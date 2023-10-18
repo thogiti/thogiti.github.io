@@ -167,7 +167,7 @@ result:  True
 
 The Circom circuit template for this will look like below:
 
-```circom
+```Circom
 pragma circom 2.1.4;
 
 template Multiply2() {
@@ -184,6 +184,7 @@ component main = Multiply2();
     "X": "5",
     "y": "77"
 } */
+
 ```
 
 Let's compile this file with Circom compiler and create r1cs file. Run the below commands at the terminal.
