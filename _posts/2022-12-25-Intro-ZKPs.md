@@ -3,10 +3,6 @@ title: "A brief introduction to Zero Knowledge Proofs (ZKPs)"
 tags: "zk", "Rust", "Executive Summary"
 ---
 
----
-title: "A brief introduction to Zero Knowledge Proofs (ZKPs)"
-tags: ["zk", "Rust", "Executive Summary"]
----
 
 1. Introduction
    - A. Definition of Zero Knowledge Proofs (ZKPs)
