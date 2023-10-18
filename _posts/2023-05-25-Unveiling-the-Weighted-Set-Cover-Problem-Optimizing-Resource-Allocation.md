@@ -1,10 +1,6 @@
 ---
-title = Unveiling the Weighted Set Cover Problem - Optimizing Resource Allocation
-
-
-tags = weighted-set-cover-problem resource-allocation-optimization technology-applications blockchain-transaction-fee-optimization machine-learning-feature-selection optimization-algorithms SageMath greedy-algorithms mathematical-software problem-solving-techniques Karp-reduction block-transaction-fee-optimization yacademy ZK-Fellowship yaudit-ZK-Fellowship
-
-
+title: Unveiling the Weighted Set Cover Problem - Optimizing Resource Allocation
+tags: weighted-set-cover-problem resource-allocation-optimization technology-applications blockchain-transaction-fee-optimization machine-learning-feature-selection optimization-algorithms SageMath greedy-algorithms mathematical-software problem-solving-techniques Karp-reduction block-transaction-fee-optimization yacademy ZK-Fellowship yaudit-ZK-Fellowship
 ---
 
 

@@ -1,8 +1,6 @@
 ---
-title = The Ultimate Guide to Working with ZKSNARKS and Cryptographic Primitives - From Trusted Setup to Workflow Automation
-
-tags = ZKSNARKS ZKP Zero-Knowledge-Proofs Circom Cryptographic-Primitives Trusted-setup Powers-of-Tau Groth16 Sparse-Merkle-Tree keccak Exponentiation workflow-automation
-
+title: The Ultimate Guide to Working with ZKSNARKS and Cryptographic Primitives - From Trusted Setup to Workflow Automation
+tags: ZKSNARKS ZKP Zero-Knowledge-Proofs Circom Cryptographic-Primitives Trusted-setup Powers-of-Tau Groth16 Sparse-Merkle-Tree keccak Exponentiation workflow-automation
 ---
 
 

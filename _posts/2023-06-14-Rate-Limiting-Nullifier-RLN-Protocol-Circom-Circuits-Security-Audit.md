@@ -1,10 +1,6 @@
 ---
-title = Rate Limiting Nullifier (RLN) Protocol - Circom Circuits Security Audit
-
-
-tags = Ethereum RLN Rate-Limiting-Nullifier Circom Circom-Circuits Security-Audit ZKP-Security-Audit ZKP Zero-Knowledge-Proofs Ecne Poseidon PSE
-
-
+title: Rate Limiting Nullifier (RLN) Protocol - Circom Circuits Security Audit
+tags: Ethereum RLN Rate-Limiting-Nullifier Circom Circom-Circuits Security-Audit ZKP-Security-Audit ZKP Zero-Knowledge-Proofs Ecne Poseidon PSE
 ---
 
 # Rate Limiting Nullifier (RLN) Review

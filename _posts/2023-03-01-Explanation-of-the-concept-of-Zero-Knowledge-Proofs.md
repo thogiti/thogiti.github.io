@@ -1,7 +1,6 @@
 ---
-title = Explanation of the Concept of Zero Knowledge Proofs
-
-tags = zk ZKP Understanding-Zero-Knowledge-Proofs Explanation
+title: Explanation of the Concept of Zero Knowledge Proofs
+tags: zk ZKP Understanding-Zero-Knowledge-Proofs Explanation
 ---
 
 ## Overview

@@ -1,8 +1,6 @@
 ---
-title = Efficient Computation of Frobenius Automorphism on BN254 Elliptic Curve
-
-tags = zk ZKP Zero-Knowledge-Proofs Frobenius-Automorphism BN254 Elliptic-Curve BN254-Elliptic-Curve sagemath
-
+title: Efficient Computation of Frobenius Automorphism on BN254 Elliptic Curve
+tags: zk ZKP Zero-Knowledge-Proofs Frobenius-Automorphism BN254 Elliptic-Curve BN254-Elliptic-Curve sagemath
 ---
 
 In this blog post, we will explore an efficient method to compute the Frobenius automorphism for the BN254 elliptic curve. The BN254 curve is a pairing-friendly elliptic curve that is widely used in cryptographic applications [hackmd.io/@jpw](https://hackmd.io/@jpw/bn254). We will exploit the fact that $(p−1)/2$ is odd to compute the Frobenius automorphism efficiently.

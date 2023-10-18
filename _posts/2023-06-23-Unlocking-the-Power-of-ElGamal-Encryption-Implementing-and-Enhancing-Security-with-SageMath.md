@@ -1,9 +1,6 @@
 ---
-title = Unlocking the Power of ElGamal Encryption - Implementing and Enhancing Security with SageMath
-
-
-tags = ElGamal SageMath Public-Key-Cryptography Discrete-Logarithm-Problem ElGamal-Key-Generation ElGamal-Encryption-and-Decryption Secure-Communication-with-ElGamal Enhancing-ElGamal-Security
-
+title: Unlocking the Power of ElGamal Encryption - Implementing and Enhancing Security with SageMath
+tags: ElGamal SageMath Public-Key-Cryptography Discrete-Logarithm-Problem ElGamal-Key-Generation ElGamal-Encryption-and-Decryption Secure-Communication-with-ElGamal Enhancing-ElGamal-Security
 ---
 
 - [Introduction](#introduction)

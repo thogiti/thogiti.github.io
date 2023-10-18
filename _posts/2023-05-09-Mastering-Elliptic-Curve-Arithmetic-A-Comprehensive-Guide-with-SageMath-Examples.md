@@ -1,8 +1,6 @@
 ---
-title = Mastering Elliptic Curve Arithmetic - A Comprehensive Guide with SageMath Examples
-
-tags = Ethereum Danksharding Scalability Point-Operations Multiscalar-Multiplication Point-Addition Point-Doubling ECADD ECDBL ECDH ECDSA Securing-Communications-with-ECC Ensuring-Data-Integrity-with-Digital-Signatures Establishing-Secure-Connections-with-ECC sagemath
-
+title: Mastering Elliptic Curve Arithmetic - A Comprehensive Guide with SageMath Examples
+tags: Ethereum Danksharding Scalability Point-Operations Multiscalar-Multiplication Point-Addition Point-Doubling ECADD ECDBL ECDH ECDSA Securing-Communications-with-ECC Ensuring-Data-Integrity-with-Digital-Signatures Establishing-Secure-Connections-with-ECC sagemath
 ---
 
 - [Introduction Demystifying Elliptic Curves and Their Applications](#introduction-demystifying-elliptic-curves-and-their-applications)

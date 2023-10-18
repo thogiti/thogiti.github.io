@@ -1,8 +1,6 @@
 ---
-title = Writing Zero Knowledge Proofs and Circuits in Four Different Languages - Dotproduct of Two Vectors
-
-tags = zk ZKP Zero-Knowledge-Proofs ZKP-dotproduct Circom Halo2 Noir
-
+title: Writing Zero Knowledge Proofs and Circuits in Four Different Languages - Dotproduct of Two Vectors
+tags: zk ZKP Zero-Knowledge-Proofs ZKP-dotproduct Circom Halo2 Noir
 ---
 
 # Overview

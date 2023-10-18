@@ -1,8 +1,6 @@
 ---
-title = Mastering Rank One Constraint System R1CS with Circom Examples
-
-tags = R1CS ZKP Zero-knowledge-proofs Circom Constraint-Systems Non-linear-constraints
-
+title: Mastering Rank One Constraint System R1CS with Circom Examples
+tags: R1CS ZKP Zero-knowledge-proofs Circom Constraint-Systems Non-linear-constraints
 ---
 
 - [Overview](#overview)

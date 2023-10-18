@@ -1,9 +1,6 @@
 ---
-title = Paper Review - Predicting the development of adverse cardiac events in patients with hypertrophic cardiomyopathy using machine learning
-
-
-tags = AI ML AI-for-Cardiomyopathy ML-for-Cardiomyopathy Cardiomyopathy Classification-of-Hypertrophic-Cardiomyopathy Classification-of-Cardiomyopathy Radiomics AI-for-Imaging AI-for-Cardiology Cardiology Diagnostic-markers Paper-Review
-
+title: Paper Review - Predicting the development of adverse cardiac events in patients with hypertrophic cardiomyopathy using machine learning
+tags: AI ML AI-for-Cardiomyopathy ML-for-Cardiomyopathy Cardiomyopathy Classification-of-Hypertrophic-Cardiomyopathy Classification-of-Cardiomyopathy Radiomics AI-for-Imaging AI-for-Cardiology Cardiology Diagnostic-markers Paper-Review
 ---
 
 

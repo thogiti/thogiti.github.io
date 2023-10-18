@@ -1,9 +1,6 @@
 ---
-title = Different types of Zero Knowledge Proofs (Interactive and Non-interactive)
-
-
-tags = zk ZKP Understanding-Zero-Knowledge-Proofs
- 
+title: Different types of Zero Knowledge Proofs (Interactive and Non-interactive)
+tags: zk ZKP Understanding-Zero-Knowledge-Proofs
 ---
 
 # Overview

@@ -1,8 +1,6 @@
 ---
-title = Error Correction in Ethereum's Danksharding - Harnessing the Power of Generalized Reed-Solomon Codes for Ethereum's Scalability
-
-tags = Ethereum Danksharding Scalability Product-Code algebraic-coding-theory Data-Extraction Data-Interpolation Missing-Value-Analysis Coefficient-Extraction Error-Correction Generalized-Reed-Solomon-Codes Reed-Solomon-Codes sagemath
-
+title: Error Correction in Ethereum's Danksharding - Harnessing the Power of Generalized Reed-Solomon Codes for Ethereum's Scalability
+tags: Ethereum Danksharding Scalability Product-Code algebraic-coding-theory Data-Extraction Data-Interpolation Missing-Value-Analysis Coefficient-Extraction Error-Correction Generalized-Reed-Solomon-Codes Reed-Solomon-Codes sagemath
 ---
 
 Danksharding is an innovative approach to scale Ethereum's blockchain, aiming to achieve over 100,000 transactions per second by enabling rollups to add cheaper data to blocks [ethereum.org](https://ethereum.org/en/roadmap/danksharding/). As Ethereum moves towards Proto-Danksharding and eventually full Danksharding [ethereum.org](https://ethereum.org/en/roadmap/), data extraction and interpolation become crucial aspects of the block-building process. 

@@ -1,33 +1,10 @@
----
-layout: article
-titles:
-  # @start locale config
-  en      : &EN       About
-  en-GB   : *EN
-  en-US   : *EN
-  en-CA   : *EN
-  en-AU   : *EN
-  zh-Hans : &ZH_HANS  关于
-  zh      : *ZH_HANS
-  zh-CN   : *ZH_HANS
-  zh-SG   : *ZH_HANS
-  zh-Hant : &ZH_HANT  關於
-  zh-TW   : *ZH_HANT
-  zh-HK   : *ZH_HANT
-  ko      : &KO       소개
-  ko-KR   : *KO
-  fr      : &FR       À propos
-  fr-BE   : *FR
-  fr-CA   : *FR
-  fr-CH   : *FR
-  fr-FR   : *FR
-  fr-LU   : *FR
-  # @end locale config
-key: page-about
----
++++
+template = "about/section.html"
+title = "Nagu: A Seasoned Innovator in AI, Blockchain, and Infrastructure"
 
- <style> .center { display: block; margin-left: auto; margin-right: auto; width: 30%; } </style> 
-
+[extra]
+katex = true
++++
 
 Nagu is a distinguished professional with over 20 years of experience in developing data-driven products and platforms in the realms of Artificial Intelligence & Machine Learning (AI/ML), Blockchain, and Infrastructure. His solid foundation in mathematics and science, combined with his expertise in Cryptography, sets him apart as a thought leader in the industry.
 
@@ -37,18 +14,15 @@ Nagu's unique ability to merge technology, data, and business operations has led
 
 Throughout his illustrious career, Nagu has held executive positions at renowned organizations such as TeamViewer, Viking Cruises, and PCM. This experience has honed his leadership skills, enabling him to drive success for both his teams and the companies he has served.
 
-Nagu's passion for innovation is evident in his four primary areas of interest:
+Nagu's passion for innovation is evident in his three primary areas of interest:
 
 1. Artificial Intelligence & Machine Learning: Nagu's expertise in AI/ML has been instrumental in designing advanced data-driven systems and applications, pushing the boundaries of what is possible in the field.
 
 2. Blockchain: Nagu's knowledge of cryptography and blockchain technology has enabled him to develop secure, decentralized solutions that revolutionize the way businesses operate.
 
-3. Infrastructure: Nagu's experience in infrastructure development has provided him with the ability to create robust, scalable, low latency, and high concurrency platforms that support the ever-evolving needs of today's digital landscape.
+3. Infrastructure: Nagu's experience in infrastructure development has provided him with the ability to create robust, scalable platforms that support the ever-evolving needs of today's digital landscape.
 
-4. Data Driven Marketing: Nagu's experience in creating personalized, relevant and engaging customer experiences that drive business growth and loyalty using data, technology and marketing best practices.
-
-
-In summary, Nagu is a seasoned innovator and leader with a proven track record in AI, Blockchain, Infrastructure and Marketing. His extensive experience, combined with his passion for data driven solutions and cutting-edge technology, positions him as a valuable asset in the rapidly advancing world of digital transformation.
+In summary, Nagu is a seasoned innovator and leader with a proven track record in AI, Blockchain, and Infrastructure. His extensive experience, combined with his passion for cutting-edge technology, positions him as a valuable asset in the rapidly advancing world of digital transformation.
 
 
 ## Publictions

@@ -1,9 +1,6 @@
 ---
-title = Paper Review - Zero Knowledge Proofs for Decision Tree Predictions and Accuracy
-
-tags = AI ML ZKML Zero-Knowledge-Proofs ZKP Efficient-ZKP zero-knowledge-decision-tree-predictions zero-knowledge-decision-tree-accuracy-tests Decision-Tree privacy-preserving-machine-learning privacy Paper-Review
-
-
+title: Paper Review - Zero Knowledge Proofs for Decision Tree Predictions and Accuracy
+tags: AI ML ZKML Zero-Knowledge-Proofs ZKP Efficient-ZKP zero-knowledge-decision-tree-predictions zero-knowledge-decision-tree-accuracy-tests Decision-Tree privacy-preserving-machine-learning privacy Paper-Review
 ---
 
 # **IN DRAFT MODE**
