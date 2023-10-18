@@ -53,7 +53,7 @@ In summary, Nagu is a seasoned innovator and leader with a proven track record i
 
 ## Publictions
 
-*  Successful real-world application of an osteoarthritis classification deep-learning model, Journal of Orthopedic Research, [https://doi.org/10.1002/jor.25415] (https://doi.org/10.1002/jor.25415) 
+*  Successful real-world application of an osteoarthritis classification deep-learning model, Journal of Orthopedic Research, [https://doi.org/10.1002/jor.25415](https://doi.org/10.1002/jor.25415) 
 * Deep Transfer Learning for Classification of Common Skin Cancers in Asian Ethnicities Using CNNs with Ensemble Schemes (under review with JAMA Dermatology & JAA Dermatology).
 * Privacy Preserving Brain Tumor Segmentation using Federated Learning and Differential Privacy (under review with Applied Sciences & Journal of Neuro-Oncology)
 * Acoustic Psychometry using Machine Learning Methods for mental states identification, http://apsystems123.com/#t-2 
