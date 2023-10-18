@@ -36,7 +36,7 @@ Let's consider an example of the ElGamal encryption process:
 
 Here is the complete flow diagram of ElGamal encryption.
 
-![ElGamal encryption Flow](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230623/Flow-ElGamal-encryption.png)
+![ElGamal encryption Flow](/assets/images/20230623/Flow-ElGamal-encryption.png)
 
 
 

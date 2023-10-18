@@ -97,7 +97,7 @@ E = EllipticCurve([a, b])
 plot(E, xmin=-3, xmax=3, ymin=-3, ymax=3)
 ```
 
-![Elliptic Curve Plot](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230509/sagemath-elliptic-curve-example.png)
+![Elliptic Curve Plot](/assets/images/20230509/sagemath-elliptic-curve-example.png)
 
 *An example of an elliptic curve plot generated using SageMath.*
 
@@ -136,7 +136,7 @@ Point addition is the primary operation in elliptic curve arithmetic. Given two 
 3. Reflect $R'$ across the x-axis to obtain $R$.
 
 
-![Point addition on Elliptic Curve ](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230509/point-addition-in-ECC.png)
+![Point addition on Elliptic Curve ](/assets/images/20230509/point-addition-in-ECC.png)
 
 *A geometrical visualization of a point addition on elliptic curve.*
 
@@ -161,7 +161,7 @@ Point doubling is a special case of point addition where $P = Q$. In this case, 
 2. Find the second point of intersection $R'$ between $L$ and the elliptic curve.
 3. Reflect $R'$ across the x-axis to obtain $R$.
 
-![Point doubling on Elliptic Curve ](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230509/point-doubling-in-ECC.png)
+![Point doubling on Elliptic Curve ](/assets/images/20230509/point-doubling-in-ECC.png)
 
 *A geometrical visualization of a point addition on elliptic curve.*
 
@@ -251,7 +251,7 @@ R = P + Q
 plot_points_on_curve(E, [P.xy(), Q.xy(), R.xy()], ['P', 'Q', 'R'], ['red', 'blue', 'green'])
 ```
 
-![Elliptic Curve Arithmetic Visualization](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230509/point-addition-ecc-visualiation.png)
+![Elliptic Curve Arithmetic Visualization](/assets/images/20230509/point-addition-ecc-visualiation.png)
 
 *An example of an elliptic curve plot with points P, Q, and R generated using SageMath.*
 
@@ -285,7 +285,7 @@ To visualize the elliptic curve, we can use the `plot` function:
 plot(E, xmin=-5, xmax=5, ymin=-5, ymax=5)
 ```
 
-![Elliptic Curve Plot](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230509/sagemath-elliptic-curve-example.png)
+![Elliptic Curve Plot](/assets/images/20230509/sagemath-elliptic-curve-example.png)
 
 *An example of an elliptic curve plot generated using SageMath.*
 

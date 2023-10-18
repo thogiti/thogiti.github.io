@@ -56,7 +56,7 @@ The zero-knowledge decision tree scheme (zkDT) consists of the four algorithms, 
 
 Here is a sequence diagram describing the specific construction of zkDT.
 
-![Intuition of the construction of zkDT](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230724/zkDT-sequence-diagram.png)
+![Intuition of the construction of zkDT](/assets/images/20230724/zkDT-sequence-diagram.png)
 
 
 - The general idea of the construction of zkDT involves the prover $P$ sending the commitment of a decision tree $T$, $comT$, to the verifier $V$.
@@ -76,7 +76,7 @@ The paper introduces the concept of an Authenticated Decision Tree (ADT), which 
 ## [Construction of ADT](#construction-of-adt)
 The paper describes the construction of the ADT, which involves hashing the root of the decision tree concatenated with a random point to produce the commitment. The paper notes that the commitment must be randomized in order to prove the zero knowledge property of the scheme later.
 
-![Construction of ADT](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230724/Committing-algorithm-of-ADT-scheme-zkDT.png)
+![Construction of ADT](/assets/images/20230724/Committing-algorithm-of-ADT-scheme-zkDT.png)
 
 
 - Each node in ADT contains three pieces of information: the attribute $(v.att)$, the threshold $(v.thr)$, and pointers to the left and right children $(lc, rc)$.
@@ -101,7 +101,7 @@ With the construction of ADT, we can update our methodology of the algorithms us
 # [Proving the Validity of the Prediction](#proving-the-validity-of-the-prediction)
 The protocol for proving the correctness of the prediction in a decision tree involves using a zero knowledge proof on top of the validation process to keep the prediction path and sibling hashes confidential (zero knowledge). This protocol ensures that the verifier only receives a binary output $(1 or 0)$ indicating whether all the checks are satisfied or not, making it both sound and zero knowledge.
 - 
-![Zero knowledge decision tree prediction](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230724/Zero-knowledge-decision-tree-prediction.png)
+![Zero knowledge decision tree prediction](/assets/images/20230724/Zero-knowledge-decision-tree-prediction.png)
 
 
 The below steps explain the design of an efficient zero knowledge proof protocol proposed in the paper for validating decision tree predictions.

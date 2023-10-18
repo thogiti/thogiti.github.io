@@ -30,7 +30,7 @@ A.B = a1*b1 + a2*b2 + ... + aN*bN
 
 # [Process Flow of a Zero Knowledge Proof](#process-flow-of-a-zero-knowledge-proof)
 
-The below diagram describes a typical process flow in creating a Zero Knowledge Proof system. ![Zero Knowledge Proof Process Flow](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230313/zkp-process-flow-diagram-2023-04-13-150046.png)
+The below diagram describes a typical process flow in creating a Zero Knowledge Proof system. ![Zero Knowledge Proof Process Flow](/assets/images/20230313/zkp-process-flow-diagram-2023-04-13-150046.png)
 
 
 To create zero-knowledge proofs and circuits using different libraries like Circom, Noir, and Halo2, follow these steps:

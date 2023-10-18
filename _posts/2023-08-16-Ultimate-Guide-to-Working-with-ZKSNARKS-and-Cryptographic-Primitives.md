@@ -18,25 +18,4 @@ In this article, we will guide you through the process of mastering practical kn
 
 By the end of this article, you will have a solid foundation of working with ZKSNARKS and cryptographic primitives, and you will be able to apply them to your own projects. Let's get started!
 
-
-# [Trusted Setup](#trusted-setup)
-
-
-
-# [Workflow Automation of ZK Circuits](#workflow-automation-of-zk-circuits)
-
-
-
-# [Exponentiation of x*y](#exponentiation-of-xy)
-
-
-
-# [Hashing with keccak ZK Circuit](#hashing-with-keccak-zk-circuit)
-
-
-
-# [Sparse Merkle Tree ZK Circuit](#sparse-merkle-tree-zk-circuit)
-
-
-
-
+You can find the more details at the repo ![ZKSNARKS] (https://github.com/thogiti/EFPSEZKFellowSummer/tree/main/Module%206%20-%20Intro%20to%20Circuits)

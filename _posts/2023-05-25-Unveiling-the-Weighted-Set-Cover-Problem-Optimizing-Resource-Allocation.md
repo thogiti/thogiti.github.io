@@ -28,7 +28,7 @@ Now, let's understand this step by step:
 
 # [Problem Definition Weighted Set Cover](#problem-definition-weighted-set-cover)
 
-![Weighted Set Cover Example](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230525/setcover.jpg)
+![Weighted Set Cover Example](/assets/images/20230525/setcover.jpg)
 
 
 Given:

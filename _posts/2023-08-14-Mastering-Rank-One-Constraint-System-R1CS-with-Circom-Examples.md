@@ -37,7 +37,7 @@ In the context of zk-SNARKS, an arithmetic circuit is converted into a R1CS. Eac
 
 In the [previous](https://thogiti.github.io/writing-zero-knowledge-proofs-and-circuits-in-four-languages/#process-flow-of-a-zero-knowledge-proof) blog post, we saw a process flow of creating a Zero Knowledge Proof system. Here is the high level view of this flow:
 
-![Zero Knowledge Proof Process Flow](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230313/zkp-process-flow-diagram-2023-04-13-150046.png)
+![Zero Knowledge Proof Process Flow](/assets/images/20230313/zkp-process-flow-diagram-2023-04-13-150046.png)
 
 
 Constraint systems are collections of arithmetic constraints over a set of variables. They play an essential role in computational problems, particularly in the realm of cryptographic protocols and zero-knowledge proofs. In a constraint system, there are two types of variables: high-level variables (the secret inputs) and low-level variables (the internal inputs and outputs of the multiplication gates).
@@ -80,7 +80,7 @@ For Circom installation, follow the official documentation at [docs.circom.io](h
 
 Before we can create an r1cs, our polynomials and constraints need to be of the form
 
-![r1cs-form](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230814/r1cs-eq1.jpg)
+![r1cs-form](/assets/images/20230814/r1cs-eq1.jpg)
 
 
 Also, Circom expects the constraints to be of the form $Aw * Bw - Cw = 0$, where $A$ is the left hand side of matrix, $B$ is the right hand side of matrix and $C$ is the output matrix forms. The variable $w$ is witness vector. Here the witness $w$ will be of the form $[1, out, x, y, ...]$
@@ -198,7 +198,7 @@ snarkjs r1cs print multiply2.r1cs
 
 Here is the output from the above commands:
 
-![multiply2-r1cs](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230814/multiply2-r1cs-output.png)
+![multiply2-r1cs](/assets/images/20230814/multiply2-r1cs-output.png)
 
 
 We should be expecting the constraints in the form of  $ A * B - C = 0$. 
@@ -255,7 +255,7 @@ cat witness.json
 We can check that circom is using the same column layout for witness $w$ we have been using: $[1, out, x, y]$, as $x$ was set to `11` and $y$ to `9` in our `input.json`.
 
 
-![multiply2-r1cs-wasm-witness](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230814/multiply2-r1cs-wasm-witness-output.png)
+![multiply2-r1cs-wasm-witness](/assets/images/20230814/multiply2-r1cs-wasm-witness-output.png)
 
 
 In `multiplier2` circuit we took `x` and `y` (`2` wires) connected it with the signal `out` (+1 wire) and another (+1 wire) for the output of `out`, and checked the only `1` constraint when `out <== x * y`. Hence, we have `4` wires and `1` constraint.
@@ -287,7 +287,7 @@ The witness vector will be $[1, out, x, y, u, v, u1, u2]$. This makes our matric
 We have three constraints, hene we will have three rows in the matrices $A$, $B$, and $C$. Each row representing the corresponding constraint as written above.
 
 
-![r1cs-ex2](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230814/r1cs-ex2.jpg)
+![r1cs-ex2](/assets/images/20230814/r1cs-ex2.jpg)
 
 
 **Constructing Matrix A from left hand terms**
@@ -576,7 +576,7 @@ cat witness.json
 
 We get the following output.
 
-![multiply4-r1cs-wasm-witness-output](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230814/multiply4-r1cs-wasm-witness-output.png)
+![multiply4-r1cs-wasm-witness-output](/assets/images/20230814/multiply4-r1cs-wasm-witness-output.png)
 
 
 In `multiplier4` circuit we took `x`, `y`, `u` and `v` (4 wires) and `u1`, `u2` (+2 wires) connected it with the signal `out` (+1 wire) and another (+1 wire) for the output of `out`, and checked the  `3` constraints when `u1 <== x * y`, `u2 <== u * v`, and `out <== u1 * u2`. Hence, we have `8` wires and `3` constraints.
@@ -769,7 +769,7 @@ cat witness.json
 
 We get the following output.
 
-![Example5-r1cs-wasm-witness-output](https://github.com/thogiti/thogiti.github.io/blob/master/assets/images/20230814/Example5-r1cs-wasm-witness-output.png)
+![Example5-r1cs-wasm-witness-output](/assets/images/20230814/Example5-r1cs-wasm-witness-output.png)
 
 
 In `Example5` circuit we took `x`, and `y` (2 wires) and `u1`, `u2` (+2 wires) connected it with the signal `out` (+1 wire) and another (+1 wire) for the output of `out`, and checked the  `3` constraints when `u1 <== 3 * x * x`, `u2 <== u1 * y`, and `out <== 5 * x * y + u2 - x - 2*y +3`. Hence, we have `6` wires and `3` constraints.
