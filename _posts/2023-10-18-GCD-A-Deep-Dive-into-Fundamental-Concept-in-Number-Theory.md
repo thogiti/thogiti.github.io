@@ -132,13 +132,12 @@ The Extended Euclidean algorithm is based on the Euclidean algorithm, which repe
 
 Here is an example of how the algorithm works. Suppose we want to find the gcd and the coefficients of Bézout's identity for `a = 36` and `b = 10`. We can use a table to keep track of the steps:
 
-|  a  |  b  | q | r |  x  |  y  |
-|:---:|:---:|:-:|:-:|:---:|:---:|
-| 36  | 10  | 3 | 6 |  0  |  1  |
-| 10  |  6  | 1 | 4 |  1  | -3  |
-|  6  |  4  | 1 | 2 | -1  |  4  |
-|  4  |  2  | 2 | 0 |  3  | -11 |
-
+| a | b | q | r | x | y |
+|---|---|---|---|---|---|
+| 36 | 10 | 3 | 6 | 0 | 1 |
+| 10 | 6 | 1 | 4 | 1 | -3 |
+| 6 | 4 | 1 | 2 | -1 | 4 |
+| 4 | 2 | 2 | 0 | 3 | -11 |
 
 The first four columns are the same as in the Euclidean algorithm. The last two columns are computed as follows:
 
