@@ -4,7 +4,7 @@ tags: GCD Number-Theory Cryptography Extended-Euclidean-Algorithm Euclidean-Algo
 ---
 
 - [Greatest Common Divisor Overview](#greatest-common-divisor-overview)
-  - [Definition 1](#definition-1)
+  - [Definition 1 - GCD](#definition-1---gcd)
   - [Definition 2 - Co-prime](#definition-2---co-prime)
   - [Proposition 1](#proposition-1)
 - [The Euclidean Algorithm](#the-euclidean-algorithm)
@@ -19,7 +19,7 @@ tags: GCD Number-Theory Cryptography Extended-Euclidean-Algorithm Euclidean-Algo
 
 The numbers $12$ and $18$ share the divisors $1, 2, 3, and 6$, with $6$ being the largest. This set of common divisors can be created for any pair of non-zero integers, $a$ and $b$. The set will always include at least the number $1$, as it is a divisor of all integers. Since the set is finite, it will always have a maximum value.
 
-## [Definition 1](#definition-1)
+## [Definition 1 - GCD](#definition-1---gcd)
 
 Let's consider two integers, a and b, where both are not zero. The largest number, d, that can divide both a and b is known as the greatest common divisor (gcd). We represent it as d = gcd(a, b).
 
