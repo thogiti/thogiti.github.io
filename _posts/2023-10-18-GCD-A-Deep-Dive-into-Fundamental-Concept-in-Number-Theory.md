@@ -84,7 +84,7 @@ $$14 = 2 · 7 + 0$$
 
 Again, the last non-zero remainder is the gcd i.e. gcd is $7$. Why does this work? Let’s start by showing why $7$ is a common divisor. 
 
-The fact that the remainder on the last line is `0` says that $7 \mid 14$. Since $7 \mid 7$ and $7 \mid 14$, the next-to-last line says that $7 \mid 21$, since `21` is a linear combination of `7` and `14`. Now move up one line. We have just shown that $7 \mid 14$ and $7 \mid 21$. Since `119` is a linear combination of `21` and `14`, we deduce that $7 \mid 119$. Finally, moving to the top line, we see that $7 \mid 259$ because `259` is a linear combination of $119 and 21$, both of which are multiples of `7`. Since $7 \mid 119$ and $7 \mid 259$, we have proved that `7` is a common divisor of `119` and `259`.
+The fact that the remainder on the last line is `0` says that $7 \mid 14$. Since $7 \mid 7$ and $7 \mid 14$, the next-to-last line says that $7 \mid 21$, since `21` is a linear combination of `7` and `14`. Now move up one line. We have just shown that $7 \mid 14$ and $7 \mid 21$. Since `119` is a linear combination of `21` and `14`, we deduce that $7 \mid 119$. Finally, moving to the top line, we see that $7 \mid 259$ because `259` is a linear combination of `119` and `21`, both of which are multiples of `7`. Since $7 \mid 119$ and $7 \mid 259$, we have proved that `7` is a common divisor of `119` and `259`.
 
 We now want to show that `7` is the largest common divisor. Let `d` be any divisor of `119` and `259`. The top line implies that `21`, which is a linear combination of `259` and `119` (namely, $259 − 2 · 119$), is a multiple of `d`. Next, go to the second line. Both `119` and `21` are multiples of `d`, so `14` must be a multiple of `d`. The third line tells us that since $d \mid 21$ and $d \mid 14$, we must have $d \mid 7$. In particular, $d \leq 7$, so `7` is the greatest common divisor, as claimed. We also have proved the additional fact that any common divisor must divide `7`.
 
@@ -132,12 +132,13 @@ The Extended Euclidean algorithm is based on the Euclidean algorithm, which repe
 
 Here is an example of how the algorithm works. Suppose we want to find the gcd and the coefficients of Bézout's identity for `a = 36` and `b = 10`. We can use a table to keep track of the steps:
 
-| a | b | q | r | x | y |
-|---|---|---|---|---|---|
-| 36 | 10 | 3 | 6 | 0 | 1 |
-| 10 | 6 | 1 | 4 | 1 | -3 |
-| 6 | 4 | 1 | 2 | -1 | 4 |
-| 4 | 2 | 2 | 0 | 3 | -11 |
+|  a  |  b  | q | r |  x  |  y  |
+|:---:|:---:|:-:|:-:|:---:|:---:|
+| 36  | 10  | 3 | 6 |  0  |  1  |
+| 10  |  6  | 1 | 4 |  1  | -3  |
+|  6  |  4  | 1 | 2 | -1  |  4  |
+|  4  |  2  | 2 | 0 |  3  | -11 |
+
 
 The first four columns are the same as in the Euclidean algorithm. The last two columns are computed as follows:
 
