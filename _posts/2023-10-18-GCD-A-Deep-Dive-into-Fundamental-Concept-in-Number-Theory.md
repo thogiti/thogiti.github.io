@@ -48,7 +48,7 @@ This is logical because we've divided these numbers by their GCD, which is the l
 
 If `a` and `b` are integers with $d = gcd(a, b)$, then $gcd(\frac{a}{d}, \frac{b}{d}) = 1$.
 
-Proof. If $c = gcd(\frac{a}{d}, \frac{b}{d})$, then $c \mid \frac{a}{d}$ and $c \mid \frac{b}{d}$. This means that there are integers $k_1$ and $k_2$ with $a = ck_1$ and $b = ck_2$, which tells us that $a = cdk_1$ and $b = cdk_2$. So, $cd$ is a common divisor of $a$ and $b$. Since $d$ is the greatest common divisor and $cd \geq d$, we must have $c = 1$.
+**Proof.** If $c = gcd(\frac{a}{d}, \frac{b}{d})$, then $c \mid \frac{a}{d}$ and $c \mid \frac{b}{d}$. This means that there are integers $k_1$ and $k_2$ with $a = ck_1$ and $b = ck_2$, which tells us that $a = cdk_1$ and $b = cdk_2$. So, $cd$ is a common divisor of $a$ and $b$. Since $d$ is the greatest common divisor and $cd \geq d$, we must have $c = 1$.
 
 # [The Euclidean Algorithm](#the-euclidean-algorithm)
 
@@ -102,7 +102,7 @@ $$r_{n−3} = q_{n−1}r_{n−2} + r_{n−1}, with  0 \leq r_{n−1} < r_{n−2}
 
 $$r_{n−2} = q_{n}r_{n−1} + 0$$
 
-The last non-zero remainder, namely $r_{n−1}, equals too $gcd(a,b)$.
+The last non-zero remainder, namely $r_{n−1}$, equals to $gcd(a,b)$.
 
 
 ## [Geometrical View of the Euclidean Algorithm](#geometrical-view-of-the-euclidean-algorithm)
@@ -126,7 +126,7 @@ $$7 = gcd(259, 119) = 259 · 6 − 119 · 13$$
 
 The method for obtaining x and y is called **the Extended Euclidean Algorithm**. Sometimes these are also referred as the coefficients of Bézout’s identity.
 
-Once you’ve used the Euclidean Algorithm to arrive at gcd(a, b), there’s an easy and very straightforward way to implement the Extended Euclidean Algorithm. I’ll show you below how it works with an example.
+Once you’ve used the Euclidean Algorithm to arrive at $gcd(a, b)$, there’s an easy and very straightforward way to implement the Extended Euclidean Algorithm. I’ll show you below how it works with an example.
 
 The Extended Euclidean algorithm is based on the Euclidean algorithm, which repeatedly performs Euclidean divisions until the remainder is zero. The extended Euclidean algorithm also keeps track of the quotients of each division, and uses them to compute the coefficients `x` and `y` in a recursive way.
 
@@ -166,7 +166,7 @@ $$gcd(a, b) = ax + by.$$
 **Proof.** 
 Consider the set $S$ of integers that can be expressed as $ax + by$, where `x` and `y` are integers. Since `a`, `b`, `-a`, and `-b` are all elements of $S$, we can conclude that $S$ contains at least one positive integer.
 
-Let `d` be the smallest positive integer in $S$ (according to the Well-Ordering Principle). Since `d` is an element of $S$, we can write $d = ax_0 + by_0$ for some integers $x_0$ and $y_0$.
+Let `d` be the smallest positive integer in $S$ (according to the [Well-Ordering Principle](https://en.wikipedia.org/wiki/Well-ordering_principle)). Since `d` is an element of $S$, we can write $d = ax_0 + by_0$ for some integers $x_0$ and $y_0$.
 
 Now, we claim that both `a` and `b` are multiples of `d`, making `d` a common divisor of `a` and `b`. To prove this, let's write $a = dq + r$, where `q` and `r` are integers and $0 \leq r < d$.
 
