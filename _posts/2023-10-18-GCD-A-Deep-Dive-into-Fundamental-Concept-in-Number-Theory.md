@@ -17,13 +17,9 @@ tags: GCD Number-Theory Cryptography Extended-Euclidean-Algorithm Euclidean-Algo
 
 # [Greatest Common Divisor Overview](#greatest-common-divisor-overview)
 
-The numbers $12$ and $18$ share the divisors $1, 2, 3, and 6$, with $6$ being the largest. This set of common divisors can be created for any pair of non-zero integers, $a$ and $b$. The set will always include at least the number $1$, as it is a divisor of all integers. Since the set is finite, it will always have a maximum value.
+The numbers $12$ and $18$ share the divisors `1`, `2`, `3`, and `6`, with `6` being the largest. This set of common divisors can be created for any pair of non-zero integers, `a` and `b`. The set will always include at least the number `1`, as it is a divisor of all integers. Since the set is finite, it will always have a maximum value.
 
 ## [Definition 1 - GCD](#definition-1---gcd)
-
-Let's consider two integers, a and b, where both are not zero. The largest number, d, that can divide both a and b is known as the greatest common divisor (gcd). We represent it as d = gcd(a, b).
-
-Sure, here's a more readable and simplified version of your text using GitHub Markdown for mathematical notation:
 
 Let's consider two integers `a` and `b`, where both are not zero. The set of common divisors between `a` and `b` has a maximum element, which we denote as `d`. This `d` is known as the Greatest Common Divisor (GCD) of `a` and `b`. We express this as $d = gcd(a, b)$.
 
@@ -32,7 +28,7 @@ This equation signifies that `d` is the largest integer that can divide both `a`
 **Examples.** $gcd(24, 52) = 4$, $gcd(9, 27) = 9$, $gcd(14, 35) = 7$, $gcd(15, 28) = 1$.
 
 ## [Definition 2 - Co-prime](#definition-2---co-prime)
-Two integers `a` and `b` are said to be relatively prime or co-prime if $gcd(a, b) = 1$.
+Two integers `a` and `b` are said to be **relatively prime** or **co-prime** if $gcd(a, b) = 1$.
 
 **Examples.** $gcd(15, 28) = 1$, $gcd(15, 14) = 1$, $gcd(21, 40) = 1$.
 
@@ -88,9 +84,9 @@ $$14 = 2 · 7 + 0$$
 
 Again, the last non-zero remainder is the gcd i.e. gcd is $7$. Why does this work? Let’s start by showing why $7$ is a common divisor. 
 
-The fact that the remainder on the last line is `0` says that $7 | 14$. Since $7 | 7$ and $7 | 14$, the next-to-last line says that $7 | 21$, since `21` is a linear combination of `7` and `14`. Now move up one line. We have just shown that $7 | 14$ and $7 | 21$. Since `119` is a linear combination of `21` and `14`, we deduce that $7 | 119$. Finally, moving to the top line, we see that $7 | 259$ because `259` is a linear combination of $119 and 21$, both of which are multiples of `7`. Since $7 | 119$ and $7 | 259$, we have proved that `7` is a common divisor of `119` and `259`.
+The fact that the remainder on the last line is `0` says that $7 \mid 14$. Since $7 \mid 7$ and $7 \mid 14$, the next-to-last line says that $7 \mid 21$, since `21` is a linear combination of `7` and `14`. Now move up one line. We have just shown that $7 \mid 14$ and $7 \mid 21$. Since `119` is a linear combination of `21` and `14`, we deduce that $7 \mid 119$. Finally, moving to the top line, we see that $7 \mid 259$ because `259` is a linear combination of $119 and 21$, both of which are multiples of `7`. Since $7 \mid 119$ and $7 \mid 259$, we have proved that `7` is a common divisor of `119` and `259`.
 
-We now want to show that `7` is the largest common divisor. Let `d` be any divisor of `119` and `259`. The top line implies that `21`, which is a linear combination of `259` and `119` (namely, $259 − 2 · 119$), is a multiple of `d`. Next, go to the second line. Both `119` and `21` are multiples of `d`, so `14` must be a multiple of `d`. The third line tells us that since $d | 21$ and $d | 14$, we must have $d | 7$. In particular, $d \leq 7$, so `7` is the greatest common divisor, as claimed. We also have proved the additional fact that any common divisor must divide `7`.
+We now want to show that `7` is the largest common divisor. Let `d` be any divisor of `119` and `259`. The top line implies that `21`, which is a linear combination of `259` and `119` (namely, $259 − 2 · 119$), is a multiple of `d`. Next, go to the second line. Both `119` and `21` are multiples of `d`, so `14` must be a multiple of `d`. The third line tells us that since $d \mid 21$ and $d \mid 14$, we must have $d \mid 7$. In particular, $d \leq 7$, so `7` is the greatest common divisor, as claimed. We also have proved the additional fact that any common divisor must divide `7`.
 
 **Euclidean Algorithm.** Let `a` and `b` be non-negative integers and assume that $b \neq 0$. Let's do the following computation:
 
@@ -111,6 +107,8 @@ The last non-zero remainder, namely $r_{n−1}, equals too $gcd(a,b)$.
 
 ## [Geometrical View of the Euclidean Algorithm](#geometrical-view-of-the-euclidean-algorithm)
 Suppose we want to compute $gcd(48, 21)$. Start at the point $(48, 21)$ in the plane $(x,y)$.
+
+![Geometrical View of Computation of gcd(48,21)](/assets/images/20231018/Computation-of-gcd(48,21).png)
 
 Start by moving left in increments of `21` until you reach or cross the line $y = x$. In this instance, we take two steps of `21`, landing us at $(6,21)$. Then, move downwards in increments of `6` (the smaller of the two coordinates) until you reach or cross the line $y = x$. Here, we take three steps of `6`, bringing us to $(6, 3)$. Next, move left in increments of `3`. After one step, we arrive at $(3, 3)$, which is on the line $y = x$. The $gcd$ is the x-coordinate (which is also the y-coordinate).
 
