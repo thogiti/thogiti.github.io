@@ -571,4 +571,4 @@ When we run the script `compile-Multiplier3-groth16.sh`, we can see the successf
 
 
 
-You can find the above details at the repo [ZKSNARKS](https://github.com/thogiti/EFPSEZKFellowSummer/tree/main/Module%206%20-%20Intro%20to%20Circuits)
+You can find the full code at the repo [ZKSNARKS](https://github.com/thogiti/EFPSEZKFellowSummer/tree/main/Module%206%20-%20Intro%20to%20Circuits)
