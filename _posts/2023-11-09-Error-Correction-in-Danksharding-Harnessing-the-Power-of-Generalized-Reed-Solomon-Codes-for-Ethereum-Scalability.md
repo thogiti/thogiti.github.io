@@ -14,6 +14,11 @@ In this blog post, we will explore the potential of using product codes, a power
 - [Generalized Reed-Solomon Codes](#generalized-reed-solomon-codes)
 - [Data Extraction and Data Interpolation in Danksharding](#data-extraction-and-data-interpolation-in-danksharding)
 - [Example of Error Correction Codes in Danksharding](#example-of-error-correction-codes-in-danksharding)
+  - [Creating the Generalized Reed-Solomon Code](#creating-the-generalized-reed-solomon-code)
+  - [Creating a random message vector and encoding it using the GRS code](#creating-a-random-message-vector-and-encoding-it-using-the-grs-code)
+  - [Simulating the transmission of the encoded message with a static error rate of 3](#simulating-the-transmission-of-the-encoded-message-with-a-static-error-rate-of-3)
+  - [Decoding the received message to the code and checking if it's equal to the original encoded message](#decoding-the-received-message-to-the-code-and-checking-if-its-equal-to-the-original-encoded-message)
+  - [Decoding the received message to the original message and checking if it's equal to the original message](#decoding-the-received-message-to-the-original-message-and-checking-if-its-equal-to-the-original-message)
 - [Conclusion](#conclusion)
 
 # [What is Danksharding](#what-is-danksharding)
@@ -45,7 +50,7 @@ To illustrate the potential of product codes and GRS codes in the context of Dan
 Algebraic properties of product codes that are useful in coefficient extraction and missing data analysis include linearity, error-correcting capabilities, and structured redundancy. These properties enable efficient techniques for extracting information from data sets and interpolating missing values. In this example, we will use SageMath to demonstrate how these properties can be applied to extract coefficients and estimate missing data.
 
 
-1. Creating the Generalized Reed-Solomon Code:
+## Creating the Generalized Reed-Solomon Code
 
 ```python
 C = codes.GeneralizedReedSolomonCode(GF(59).list()[1:41], 3, GF(59).list()[1:41])
@@ -57,7 +62,7 @@ C = codes.GeneralizedReedSolomonCode(GF(59).list()[1:41], 3, GF(59).list()[1:41]
 * `codes.GeneralizedReedSolomonCode()` creates a GRS code over the specified Galois Field with the given parameters.
 
 
-2. Creating a random message vector and encoding it using the GRS code:
+## Creating a random message vector and encoding it using the GRS code
 
 
 ```python
@@ -68,7 +73,7 @@ c = C.encode(msg)
 ```
 
 
-3. Simulating the transmission of the encoded message with a static error rate of 3:
+## Simulating the transmission of the encoded message with a static error rate of 3
 
 ```python
 err = 3
@@ -79,7 +84,7 @@ r = Chan.transmit(c)
 ```
 
 
-4. Decoding the received message to the code and checking if it's equal to the original encoded message:
+##  Decoding the received message to the code and checking if it's equal to the original encoded message
 
 ```python
 c_dec = C.decode_to_code(r)
@@ -88,7 +93,7 @@ print("Are the decoded received message to the code and the original encoded mes
 ```
 
 
-5. Decoding the received message to the original message and checking if it's equal to the original message:
+## Decoding the received message to the original message and checking if it's equal to the original message
 
 
 ```python
