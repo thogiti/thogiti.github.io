@@ -30,6 +30,8 @@ Conversely, row encoding involves representing each constraint as a separate pol
 Consider a simple R1CS with three variables $( x_1, x_2, x_3 )$ and two constraints:
 
 $$ 2x_1 + 3x_2 + x_3 = 10 $$
+
+
 $$ x_1 - x_2 + 2x_3 = 5 $$
 
 ### Column Encoding Example
