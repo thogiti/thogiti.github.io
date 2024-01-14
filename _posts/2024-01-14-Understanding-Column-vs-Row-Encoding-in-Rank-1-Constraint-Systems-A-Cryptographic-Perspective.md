@@ -21,7 +21,7 @@ Constraints are the equations that make up the R1CS. They are represented in the
 The crux of the discussion revolves around how we represent these variables and constraints in the form of polynomials, a process crucial for cryptographic applications like zk-SNARKs (Zero-Knowledge Succinct Non-Interactive Argument of Knowledge).
 
 ### Column Encoding
-In column encoding, each variable of the R1CS is represented by its own polynomial. This method treats each variable uniformly, creating a polynomial that encapsulates the variable's behavior across all constraints. The degree of these polynomials is generally lower, tied to the number of constraints rather than the number of variables. Often in cryptographic applications  the number of constraints is smaller than the number of variables.
+In column encoding, each variable of the R1CS is represented by its own polynomial. This method treats each variable uniformly, creating a polynomial that encapsulates the variable's behavior across all constraints. The degree of these polynomials is generally lower, tied to the number of constraints rather than the number of variables. Often in cryptographic applications  the number of constraints is (much) smaller than the number of variables.
 
 ### Row Encoding
 Conversely, row encoding involves representing each constraint as a separate polynomial. Here, a polynomial is created for each row in the R1CS matrix, combining the variables involved in that particular constraint. This approach can lead to higher degree polynomials since each row might involve multiple variables.
