@@ -35,11 +35,11 @@ $$ x_1 - x_2 + 2x_3 = 5 $$
 ### Column Encoding Example
 In column encoding, we might have:
 
-$$ P_{x_1}(x)  for  x_1 $$
+$$ P_{x_1}(x)\  for\  x_1 $$
 
-$$ P_{x_2}(x)  for  x_2 $$
+$$ P_{x_2}(x)\  for\  x_2 $$
 
-$$ P_{x_3}(x)  for  x_3 $$
+$$ P_{x_3}(x)\  for\  x_3 $$
 
 These polynomials are likely of degree 2 or less, given there are only two constraints.
 
@@ -47,6 +47,8 @@ These polynomials are likely of degree 2 or less, given there are only two const
 In row encoding, the constraints become:
 
 $$ P_1(x) = 2P_{x_1}(x) + 3P_{x_2}(x) + P_{x_3}(x) $$
+
+
 $$ P_2(x) = P_{x_1}(x) - P_{x_2}(x) + 2P_{x_3}(x) $$
 
 Here, $ P_1(x) $ and $ P_2(x) $ can be of a higher degree, depending on the variable polynomials.
