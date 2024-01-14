@@ -27,27 +27,29 @@ In column encoding, each variable of the R1CS is represented by its own polynomi
 Conversely, row encoding involves representing each constraint as a separate polynomial. Here, a polynomial is created for each row in the R1CS matrix, combining the variables involved in that particular constraint. This approach can lead to higher degree polynomials since each row might involve multiple variables.
 
 ## A Practical Example
-Consider a simple R1CS with three variables \( x_1, x_2, x_3 \) and two constraints:
+Consider a simple R1CS with three variables $( x_1, x_2, x_3 )$ and two constraints:
 
-1. \( 2x_1 + 3x_2 + x_3 = 10 \)
-2. \( x_1 - x_2 + 2x_3 = 5 \)
+$$ 2x_1 + 3x_2 + x_3 = 10 $$
+$$ x_1 - x_2 + 2x_3 = 5 $$
 
 ### Column Encoding Example
 In column encoding, we might have:
 
-- \( P_{x_1}(x) \) for \( x_1 \)
-- \( P_{x_2}(x) \) for \( x_2 \)
-- \( P_{x_3}(x) \) for \( x_3 \)
+$$ P_{x_1}(x)  for  x_1 $$
+
+$$ P_{x_2}(x)  for  x_2 $$
+
+$$ P_{x_3}(x)  for  x_3 $$
 
 These polynomials are likely of degree 2 or less, given there are only two constraints.
 
 ### Row Encoding Example
 In row encoding, the constraints become:
 
-- \( P_1(x) = 2P_{x_1}(x) + 3P_{x_2}(x) + P_{x_3}(x) \)
-- \( P_2(x) = P_{x_1}(x) - P_{x_2}(x) + 2P_{x_3}(x) \)
+$$ P_1(x) = 2P_{x_1}(x) + 3P_{x_2}(x) + P_{x_3}(x) $$
+$$ P_2(x) = P_{x_1}(x) - P_{x_2}(x) + 2P_{x_3}(x) $$
 
-Here, \( P_1(x) \) and \( P_2(x) \) can be of a higher degree, depending on the variable polynomials.
+Here, $ P_1(x) $ and $ P_2(x) $ can be of a higher degree, depending on the variable polynomials.
 
 ## Complexity Analysis
 When analyzing the complexity, it becomes evident why column encoding is often preferred:
