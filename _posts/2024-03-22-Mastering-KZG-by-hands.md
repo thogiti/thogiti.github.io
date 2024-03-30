@@ -263,6 +263,8 @@ In the KZG commitment scheme, the roles of the Trusted Third Party, Prover, and 
 This interaction between the three parties allows for secure and efficient verification of data properties in a variety of cryptographic applications, including blockchain protocols and secure computation, providing a balance between transparency and privacy.
 
 Below is a detailed sequence diagram that explains the flow in a typical KZG protocol.
+![multiply2-r1cs-wasm-witness](assets/images/20240322/KZG-flow.png)
+
 
 ```mermaid
 sequenceDiagram
