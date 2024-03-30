@@ -2,47 +2,10 @@
 title: Mastering Polynomial Commitments - A Beginner's Guide to the KZG Polynomial Commitment
 tags: Ethereum Danksharding EIP-4844 KZG Kate-Scheme PCS Polynomial-Commitment-Scheme ZKSNARK Data-Availability
 ---
-<!-- omit from toc -->
 # Mastering Polynomial Commitments - A Beginner's Guide to the KZG Polynomial Commitment
 
 ## [TLDR](#tldr)
 The KZG commitment scheme is like a cryptographic vault for securely locking away polynomials (mathematical equations) so that you can later prove you have them without giving away their secrets. It's like making a sealed promise that you can validate without ever having to open it up and show the contents. Using advanced math based on elliptic curves, it enables efficient, verifiable commitments that are a key part of making blockchain transactions more private and scalable. This scheme is especially important for Ethereum's upgrades, where it helps to verify transactions quickly and securely without compromising on privacy.
-
-**Table of Contents**
-- [TLDR](#tldr)
-- [Motivation](#motivation)
-  - [ZKSNARKs](#zksnarks)
-  - [Ethereum Danksharding](#ethereum-danksharding)
-- [Goal](#goal)
-- [What we need to know before we discuss KZG](#what-we-need-to-know-before-we-discuss-kzg)
-  - [Modular Arithmetic](#modular-arithmetic)
-  - [Finite Field of order prime p](#finite-field-of-order-prime-p)
-  - [Group](#group)
-  - [Generator of a Group](#generator-of-a-group)
-  - [Why Primes for Modulo Operations in Fields](#why-primes-for-modulo-operations-in-fields)
-  - [Cryptographic Assumptions](#cryptographic-assumptions)
-  - [Pairing Function](#pairing-function)
-- [Properties of Commitments](#properties-of-commitments)
-- [KZG Protocol Flow](#kzg-protocol-flow)
-  - [Trusted Setup](#trusted-setup)
-  - [Initial Configuration](#initial-configuration)
-  - [Commitment of the Polynomial](#commitment-of-the-polynomial)
-  - [Opening of the Polynomial](#opening-of-the-polynomial)
-  - [Verification Proof](#verification-proof)
-- [KZG by Hands](#kzg-by-hands)
-  - [KZG by Hands - Initial Configuration](#kzg-by-hands---initial-configuration)
-  - [KZG by Hands - Trusted Setup](#kzg-by-hands---trusted-setup)
-  - [KZG by Hands - Commitment of the polynomial](#kzg-by-hands---commitment-of-the-polynomial)
-  - [KZG by Hands - Opening of the Polynomial](#kzg-by-hands---opening-of-the-polynomial)
-  - [KZG by Hands - Verification](#kzg-by-hands---verification)
-- [Security of KZG - Deleting the toxic waste](#security-of-kzg---deleting-the-toxic-waste)
-- [KZG using Assymetic Pairing Fuctions](#kzg-using-assymetic-pairing-fuctions)
-  - [Unwavering Compactness](#unwavering-compactness)
-- [\[KZG Batch Mode\]](#kzg-batch-mode)
-  - [\[Batch Mode Single Polynomial, Multiple Points\]](#batch-mode-single-polynomial-multiple-points)
-- [References](#references)
-
-
 
 ## [Motivation](#motivation)
 
