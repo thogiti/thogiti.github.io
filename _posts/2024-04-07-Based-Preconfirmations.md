@@ -1,16 +1,15 @@
 ---
 title: Enhancing Ethereum Transactions with Based Preconfirmations
-tags: Ethereum Preconfirmations Promises Based-Preconfirmations Preconfs Based-Preconfs Rollups Based-Rollups L1-Sequenced-Rollups Ethereum-Alignment
+tags: Ethereum Preconfirmations Promises Based-Preconfirmations Preconfs Based-Preconfs Rollups Based-Rollups L1-Sequenced-Rollups Ethereum-Alignment Interoperability Cross-Rollup-Interactions
 ---
 
-## WORK IN PROGRESS - WIP
 
-## Overview of Based Preconfirmations
+## [Overview](#overview)
 
 Based preconfirmations (preconfs) represent a significant advancement in Ethereum transaction processing, offering users swift and reliable execution. Through a combination of on-chain infrastructure, proposer accountability mechanisms, and flexible promise acquisition processes, preconfs stand to significantly enhance the user experience in Ethereum interactions. This technology not only reduces transaction latency but also introduces a layer of security and efficiency previously unseen in the ecosystem[^1].
 
 
-## Construction of Preconfs
+## [Construction of Preconfs](#construction-of-preconfs)
 
 Preconfs rely on two foundational on-chain infrastructure components:
 
@@ -30,7 +29,7 @@ There are two categories of promise faults, both subject to slashing:
 
 To prioritize preconfed transactions, an execution queue for non-preconfed transactions is introduced, ensuring that transactions with preconf promises are executed first.
 
-## Promise Acquisition Process
+## [Promise Acquisition Process](#promise-acquisition-process)
 
 ![Promise acquisition flow](https://ethresear.ch/uploads/default/original/2X/9/9667dc80c8d911fa3cd86108c3375d0de06e4252.png)
 
@@ -64,130 +63,86 @@ For users seeking preconfed transactions, the initial step involves acquiring a 
 Each of these elements plays a crucial role in the functionality and efficiency of based preconfirmations, ensuring transactions are not only processed swiftly but also securely and fairly within the Ethereum ecosystem.
 
 
-## Ethereum Based Sequencing with Preconfirmations
+## [Preconfirmations Acquisition Process Flow](#preconfirmations-acquisition-process-flow)
 
-Ethereum's evolving ecosystem is set to introduce new paradigms for rollups and chain interactions, emphasizing seamless transitions and enhanced user experiences. This section introduces a framework for Ethereum sequencing and pre-confirmations by Justin Drake[^2], a step toward realizing this vision, offering a unified platform for all Ethereum chains and rollups. 
+![Promise Acquisition Process Flow](/assets/images/20240401/Preconfirmations-Acquisition-Flow.png)
 
-
-### Context and Motivation
-
-**United Chains of Ethereum**
-
-The vision for Ethereum is not just a network of isolated chains but a cohesive ecosystem where all rollups and chains coexist without friction, termed the "United Chains of Ethereum." This concept envisions a scenario where users can move between different states (rollups) with ease, akin to crossing state lines without the need for passports or the imposition of tariffs. Such an environment would not only enhance user experience but also foster a more integrated and efficient blockchain ecosystem.
-
-**Ethereum's Services for Rollups**
-
-- **Current Services:** Ethereum currently provides two critical services to rollups: settlement and data availability. These services lay the foundation for rollups to operate effectively on Ethereum's decentralized platform.
-
-- **Introduction of Ethereum Sequencing:** Ethereum sequencing, is proposed to complement the existing ones, offering a new resource that rollups can leverage to further optimize their operations. Although sequencing has always been inherent to Ethereum, its potential as a dedicated service for rollups represents an innovative application, akin to the adaptive use of core data for new functionalities.
-
-
-### Technical Construction
-
-#### Based Sequencing
-
-- **Mechanism:** The proposal for based sequencing involves utilizing the beacon chain's look-ahead period to invite proposers to opt into providing sequencing services by posting collateral. This approach leverages Ethereum's existing structure to introduce a new layer of functionality for rollups.
-
-- **Look-Ahead Period:** By capitalizing on the beacon chain's ability to predict the next set of proposers, the system can prepare and designate specific proposers to take on the additional role of sequencers, ensuring that rollups have predictable and reliable sequencing services.
-
-
-#### Preconfirm Mechanism
-
-- **User Interaction with Proposers:** Users can identify which proposers within the look-ahead period have opted for based sequencing and request preconfirmations from them. These preconfirmations are akin to promises that the user's transaction will be included and executed in the future, with penalties applied for non-fulfillment.
-
-- **Slashing for Non-Fulfillment:** The system imposes penalties, or slashing, for proposers who fail to fulfill their preconfirmations. This adds a layer of accountability, ensuring that proposers are incentivized to honor their commitments.
-- 
-
-#### Communication through MEV Boost
-
-The integration of preconfirmations with MEV Boost represents a critical aspect of the technical construction, facilitating the efficient flow of information between users, proposers, builders, and the Ethereum network. By routing preconfirmation details through MEV Boost, the system ensures that builders are aware of preconfirmed transactions and can construct blocks accordingly. This process not only optimizes the inclusion of transactions but also maintains the integrity and value of the constructed blocks, aligning with the overarching goals of the Ethereum sequencing and pre-confirmation framework.
-
-#### Preconfirmations Flow through MEV Boost
-
-The process of how preconfirmations would flow through MEV Boost within the context of Ethereum's base layer sequencing and pre-confirmations involves several key steps and entities. This mechanism aims to ensure that transactions preconfirmed by proposers (who have opted into providing sequencing services) are communicated effectively to builders and ultimately included in the constructed blocks. Here's a detailed step-by-step explanation of the process:
-
-
-![Preconfirmations Flow through MEV Boost](/assets/images/20240407/Preconfirmations-Flow-through-MEVBoost.png)
-
-*Figure: Preconfirmations Flow through MEV Boost*
-
+*Figure: Promise Acquisition Process Flow*
 
 ```mermaid
 sequenceDiagram
-    participant U as User
-    participant P as Proposer/Sequencer
-    participant M as MEV Boost
-    participant B as Builder
-    participant E as Ethereum Network
+    participant User as User
+    participant Preconfer as Preconfer
+    participant Blockchain as Ethereum
 
     rect rgb(191, 223, 255)
-    U->>P: Request Preconfirmation
-    Note over U,P: User identifies proposer <br> within look-ahead period
-    end    
-    rect rgb(191, 223, 255)
-    P->>U: Issue Preconfirmation
-    Note over P,U: Proposer provides <br>preconfirmation if accepted
+    User->>+Preconfer: Identify & send promise request
+    Note over User,Preconfer: User selects the next preconfer based on slot <br>position and sends a transaction promise request.
+    
+    Preconfer->>-User: Evaluate request
+    Note over User,Preconfer: Preconfer assesses the request, considering network <br>conditions, preconf tip, and MEV potential.
+    end
+    rect rgb(177,176,159)
+    Preconfer->>+User: Issue preconf promise
+    Note over User,Preconfer: If accepted, preconfer sends back a <br>signed preconf promise to the user.
     end
     rect rgb(191, 223, 255)
-    P->>M: Communicate Preconfirmation to MEV Boost
+    User->>Preconfer: Transfer preconf tip
+    Note over User,Preconfer: User transfers the agreed preconf tip <br>to the preconfer as compensation.
     end
-    rect rgb(191, 223, 255)
-    M->>B: Relay Preconfirmation Details to Builders
-    Note over M,B: MEV Boost acts as an intermediary
-    end
-    rect rgb(191, 223, 255)
-    B->>M: Construct Block Respecting Preconfirmations
-    Note over B: Builders include <br>preconfirmed transactions
-    M->>P: Inform Proposer of Constructed Block
-    end
-    rect rgb(191, 223, 255)
-    P->>E: Propose Block to Ethereum Network
-    Note over P,E: Proposer ensures block submission for the slot
-    end
-    rect rgb(191, 223, 255)
-    E->>U: Execute and Settle Transaction
-    Note over E,U: Successful inclusion and execution of preconfirmed transaction
+    rect rgb(177,176,159)
+    Preconfer->>+Blockchain: Include & execute transaction
+    Note over Preconfer,Blockchain: In the assigned slot, preconfer includes the <br>transaction in their block proposal for execution.
+    
+    Blockchain->>-User: Verify transaction execution
+    Note over User,Blockchain: Once executed on-chain, both user and preconfer verify the fulfillment of the promise.
     end
 ```
 
 
-**1: User Requests Preconfirmation**
+The promise acquisition process in the context of Ethereum's sequencing and pre-confirmation mechanism is a critical aspect, ensuring transactions receive a preconfirmation or "promise" from a proposer or sequencer. This process involves several steps, each integral to securing a promise that a transaction will be included and executed on the blockchain within a specified time frame. Below is a detailed explanation of the promise acquisition process flow:
 
-- A user identifies proposers within the beacon chain's look-ahead period who have opted into providing based sequencing by posting collateral.
+**1. User Identifies Next Preconfer**
 
-- The user then sends a preconfirmation request to one of these proposers, seeking assurance that their transaction will be included and executed in a future slot.
+- **Starting Point:** A user or a smart contract initiates the process by identifying the next available preconfer (a proposer who has opted in to provide preconfirmation services) within the Ethereum network's lookahead window.
 
-**2: Proposer Provides Preconfirmation**
+- **Selection Criteria:** The selection is based on the proposer's slot position in the proposer lookahead, where proposers have declared their capability and willingness to issue preconfirmations by posting collateral.
 
-- The selected proposer evaluates the request and, if accepted, provides the user with a preconfirmation. This preconfirmation is essentially a promise to include and execute the user's transaction in a specified future slot, subject to certain conditions and penalties for non-fulfillment.
+**2. Promise Request Sent to Preconfer**
 
-**3: Proposer to MEV Boost Communication**
+- **Initiation:** The user sends a promise request to the identified preconfer. This request includes details of the transaction for which the preconfirmation is sought, along with any specific conditions or requirements.
 
-- Once a proposer issues a preconfirmation, they communicate this information to MEV Boost. MEV Boost acts as an intermediary that facilitates the communication between proposers (now acting as sequencers for their respective slots), builders, and ultimately, the Ethereum network.
+- **Communication Channel:** The request can be sent through various off-chain communication channels established by the preconfer, such as a dedicated API endpoint or a peer-to-peer messaging system.
 
-**4: MEV Boost Relays Preconfirmations to Builders**
+**3. Preconfer Evaluates the Request**
 
-- MEV Boost relays the preconfirmation details to builders, who are responsible for constructing the blocks. Builders receive information about all preconfirmed transactions, which they must consider while building their blocks.
+- **Assessment:** Upon receiving the request, the preconfer evaluates it based on several factors, including the current network conditions, the preconf tip amount proposed by the user, and the overall risk of executing the transaction.
 
-**5: Builders Construct Blocks Considering Preconfirmations**
+- **Decision Making:** The preconfer decides whether to accept or reject the promise request. This decision may involve calculating the potential MEV and assessing whether the transaction aligns with the preconfer's criteria.
 
-- With the preconfirmation details at hand, builders construct blocks that honor these preconfirmations. This involves including the preconfirmed transactions in the block for the specified slot and ensuring that the execution conditions promised in the preconfirmations are met.
+**4. Issuance of Preconf Promise**
 
-**6: Blocks Are Proposed to the Network**
+- **Promise Generation:** If the preconfer decides to accept the request, they generate a signed preconf promise. This promise includes the preconfer's commitment to ensuring the transaction's inclusion and execution within their upcoming slot, adhering to the agreed conditions.
 
-- Once builders construct a block that respects all preconfirmations and optimizes for other factors (like MEV), the block is proposed to the Ethereum network. The proposer for the relevant slot, who initially issued the preconfirmation, is responsible for ensuring that this block gets submitted.
+- **Communication of Promise:** The preconf promise is then communicated back to the user, providing them with a guarantee of transaction execution. The communication method used is similar to that of the initial request, ensuring secure and verifiable delivery.
 
-**7: Execution and Settlement**
+**5. Payment of Preconf Tip**
 
-- If the block is successfully included in the blockchain, the preconfirmed transactions are executed as promised, fulfilling the proposer's commitment to the user. If a proposer fails to fulfill the preconfirmation, penalties (slashing) may be applied depending on the nature of the fault (e.g., liveness fault, safety fault).
+- **Tip Transfer:** Upon receipt of the preconf promise, the user transfers the agreed preconf tip to the preconfer. This tip serves as compensation for the service provided and incentivizes the preconfer to honor the commitment.
+
+- **Escrow Mechanisms:** In some implementations, the tip may be held in escrow until the promise is fulfilled, adding an extra layer of security for the user.
+
+**6. Inclusion and Execution of Transaction**
+
+- **On-Chain Fulfillment:** The preconfer includes the preconfirmed transaction in their proposed block during their assigned slot, executing it according to the terms outlined in the preconf promise.
+
+- **Verification of Fulfillment:** Once the transaction is included and executed on-chain, both the preconfer and the user can verify that the promise has been fulfilled, completing the process.
 
 **Additional Considerations:**
 
-- **Slashing Mechanism:** The process incorporates a slashing mechanism to penalize proposers if they fail to honor their preconfirmations. This ensures a level of accountability and trust in the system.
+- **Fallback Mechanisms:** In case of unexpected issues or if the first preconfer fails to include the transaction, users may have fallback options, such as requesting promises from multiple preconfers in parallel.
 
-- **Dynamic Communication:** The flow of information through MEV Boost allows for dynamic adjustments based on real-time conditions, such as changes in transaction priority or network congestion.
-
-
+- **Dispute Resolution:** The system may include mechanisms for resolving disputes in cases where there's disagreement about whether the promise was adequately fulfilled.
 
 
 
