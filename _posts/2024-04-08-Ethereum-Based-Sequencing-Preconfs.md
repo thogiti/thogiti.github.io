@@ -3,7 +3,6 @@ title: Ethereum Based Sequencing with Preconfirmations
 tags: Ethereum Preconfirmations Promises Based-Sequencing Ethereum-Based-Sequencing-Preconfirmations L1-Based-Sequencing-Preconfirmations Based-Preconfirmations Preconfs Based-Preconfs Rollups Based-Rollups L1-Sequenced-Rollups Ethereum-Alignment Interoperability Cross-Rollup-Interactions
 ---
 
-## WORK IN PROGRESS - WIP
 
 ## [Overview](#overview)
 
