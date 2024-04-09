@@ -29,7 +29,8 @@ There are two categories of promise faults, both subject to slashing:
 
 To prioritize preconfed transactions, an execution queue for non-preconfed transactions is introduced, ensuring that transactions with preconf promises are executed first.
 
-## [Promise Acquisition Process](#promise-acquisition-process)
+
+## [Key Elements of Preconfirmations Acquisition ](#key-elements-of-preconfirmations-acquisition)
 
 ![Promise acquisition flow](https://ethresear.ch/uploads/default/original/2X/9/9667dc80c8d911fa3cd86108c3375d0de06e4252.png)
 
@@ -124,7 +125,7 @@ The promise acquisition process in the context of Ethereum's sequencing and pre-
 
 - **Promise Generation:** If the preconfer decides to accept the request, they generate a signed preconf promise. This promise includes the preconfer's commitment to ensuring the transaction's inclusion and execution within their upcoming slot, adhering to the agreed conditions.
 
-- **Communication of Promise:** The preconf promise is then communicated back to the user, providing them with a guarantee of transaction execution. The communication method used is similar to that of the initial request, ensuring secure and verifiable delivery.
+- **Communication of Promise:** The preconf promise is then communicated back to the user, providing them with a guarantee of transaction execution. The communication method used is like that of the initial request, ensuring secure and verifiable delivery.
 
 **5. Payment of Preconf Tip**
 

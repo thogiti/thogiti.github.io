@@ -34,7 +34,7 @@ The vision for Ethereum is not just a network of isolated chains but a cohesive 
 
 ### [Preconfirm Mechanism](#preconfirm-mechanism)
 
-In the previous article on [Precinformations](/_posts/2024-04-07-Based-Preconfirmations.md), I explained the details on how Preconfirmations work and the promise acquisition process flow[^3][^2]. 
+In the previous article on [Precinformations](https://thogiti.github.io/2024/04/07/Based-Preconfirmations.html), I explained the details on how Preconfirmations work and the promise acquisition process flow[^3][^2]. 
 
 - **User Interaction with Proposers:** Users can identify which proposers within the look-ahead period have opted for based sequencing and request preconfirmations from them. These preconfirmations are akin to promises that the user's transaction will be included and executed in the future, with penalties applied for non-fulfillment.
 
@@ -46,6 +46,7 @@ In the previous article on [Precinformations](/_posts/2024-04-07-Based-Preconfir
 The integration of preconfirmations with MEV Boost represents a critical aspect of the technical construction, facilitating the efficient flow of information between users, proposers, builders, and the Ethereum network. By routing preconfirmation details through MEV Boost, the system ensures that builders are aware of preconfirmed transactions and can construct blocks accordingly. This process not only optimizes the inclusion of transactions but also maintains the integrity and value of the constructed blocks, aligning with the overarching goals of the Ethereum sequencing and pre-confirmation framework.
 
 ## [Preconfirmations Flow through MEV Boost](#preconfirmations-flow-through-mev-boost)
+
 
 ![Preconfirmations Flow through MEV Boost](/assets/images/20240401/Preconfirmations-Flow-through-MEVBoost.png)
 
@@ -128,6 +129,48 @@ The process of how preconfirmations would flow through MEV Boost within the cont
 - **Slashing Mechanism:** The process incorporates a slashing mechanism to penalize proposers if they fail to honor their preconfirmations. This ensures a level of accountability and trust in the system.
 
 - **Dynamic Communication:** The flow of information through MEV Boost allows for dynamic adjustments based on real-time conditions, such as changes in transaction priority or network congestion.
+
+
+## [Concerns and Complexities]
+
+A previous discussion on Ethereum Based Sequencing with Preconfirmations[^4] revealed that the design space of this framework involves many complex topics and left with several questions and concerns raised by participants. Below are the key questions/concerns highlighted in the discussion, along with the answers or proposed solutions based on the information provided and general understanding of Ethereum's evolving ecosystem:
+
+
+**Block Value and Preconfirm Tips**
+
+- **Concern:** There's worry about suboptimal block value due to constraints imposed by preconfirmations.
+
+- **Proposed Solution:** Introducing preconfirm tips could compensate proposers for the reduced block value, aligning incentives by compensating for the privilege of transaction inclusion and execution guarantees. The tip amount could vary based on the transaction's impact on MEV.
+
+**Monopoly Power of Preconfers**
+
+- **Concern:** How the monopoly power of preconfers might affect transaction inclusion and execution.
+
+- **Clarification Provided:** In the model, there would be only one preconfer per slot, similar to the monopoly power a proposer has over a slot. This design simplifies the process and ensures that preconfers can guarantee transaction execution based on state, not just inclusion.
+
+**Pricing and Selection of Preconfirms**
+
+- **Concern:** How to fairly price and select preconfirms to ensure equitable treatment of users and proposers.
+
+- **Proposed Solution:** The preconfer should employ mechanisms (possibly market-driven or advised by searchers) to price preconfirms appropriately. A realtime auction mechanism for bidding on preconfirms was also suggested as a way to provide transparency and fairness.
+
+**Trust and Centralization Risks**
+
+- **Concern:** The proposed model might centralize power and trust in a few entities, potentially introducing risks of censorship and control.
+
+- **Discussion Points:** The design inherently requires some degree of centralization for efficiency and reliability. However, introducing Execution Tickets, ensuring collateral is posted by preconfers, and possibly diversifying the entities involved (e.g., multiple relays) could mitigate some concerns. Furthermore, economic incentives, such as slashing for non-fulfillment of preconfirms, aim to align interests and maintain a degree of decentralization within the constraints of the model.
+
+**Implementation and Execution Details**
+
+- **Questions:** How would the mechanism for posting collateral work? How are delegation preferences expressed by proposers?
+
+- **Exploration:** The discussion highlighted these as implementation details that would need to be worked out. For example, proposers could sign a message indicating their chosen preconfer, potentially recorded on-chain. The amount of collateral (e.g., 1000 ETH as suggested) needs to be significant enough to cover potential losses from MEV, providing economic security.
+
+**Communication and Information Flow**
+
+- **Concern:** Ensuring the efficient and secure communication of preconfirms through the network.
+
+- **Proposed Solution:** Utilizing MEV Boost and possibly dedicated channels or protocols for communicating preconfirms could ensure that builders receive necessary information to construct blocks that honor preconfirmations.
 
 
 
