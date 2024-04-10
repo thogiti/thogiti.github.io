@@ -130,7 +130,7 @@ The process of how preconfirmations would flow through MEV Boost within the cont
 - **Dynamic Communication:** The flow of information through MEV Boost allows for dynamic adjustments based on real-time conditions, such as changes in transaction priority or network congestion.
 
 
-## [Concerns and Complexities]
+## [Concerns and Complexities](#concerns-and-complexities)
 
 A previous discussion on Ethereum Based Sequencing with Preconfirmations[^4] revealed that the design space of this framework involves many complex topics and left with several questions and concerns raised by participants. Below are the key questions/concerns highlighted in the discussion, along with the answers or proposed solutions based on the information provided and general understanding of Ethereum's evolving ecosystem:
 
