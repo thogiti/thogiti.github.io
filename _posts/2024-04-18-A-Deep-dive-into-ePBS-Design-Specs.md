@@ -1,9 +1,8 @@
 ---
-title: A Deep Dive into ePBS Design Specifications 
+title: Ethereum's New Frontier - A Comprehensive Guide to ePBS Design Specifications
 tags: Ethereum ePBS PBS MEV Proposer-Builder-Separation Enshrined-Proposer-Builder-Separation Enshrined-PBS In-Protocol-PBS epbs-specs PTC payload-timeliness-committee fork-choice-considerations honest-validator honest-builder execution-payload anatomy-of-slot payload-attestation inclusion-lists Native-Proposer-Builder-Separation 
 ---
 
-Ethereum's New Frontier - A Comprehensive Guide to ePBS Design Specifications
 
 **Table of Contents**
 - [ePBS Design Specifications](#epbs-design-specifications)
