@@ -87,6 +87,10 @@ toc:
 mathjax: true # false (default), true
 mathjax_autoNumber: true # false (default), true
 
+mermaid: true
+
+use_math: true
+
 ## Mermaid
 mermaid: true # false (default), true
 
