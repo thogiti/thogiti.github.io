@@ -30,6 +30,9 @@ tags: Ethereum ePBS PBS MEV Proposer-Builder-Separation Enshrined-Proposer-Build
 
 ## ePBS Design Specifications
 
+*Note:* If you're new to ePBS (Enshrined Proposer Builder Separation) or PBS (Proposer Builder Separation) in Ethereum, or if you're looking to refresh your understanding, my previous article on [ePBS]((https://thogiti.github.io/2024/03/28/ePBS.html)) is an excellent starting point[^15].
+
+
 The current enshrined Proposer Builder Separation (ePBS) or native Proposer Builder Separation specification[^12][^13] addresses a critical issue in Ethereum's current implementation of PBS[^1][^2]. Traditionally, both proposers and builders have had to rely on intermediaries through MEV-Boost[^3][^4], which introduces trust and censorship concerns as outlined above. The ePBS framework modifies this dynamic by changing the necessity of intermediaries ("must") to an option ("may"), allowing for a more trustless interaction within the Ethereum ecosystem[^5][^6][^7]. It incorporates [EIP-7251](https://eips.ethereum.org/EIPS/eip-7251) and [EIP-7002](https://eips.ethereum.org/EIPS/eip-7002), which are integral to its implementation. 
 
 EIP-7251 aims to increase the maximum effective balance (Max EB) for Ethereum validators to 2048 ETH while keeping a minimum stake of 32 ETH, reducing the total number of validators without compromising security. EIP-7002 introduces a mechanism allowing validators to trigger exits from the beacon chain using their execution layer (0x01) withdrawal credentials, enhancing flexibility and security for staking operations.
@@ -525,3 +528,4 @@ Given the complex landscape and the potential for significant shifts in Ethereum
 [^12]: https://hackmd.io/@potuz/rJ9GCnT1C
 [^13]: https://github.com/potuz/consensus-specs/pull/2
 [^14]: https://docs.eigenlayer.xyz/eigenlayer/overview/whitepaper
+[^15]: https://thogiti.github.io/2024/03/28/ePBS.html
