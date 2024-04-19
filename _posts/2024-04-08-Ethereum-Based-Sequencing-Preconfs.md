@@ -51,9 +51,9 @@ _Figure: Different Sequencing Options and their Problem Space, Credit Justin Dra
 **Benefits:** Shared sequencing aims to promote scalability by distributing the load of transaction processing and enhancing the network’s throughput. It also strives for neutrality and fairness in transaction handling, critical for maintaining trust in a decentralized ecosystem.
 
 **Problems and Challenges:**
-- **MEV Sharing:** Coordinating MEV sharing, like the approach Espresso is investigating, requires sophisticated mechanisms to fairly distribute MEV across participating rollups and chains.
-- **Deposits Sharing:** Solutions like zkSync's deposit sharing are innovative but require widespread adoption and trust among different rollups to function effectively, potentially leading to centralization of trust.
-- **Execution Sharing:** Implementation of execution sharing strategies, such as Polygon's aggregation layer, requires standardization and integration across different rollups to ensure compatibility and trustless atomicity.
+- **MEV Sharing:** Coordinating MEV sharing, like the approach Espresso is investigating, requires sophisticated mechanisms to fairly distribute MEV across participating rollups and chains[^5].
+- **Deposits Sharing:** Solutions like zkSync's deposit sharing are innovative but require widespread adoption and trust among different rollups to function effectively, potentially leading to centralization of trust[^6].
+- **Execution Sharing:** Implementation of execution sharing strategies, such as Polygon's aggregation layer, requires standardization and integration across different rollups to ensure compatibility and trustless atomicity[^7].
 
 
 **Based Sequencing:**
@@ -222,8 +222,12 @@ A previous discussion on Ethereum Based Sequencing with Preconfirmations[^4] rev
 
 
 
+
 ## References
 [^1]: https://docs.google.com/presentation/d/1v429N4jdikMIWWkcVwfjMlV2LlOXSawFCMKoBnZVDNU/edit#slide=id.g1f1d94ef56e_0_655
 [^2]: https://ethresear.ch/t/based-preconfirmations/17353 
 [^3]: https://thogiti.github.io/2024/04/07/Based-Preconfirmations.html
 [^4]: https://youtu.be/2IK136vz-PM
+[^5]: https://hackmd.io/@EspressoSystems/SharedSequencing
+[^6]: https://docs.zksync.io/zk-stack/components/shared-bridges.html
+[^7]: https://polygon.technology/blog/aggregated-blockchains-a-new-thesis
