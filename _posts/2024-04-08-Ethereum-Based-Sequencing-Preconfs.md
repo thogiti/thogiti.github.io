@@ -8,7 +8,7 @@ tags: Ethereum Preconfirmations Promises Based-Sequencing Ethereum-Based-Sequenc
 
 Ethereum's evolving ecosystem is set to introduce new paradigms for rollups and chain interactions, emphasizing seamless transitions and enhanced user experiences. This section introduces a framework for Ethereum sequencing and pre-confirmations by Justin Drake[^1][^4], a step toward realizing this vision, offering a unified platform for all Ethereum chains and rollups. 
 
-## [Context and Motivation](#context-and-motivation)
+## [Motivation](#motivation)
 
 ### [United Chains of Ethereum](#united-chains-of-ethereum)
 
