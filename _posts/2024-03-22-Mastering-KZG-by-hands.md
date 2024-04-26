@@ -570,8 +570,6 @@ $e(C_f - C_R, g) = e(C_Q, C_P)$
 where $C_P = P(a) \cdot g$. Given this, the Verifier can confirm the truth of the equality, thereby verifying the proof.
 
 
-
-
 ## [References](#references)
 [^1]: https://en.wikipedia.org/wiki/Polynomial_remainder_theorem
 [^2]: https://github.com/ethereum/kzg-ceremony 

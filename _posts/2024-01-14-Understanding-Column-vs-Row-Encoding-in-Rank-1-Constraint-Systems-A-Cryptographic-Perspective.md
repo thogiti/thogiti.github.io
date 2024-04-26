@@ -79,3 +79,5 @@ As cryptographic systems evolve, the need for efficient and secure methods of ha
 
 ### Conclusion
 The choice between column and row encoding in R1CS is more than just a technical decision; it's about optimizing computational resources while ensuring security and scalability. For practitioners and researchers in cryptography, appreciating these subtleties can lead to more efficient and robust cryptographic protocols. As the field progresses, the continuous refinement of these techniques will remain essential in the quest for more secure and efficient cryptographic systems.
+
+
