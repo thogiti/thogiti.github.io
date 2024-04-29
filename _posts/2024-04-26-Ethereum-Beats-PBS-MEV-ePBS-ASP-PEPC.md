@@ -3,7 +3,14 @@ title: Ethereum Beats - Exploring the Dance of Validators and Builders in Ethere
 tags: Ethereum ePBS PBS MEV Proposer-Builder-Separation Enshrined-Proposer-Builder-Separation Enshrined-PBS In-Protocol-PBS epbs-specs PTC payload-timeliness-committee honest-validator honest-builder execution-payload payload-attestation inclusion-lists Native-Proposer-Builder-Separation ASP PEPC MEV-Burn ASP-Burn Block-auction-epbs Slot-auction-epbs
 ---
 
+_Note: This article is inspired by Barnabé's article [More pictures about proposers and builders.](https://mirror.xyz/barnabe.eth/QJ6W0mmyOwjec-2zuH6lZb0iEI2aYFB9gE-LHWIMzjQ) I am very inspired his writings on Ethereum. Hence this article is dedicated to him._
+
 ## Proposing Rights and the Role of Validators
+
+![Proposing Rights and the Role of Validators](/assets/images/20240401/proposing-rights.png)
+
+_Figure: Proposing Rights and the Role of Validators, Credit by Barnabé Monnot_
+
 Imagine you're at a huge music festival, and there's one microphone that anyone can use—but first, you need a ticket to access it. In the Ethereum world, this "microphone" is the ability to propose a block of transactions. Validators are like ticket holders who get a turn to announce (propose) which songs (transactions) will play next.
 
 Initially, validators have two main rights:
@@ -11,29 +18,62 @@ Initially, validators have two main rights:
 - **The right to propose the execution payload**: This involves choosing the specific songs to play.
 
 ## Introduction of MEV-Boost and Building Rights
+
+![MEV-Boost](/assets/images/20240401/MEV-Boost.png)
+
+_Figure: MEV-Boost and Building Rights, Credit by Barnabé Monnot_
+
 Soon, validators realize that choosing the next songs can be quite valuable—maybe some songs or advertisements are willing to pay to be played next. So, they start a system where they can sell this choice to others (builders) who will pay them for the chance to line up the next tracks. This is done through something called MEV-Boost.
 
 ## Block-auction ePBS: Trying to Regain Control
+
+![Block-auction ePBS](/assets/images/20240401/Block-auction-ePBS.png)
+
+_Figure: Block-auction ePBS, Credit by Barnabé Monnot_
+
 The festival organizers notice that letting people pay for song choices outside their official system might cause issues (like unfair song choices or security risks). So, they develop a new method called "enshrined Proposer-Builder Separation" (ePBS), where validators can still strike deals with builders, but without needing a middleman. This aims to:
 - Ensure the honest validator gets paid whether or not the builder delivers.
 - Reduce the need to trust others not to mess up.
 - Keep the song choosing (consensus data) separate from song playing (execution payload).
 
 ## Slot-auction ePBS: Simplifying the Process
+
+![Slot-auction ePBS](/assets/images/20240401/Slot-auction-ePBS.png)
+
+_Figure: Slot-auction ePBS, Credit by Barnabé Monnot_
+
 Here, instead of committing to specific songs, the validator commits to a specific DJ (execution proposer) who decides the playlist. This minimizes timing games—where validators might wait till the last minute to propose, hoping for a better deal.
 
 ## Slot-auction+32 ePBS and APS-Burn: Looking Towards the Future
+
+![Slot-auction ePBS](/assets/images/20240401/Slot-auction-32-ePBS.png)
+
+_Figure: Slot-auction+32 ePBS, Credit by Barnabé Monnot_
+
 These new methods try to address some deeper issues:
 - **Slot-auction+32 ePBS**: This is like deciding who will be the DJ not just for the next set but for one that starts 32 sets later, which helps reduce immediate biases or manipulations.
+
+![ASP-Burn](/assets/images/20240401/ASP-Burn.png)
+
+_Figure: ASP-Burn, Credit by Barnabé Monnot_
+
 - **APS-Burn**: Validators now focus on choosing bids for future slots based more on average expectations rather than immediate gains.
 
 ## Execution Tickets (ETs)
+
+![Execution Tickets](/assets/images/20240401/Execution-Tickets.png)
+
+_Figure: Execution Tickets, Credit by Barnabé Monnot_
+
 This is like having a raffle ticket that lets you be a DJ at some random future time. It's less predictable, which could make it fairer but also more uncertain for ticket holders.
 
 ## Protocol-Enforced Proposer Commitments - PEPC
 
-PEPC, like our DJ-controlled stage at a music festival, introduces a structured yet flexible approach to performance that ensures certain highlights are guaranteed, while still allowing room for innovation and participation from various players. It's a blend of strict planning and creative expression, crucial for maintaining both the excitement and the integrity of the festival.
+![Block-auction PEPC](/assets/images/20240401/Block-auction-PEPC.png)
 
+_Figure: Block-auction PEPC, Credit by Barnabé Monnot_
+
+PEPC, like our DJ-controlled stage at a music festival, introduces a structured yet flexible approach to performance that ensures certain highlights are guaranteed, while still allowing room for innovation and participation from various players. It's a blend of strict planning and creative expression, crucial for maintaining both the excitement and the integrity of the festival.
 
 ### Setting the Stage: The Role of the DJ (Execution Proposer)
 
