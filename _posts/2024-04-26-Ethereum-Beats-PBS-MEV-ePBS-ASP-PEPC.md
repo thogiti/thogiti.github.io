@@ -3,7 +3,7 @@ title: Ethereum Beats - Exploring the Dance of Validators and Builders in Ethere
 tags: Ethereum ePBS PBS MEV Proposer-Builder-Separation Enshrined-Proposer-Builder-Separation Enshrined-PBS In-Protocol-PBS epbs-specs PTC payload-timeliness-committee honest-validator honest-builder execution-payload payload-attestation inclusion-lists Native-Proposer-Builder-Separation ASP PEPC MEV-Burn ASP-Burn Block-auction-epbs Slot-auction-epbs
 ---
 
-_Note: This article is inspired by Barnabé's article [More pictures about proposers and builders.](https://mirror.xyz/barnabe.eth/QJ6W0mmyOwjec-2zuH6lZb0iEI2aYFB9gE-LHWIMzjQ) I am very inspired his writings on Ethereum. Hence this article is dedicated to him._
+_Note: This article is inspired by Barnabé's article [More pictures about proposers and builders.](https://mirror.xyz/barnabe.eth/QJ6W0mmyOwjec-2zuH6lZb0iEI2aYFB9gE-LHWIMzjQ) I am very inspired by his writings on Ethereum. Hence this article is dedicated to him._
 
 ## Proposing Rights and the Role of Validators
 
