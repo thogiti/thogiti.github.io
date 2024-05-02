@@ -1,6 +1,6 @@
 ---
-title: Merkelization and Hash Root Tree - A Deep Dive into SSZ Merkelization in Ethereum
-tags: Ethereum Serialization SSZ Merkleization Beacon-chain-serialization Merkelize-composite-types Merkelize-complex-types
+title: Merkleization and Hash Root Tree - A Deep Dive into SSZ Merkleization in Ethereum
+tags: Ethereum Serialization SSZ Merkleization Beacon-chain-serialization Merkleize-composite-types Merkleize-complex-types
 ---
 
 In Ethereum consensus mechanism, it's critical for all participating nodes to agree on the state of the system consistently and efficiently. The [Simple Serialize (SSZ)](https://thogiti.github.io/2024/05/01/SSZ.html) framework facilitates this through Merkleization, a process that transforms serialized data into a Merkle tree structure. This wiki page discusses the intricacies of Merkleization and its importance in ensuring a shared state across nodes in a scalable and secure manner.
@@ -335,7 +335,7 @@ assert a.hash_tree_root() == indexed_attestation_root
 
 Now, you can visualize the full picture of the merkleization of `IndexedAttestation`:
 
-![merkleization of IndexedAttestation](/assets/images/20240501/merkelization-IndexedAttestation.png)
+![merkleization of IndexedAttestation](/assets/images/20240501/merkleization-IndexedAttestation.png)
 
 Here is the full working code:
 
