@@ -97,7 +97,7 @@ The current MEV-Boost design favors builders, creating a dynamic where malicious
 
 ### Double Auction Mechanism using TFHE
 
-### UX of AI Agents and LLM Scripts 
+### UX of AI Agents and LLM Scripts for Solo Builders
 
 
 ## References
