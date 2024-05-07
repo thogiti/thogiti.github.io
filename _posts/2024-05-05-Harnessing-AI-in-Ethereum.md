@@ -173,6 +173,52 @@ Enhancing on-chain trading decisions and strategies by integrating real-time dat
 
 AI can also reduce the computational load on the blockchain. By performing complex calculations off-chain and then integrating the results back on-chain using cryptographic proofs and cryptoeconomic ecurity mechanisms like EigenLayer[^2] and Ritual[^3], we reduce transaction costs and enhance overall network performance.
 
+**Problem Statement:**  
+Mitigate the high computational load and costs associated with complex on-chain operations by leveraging AI-driven computation off-chain, while ensuring the integrity and verifiability of these computations when reintroduced on-chain.
+
+**Technical Approach:**  
+- **Hybrid Architectures:**  
+  Implement hybrid architectures where AI agents perform heavy computations off-chain. These computations are then verified and integrated on-chain using specialized protocols such as EigenLayer AVS [^2] or Ritual [^3], which provide additional cryptoeconomic assurances.
+
+**Mechanism Design:**  
+- **Off-Chain Computation:**  
+  Conduct compute-intensive tasks $C$ off-chain using AI agents.
+- **Cryptographic Verification:**  
+  Utilize cryptographic proofs (like zero-knowledge proofs or TFHE) to verify the integrity of $C$'s results when submitted on-chain.
+
+**Data Required:**  
+- Data specific to the computational tasks being offloaded, including parameters needed for AI model training and operation.
+
+**Evaluation Criteria:**  
+- **Cost Reduction:**  
+  Measure the reduction in on-chain transaction costs resulting from offloading computations.
+- **Verification Success Rate:**  
+  Evaluate the success rate of verifying off-chain computation results on-chain.
+- **Network Performance Improvement:**  
+  Assess overall network performance improvements.
+
+**Optimization Potential:**  
+- **Enhancing Cryptographic Proofs:**  
+  Develop more efficient cryptographic proofs to enhance security and feasibility of integrating off-chain computations.
+
+### Specific Objectives and Examples
+
+**Decentralized AI Training:**  
+- **Objective:** Perform intensive AI model training off-chain to reduce costs and then use cryptographic proofs to verify the model's integrity on-chain.
+- **Example:** Train a complex neural network model to predict market trends based on large datasets off-chain. Use zero-knowledge proofs to verify the model's accuracy and integrity when deploying it on-chain for decentralized financial forecasting.
+
+**Enhanced Data Privacy:**  
+- **Objective:** Utilize off-chain computation to process sensitive data, ensuring privacy is maintained when results are used on-chain.
+- **Example:** Process personal financial data off-chain for credit scoring while maintaining individual privacy. Verify the computation's integrity on-chain using Ritual.net to maintain data confidentiality and ensure result reliability.
+
+**Resource-Intensive Simulations:**  
+- **Objective:** Conduct resource-intensive simulations, like environmental impact assessments, off-chain to avoid overloading the blockchain.
+- **Example:** Simulate complex environmental models off-chain using AI. Use EigenLayer AVS to validate and relay the simulation results to the blockchain for transparent and secure public access.
+
+**Scalable Machine Learning Models:**  
+- **Objective:** Scale complex machine learning models by handling the bulk of computational work off-chain.
+- **Example:** Develop large-scale machine learning models for genomic data analysis off-chain. Implement cryptographic protocols to ensure that the findings are verifiable on-chain without exposing the sensitive data.
+
 ## Dynamic Trade Routing in MEV Scenarios 
 
 During periods where MEV is detectable, AI agents can route transactions through optimal pathways to minimize costs and slippage. By continuously learning from the network state, these agents adapt and optimize the routes in real time.
