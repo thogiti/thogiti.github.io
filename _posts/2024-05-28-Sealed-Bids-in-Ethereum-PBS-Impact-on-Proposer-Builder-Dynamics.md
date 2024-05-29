@@ -106,6 +106,35 @@ The parameters chosen for our simulation are designed to to explore the implicat
    - **SPSBA**: Bidders also submit sealed bids; however, the highest bidder pays the amount of the second-highest bid. This mechanism tests the honesty of bids and the strategic response to other bidders' expected behavior.
 - **Number of Draws (R):** To ensure robustness in our results, each set of simulations is run multiple times, specifically $R$ draws, where $R$ is a sufficiently large number to allow for statistical significance in the outcomes. This replication helps in assessing the variability and reliability of auction outcomes across different simulation runs.
 
+### Revenue Equivalence Theorem and Winning Bid Estimation in FPSBA
+
+The Revenue Equivalence Theorem (RET) says that under certain standard conditions—risk-neutral bidders, independent valuations, and symmetric bidders—different auction types yield the same expected revenue for the seller, despite varied bidding strategies and payment rules[^6]. This theorem underscores the fundamental economic similarity across traditional auction formats when viewed from the auctioneer's perspective.
+
+In practical application, particularly within the context of a FPSBA, determining the optimal bid involves complex strategic calculations, especially when dealing with incomplete information about other bidders' valuations. To approximate the optimal bid for a bidder with a known valuation $v_i$, while conditioning on all other bidders' valuations are less than $v_i$, we can adopt a systematic approach to estimate the second-highest bid, which is crucial in setting the winning price in FPSBA.
+
+#### Expectation of the 2nd Order Statistic
+
+Our computational procedure is outlined as follows:
+
+- **Input Parameters**:
+   - $\bar{v}$: the lower truncation value representing the highest known bidder's valuation less than $v_i$.
+   - $R$: the number of simulation draws, which dictates the robustness of our estimation.
+- **Draw Simulations**:
+   - Generate $v_r$ for $r = 1, \ldots, R$, where each $v_r$ is a simulated valuation drawn from the assumed distribution.
+- **Subset and Reshape**:
+   - Identify the subset $\mathcal{R}$ such that $\mathcal{R} = \{ r \in \{1, \ldots, R\} | v_r \leq \bar{v} \}$, including only those draws where the valuation is less than or equal to $\bar{v}$.
+   - Reshape the dataset to $v_{i,r}$ for $i = 1, \ldots, N$ and $r = 1, \ldots, \tilde{R}$, adjusting the dataset dimensions by discarding the last $\text{mod}(\vert \mathcal{R} \vert, N)$ observations to ensure a balanced matrix for analysis.
+- **Calculate the 2nd Largest Value**:
+   - For each simulation $r$ within $\mathcal{R}$, determine the second-largest value $v_{(n-1),r}$, which represents the next highest bid under the scenario that $v_i$ is the highest.
+- **Estimate the Expected Value**:
+   - Compute the estimated expectation $\hat{\mathbb{E}}(v_{(n-1)})$ as $R^{-1} \sum_{r=1}^R v_{(n-1),r}$, providing an average of the second-highest bids across all valid simulations.
+
+This method provides a statistically robust way to approximate the expected second-highest bid in FPSBA, enabling a bidder to strategically place their bid slightly above this value to maximize the likelihood of winning at the minimum additional cost. Such calculations are instrumental in deploying effective bid strategies within the sealed bid framework, emphasizing the analytical depth required to navigate such auction systems efficiently.
+
+For reference here is how trucnated uniform and chi-squared sitributions look:
+![Trunctaed-Uniform-Distribution](/assets/images/20240501/Trunctaed-Uniform-Distribution.png)
+
+![Trunctaed-Chi-Squared-Distribution](/assets/images/20240501/Trunctaed-Chi-Squared-Distribution.png)
 
 
 ## References
