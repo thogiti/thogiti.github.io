@@ -89,7 +89,7 @@ In both auction types, the interesting outcome is that the proposer's expected r
 
 For our simulation of the FPSBA and SPSBA, we have setup a Python simulation environment. We used NumPy, Pandas, Matplotlib, Plotly,  and SciPy libraries to analyze and visualize the auction dynamics accurately.
 
-You can find the python jupyter notebook here and the full code with the GitHub repo here.
+You can find the python jupyter notebook [here](https://github.com/thogiti/sealed-bid-auctions-Ethereum/blob/main/SealedBid-ETH-PBS.ipynb) and the full code with the GitHub repo [here](https://github.com/thogiti/sealed-bid-auctions-Ethereum).
 
 ### Simulation Parameters
 
@@ -206,6 +206,31 @@ The visualizations provide a clear depiction of how bid shading impacts auction 
 
 Overall, these results highlight the nuanced differences in auction mechanics and their impact on both bidder behavior and proposer revenue. While FPSBA may lead to more cautious bidding, SPSBA facilitates a broader range of bid values, each closely reflecting the bidders' true valuations, thereby potentially enhancing the proposer’s revenue in scenarios of high valuation variability. This analysis not only aids in understanding the strategic underpinnings of different auction types but also assists in crafting guidelines for proposers to maximize their earnings within Ethereum’s auction-based PBS system.
 
+### Practical Implications
+
+### Strategic Influence on Builders and Proposers
+
+The insights derived from these sealed bid auction simulations provide a strategic blueprint for builders and proposers within Ethereum’s PBS system. Builders can refine their bidding strategies based on the sealed bid auction type; for instance, in SPSBA scenarios, bidding closer to true valuations may be advantageous due to the second-highest bid pricing mechanism, potentially leading to higher proposer revenue without the risk of overpayment. For FPSBA, more conservative bid shading strategies might be necessary to avoid the winner's curse, especially in high-variance valuation environments.
+
+Proposers, on the other hand, can use these insights to better predict the outcomes of different auction formats, influencing their choice between FPSBA and SPSBA based on expected revenue and the variance in bids they are willing to entertain. Understanding these dynamics is crucial for maximizing revenue while maintaining a competitive and fair bidding environment.
+
+#### Enhancing Auction Efficiency and Fairness
+
+To enhance both the efficiency and fairness of block proposals, modifications to bidding strategies could be introduced, such as adjusting the information symmetry between bidders or revising the auction rules to minimize extreme outcomes such as very low or high bids that do not reflect the true value of the block. These adjustments could help stabilize the bidding environment and ensure more predictable proposer revenues.
+
+#### Implications for the Protocol Development
+
+The results of these simulations have broader implications for future protocol developments, particularly in fine-tuning the PBS mechanism. As Ethereum continues to evolve, integrating these findings could lead to more robust designs of auction-based mechanisms, possibly incorporating hybrid models that blend elements of FPSBA and SPSBA to balance risk and reward more effectively across the network.
+
+#### Future Research Directions
+
+Looking ahead, further research could explore deeper into hybrid auction mechanisms, the impact of dishonest behavior by builders and/or proposer, or timing games by builders, or multi-stage bidding or multi-round bidding where builder can submit multiple bids within a slot auction or proposer leaks bids a builder or cancellation dynamics or the introduction of dynamic bidding strategies that adapt to real-time feedback within the auction environment. Investigating these areas could provide more granular insights into optimizing Ethereum's PBS mechanism for better scalability and security.
+
+### Call to Action
+
+We encourage the Ethereum community, both developers and researchers, to engage with the simulation code used in this study to explore these findings further. Your feedback and insights are invaluable to refining and advancing this research. If you are interested in experimenting with the simulations or have suggestions for improvement, please visit our GitHub repository [here](https://github.com/thogiti/sealed-bid-auctions-Ethereum) to download the code and contribute to the ongoing development of Ethereum's auction mechanisms.
+
+Your participation and feedback are crucial for driving innovation and ensuring the continued evolution of Ethereum. Let’s collaborate to enhance and optimize these systems for the future of decentralized Ethereum.
 
 ## References
 [^1]: https://barnabe.substack.com/p/pbs 
