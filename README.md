@@ -1,1 +1,1 @@
-This repository contains my [webpage https://thogiti.github.io/](https://thogiti.github.io/) built using [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme).
+This repository contains my website [https://thogiti.github.io/](https://thogiti.github.io/) built using [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme).
