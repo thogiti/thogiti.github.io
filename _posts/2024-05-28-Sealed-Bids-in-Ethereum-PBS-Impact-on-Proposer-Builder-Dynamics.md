@@ -136,6 +136,78 @@ For reference here is how trucnated uniform and chi-squared sitributions look:
 
 ![Trunctaed-Chi-Squared-Distribution](/assets/images/20240501/Trunctaed-Chi-Squared-Distribution.png)
 
+## Results and Analysis
+
+![Distribution-of-Payments-Uniform-Distribution](/assets/images/20240501/Distribution-of-Payments-Uniform-Distribution.png)
+_Figure: Distribution of Payments (Uniform Distribution)_
+
+![Distribution-of-Payments-Chi-Squared-Distribution](/assets/images/20240501/Distribution-of-Payments-Chi-Squared-Distribution.png)
+_Figure: Distribution of Payments (Chi-Squared Distribution)_
+
+![Winning-Bids-Valuations-Uniform-Distribution](/assets/images/20240501/Winning-Bids-Valuations-Uniform-Distribution.png)
+_Figure: Winning Bids vs Valuations (Uniform Distribution)_
+
+![Winning-Bids-Valuations-Chi-Squared-Distribution](/assets/images/20240501/Winning-Bids-Valuations-Chi-Squared-Distribution.png)
+_Figure: Winning Bids vs Valuations (Chi-Squared Distribution)_
+
+
+Here is a table that summarizes the average payments and their respective standard deviations for both auction types under uniform and chi-squared distributions.
+
+
+| Distribution          | Auction | Mean     | Std. Deviation |
+|-----------------------|---------|----------|----------------|
+| Uniform Distribution  | FPSB    | 0.81817  | 0.07           |
+| Uniform Distribution  | SPSB    | 0.81795  | 0.11           |
+| Chi-Squared Distribution | FPSB  | 3.88028  | 1.00           |
+| Chi-Squared Distribution | SPSB  | 3.85591  | 1.48           |
+
+
+### Uniform Distribution
+
+- **FPSBA vs. SPSBA**: Under the uniform distribution, both FPSBA and SPSBA show very similar average payments, with FPSBA yielding an average payment of 0.81817 and a standard deviation of 0.07, while SPSBA results in an average payment of 0.81795 with a higher standard deviation of 0.11. The close averages suggest that, under uniform distribution conditions, the revenue equivalence theorem holds, as both auction types provide nearly the same revenue to the proposer. However, the higher standard deviation in SPSBA indicates that there is more variability in the bids (especially on the higher valuation sides), possibly because bidders feel more confident to bid closer to their true valuations, knowing they will only pay the second-highest price.
+
+### Chi-Squared Distribution
+
+- **FPSBA vs. SPSBA**: In the chi-squared distribution scenario, the average payment for FPSBA is at 3.88028 with a standard deviation of 1.00, compared to SPSBA, which has an average payment of 3.85591 with a standard deviation of 1.48. This suggests that the revenue equivalence theorem holds, SPSBA tends to encourage more aggressive bidding due to its payment mechanism. The higher standard deviation in SPSBA under chi-squared distribution confirms that this auction type can lead to a broader range of bid amounts, reflecting a greater spread in the perceived values of the auctioned block.
+
+### Implications for Proposer Revenue Maximization
+
+- **SPSBA's Potential Advantage**: Despite the generally similar performance in terms of average revenue across both auction types, SPSBA's tendency to generate a higher variance in bids could be advantageous for the proposer in scenarios where bidders have high valuations of the block. Since SPSBA encourages bidders to bid their true valuation, it may occasionally lead to significantly higher payments than FPSBA, where bidders might underbid due to the fear of the winner's curse.
+
+- **Strategic Considerations for Bidders**: The analysis shows that bidders in SPSBA are more likely to bid aggressively, which could lead to occasional spikes in proposer revenue, especially under the chi-squared distribution. In contrast, FPSBA bidders might employ bid shading to mitigate the risk of overpaying, leading to more consistent but potentially lower payments to the proposer.
+
+### Visualization and Strategic Insights
+
+The provided visualizations underscore these points, illustrating the distribution of payments and the variance in bids across both auction types. The graphs highlight how bid shading in FPSBA leads to a concentration of bids around lower values compared to the more widely dispersed bids in SPSBA. This analysis not only helps in understanding the strategic underpinnings of different auction types but also assists proposers and bidders in crafting strategies that maximize their respective returns within Ethereum’s auction-based PBS system.
+
+### Findings from FPSBA Simulations
+
+The simulation results from the FPSBA provide insightful data on bidding behavior and its financial implications for the proposer:
+
+- **Distribution of Bids and Payments**: The FPSBA under both uniform and chi-squared distributions shows a significant correlation between the bidders' valuations and their bids, which are roughly half of the valuations due to bid shading strategies. This relationship is evident from the plot showing FPSBA bids as a percentage of valuation, highlighting a decrease in bid percentage as valuation increases in the chi-squared distribution.
+  
+- **Average and Variance in Payments**: The average payment in FPSBA for the uniform distribution is approximately 0.81817 with a standard deviation of 0.07. For the chi-squared distribution, the average payment significantly increases to 3.88028, with a higher standard deviation of 1.00, indicating greater variability in payments. This increase suggests that when valuations vary widely (as modeled by the chi-squared distribution), the competition and bid amounts increase, potentially boosting the proposer's revenue.
+
+### Insights from SPSBA Simulations
+
+The Second Price Sealed Bid Auction (SPSBA) offers a contrast in bid behavior and outcomes:
+
+- **Comparison with FPSBA**: The average payments between FPSBA and SPSBA are nearly identical in the uniform distribution scenario, indicating the revenue equivalence theorem's validity under these conditions. However, the SPSBA demonstrates a higher variance in payments with standard deviations of 0.11 in the uniform and 1.48 in the chi-squared distribution, which suggests that bidders tend to bid closer to their true valuations, leading to a wider range of winning bids.
+
+- **Circumstances for SPSBA Outperforming FPSBA**: In scenarios modeled by the chi-squared distribution, where the value assessments are highly variable, SPSBA can outperform FPSBA in maximizing proposer revenue. This outcome is due to SPSBA's dominant strategy of bidding truthfully, which tends to increase the second-highest bids especially when bidders have high valuations. Unlike FPSBA, where the fear of the winner's curse might lead to significant bid shading, SPSBA encourages more aggressive bidding closer to the true valuation.
+
+### Visualization and Implications of Bid Shading
+
+![FPSB-optimal-bid-perc-of-valuation-Uniform-Distribution](/assets/images/20240501/FPSB-optimal-bid-perc-of-valuation-Uniform-Distribution.png)
+_Figure: FPSB optimal bid as a % of valuation (Uniform Distribution)_
+
+![FPSB-optimal-bid-perc-of-valuation-Chi-Squared-Distribution](/assets/images/20240501/FPSB-optimal-bid-perc-of-valuation-Chi-Squared-Distribution.png)
+_Figure: FPSB optimal bid as a % of valuation (Chi-Squared Distribution)_
+
+The visualizations provide a clear depiction of how bid shading impacts auction outcomes. In FPSBA, bidders tend to reduce their bids as a strategy to avoid overpaying, which is evident from the optimal bid as a percentage of valuation graphs. This strategy results in a lower variance in payments compared to SPSBA, where bidders, feeling secure in the auction's structure, may place bids that are much higher or lower, depending on their confidence in their valuation accuracy.
+
+Overall, these results highlight the nuanced differences in auction mechanics and their impact on both bidder behavior and proposer revenue. While FPSBA may lead to more cautious bidding, SPSBA facilitates a broader range of bid values, each closely reflecting the bidders' true valuations, thereby potentially enhancing the proposer’s revenue in scenarios of high valuation variability. This analysis not only aids in understanding the strategic underpinnings of different auction types but also assists in crafting guidelines for proposers to maximize their earnings within Ethereum’s auction-based PBS system.
+
 
 ## References
 [^1]: https://barnabe.substack.com/p/pbs 
