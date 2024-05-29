@@ -87,6 +87,26 @@ To illustrate the concept of equilibrium bids and proposer revenue in sealed bid
 
 In both auction types, the interesting outcome is that the proposer's expected revenue, calculated under these bidding strategies and valuation assumptions, equates to $1/3$. This equivalence in expected revenue across both auction types demonstrates the principle of revenue equivalence in economic theory, where the auction format does not affect the average income of the seller, assuming rational bidders and specific conditions about valuation distributions and bidder risk behaviors. 
 
+## Simulation Setup
+
+### Python Simulation Environment
+
+For our simulation of the FPSBA and SPSBA, we have setup a Python simulation environment. We used NumPy, Pandas, Matplotlib, Plotly,  and SciPy libraries to analyze and visualize the auction dynamics accurately.
+
+### Simulation Parameters
+
+The parameters chosen for our simulation are designed to to explore the implications of different auction mechanics on proposer revenue and bidder strategies in a controlled yet complex scenario:
+
+- **Number of Bidders (N):** We simulate the auction scenarios with 10 bidders. This number ensures that the auction environment is competitive enough to simulate real-world bidding competition providing insights into bidder behavior and auction outcomes.
+- **Types of Distributions:**
+   - **Uniform Distribution**: Here, bidder valuations are uniformly distributed across a $[0,1]$ range, representing a scenario where all possible valuations are equally probable. This distribution serves as a baseline to assess bidder strategy in a relatively simple context.
+   - **Chi-Squared Distribution**: This distribution is selected to model more skewed valuation scenarios, likely reflecting the conditions where bidders might have asymmetric information, potentially from private order flows. It helps us examine how bidders with different levels of information might behave in the auction.
+- **Auction Mechanisms:**
+   - **FPSBA**: In this mechanism, bidders submit sealed bids, and the highest bidder wins but pays exactly what they bid. The focus is on how bidders strategize to win the auction without overpaying, given their information.
+   - **SPSBA**: Bidders also submit sealed bids; however, the highest bidder pays the amount of the second-highest bid. This mechanism tests the honesty of bids and the strategic response to other bidders' expected behavior.
+- **Number of Draws (R):** To ensure robustness in our results, each set of simulations is run multiple times, specifically $R$ draws, where $R$ is a sufficiently large number to allow for statistical significance in the outcomes. This replication helps in assessing the variability and reliability of auction outcomes across different simulation runs.
+
+
 
 ## References
 [^1]: https://barnabe.substack.com/p/pbs 
