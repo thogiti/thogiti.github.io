@@ -1,2 +1,1 @@
-
 [督一 心](https://thogiti.github.io/)。
