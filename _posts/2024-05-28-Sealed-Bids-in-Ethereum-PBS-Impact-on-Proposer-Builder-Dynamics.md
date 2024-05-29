@@ -239,6 +239,6 @@ Your participation and feedback are crucial for driving innovation and ensuring 
 [^4]: https://hackmd.io/@potuz/rJ9GCnT1C
 [^5]: https://thogiti.github.io/2024/04/18/A-Deep-dive-into-ePBS-Design-Specs.html
 [^6]: https://en.wikipedia.org/wiki/Revenue_equivalence
-[^7]: 
+[^7]: https://en.wikipedia.org/wiki/Bayesian_game
 [^8]: https://en.wikipedia.org/wiki/Winner%27s_curse
 
