@@ -254,6 +254,14 @@ layout: base
   {%- include scripts/page.js -%}
 </script>
 
+<script src="https://utteranc.es/client.js"
+repo="https://github.com/thogiti/comments.thogiti.github.io"
+issue-term="url"
+theme="github-light"
+crossorigin="anonymous"
+async>
+</script>
+
 {%- if page.sidebar -%}
 <script>{%- include scripts/components/sidebar.js -%}</script>
 {%- endif -%}
@@ -265,14 +273,6 @@ layout: base
   {%- include scripts/aside/affix.js -%}
 </script>
 {%- endif -%}
-
-<script src="https://utteranc.es/client.js"
-        repo="https://github.com/thogiti/comments.thogiti.github.io"
-        issue-term="url"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
 
 {%- include markdown-enhancements.html -%}
 {%- include pageview.html -%}
