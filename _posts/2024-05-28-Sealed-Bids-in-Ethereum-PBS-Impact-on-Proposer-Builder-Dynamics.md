@@ -1,5 +1,5 @@
 ---
-title: Sealed Bids in Ethereum's PBS Impact on Proposer-Builder Dynamics
+title: Sealed Bids in Ethereum's PBS - Impact on Proposer-Builder Dynamics
 tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-pricesealed-bid second-price-sealed-bid PBS MEV Proposer-Builder-Separation MEV-Supply-Chain-Architecture MEV-Supply-Chain-Management Bayesian-nash-equilibrium BNE builder-bidding-strategies proposer-revenue maximizing-proposer-revenue
 ---
 
@@ -64,6 +64,20 @@ FPSBAs are essentially Bayesian games, characterized by incomplete information w
 To address the winner's curse in FPSBA, bidders may employ **bid shading**, where they intentionally lower their bids to mitigate the risk of overpaying. This strategic move balances the desire to win the auction with the need to avoid unfavorable payoff outcomes.
 
 This Bayesian game framework is essential for explaining why and how bidders in a FPSBA attempt to optimize their bids in the face of significant uncertainties about competitors' actions and intentions. 
+
+The following table compares FPSBA to SPSBA in which the valuations of the $n$ builders are drawn independently and uniformly at random from $[0,1]$:
+
+```markdown
+| Auction      | First-price                  | Second-price                     |
+|--------------|------------------------------|----------------------------------|
+| Winner       | Agent with highest bid       | Agent with highest bid           |
+| Winner pays  | Winner's bid                 | Second-highest bid               |
+| Loser pays   | 0                            | 0                                |
+| Dominant strategy | No dominant strategy     | Bidding truthfully is dominant strategy |
+| Bayesian Nash equilibrium | Bidder i bids $\frac{n - 1}{n} v_i$ | Bidder i truthfully bids $v_i$ |
+| Auctioneer's revenue | $\frac{n - 1}{n + 1}$ | $\frac{n - 1}{n + 1}$        |
+```
+
 
 
 ## References
