@@ -13,6 +13,14 @@ type: article
 
   <div class="article__content" itemprop="articleBody">{{ content }}</div>
 
+  <script src="https://utteranc.es/client.js"
+        repo="https://github.com/thogiti/comments.thogiti.github.io"
+        issue-term="url"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+
   {%- if _sharing -%}
     <section class="article__sharing d-print-none">{%- include sharing.html -%}</section>
   {%- endif -%}
@@ -28,10 +36,3 @@ type: article
   {%- include scripts/article.js -%}
 </script>
 
-<script src="https://utteranc.es/client.js"
-        repo="https://github.com/thogiti/comments.thogiti.github.io"
-        issue-term="url"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
