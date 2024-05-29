@@ -129,10 +129,10 @@ Our computational procedure is outlined as follows:
 
 This method provides a statistically robust way to approximate the expected second-highest bid in FPSBA, enabling a bidder to strategically place their bid slightly above this value to maximize the likelihood of winning at the minimum additional cost. Such calculations are instrumental in deploying effective bid strategies within the sealed bid framework, emphasizing the analytical depth required to navigate such auction systems efficiently.
 
-For reference here is how trucnated uniform and chi-squared sitributions look:
-![Trunctaed-Uniform-Distribution](/assets/images/20240501/Trunctaed-Uniform-Distribution.png)
+For reference here is how truncated uniform and chi-squared distributions look like:
+![Truncated-Uniform-Distribution](/assets/images/20240501/Trunctaed-Uniform-Distribution.png)
 
-![Trunctaed-Chi-Squared-Distribution](/assets/images/20240501/Trunctaed-Chi-Squared-Distribution.png)
+![Truncated-Chi-Squared-Distribution](/assets/images/20240501/Trunctaed-Chi-Squared-Distribution.png)
 
 ## Results and Analysis
 
