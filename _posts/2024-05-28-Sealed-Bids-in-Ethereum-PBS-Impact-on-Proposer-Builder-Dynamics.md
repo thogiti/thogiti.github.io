@@ -67,7 +67,7 @@ This Bayesian game framework is essential for explaining why and how bidders in 
 
 The following table compares FPSBA to SPSBA in which the valuations of the $n$ builders are drawn independently and uniformly at random from $[0,1]$:
 
-```markdown
+
 | Auction      | First-price                  | Second-price                     |
 |--------------|------------------------------|----------------------------------|
 | Winner       | Agent with highest bid       | Agent with highest bid           |
@@ -76,8 +76,16 @@ The following table compares FPSBA to SPSBA in which the valuations of the $n$ b
 | Dominant strategy | No dominant strategy     | Bidding truthfully is dominant strategy |
 | Bayesian Nash equilibrium | Bidder i bids $\frac{n - 1}{n} v_i$ | Bidder i truthfully bids $v_i$ |
 | Auctioneer's revenue | $\frac{n - 1}{n + 1}$ | $\frac{n - 1}{n + 1}$        |
-```
 
+### An Example
+
+To illustrate the concept of equilibrium bids and proposer revenue in sealed bid auctions, consider a scenario where two builders have their valuations drawn independently and uniformly from the interval $[0,1]$. This example highlights how different auction formats affect the proposer’s revenue:
+
+- **In a FPSBA:** Each builder's equilibrium bid is calculated as half of their valuation, aiming to balance the potential cost of winning against the value of the block. If the builders' valuations are $v_1$ and $v_2$, their bids will be $\frac{v_1}{2}$ and $\frac{v_2}{2}$, respectively. The proposer receives the higher of these two bids, which is $\max(\frac{v_1}{2}, \frac{v_2}{2})$. This represents the highest price a builder is willing to pay while still attempting to maximize their payoff.
+
+- **In a SPSBA:** Builders bid their true valuations $v_1$ and $v_2$, since the winning builder pays the second-highest bid, which incentivizes them to bid truthfully without the risk of the winner's curse. The proposer in this case receives the second-highest bid, which is $\min(v_1, v_2)$.
+
+In both auction types, the interesting outcome is that the proposer's expected revenue, calculated under these bidding strategies and valuation assumptions, equates to $1/3$. This equivalence in expected revenue across both auction types demonstrates the principle of revenue equivalence in economic theory, where the auction format does not affect the average income of the seller, assuming rational bidders and specific conditions about valuation distributions and bidder risk behaviors. 
 
 
 ## References
