@@ -9,14 +9,16 @@ tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-price-sealed-bid second
 
 In this post, we explore the intriguing world of edge cases within First Price Sealed Bid Auction (FPSBA) and Second Price Sealed Bid Auction (SPSBA) in Ethereum’s Proposer Builder Separation (PBS) scheme, where traditional auction theories meet the cutting-edge challenges of blockchain technology. 
 
-Before we proceed, a quick note: If you're unfamiliar with the concepts of [PBS](https://barnabe.substack.com/p/pbs)[^1][^2]], FPSBA, or SPSBA, or simply wish for a refresher, I recommend visiting [Sealed Bid Auctions in Ethereum’s PBS](https://thogiti.github.io/2024/05/28/Sealed-Bids-in-Ethereum-PBS-Impact-on-Proposer-Builder-Dynamics.html)[^3]. It’s essential groundwork that will enrich your understanding of the discussions that lie ahead.
+Before we proceed, a quick note: If you're unfamiliar with the concepts of [PBS](https://barnabe.substack.com/p/pbs)[^1][^2], FPSBA, or SPSBA, or simply wish for a refresher, I recommend visiting [Sealed Bid Auctions in Ethereum’s PBS](https://thogiti.github.io/2024/05/28/Sealed-Bids-in-Ethereum-PBS-Impact-on-Proposer-Builder-Dynamics.html)[^3]. It’s essential groundwork that will enrich your understanding of the discussions that lie ahead.
 
 In this exploration, we meditate on the scenarios that deviate from the norm—where honesty and transparency are compromised, the system’s integrity is put to the test and the participants in the network exploiting less understood concepts that could compromise auction efficiency and fairness. These aren’t just theoretical curiosities; they bear significant, tangible implications for the design and execution of auctions on the Ethereum network. For each case, we’ll dissect the problem, propose methodologies for modeling these complexities, and discuss strategic modifications to the auction and mechanism designs that could help mitigate these issues.
 
 So, let’s start our journey, working together to better understand Ethereum’s auction mechanics and find practical solutions for its challenging scenarios.
 
 
-## Edge Case Analysis: Dishonest Builder, Honest Proposer
+## Dishonest Builder, Honest Proposer
+
+![proposer-remorse-meme](/assets/images/20240501/proposer-remorse-meme.jpg)
 
 ### Description
 This scenario explores the complexities when builders, participating in Ethereum's PBS auctions, submit artificially low bids or collude with each other. This dishonest behavior risks the integrity and effectiveness of the auction, affecting the proposer’s revenue and the overall fairness of the process.
