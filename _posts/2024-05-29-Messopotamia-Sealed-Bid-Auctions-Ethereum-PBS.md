@@ -16,7 +16,7 @@ In this exploration, we meditate on the scenarios that deviate from the norm—w
 So, let’s start our journey, working together to better understand Ethereum’s auction mechanics and find practical solutions for its challenging scenarios.
 
 
-## Dishonest Builder, Honest Proposer
+## Dishonest Builder
 
 ![proposer-remorse-meme](/assets/images/20240501/proposer-remorse-meme.jpg)
 
@@ -66,6 +66,82 @@ Collusion introduces another layer of complexity, as it involves coordinated bid
 - **Auction Efficiency and Welfare Analysis**: Assessing how dishonesty and collusion affect the overall efficiency of the auction and whether any changes result in welfare losses or Pareto improvements.
 - **Simulation and Empirical Analysis**: Conducting simulations to observe the behavior of the auction under various configurations of $\alpha$, $\beta$, and $\gamma$. Empirical analysis could involve historical data from similar auction environments to validate the model's predictions.
 
+
+## Dishonest Proposer – Bid Leakage
+
+![bid-leakage-evil-kermit-meme](/assets/images/20240501/bid-leakage-evil-kermit-meme.jpg)
+
+### Description
+In this specific analysis, we study scenarios where an honest builder faces a dishonest proposer who leaks bid information. This case primarily focuses on the implications of such bid leaks, whether certain or probabilistic, on the integrity of the auction process and strategic bidding behaviors.
+
+### Problem Highlight
+Bid leakage fundamentally undermines the integrity of the bidding process by exposing confidential bid information. This exposure skews the competitive nature of auctions, potentially leading to altered bid strategies and unfair advantages, which can decrease the overall health and fairness of the auction environment.
+
+### Detailed Study on Bid Leakage in FPSBA and SPSBA
+
+To thoroughly investigate the impact of bid leakage, we consider scenarios of certain leakage (where the probability $p = 1$) and probabilistic leakage (where $0 < p < 1$), analyzing how builders adjust their strategies in response to the leaked information and the subsequent effects on auction outcomes and equilibria.
+
+### Scenarios for Bid Leakage
+
+1. **Certain Bid Leakage ($p = 1$)**
+   - **Description**: The first bid submitted is leaked with certainty.
+   - **Impact**: Subsequent builders adjust their strategies knowing the first bid, which might lead them to either outbid the leaked bid or strategically position their bid in a way that maximizes their utility based on the leaked information.
+
+2. **Probabilistic Bid Leakage ($0 < p < 1$)**
+   - **Description**: The first bid submitted is leaked with a probability $p$.
+   - **Impact**: Subsequent builders adjust their strategies based on the likelihood of the leakage, which introduces a layer of uncertainty and complexity into their bidding strategies.
+
+3. **Leaking Only the Maximum Bid Up to the Current Time**
+
+	- **Description:** At an arbitrary time $t$ during the auction, the current maximum bid $B_{\text{max}}$ is leaked.
+	- **Impact:** Builders who have not yet bid, or those considering revising their bids, adjust their strategies based on the leaked $B_{\text{max}}$.
+
+Note: The scenario 3 looks analogous to 1 because $B_1$ is the max bid when the first bid is submitted. We need to further analyze this scenario.
+
+### Modeling and Analysis
+
+#### Key Parameters:
+- **Leak Probability ($p$)**: Defines the likelihood that the first or highest bid is leaked.
+- **Builder's Valuation ($V_i$)**: The intrinsic valuation of the builder for the slot, informing their maximum willing bid.
+- **Number of Builders ($N$)**: Total participants in the auction affecting the dynamics of bid adjustments.
+
+#### Impact on Bidding Strategies and Auction Outcomes
+
+**FPSBA**:
+- **Honest Bidders**:
+  - The first bid $B_1$ is submitted and leaked.
+  - Subsequent builders adjust their bids knowing $B_1$:
+        $B_i = \max$ { $B_1, \frac{N-1}{N} \cdot V_i$ } $\quad \text{for } i > 1$
+  - Upon leakage of $B_{\text{max}}$, subsequent builders adjust their bids to either match or exceed $B_{\text{max}}$ depending on their valuations:
+        $B_i = \max$ { $B_{\text{max}}, \frac{N-1}{N} \cdot V_i$ } $\quad \text{for } i > 1$
+
+**SPSBA**:
+- **Honest Bidders**:
+  - The first bid $B_1$ is submitted and leaked.
+  - Subsequent builders adjust their bids knowing $B_1$:
+        $B_i = \min$ { $B_1 + \epsilon, V_i$ } $\quad \text{for } i > 1$
+
+  where $\epsilon$ is a small increment to slightly outbid $B_1$, aiming to win without overpaying.
+
+  - Builders adjust their bids to slightly outbid the leaked $B_{\text{max}}$ if it benefits them, considering their true valuation:
+        $B_i = \min$ { $B_{\text{max}} + \epsilon, V_i$ } $\quad \text{for } i > 1$
+
+where $\epsilon$ is a small increment to ensure the highest possible but sensible bid.
+
+
+#### Simulation of Auction Outcomes
+
+- **Steps**:
+  - Define the bid leakage scenario: Set $p$ for certain or probabilistic leakage.
+  - Simulate the auction process for FPSBA and SPSBA:
+     - Generate valuations $V_i$ for $N$ builders.
+     - Submit and possibly leak the first bid $B_1$.
+     - Adjust subsequent bids based on the leakage information.
+  - Calculate proposer payments and analyze the changes in bidding strategies and the overall auction efficiency.
+
+#### Equilibrium Analysis
+
+- **Bayesian Nash Equilibrium**: Determine the new equilibrium under bid leakage scenarios for FPSBA and SPSBA, where builders integrate the leaked information into their bidding strategy, potentially altering the traditional equilibrium outcomes.
 
 
 ## References
