@@ -3,8 +3,6 @@ title: Cross-Chain MEV Auctions - Modeling Proposer Revenue Maximization
 tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-price-sealed-bid second-price-sealed-bid PBS MEV Proposer-Builder-Separation MEV-Supply-Chain-Architecture MEV-Supply-Chain-Management Bayesian-nash-equilibrium BNE builder-bidding-strategies proposer-revenue maximizing-proposer-revenue vickrey-auctions Proposer-Revenue-Maximization cross-chain-mev cross-chain-mev-auctions
 ---
 
-## WIP - WORK IN PROGRESS 
-
 ## Introduction
 
 In the evolving landscape of multi-chain world, one of the key components to unlocking the full potential of cross-chain interactions is through maximizing the value extracted from miner-extractable value, or MEV. This article will explore the mathematical models and optimization of auction mechanisms to maximize proposer revenues and strategic decision making in should a bidder opt for separate auctions or a joint MEV auction in cross-chain MEV interactions.
@@ -213,6 +211,101 @@ $$R_{seq} - R_{sim} = \sigma \cdot \sum_{j=1}^K \beta_j$$
    - Sequential auctions can more closely mimic actual bidding behaviors as they allow bidders to adapt strategies based on new information and previous results.
 - **Market Dynamics**:
    - These auctions can foster a more dynamic and potentially competitive bidding environment, which might lead to enhanced overall revenue.
+
+## Combinatorial Auctions
+
+Combinatorial auctions in the context of MEV auctions allow bidders to place bids on predefined combinations of chains, rather than just individual chains, capturing complex synergies and bidder's preferences. This approach can significantly enhance proposer revenue by recognizing the added value that bidders place on controlling multiple chains simultaneously. By focusing on practical, predefined subsets of chains instead of all combinations, the auction process remains computationally feasible while still reflecting the strategic importance of cross-chain MEV opportunities. This model ensures a more efficient and effective auction mechanism, maximizing total revenue and accurately representing bidder valuations and synergies.
+
+### Relaxed Combinatorial Auction Model
+
+**Objective**:
+To model and analyze a practical and efficient combinatorial auction where the auctioneer doesn't need to evaluate all possible combinations, but predefine a subset of combinations for cross-chain MEV auctions, focusing on simplicity and feasibility.
+
+### Relaxed Combinatorial Auction Setup
+
+**Assumptions**:
+- **Bidder Behavior**: Bidders can place bids on predefined combinations of chains, chosen to reflect likely synergies without overwhelming complexity.
+- **Valuation Model**:
+   - For predefined subsets of chains $S$:
+
+     $$V_{i,S} = \sum_{j \in S} V_{i,j} + \gamma_S$$
+     where $V_{i,j}$ is the valuation of bidder $i$ for chain $j$, and $\gamma_S$ is the synergy value for the combination $S$.
+
+**Notation**:
+- $n$: Number of bidders.
+- $K$: Number of chains.
+- $\mathcal{S}$: Set of predefined subsets $S$ of chains.
+- $V_j^*$: True valuation for chain $j$.
+- $\epsilon_{i,j}$: Estimation error for bidder $i$ on chain $j$, $\epsilon_{i,j} \sim N(0, \sigma^2)$.
+- $\gamma_S$: Synergy value for subset $S$ of chains.
+
+### Valuation Model
+
+For each bidder $i$ and chain $j$:
+$V_{i,j} = V_j^* + \epsilon_{i,j}$
+
+For a predefined subset of chains $S \in \mathcal{S}$:
+
+$$V_{i,S} = \sum_{j \in S} (V_j^* + \epsilon_{i,j}) + \gamma_S$$
+
+$$V_{i,S} = \sum_{j \in S} V_j^* + \sum_{j \in S} \epsilon_{i,j} + \gamma_S$$
+
+### Revenue Calculation
+
+**Relaxed Combinatorial Auctions**:
+- Bidders place bids on predefined subsets $S \subseteq \{1, 2, \ldots, K\}$.
+- The auctioneer selects the combination of bids from predefined subsets that maximizes total revenue.
+
+**Example**:
+Consider three chains $A$, $B$, and $C$:
+- Predefined subsets: $\{A\}$, $\{B\}$, $\{C\}$, $\{A, B\}$, $\{B, C\}$, $\{A, C\}$, and $\{A, B, C\}$.
+
+For a single bidder $i$:
+- Valuation for $\{A\}$:
+  $V_{i,A} = V_A^* + \epsilon_{i,A}$
+- Valuation for $\{A, B\}$:
+  $V_{i,\{A,B\}} = V_A^* + V_B^* + \epsilon_{i,A} + \epsilon_{i,B} + \gamma_{\{A,B\}}$
+
+**Revenue Calculation**:
+The auctioneer selects the combination of bids from the predefined subsets that maximizes revenue:
+$$R_{comb} = \max \left( \sum_{S \in \mathcal{S}} V_{i,S} \right)$$
+
+### Comparative Analysis
+
+To compare the revenue from relaxed combinatorial auctions to separate and joint auctions, consider the following:
+
+**Separate Auctions Revenue**:
+
+$$R_{sep} = \sum_{j=1}^K \left( V_j^* + \sigma \cdot \alpha(n) \right)$$
+
+$$R_{sep} = \sum_{j=1}^K V_j^* + \sigma \cdot K \cdot \alpha(n)$$
+
+**Joint Auction Revenue**:
+
+$$R_{joint} = \sum_{j=1}^K V_j^* + M + \sigma \cdot \sqrt{K} \cdot \alpha(n)$$
+
+**Relaxed Combinatorial Auction Revenue**:
+The relaxed combinatorial auction allows for simpler combinatorial bidding:
+
+$$R_{comb} = \max \left( \sum_{S \in \mathcal{S}} \left( \sum_{j \in S} V_j^* + \sum_{j \in S} \epsilon_{i,j} + \gamma_S \right) \right)$$
+
+### Observations and Insights
+
+**Synergy Values $\gamma_S$**:
+- The inclusion of synergy values $\gamma_S$ can significantly increase the total revenue if bidders value combinations of chains higher than the sum of individual chains.
+- The magnitude of $\gamma_S$ reflects the importance of synergies in MEV extraction.
+
+**Simpler Bidding Strategies**:
+- Predefining subsets simplifies the bidding process and reduces computational complexity.
+- It makes the auction process more practical and feasible while still capturing important synergies.
+
+**Revenue Comparison**:
+- If synergies $\gamma_S$ are significant, relaxed combinatorial auctions can yield higher revenue than both separate and joint auctions.
+- The revenue from relaxed combinatorial auctions can be written as:
+
+  $$R_{comb} = \sum_{j=1}^K V_j^* + \sigma \cdot \sum_{j=1}^K \alpha(n) + \sum_{S \in \mathcal{S}} \gamma_S$$
+
+
 
 
 ## References
