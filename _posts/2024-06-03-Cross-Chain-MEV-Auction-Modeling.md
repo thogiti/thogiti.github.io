@@ -218,8 +218,10 @@ Combinatorial auctions in the context of MEV auctions allow bidders to place bid
 
 ### Relaxed Combinatorial Auction Model
 
+In practice, real-world cross-chain combinations will likely be a small subset of all possible combinations, as not all  possibilities make economic sense to bid on. Therefore, the marketplace will only need to evaluate a limited number of predefined combinations, simplifying the auction process while still capturing significant synergies and maximizing revenue.
+
 **Objective**:
-To model and analyze a practical and efficient combinatorial auction where the auctioneer doesn't need to evaluate all possible combinations, but predefine a subset of combinations for cross-chain MEV auctions, focusing on simplicity and feasibility.
+To model and analyze a practical and efficient combinatorial auction where the auctioneer doesn't need to evaluate all possible combinations, but a predefined subset of combinations for cross-chain MEV auctions, focusing on simplicity and feasibility.
 
 ### Relaxed Combinatorial Auction Setup
 
@@ -305,7 +307,130 @@ $$R_{comb} = \max \left( \sum_{S \in \mathcal{S}} \left( \sum_{j \in S} V_j^* + 
 
   $$R_{comb} = \sum_{j=1}^K V_j^* + \sigma \cdot \sum_{j=1}^K \alpha(n) + \sum_{S \in \mathcal{S}} \gamma_S$$
 
+### An Example Scenario of Combinatorial Auction
 
+#### Combinatorial Auction Setup
+
+- **Number of Chains**: 3 $(A, B, C)$
+- **Number of Bidders**: 3 $(1, 2, 3)$
+- **Predefined Subsets**: $\{A\}$, $\{B\}$, $\{C\}$, $\{A, B\}$, $\{B, C\}$, $\{A, C\}$, $\{A, B, C\}$
+- **True Valuations**: 
+  - $V_A^* = 100$
+  - $V_B^* = 120$
+  - $V_C^* = 80$
+- **Synergy Values**:
+  - $\gamma_{\{A, B\}} = 30$
+  - $\gamma_{\{B, C\}} = 20$
+  - $\gamma_{\{A, C\}} = 25$
+  - $\gamma_{\{A, B, C\}} = 50$
+- **Estimation Errors** ($\epsilon_{i,j}$):
+  - Assume they follow $N(0, 10^2)$.
+
+#### Bidder Valuations
+
+**Bidder 1**:
+- $\epsilon_{1,A} = 5$
+- $\epsilon_{1,B} = -3$
+- $\epsilon_{1,C} = 2$
+
+$V_{1,A} = 100 + 5 = 105$
+
+$V_{1,B} = 120 - 3 = 117$
+
+$V_{1,C} = 80 + 2 = 82$
+
+$V_{1,\{A,B\}} = 105 + 117 + 30 = 252$
+
+$V_{1,\{B,C\}} = 117 + 82 + 20 = 219$
+
+$V_{1,\{A,C\}} = 105 + 82 + 25 = 212$
+
+$V_{1,\{A,B,C\}} = 105 + 117 + 82 + 50 = 354$
+
+**Bidder 2**:
+- $\epsilon_{2,A} = -10$
+- $\epsilon_{2,B} = 4$
+- $\epsilon_{2,C} = -5$
+
+$V_{2,A} = 100 - 10 = 90$
+
+$V_{2,B} = 120 + 4 = 124$
+
+$V_{2,C} = 80 - 5 = 75$
+
+$V_{2,\{A,B\}} = 90 + 124 + 30 = 244$
+
+$V_{2,\{B,C\}} = 124 + 75 + 20 = 219$
+
+$V_{2,\{A,C\}} = 90 + 75 + 25 = 190$
+
+$V_{2,\{A,B,C\}} = 90 + 124 + 75 + 50 = 339$
+
+**Bidder 3**:
+- $\epsilon_{3,A} = 3$
+- $\epsilon_{3,B} = 1$
+- $\epsilon_{3,C} = -2$
+
+$V_{3,A} = 100 + 3 = 103$
+
+$V_{3,B} = 120 + 1 = 121$
+
+$V_{3,C} = 80 - 2 = 78$
+
+$V_{3,\{A,B\}} = 103 + 121 + 30 = 254$
+
+$V_{3,\{B,C\}} = 121 + 78 + 20 = 219$
+
+$V_{3,\{A,C\}} = 103 + 78 + 25 = 206$
+
+$V_{3,\{A,B,C\}} = 103 + 121 + 78 + 50 = 352$
+
+#### Auction Outcome
+
+The auctioneer selects the combination of bids that maximizes total revenue. We will consider the highest bid for each predefined subset and choose the combination that maximizes the sum.
+
+**Bids for Single Chains**:
+- $\{A\}$: $V_{1,A} = 105$
+- $\{B\}$: $V_{2,B} = 124$
+- $\{C\}$: $V_{1,C} = 82$
+
+**Bids for Pairs**:
+- $\{A,B\}$: $V_{3,\{A,B\}} = 254$
+- $\{B,C\}$: $V_{1,\{B,C\}} = 219$
+- $\{A,C\}$: $V_{1,\{A,C\}} = 212$
+
+**Bids for All Chains**:
+- $\{A,B,C\}$: $V_{1,\{A,B,C\}} = 354$
+
+**Combination Revenue**:
+- **Separate Bids**:
+  $R_{sep} = 105 + 124 + 82 = 311$
+
+- **Pairs**:
+  $R_{\{A,B\}} = 254$
+  $R_{\{B,C\}} = 219$
+  $R_{\{A,C\}} = 212$
+
+- **All Chains**:
+  $R_{\{A,B,C\}} = 354$
+
+**Optimal Revenue**:
+The auctioneer will choose the highest revenue from the combinations. In this case:
+$R_{comb} = 354$
+
+#### Observations and Insights
+
+**Revenue Maximization**:
+   - The relaxed combinatorial auction achieved the highest revenue by selecting the bid for all chains $\{A,B,C\}$.
+
+**Synergy Impact**:
+   - The synergy values $\gamma_S$ played a important role in increasing the total valuation of combinations. The high synergy value for the combination $\{A,B,C\}$ significantly contributed to the maximum revenue.
+
+**Computational Efficiency**:
+   - By limiting the auction to predefined subsets, the auctioneer avoided the need to evaluate all possible combinations, making the process more practical and efficient.
+
+**Bidding Behavior**:
+   - Bidders could express their preferences for combinations, allowing for more nuanced bids that reflect their valuation of synergies.
 
 
 ## References
