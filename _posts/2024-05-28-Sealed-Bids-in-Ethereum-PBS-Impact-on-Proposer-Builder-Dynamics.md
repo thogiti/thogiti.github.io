@@ -31,7 +31,7 @@ A deep understanding of these mechanisms is crucial not only for those actively 
 _Figure: First-price sealed-bid auction for bandwidth resource trading market. Credit by Niyato D, Luong NC, Wang P, Han Z. Auction Theory for Computer Networks. Cambridge University Press; 2020._ 
 
 
-The **First Price Sealed Bid Auction (FPSBA)** requires each builder to submit a single, confidential bid without knowledge of the other bids. The highest bidder wins but pays exactly the amount they bid. This model encourages strategic bidding, where builders must carefully balance their bid to win without overpaying. However, FPSBA can lead to a phenomenon known as the **winner's curse**, where the winning bidder realizes they have overpaid relative to the actual value of the block[^8]. This often occurs when bidders estimate and act on incomplete information about the block's value.
+The **First Price Sealed Bid Auction (FPSBA)** requires each builder to submit a single, confidential bid without knowledge of the other bids. The highest bidder wins but pays exactly the amount they bid. This model encourages strategic bidding, where builders must carefully balance their bid to win without overpaying. 
 
 ### Second Price Sealed Bid Auction (SPSBA)
 
@@ -39,7 +39,7 @@ The **First Price Sealed Bid Auction (FPSBA)** requires each builder to submit a
 _Figure: Second-price sealed-bid auction for bandwidth resource trading market. Credit by Niyato D, Luong NC, Wang P, Han Z. Auction Theory for Computer Networks. Cambridge University Press; 2020._ 
 
 
-Conversely, the **Second Price Sealed Bid Auction (SPSBA)**, often called the Vickrey Auction, also involves builders submitting a single, hidden bid. However, unlike FPSBA, the highest bidder wins but pays the amount of the second-highest bid. This setup theoretically encourages bidders to bid their true valuation of the block, as the winning price depends on the next highest bid, not their own, mitigating the risk of the winner's curse.
+Conversely, the **Second Price Sealed Bid Auction (SPSBA)**, often called the Vickrey Auction, also involves builders submitting a single, hidden bid. However, unlike FPSBA, the highest bidder wins but pays the amount of the second-highest bid. This setup theoretically encourages bidders to bid their true valuation of the block, as the winning price depends on the next highest bid, not their own, mitigating the risk of the overpayment.
 
 ### Distribution Models for Builder Valuations
 
@@ -57,7 +57,7 @@ Determining the optimal bid in a FPSBA poses significant challenges due to the p
 
 FPSBAs are essentially Bayesian games, characterized by incomplete information where each player (bidder) lacks knowledge about the strategies and payoffs of others. However, each bidder possesses beliefs about the other players' valuations based on a known probability distribution. In this setting, the Nash equilibrium used to determine each player's best response is specifically a Bayesian-Nash Equilibrium (BNE). This form of equilibrium accounts for the players' strategies that maximize their expected utility, under the assumption that they understand the distribution of others' valuations, even if they don't know the specific bids being placed.
 
-To address the winner's curse in FPSBA, bidders may employ **bid shading**, where they intentionally lower their bids to mitigate the risk of overpaying. This strategic move balances the desire to win the auction with the need to avoid unfavorable payoff outcomes.
+In FPSBA, bidders may employ **bid shading**, where they intentionally lower their bids to mitigate the risk of overpaying. This strategic move balances the desire to win the auction with the need to avoid unfavorable payoff outcomes.
 
 This Bayesian game framework is essential for explaining why and how bidders in a FPSBA attempt to optimize their bids in the face of significant uncertainties about competitors' actions and intentions. 
 
@@ -79,7 +79,7 @@ To illustrate the concept of equilibrium bids and proposer revenue in sealed bid
 
 - **In a FPSBA:** Each builder's equilibrium bid is calculated as half of their valuation, aiming to balance the potential cost of winning against the value of the block. If the builders' valuations are $v_1$ and $v_2$, their bids will be $\frac{v_1}{2}$ and $\frac{v_2}{2}$, respectively. The proposer receives the higher of these two bids, which is $\max(\frac{v_1}{2}, \frac{v_2}{2})$. This represents the highest price a builder is willing to pay while still attempting to maximize their payoff.
 
-- **In a SPSBA:** Builders bid their true valuations $v_1$ and $v_2$, since the winning builder pays the second-highest bid, which incentivizes them to bid truthfully without the risk of the winner's curse. The proposer in this case receives the second-highest bid, which is $\min(v_1, v_2)$.
+- **In a SPSBA:** Builders bid their true valuations $v_1$ and $v_2$, since the winning builder pays the second-highest bid, which incentivizes them to bid truthfully without the risk of the overpayment. The proposer in this case receives the second-highest bid, which is $\min(v_1, v_2)$.
 
 In both auction types, the interesting outcome is that the proposer's expected revenue, calculated under these bidding strategies and valuation assumptions, equates to $1/3$. This equivalence in expected revenue across both auction types demonstrates the principle of revenue equivalence in economic theory, where the auction format does not affect the average income of the seller, assuming rational bidders and specific conditions about valuation distributions and bidder risk behaviors. 
 
@@ -170,7 +170,7 @@ Here is a table that summarizes the average payments and their respective standa
 
 ### Implications for Proposer Revenue Maximization
 
-- **SPSBA's Potential Advantage**: Despite the generally similar performance in terms of average revenue across both auction types, SPSBA's tendency to generate a higher variance in bids could be advantageous for the proposer in scenarios where bidders have high valuations of the block. Since SPSBA encourages bidders to bid their true valuation, it may occasionally lead to significantly higher payments than FPSBA, where bidders might underbid due to the fear of the winner's curse.
+- **SPSBA's Potential Advantage**: Despite the generally similar performance in terms of average revenue across both auction types, SPSBA's tendency to generate a higher variance in bids could be advantageous for the proposer in scenarios where bidders have high valuations of the block. Since SPSBA encourages bidders to bid their true valuation, it may occasionally lead to significantly higher payments than FPSBA, where bidders might underbid of their true valuations.
 
 - **Strategic Considerations for Bidders**: The analysis shows that bidders in SPSBA are more likely to bid aggressively, which could lead to occasional spikes in proposer revenue, especially under the chi-squared distribution. In contrast, FPSBA bidders might employ bid shading to mitigate the risk of overpaying, leading to more consistent but potentially lower payments to the proposer.
 
@@ -192,7 +192,7 @@ The Second Price Sealed Bid Auction (SPSBA) offers a contrast in bid behavior an
 
 - **Comparison with FPSBA**: The average payments between FPSBA and SPSBA are nearly identical in the uniform distribution scenario, indicating the revenue equivalence theorem's validity under these conditions. However, the SPSBA demonstrates a higher variance in payments with standard deviations of 0.11 in the uniform and 1.48 in the chi-squared distribution, which suggests that bidders tend to bid closer to their true valuations, leading to a wider range of winning bids.
 
-- **Circumstances for SPSBA Outperforming FPSBA**: In scenarios modeled by the chi-squared distribution, where the value assessments are highly variable, SPSBA can outperform FPSBA in maximizing proposer revenue. This outcome is due to SPSBA's dominant strategy of bidding truthfully, which tends to increase the second-highest bids especially when bidders have high valuations. Unlike FPSBA, where the fear of the winner's curse might lead to significant bid shading, SPSBA encourages more aggressive bidding closer to the true valuation.
+- **Circumstances for SPSBA Outperforming FPSBA**: In scenarios modeled by the chi-squared distribution, where the value assessments are highly variable, SPSBA can outperform FPSBA in maximizing proposer revenue. This outcome is due to SPSBA's dominant strategy of bidding truthfully, which tends to increase the second-highest bids especially when bidders have high valuations. Unlike FPSBA, where the fear of the overpayment might lead to significant bid shading, SPSBA encourages more aggressive bidding closer to the true valuation.
 
 ### Visualization and Implications of Bid Shading
 
@@ -210,7 +210,7 @@ Overall, these results highlight the nuanced differences in auction mechanics an
 
 ### Strategic Influence on Builders and Proposers
 
-The insights derived from these sealed bid auction simulations provide a strategic blueprint for builders and proposers within Ethereum’s PBS system. Builders can refine their bidding strategies based on the sealed bid auction type; for instance, in SPSBA scenarios, bidding closer to true valuations may be advantageous due to the second-highest bid pricing mechanism, potentially leading to higher proposer revenue without the risk of overpayment. For FPSBA, more conservative bid shading strategies might be necessary to avoid the winner's curse, especially in high-variance valuation environments.
+The insights derived from these sealed bid auction simulations provide a strategic blueprint for builders and proposers within Ethereum’s PBS system. Builders can refine their bidding strategies based on the sealed bid auction type; for instance, in SPSBA scenarios, bidding closer to true valuations may be advantageous due to the second-highest bid pricing mechanism, potentially leading to higher proposer revenue without the risk of overpayment. For FPSBA, more conservative bid shading strategies might be necessary to avoid the overpayment, especially in high-variance valuation environments.
 
 Proposers, on the other hand, can use these insights to better predict the outcomes of different auction formats, influencing their choice between FPSBA and SPSBA based on expected revenue and the variance in bids they are willing to entertain. Understanding these dynamics is crucial for maximizing revenue while maintaining a competitive and fair bidding environment.
 
@@ -489,5 +489,5 @@ fig.show()
 [^5]: https://thogiti.github.io/2024/04/18/A-Deep-dive-into-ePBS-Design-Specs.html
 [^6]: https://en.wikipedia.org/wiki/Revenue_equivalence
 [^7]: https://en.wikipedia.org/wiki/Bayesian_game
-[^8]: https://en.wikipedia.org/wiki/Winner%27s_curse
+
 
