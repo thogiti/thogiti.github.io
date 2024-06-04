@@ -7,7 +7,7 @@ tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-price-sealed-bid second
 
 ## Introduction
 
-In the evolving landscape of multi-chain world, one of the key components to unlocking the full potential of cross-chain interactions is through maximizing the value extracted from miner-extractable value, or MEV. This article will explore how we can develop mathematical models and optimize auction mechanisms to maximize proposer revenues.
+In the evolving landscape of multi-chain world, one of the key components to unlocking the full potential of cross-chain interactions is through maximizing the value extracted from miner-extractable value, or MEV. This article will explore the mathematical models and optimization of auction mechanisms to maximize proposer revenues and strategic decision making in should a bidder opt for separate auctions or a joint MEV auction in cross-chain MEV interactions.
 
 We'll start by exploring a foundational model presented by Ed Felten in the recent [Arbitrum research forum](https://research.arbitrum.io/t/do-shared-mev-auctions-actually-increase-revenue/9606) [^1], which breaks down the basics of separate and joint MEV auctions. This model serves as a baseline to understand not just the mechanics, but also the broader implications of choosing one auction method over another in a multi-chain environment. By examining this model, we set the stage for a deeper investigation into more complex scenarios that reflect the real-world dynamics of cross-chain MEV interactions.
 
@@ -140,6 +140,79 @@ $$R_{joint} - R_{sep} = M - \left( K - \sqrt{K} \right) \frac{\sigma}{\lambda} \
 - **Impact of Risk Aversion**: Incorporating risk aversion significantly modifies the estimation error impact by scaling it down with the risk parameter $\lambda$.
 - **Revenue Dynamics**: The decision between joint and separate MEV auctions depends on the magnitude of $M$ relative to the modified risk parameters $\left( K - \sqrt{K} \right) \frac{\sigma}{\lambda} \alpha(n)$.
 - **Strategic Implications**: The choice of cross-chain MEV auction format can be strategically optimized based on the aggregate risk preferences of the bidders and the synergistic value of combining MEV rights across chains.
+
+
+## Dynamic Auction Model - Sequential Auctions
+
+The objective here is to model and analyze sequential auctions where the results of one auction have an impact on subsequent ones in a multi-chain MEV environment. This reflects real-life scenarios where bidders might tweak their strategies based on earlier auction experiences, adapting to wins or losses in a cross-chain MEV auction interactions.
+
+### Sequential Auction Setup
+
+**Assumptions**:
+- **Bidder Behavior**: Bidders dynamically adjust their bidding strategies based on the outcomes of preceding auctions.
+- **Valuation Model**:
+   - For each chain $j$:
+     $V_{i,j} = V_j^* + \epsilon_{i,j}$
+     where $V_j^*$ represents the true valuation for chain $j$, and $\epsilon_{i,j}$ is the estimation error for bidder $i$ on chain $j$, normally distributed as $\epsilon_{i,j} \sim N(0, \sigma^2)$.
+- **Outcome Influence**: The results from one auction (e.g., auction $j$) influence the bidder's perceptions and strategies in subsequent auctions.
+
+**Notation**:
+- $n$: Number of bidders.
+- $K$: Number of chains.
+- $V_j^*$: True valuation for chain $j$.
+- $\epsilon_{i,j}$: Estimation error for bidder $i$ on chain $j$.
+- $\alpha_j(n)$: Adjusted expected value of the second-largest of $n$ samples from a standard normal distribution $N(0, 1)$ for auction $j$.
+
+### Valuation Model Adjustments in Sequential Auctions 
+
+**Initial Auction**:
+For the initial chain $j=1$:
+$R_1 = V_1^* + \sigma \cdot \alpha_1(n)$
+
+**Subsequent Auctions**:
+For any subsequent chain $j > 1$, the valuation might be adjusted based on previous auction results. We introduce a dynamic factor $\beta_j$ to reflect these adjustments:
+$\alpha_j(n) = \alpha(n) + \beta_j$
+where $\beta_j$ is influenced by the outcomes of earlier auctions.
+
+### Sequential Auction Revenue Calculation
+
+**Revenue for Chain $j$**:
+The revenue from the auction for chain $j$ is thus:
+$R_j = V_j^* + \sigma \cdot (\alpha(n) + \beta_j)$
+
+**Total Revenue**:
+Summing up all the revenues from the sequential auctions gives:
+
+$$R_{seq} = \sum_{j=1}^K \left( V_j^* + \sigma \cdot (\alpha(n) + \beta_j) \right)$$
+
+$$R_{seq} = \sum_{j=1}^K V_j^* + \sigma \cdot \sum_{j=1}^K (\alpha(n) + \beta_j)$$
+
+### Comparative Analysis
+
+Comparing this with the revenue from a simultaneous auction for all $K$ chains:
+
+$$R_{sim} = \sum_{j=1}^K \left( V_j^* + \sigma \cdot \alpha(n) \right)$$
+
+$$R_{sim} = \sum_{j=1}^K V_j^* + \sigma \cdot K \cdot \alpha(n)$$
+
+The revenue difference is:
+
+$$R_{seq} - R_{sim} = \sigma \cdot \left( \sum_{j=1}^K (\alpha(n) + \beta_j) - K \cdot \alpha(n) \right)$$
+
+$$R_{seq} - R_{sim} = \sigma \cdot \sum_{j=1}^K \beta_j$$
+
+### Observations and Insights
+
+- **Impact of $\beta_j$**:
+   - Positive $\beta_j$ values generally suggest that sequential auctions might generate higher revenue than simultaneous ones.
+   - The $\beta_j$ values reflect changes in bidder aggressiveness or caution, driven by previous auction outcomes.
+- **Strategy Adjustments**:
+   - Losers in early auctions may become more aggressive in later rounds, potentially increasing $\beta_j$.
+   - Conversely, early winners might temper their bids to manage risk, possibly reducing $\beta_j$.
+- **Real-World Applicability**:
+   - Sequential auctions can more closely mimic actual bidding behaviors as they allow bidders to adapt strategies based on new information and previous results.
+- **Market Dynamics**:
+   - These auctions can foster a more dynamic and potentially competitive bidding environment, which might lead to enhanced overall revenue.
 
 
 ## References
