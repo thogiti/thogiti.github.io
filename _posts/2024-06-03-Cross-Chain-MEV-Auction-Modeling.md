@@ -76,7 +76,7 @@ As we've discussed above, there are several assumptions involved regarding the b
 
 In cross-chain MEV auctions, bidders' behaviors are not just influenced by their wallet size or strategic acumen, but also by how they perceive and manage risk. This dynamic becomes especially compelling in sealed bid second-price auctions, where the highest bid wins, but it's the second-highest bid that sets the price of the payment. Here, understanding risk aversion isn't just a technicality—it's central to predicting how bidders will act under uncertainty. By modeling bidders' risk preferences, we can peel back layers of complexity and uncover the subtleties of their decision-making processes, providing a clearer picture of the auction's outcome in a multi-chain environment where the stakes, and uncertainties, are multiplied.
 
-The goal in this scenario is to incorporate bidder's risk aversion into the valuation model of cross-chain MEV auctions and to examine how this affects the proposer revenue outcomes and revenues from separate and joint MEV auctions.
+The objective in this scenario is to incorporate bidder's risk aversion into the valuation model of cross-chain MEV auctions and to examine how this affects the proposer revenue outcomes and revenues from separate and joint MEV auctions.
 
 ### Valuation Model with Risk Aversion
 
@@ -126,9 +126,13 @@ $$R_{joint} = \sum_{j=1}^K V_j^* + M + \frac{\sigma \sqrt{K}}{\lambda} \alpha(n)
 
 ### Comparative Analysis
 Comparing the revenues:
+
 $$R_{sep} = \sum_{j=1}^K \left( V_j^* + \frac{\sigma}{\lambda} \alpha(n) \right)$$
+
 $$R_{joint} = \sum_{j=1}^K V_j^* + M + \frac{\sigma \sqrt{K}}{\lambda} \alpha(n)$$
+
 The difference in expected revenue is:
+
 $$R_{joint} - R_{sep} = M - \left( K - \sqrt{K} \right) \frac{\sigma}{\lambda} \alpha(n)$$
 
 ### Insights
