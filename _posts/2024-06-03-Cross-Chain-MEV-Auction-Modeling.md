@@ -214,7 +214,7 @@ $$R_{seq} - R_{sim} = \sigma \cdot \sum_{j=1}^K \beta_j$$
 
 ## Combinatorial Auctions
 
-Combinatorial auctions in the context of MEV auctions allow bidders to place bids on predefined combinations of chains, rather than just individual chains, capturing complex synergies and bidder's preferences. This approach can significantly enhance proposer revenue by recognizing the added value that bidders place on controlling multiple chains simultaneously. By focusing on practical, predefined subsets of chains instead of all combinations, the auction process remains computationally feasible while still reflecting the strategic importance of cross-chain MEV opportunities. This model ensures a more efficient and effective auction mechanism, maximizing total revenue and accurately representing bidder valuations and synergies.
+Combinatorial auctions in the context of MEV auctions allow bidders to place bids on predefined combinations of chains, rather than just individual chains, capturing complex synergies and bidder's preferences [^4]. This approach can significantly enhance proposer revenue by recognizing the added value that bidders place on controlling multiple chains simultaneously. By focusing on practical, predefined subsets of chains instead of all combinations, the auction process remains computationally feasible while still reflecting the strategic importance of cross-chain MEV opportunities. This model ensures a more efficient and effective auction mechanism, maximizing total revenue and accurately representing bidder valuations and synergies.
 
 ### Relaxed Combinatorial Auction Model
 
@@ -419,16 +419,12 @@ The auctioneer will choose the highest revenue from the combinations. In this ca
 $R_{comb} = 354$
 
 #### Observations and Insights
-
 **Revenue Maximization**:
    - The relaxed combinatorial auction achieved the highest revenue by selecting the bid for all chains $\{A,B,C\}$.
-
 **Synergy Impact**:
    - The synergy values $\gamma_S$ played a important role in increasing the total valuation of combinations. The high synergy value for the combination $\{A,B,C\}$ significantly contributed to the maximum revenue.
-
 **Computational Efficiency**:
    - By limiting the auction to predefined subsets, the auctioneer avoided the need to evaluate all possible combinations, making the process more practical and efficient.
-
 **Bidding Behavior**:
    - Bidders could express their preferences for combinations, allowing for more nuanced bids that reflect their valuation of synergies.
 
@@ -437,4 +433,5 @@ $R_{comb} = 354$
 [^1]: https://research.arbitrum.io/t/do-shared-mev-auctions-actually-increase-revenue/9606
 [^2]: https://barnabe.substack.com/p/pbs 
 [^3]: https://thogiti.github.io/2024/03/28/ePBS.html
+[^4]: https://en.wikipedia.org/wiki/Combinatorial_auction
 
