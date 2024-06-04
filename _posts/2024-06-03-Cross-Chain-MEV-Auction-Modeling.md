@@ -419,12 +419,16 @@ The auctioneer will choose the highest revenue from the combinations. In this ca
 $R_{comb} = 354$
 
 #### Observations and Insights
+
 **Revenue Maximization**:
    - The relaxed combinatorial auction achieved the highest revenue by selecting the bid for all chains $\{A,B,C\}$.
+
 **Synergy Impact**:
    - The synergy values $\gamma_S$ played a important role in increasing the total valuation of combinations. The high synergy value for the combination $\{A,B,C\}$ significantly contributed to the maximum revenue.
+
 **Computational Efficiency**:
    - By limiting the auction to predefined subsets, the auctioneer avoided the need to evaluate all possible combinations, making the process more practical and efficient.
+
 **Bidding Behavior**:
    - Bidders could express their preferences for combinations, allowing for more nuanced bids that reflect their valuation of synergies.
 
