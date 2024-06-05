@@ -43,7 +43,27 @@ Conversely, the **Second Price Sealed Bid Auction (SPSBA)**, often called the Vi
 
 ### Distribution Models for Builder Valuations
 
-To simulate these auctions accurately, we utilize two primary distribution models for the valuations builders place on block proposals: **uniform** and **chi-squared distributions**. The uniform distribution assumes that the value builders assign to a block is evenly distributed across a range, providing a baseline for understanding bidding behavior. In contrast, the chi-squared distribution is better suited for scenarios where values vary more significantly—typical in environments where builders have access to private order flows. Builders with exclusive information can more accurately assess the MEV and the value of a block, giving them an advantage over competitors without such insights. This distribution model more accurately approximates the valuation scenarios faced by builders with access to private order flows or other information that gives them deeper insight into MEV.
+To simulate these auctions accurately, we utilize two primary distribution models for the valuations builders place on block proposals: **uniform** and **chi-squared distributions**. The choice of distribution models for builder valuations in auction simulations plays an important role in understanding and predicting bidder behavior within different auction frameworks. Specifically, the uniform and chi-squared distributions offer contrasting perspectives that are useful for modeling various real-world scenarios in Ethereum's auction mechanisms.
+
+#### Uniform Distribution
+
+The **uniform distribution** is employed in simulations primarily because of its simplicity and the nature of its assumptions. It assumes that all outcomes (in this case, valuations of a block by builders) are equally likely. This model is particularly effective in scenarios where:
+
+- **Equal Information and Opportunity**: Builders have equal access to information and similar capabilities in terms of transaction processing or block assembly. This assumption levels the playing field, making it reasonable to assume that no single builder consistently values blocks higher or lower than others over time.
+- **Simplistic Baseline for Comparisons**: It provides a clean, straightforward baseline from which deviations in more complex models can be measured and understood. By starting with uniform assumptions, it's easier to isolate the effects of changing one variable at a time in more detailed simulations.
+
+#### Chi-Squared Distribution
+
+On the other hand, the **chi-squared distribution** is used to represent scenarios where the variability and skewness in builder valuations are more pronounced. This model is particularly useful in contexts such as:
+
+- **Private Order Flow and Information Asymmetry**: Some builders might have access to proprietary algorithms, insider information, or faster computational resources that give them an edge in valuing certain blocks more accurately or aggressively than their competitors. The chi-squared distribution, known for its asymmetry and long tail, effectively models the high variability and potential for extreme values that characterize such environments.
+- **Risk Tolerance and Bidding Aggressiveness**: Builders with different levels of risk tolerance or strategic priorities might evaluate the potential payoffs from winning a block differently. Those with access to private order flows or unique strategies may place higher valuations on certain blocks, reflective of their expected additional profits.
+
+#### Why These Models Matter
+
+- **Analyzing Auction Dynamics**: By employing these two distributions, we can simulate and analyze how different types of builders might behave under varying auction formats like FPSBA and SPSBA. This helps in understanding not only the average outcomes but also the range and spread of outcomes which can influence the design of auction mechanisms.
+- **Implications for Mechanism Design**: Understanding the implications of these distribution models helps in designing more robust auction mechanisms that can accommodate a range of builder behaviors and market conditions. For instance, if the market is dominated by builders with a high variance in valuations (as modeled by the chi-squared distribution), the auction design might need to account for the potential for very high or very low bids and adjust the rules or parameters to ensure fairness and efficiency.
+
 
 ### Revenue Equivalence Theorem and Bayesian Nash Equilibrium
 
@@ -130,9 +150,26 @@ Our computational procedure is outlined as follows:
 This method provides a statistically robust way to approximate the expected second-highest bid in FPSBA, enabling a bidder to strategically place their bid slightly above this value to maximize the likelihood of winning at the minimum additional cost. Such calculations are instrumental in deploying effective bid strategies within the sealed bid framework, emphasizing the analytical depth required to navigate such auction systems efficiently.
 
 For reference here is how truncated uniform and chi-squared distributions look like:
-![Truncated-Uniform-Distribution](/assets/images/20240501/Trunctaed-Uniform-Distribution.png)
 
-![Truncated-Chi-Squared-Distribution](/assets/images/20240501/Trunctaed-Chi-Squared-Distribution.png)
+![Truncated-Uniform-Distribution](/assets/images/20240501/Truncated-Uniform-Distribution.png)
+
+![Truncated-Chi-Squared-Distribution](/assets/images/20240501/Truncated-Chi-Squared-Distribution.png)
+
+### Bidding Strategy in FPSBA Under Chi-Squared Distribution
+
+- **Draw Samples**: Start by generating a large number of valuations from a chi-squared distribution. These samples represent possible valuations that other bidders might assign to the same block you are considering.
+- **Truncation**: For your maximum bid consideration  $v_i$, truncate all sampled valuations at this value. This step simulates the  scenario where you assume no other bidder will bid more than your maximum willingness to pay,  $v_i$. This truncation is important as it limits the range of bids you consider to those less than or equal to $v_i$, reflecting a conservative but strategic approach to avoid overbidding.
+- **Calculate the Largest Value**: Within each subset formed after truncation, identify the highest valuation for the $N-1$ bidders. This value represents the optimal bid in an FPSBA scenario if $v_i$ is the winner, as it is the maximum amount you would need to bid to win the auction given $N-1$ loser bids.
+- **Expected Value Calculation**: Compute the average of these highest values across all subsets. This expected optimal bid,  \hat{\mathbb{E}}(v_{(n-1)}) , serves as your statistical estimate for the optimal bid when your valuation is  v_i . This estimation balances the goal of winning the auction against the risk of paying too much.
+
+
+```python
+# Expected values on the conditional v_i is the winner; 
+# Compute the expected value of maximum drawing from a truncated distribution with N-1 bidders
+Ev = np.empty(vgrid.shape)
+for i,this_v in enumerate(vgrid): 
+    Ev[i] = Ev_largest(this_v, v, N-1)
+```
 
 ## Results and Analysis
 
@@ -270,7 +307,7 @@ np.random.seed(1337)
 
 
 def Ev_largest(vi, v_sim_untruncated, N, R_used_min=42): 
-    '''Ev_largest: compute the expected value of maximum drawing from a truncated distribtion 
+    '''Ev_largest: compute the expected value of maximum drawing from a truncated distribution 
                     where v_sim_untruncated are draws from the untruncated and vi is the 
                     truncation point. 
         
@@ -406,7 +443,8 @@ ngrid = 100
 pcts = np.linspace(0, 100, ngrid, endpoint=False)[1:]
 vgrid = np.percentile(v, q=pcts)
 
-# Expected values on the conditional 
+# Expected values on the conditional v_i is the winner; 
+# Compute the expected value of maximum drawing from a truncated distribution with n-1 bidders
 Ev = np.empty(vgrid.shape)
 for i,this_v in enumerate(vgrid): 
     Ev[i] = Ev_largest(this_v, v, N-1)
