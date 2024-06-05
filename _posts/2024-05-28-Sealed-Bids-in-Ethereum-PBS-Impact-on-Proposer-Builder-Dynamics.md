@@ -171,6 +171,47 @@ for i,this_v in enumerate(vgrid):
     Ev[i] = Ev_largest(this_v, v, N-1)
 ```
 
+```python
+def Ev_largest(vi, v_sim_untruncated, N, R_used_min=42): 
+    '''Ev_largest: compute the expected value of maximum drawing from a truncated distribution 
+                    where v_sim_untruncated are draws from the untruncated and vi is the 
+                    truncation point. 
+        INPUTS: 
+            vi: (scalar) upper truncation point 
+            v_sim_untruncated: (R-length 1-dim np array) draws of v from the untruncated distribution
+            N: (int) number of draws per iteration  
+            R_used_min: (int, optional) assert that we have at least this many samples. (Set =0 to disable.)
+            
+        OUTPUTS
+            Ev: (float) expected value of the largest across simulations
+            R_used: (int) no. replications used to compute simulated expectation
+    '''
+    assert v_sim_untruncated.ndim == 1, f'Expected 1-dimensional array'
+    
+    # perform truncation 
+    I = v_sim_untruncated <= vi
+    v_sim = np.copy(v_sim_untruncated[I])
+
+    # drop extra rows
+    drop_this_many = np.mod(v_sim.size, N)
+    if drop_this_many>0: 
+        v_sim = v_sim[:-drop_this_many]
+    
+    # reshape
+    R_used = int(v_sim.size / N)
+    v_sim = np.reshape(v_sim, (N,R_used))
+    assert R_used > R_used_min, f'Too few replications included: only {R_used}. Try increasing original R.'
+    
+    # find largest value 
+    v_sim = np.sort(v_sim, 0) # sorts ascending ... 
+    v_largest = v_sim[-1, :]  # ... so the last *row* is the maximum in columns (samples)
+    
+    # evaluate expectation
+    Ev = np.mean(v_largest)
+    
+    return Ev
+```
+
 ## Results and Analysis
 
 ![Distribution-of-Payments-Uniform-Distribution](/assets/images/20240501/Distribution-of-Payments-Uniform-Distribution.png)
