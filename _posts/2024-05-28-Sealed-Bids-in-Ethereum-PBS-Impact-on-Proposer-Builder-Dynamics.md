@@ -160,7 +160,7 @@ For reference here is how truncated uniform and chi-squared distributions look l
 - **Draw Samples**: Start by generating a large number of valuations from a chi-squared distribution. These samples represent possible valuations that other bidders might assign to the same block you are considering.
 - **Truncation**: For your maximum bid consideration  $v_i$, truncate all sampled valuations at this value. This step simulates the  scenario where you assume no other bidder will bid more than your maximum willingness to pay,  $v_i$. This truncation is important as it limits the range of bids you consider to those less than or equal to $v_i$, reflecting a conservative but strategic approach to avoid overbidding.
 - **Calculate the Largest Value**: Within each subset formed after truncation, identify the highest valuation for the $N-1$ bidders. This value represents the optimal bid in an FPSBA scenario if $v_i$ is the winner, as it is the maximum amount you would need to bid to win the auction given $N-1$ loser bids.
-- **Expected Value Calculation**: Compute the average of these highest values across all subsets. This expected optimal bid,  \hat{\mathbb{E}}(v_{(n-1)}) , serves as your statistical estimate for the optimal bid when your valuation is  v_i . This estimation balances the goal of winning the auction against the risk of paying too much.
+- **Expected Value Calculation**: Compute the average of these highest values across all subsets. This expected optimal bid,  $\hat{\mathbb{E}}(v_{(n-1)})$, serves as your statistical estimate for the optimal bid when your valuation is  v_i . This estimation balances the goal of winning the auction against the risk of paying too much.
 
 
 ```python
