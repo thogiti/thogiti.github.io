@@ -3,6 +3,8 @@ title: Solving the Messopotamia - The Curious World of Sealed Bid Auctions in Et
 tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-price-sealed-bid second-price-sealed-bid PBS MEV Proposer-Builder-Separation MEV-Supply-Chain-Architecture MEV-Supply-Chain-Management Bayesian-nash-equilibrium BNE builder-bidding-strategies proposer-revenue maximizing-proposer-revenue
 ---
 
+*Note: Many thanks to [Barnabé Monnot](https://warpcast.com/barnabe) for reviewing, guidance, and providing feedback.*
+
 ## Introduction
 
 In this post, we explore the intriguing world of edge cases within First Price Sealed Bid Auction (FPSBA) and Second Price Sealed Bid Auction (SPSBA) in Ethereum’s Proposer Builder Separation (PBS) scheme, where traditional auction theories meet the cutting-edge challenges of blockchain technology. 

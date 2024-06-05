@@ -3,6 +3,8 @@ title: Sealed Bids in Ethereum's PBS - Impact on Proposer-Builder Dynamics
 tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-pricesealed-bid second-price-sealed-bid PBS MEV Proposer-Builder-Separation MEV-Supply-Chain-Architecture MEV-Supply-Chain-Management Bayesian-nash-equilibrium BNE builder-bidding-strategies proposer-revenue maximizing-proposer-revenue
 ---
 
+*Note: Many thanks to [Barnabé Monnot](https://warpcast.com/barnabe) for reviewing, guidance, and providing feedback.*
+
 ## Introduction
 
 Ethereum's shift to a Proof of Stake (PoS) consensus mechanism introduces a clear division of roles in block proposal and construction through the Proposer-Builder Separation (PBS) [^1][^2]. This structure not only improves operational efficiency but also sets the stage for complex economic interactions between proposers and builders. Central to these interactions is the auction-based system enabled by MEV-Boost, which plays a crucial role in this ecosystem.

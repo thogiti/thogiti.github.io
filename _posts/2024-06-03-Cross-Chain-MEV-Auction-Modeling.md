@@ -3,6 +3,8 @@ title: Cross-Chain MEV Auctions - Modeling Proposer Revenue Maximization
 tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-price-sealed-bid second-price-sealed-bid PBS MEV Proposer-Builder-Separation MEV-Supply-Chain-Architecture MEV-Supply-Chain-Management Bayesian-nash-equilibrium BNE builder-bidding-strategies proposer-revenue maximizing-proposer-revenue vickrey-auctions Proposer-Revenue-Maximization cross-chain-mev cross-chain-mev-auctions
 ---
 
+*Note: Many thanks to [Barnabé Monnot](https://warpcast.com/barnabe) for reviewing, guidance, and providing feedback.*
+
 ## Introduction
 
 In the evolving landscape of multi-chain world, one of the key components to unlocking the full potential of cross-chain interactions is through maximizing the value extracted from miner-extractable value, or MEV. This article will explore the mathematical models and optimization of auction mechanisms to maximize proposer revenues and strategic decision making in should a bidder opt for separate auctions or a joint MEV auction in cross-chain MEV interactions.
