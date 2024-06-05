@@ -162,7 +162,7 @@ For reference here is how truncated uniform and chi-squared distributions look l
 - **Calculate the Largest Value**: Within each subset formed after truncation, identify the highest valuation for the $N-1$ bidders. This value represents the optimal bid in an FPSBA scenario if $v_i$ is the winner, as it is the maximum amount you would need to bid to win the auction given $N-1$ loser bids.
 - **Expected Value Calculation**: Compute the average of these highest values across all subsets. This expected optimal bid,  $\hat{\mathbb{E}}(v_{(n-1)})$, serves as your statistical estimate for the optimal bid when your valuation is  v_i . This estimation balances the goal of winning the auction against the risk of paying too much.
 
-You can see graph of the bidding strategy and the % bid shading in the FPSBA under chi-squared distribution at [below](#visualization-and-implications-of-bid-shading)
+You can see graph of the bidding strategy and the % bid shading in the FPSBA under chi-squared distribution in teh section [Visualization and Implications of Bid Shading](#visualization-and-implications-of-bid-shading).
 
 ```python
 # Expected values on the conditional v_i is the winner; 
