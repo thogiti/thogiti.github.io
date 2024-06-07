@@ -15,7 +15,6 @@ In this exploration, we meditate on the scenarios that deviate from the norm—w
 
 So, let’s start our journey, working together to better understand Ethereum’s auction mechanics and find practical solutions for its challenging scenarios.
 
-
 ## Dishonest Builder
 
 ![proposer-remorse-meme](/assets/images/20240501/proposer-remorse-meme.jpg)
@@ -28,44 +27,85 @@ Dishonest bidding and collusion distort the true competitive nature of the aucti
 
 ### Modeling Approach
 To tackle this issue, we'll employ a mathematical model that integrates the key variables influencing builder behavior and auction outcomes:
-- $\alpha$: Proportion of dishonest builders.
-- $\beta$: Dishonesty factor reducing the bid.
-- $\gamma$: Proportion of builders involved in collusion.
-- $N$: Total number of builders.
-- $V_i$: Valuation of builder $i$.
-- $B_i$: Bid of builder $i$.
 
-#### Mathematical Formulation
-For FPSBA:
-- Honest builders' bid strategy: $B_i = \frac{N-1}{N} \cdot V_i$.
-- Dishonest builders' adjusted bid: $B_i = (1 - \beta) \cdot \frac{N-1}{N} \cdot V_i$.
+- **Builder Dishonesty Alpha ($\alpha$)**: Proportion of dishonest builders, drawn from $\text{Uniform}(0, 1)$.
+- **Builder Dishonesty Beta ($\beta_i$)**: Random uniform variable in $[0, \beta]$ representing the extent of bid shading by dishonest builders.
+- **Collusion Factor ($\gamma$)**: Proportion of dishonest builders involved in collusion, drawn from $\text{Uniform}(0, 1)$.
+- **Collusion Shading Factor ($\delta$)**: Additional factor by which colluding builders further drop their bids, drawn from $\text{Uniform}(0, 1)$.
 
-Expected payment to the proposer based on the revenue equivalence theorem, considering dishonest bids:
-$P(\alpha, \beta) = \text{Average of second-highest bids}$
 
-For SPSBA:
-- Honest builders' strategy: $B_i = V_i$.
-- Dishonest builders' bid: $B_i = (1 - \beta) \cdot V_i$.
+### Bidding Strategies in FPSBA and SPSBA
 
-Similar to FPSBA, the expected proposer payment is:
-$P(\alpha, \beta) = \text{Average of second-highest bids}$
+To analyze the impact of these parameters on proposer payments, bid distributions, and equilibrium points, we need to consider both theoretical and simulation-based approaches.
 
-#### Sensitivity Analysis
-Exploring how changes in $\alpha$ and $\beta$ influence proposer payments helps understand the auction's resilience to dishonest behavior:
-$\frac{\partial P}{\partial \alpha} \quad \text{and} \quad \frac{\partial P}{\partial \beta}$
-These derivatives are crucial for revealing the sensitivity of proposer earnings to changes in the proportion of dishonest builders and their bid reduction strategy.
+- **Honest Builders**: Bid according to their valuations.
+   $B_i = \text{OptimalBid}(V_i)$
 
-### Collusion Modeling Using $\gamma$
-Collusion introduces another layer of complexity, as it involves coordinated bid reductions among a subset of builders:
-- Colluding builders may adopt a bid: $B_i = (1 - \beta) \cdot V_i$.
-- The factor $\gamma$ reflects the extent of collusion among builders.
+- **Dishonest Non-Colluding Builders**: Shade their bids by a random $\beta_i$ drawn from $[0, \beta]$.
+   $B_i = (1 - \beta_i) \text{OptimalBid}(V_i) \quad \text{where} \quad \beta_i \sim \text{Uniform}(0, \beta)$
 
-### Methodological Approach and Special Considerations
-- **Bayesian Nash Equilibrium**: Identifying the Bayesian Nash Equilibrium for both FPSBA and SPSBA in the presence of dishonesty and collusion provides insights into the stable strategies that builders and proposers might adopt.
-- **Optimal Bidding Strategies**: Understanding how honest and dishonest builders alter their bids under different scenarios helps in formulating strategies that could mitigate risks associated with dishonest behavior.
-- **Auction Efficiency and Welfare Analysis**: Assessing how dishonesty and collusion affect the overall efficiency of the auction and whether any changes result in welfare losses or Pareto improvements.
-- **Simulation and Empirical Analysis**: Conducting simulations to observe the behavior of the auction under various configurations of $\alpha$, $\beta$, and $\gamma$. Empirical analysis could involve historical data from similar auction environments to validate the model's predictions.
+- **Colluding Builders**: Further shade their bids by $\delta$ on top of the random $\beta_i$.
+   $B_i = (1 - \beta_i) (1 - \delta) \text{OptimalBid}(V_i) \quad \text{where} \quad \beta_i \sim \text{Uniform}(0, \beta)$
 
+### Analysis of Proposer Payments
+
+#### FPSBA
+
+**Proposer Payment**:
+$P_{\text{FPSBA}} = \max(B_1, B_2, \ldots, B_N)$
+
+Where:
+- $B_i$ is the bid of builder $i$.
+
+#### SPSBA 
+
+**Proposer Payment**:
+$P_{\text{SPSBA}} = \max_{i \neq j} (B_i)$
+
+Where:
+- $B_i$ is the bid of builder $i$.
+- $B_j$ is the highest bid.
+
+### Equilibrium Analysis
+
+To understand the equilibrium behavior, we need to analyze the bidding strategies and how they are influenced by the parameters $\alpha$, $\beta$, $\gamma$, and $\delta$.
+
+#### Honest Bidding Strategy
+
+For honest builders, the bidding strategy is straightforward:
+$B_i = \text{OptimalBid}(V_i)$
+
+#### Dishonest Bidding Strategy
+
+For dishonest non-colluding builders, the bidding strategy is:
+$B_i = (1 - \beta_i) \text{OptimalBid}(V_i) \quad \text{where} \quad \beta_i \sim \text{Uniform}(0, \beta)$
+
+#### Colluding Bidding Strategy
+
+For colluding builders, the bidding strategy further reduces the bid:
+$B_i = (1 - \beta_i) (1 - \delta) \text{OptimalBid}(V_i) \quad \text{where} \quad \beta_i \sim \text{Uniform}(0, \beta)$
+
+### Impact Analysis
+
+- **Proposer Payments**: Proposer payments are significantly influenced by the parameters $\alpha$, $\beta$, $\gamma$, and $\delta$. Higher values of $\alpha$, $\beta$, and $\gamma$ generally result in lower proposer payments, with $\delta$ further reducing payments when colluding bids are involved.
+- **Bid Distributions**: The level of dishonesty and collusion among builders affects the distribution of bids. Dishonest bidding leads to a wider distribution of lower bids, while colluding bids, further reduced by $\delta$, are concentrated at lower values.
+- **Equilibrium Points**: The equilibrium shifts as $\alpha$, $\beta$, $\gamma$, and $\delta$ change, influencing builders' strategies. Higher levels of dishonesty and collusion tend to push the equilibrium towards lower bid values.
+- **Impact of $\alpha$ (Proportion of Dishonest Builders)**:
+   - As $\alpha$ increases, the number of dishonest builders increases. This will likely lead to lower bids overall due to bid shading by $\beta_i$.
+   - Higher $\alpha$ can decrease proposer payments in FPSBA because the highest bid is likely to be shaded.
+   - In SPSBA, the second-highest bid is also likely to be shaded, potentially reducing proposer payments, though the effect might be less pronounced than in FPSBA.
+- **Impact of $\beta$ (Extent of Bid Shading by Dishonest Builders)**:
+   - As $\beta$ increases, the extent of bid shading increases. This results in lower bids from dishonest builders.
+   - A higher $\beta$ will reduce proposer payments in both FPSBA and SPSBA.
+   - Bid shading impacts the equilibrium by pushing the bids downwards, potentially altering the distribution of winning bids.
+- **Impact of $\gamma$ (Proportion of Colluding Builders)**:
+   - As $\gamma$ increases, the number of colluding builders increases. This results in coordinated bid shading by an additional factor $\delta$.
+   - Higher $\gamma$ can further decrease proposer payments in FPSBA because colluding bids are additionally shaded.
+   - In SPSBA, coordinated bid shading can reduce the second-highest bid, impacting proposer payments.
+- **Impact of $\delta$ (Additional Shading Factor for Colluding Builders)**:
+   - As $\delta$ increases, the bids of colluding builders are further reduced.
+   - Higher $\delta$ results in lower proposer payments in both FPSBA and SPSBA.
+   - The presence of $\delta$ can significantly alter the equilibrium by making colluding bids substantially lower than non-colluding bids.
 
 ## Dishonest Proposer – Bid Leakage
 
