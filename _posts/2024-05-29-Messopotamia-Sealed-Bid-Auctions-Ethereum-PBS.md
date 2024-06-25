@@ -3,6 +3,8 @@ title: Solving the Messopotamia - The Curious World of Sealed Bid Auctions in Et
 tags: Ethereum sealed-bids blind-bidding FPSB SPSB first-price-sealed-bid second-price-sealed-bid PBS MEV Proposer-Builder-Separation MEV-Supply-Chain-Architecture MEV-Supply-Chain-Management Bayesian-nash-equilibrium BNE builder-bidding-strategies proposer-revenue maximizing-proposer-revenue
 ---
 
+## WIP - Work in progress
+
 *Note: Many thanks to [Barnabé Monnot](https://warpcast.com/barnabe) for reviewing, guidance, and providing feedback.*
 
 ## Introduction
@@ -112,10 +114,10 @@ $B_i = (1 - \beta_i) (1 - \delta) \text{OptimalBid}(V_i) \quad \text{where} \qua
 ![bid-leakage-evil-kermit-meme](/assets/images/20240501/bid-leakage-evil-kermit-meme.jpg)
 
 ### Description
-In this specific analysis, we study scenarios where an honest builder faces a dishonest proposer who leaks bid information. This case primarily focuses on the implications of such bid leaks, whether certain or probabilistic, on the integrity of the auction process and strategic bidding behaviors.
+In this specific analysis, we study scenarios where a dishonest proposer leaks bid information (or bids are leaked by other bidders). This case primarily focuses on the implications of such bid leaks, whether certain or probabilistic, on the integrity of the auction process and strategic bidding behaviors.
 
-### Problem Highlight
-Bid leakage fundamentally undermines the integrity of the bidding process by exposing confidential bid information. This exposure skews the competitive nature of auctions, potentially leading to altered bid strategies and unfair advantages, which can decrease the overall health and fairness of the auction environment.
+### Problem statement
+Bid leakage occurs when one bidder’s bid becomes known to another, potentially affecting their bidding strategy and the overall auction outcome. This analysis aims to explore the effects of bid leakage in both First-Price Auctions (FPA) and Second-Price Auctions (SPA), focusing on how different leakage probabilities influence the surpluses of first movers (FM) and second movers (SM), seller (proposer) revenue, and overall auction efficiency.
 
 ### Detailed Study on Bid Leakage in FPSBA and SPSBA
 
@@ -123,66 +125,25 @@ To thoroughly investigate the impact of bid leakage, we consider scenarios of ce
 
 ### Scenarios for Bid Leakage
 
-1. **Certain Bid Leakage ($p = 1$)**
-   - **Description**: The first bid submitted is leaked with certainty.
-   - **Impact**: Subsequent builders adjust their strategies knowing the first bid, which might lead them to either outbid the leaked bid or strategically position their bid in a way that maximizes their utility based on the leaked information.
+- **Certain Bid Leakage ($p = 1$)**
+- **Probabilistic Bid Leakage ($0 < p < 1$)**
 
-2. **Probabilistic Bid Leakage ($0 < p < 1$)**
-   - **Description**: The first bid submitted is leaked with a probability $p$.
-   - **Impact**: Subsequent builders adjust their strategies based on the likelihood of the leakage, which introduces a layer of uncertainty and complexity into their bidding strategies.
+**Assumptions**
+- Uniform Distribution: Builders’ valuations $v$ are uniformly distributed over $[0, 1]$.
+- Two Builders: We consider two builders for simplicity.
+- Bid Leakage Probability $p$ : Probability that the first builder’s bid is leaked to the second builder.
 
-3. **Leaking Only the Maximum Bid Up to the Current Time**
+Without loss of generality, the analysis can be easily extended to any distribution of valuations and multiple builders.
 
-	- **Description:** At an arbitrary time $t$ during the auction, the current maximum bid $B_{\text{max}}$ is leaked.
-	- **Impact:** Builders who have not yet bid, or those considering revising their bids, adjust their strategies based on the leaked $B_{\text{max}}$.
+**Definitions**
 
-Note: The scenario 3 looks analogous to 1 because $B_1$ is the max bid when the first bid is submitted. We need to further analyze this scenario.
+- First Mover (FM): First builder who submits a bid  $b_1(v_1)$.
+- Second Mover (SM): Second builder who may see  $b_1$  with probability $p$ and then submits  $b_2(b_1, v_2)$ , or submits  $b_2(∅, v_2)$  with probability  $1 - p$ .
 
-### Modeling and Analysis
-
-#### Key Parameters:
-- **Leak Probability ($p$)**: Defines the likelihood that the first or highest bid is leaked.
-- **Builder's Valuation ($V_i$)**: The intrinsic valuation of the builder for the slot, informing their maximum willing bid.
-- **Number of Builders ($N$)**: Total participants in the auction affecting the dynamics of bid adjustments.
-
-#### Impact on Bidding Strategies and Auction Outcomes
-
-**FPSBA**:
-- **Honest Bidders**:
-  - The first bid $B_1$ is submitted and leaked.
-  - Subsequent builders adjust their bids knowing $B_1$:
-        $B_i = \max$ { $B_1, \frac{N-1}{N} \cdot V_i$ } $\quad \text{for } i > 1$
-  - Upon leakage of $B_{\text{max}}$, subsequent builders adjust their bids to either match or exceed $B_{\text{max}}$ depending on their valuations:
-        $B_i = \max$ { $B_{\text{max}}, \frac{N-1}{N} \cdot V_i$ } $\quad \text{for } i > 1$
-
-**SPSBA**:
-- **Honest Bidders**:
-  - The first bid $B_1$ is submitted and leaked.
-  - Subsequent builders adjust their bids knowing $B_1$:
-        $B_i = \min$ { $B_1 + \epsilon, V_i$ } $\quad \text{for } i > 1$
-
-  where $\epsilon$ is a small increment to slightly outbid $B_1$, aiming to win without overpaying.
-
-  - Builders adjust their bids to slightly outbid the leaked $B_{\text{max}}$ if it benefits them, considering their true valuation:
-        $B_i = \min$ { $B_{\text{max}} + \epsilon, V_i$ } $\quad \text{for } i > 1$
-
-where $\epsilon$ is a small increment to ensure the highest possible but sensible bid.
+### Mathematical Model for First-Price Auction (FPA)
 
 
-#### Simulation of Auction Outcomes
-
-- **Steps**:
-  - Define the bid leakage scenario: Set $p$ for certain or probabilistic leakage.
-  - Simulate the auction process for FPSBA and SPSBA:
-     - Generate valuations $V_i$ for $N$ builders.
-     - Submit and possibly leak the first bid $B_1$.
-     - Adjust subsequent bids based on the leakage information.
-  - Calculate proposer payments and analyze the changes in bidding strategies and the overall auction efficiency.
-
-#### Equilibrium Analysis
-
-- **Bayesian Nash Equilibrium**: Determine the new equilibrium under bid leakage scenarios for FPSBA and SPSBA, where builders integrate the leaked information into their bidding strategy, potentially altering the traditional equilibrium outcomes.
-
+### Mathematical Model for Second-Price Auction (SPA)
 
 ## References
 [^1]: https://barnabe.substack.com/p/pbs 
