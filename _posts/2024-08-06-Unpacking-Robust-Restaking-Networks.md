@@ -87,12 +87,40 @@ This metric is crucial because it helps us understand how vulnerable the network
   Here, $\psi$ is the initial shock to the system (a small stake loss), and $\sigma_{\bigcup_{t=1}^{T} B_t}$ is the total stake lost through all the cascading attacks.
 
 ### EigenLayer Sufficient Conditions: The Security Check
-- **EigenLayer Sufficient Conditions**: To ensure the network is secure, the EigenLayer team developed a set of conditions that act as a quick security check. A validator $v$ is considered secure if:
+- **EigenLayer Sufficient Conditions**: To ensure the network is secure, the EigenLayer team developed a set of conditions[^1] that act as a quick security check. A validator $v$ is considered secure if:
   $\sum_{s \in N_G(v)} \frac{\sigma_v}{\sigma_{N_G(s)}} \cdot \frac{\pi_s}{\alpha_s} \leq \sigma_v$
   If all validators in the network satisfy this condition, it means the network is safe from any potential attacks.
+
+Let's unpack this in bit more details. This is also **CLaim 1** in the paper. 
+
+Claim 1 in the paper states that a restaking graph $G$ is secure if for each validator $v \in V$, the following inequality holds:
+
+$\sum_{s \in N_G(v)} \frac{\sigma_v}{\sigma_{N_G(s)}} \cdot \frac{\pi_s}{\alpha_s} \leq \sigma_v$
+
+This claim is significant because it provides a sufficient condition for ensuring that the restaking network is secure, meaning that no valid attacks exist under the given conditions. Let's break down the claim and its proof step by step.
+
+**Decomposing the Inequality**
+
+The inequality in Claim 1 can be interpreted as follows:
+
+- **Left Side**: $\sum_{s \in N_G(v)} \frac{\sigma_v}{\sigma_{N_G(s)}} \cdot \frac{\pi_s}{\alpha_s}$
+  
+  - $\sigma_{N_G(s)}$ is the total stake committed by all validators that support service $s$.
+  - $\frac{\sigma_v}{\sigma_{N_G(s)}}$ represents the fraction of the total stake for service $s$ that validator $v$ contributes.
+  - $\frac{\pi_s}{\alpha_s}$ is the "cost-benefit ratio" for attacking service $s$, representing the profit relative to the security threshold.
+
+  This sum considers the aggregate influence of validator $v$ across all services it participates in, weighted by the potential profit from attacking each service.
+
+- **Right Side**: $\sigma_v$
+  
+  - This is the total stake that validator $v$ has at risk.
+
+The inequality suggests that for the network to be secure, the weighted sum of the potential attack profits (adjusted for the validator's stake in each service) should not exceed the validator's total stake. 
 
 ### Reference Depth of Cascading Attacks: How Deep Does the Rabbit Hole Go?
 - **Reference Depth**: In a sequence of cascading attacks, the reference depth measures how far back each attack is influenced by the validators slashed in earlier attacks. It’s a way to understand the ripple effects across the network and gauge how interconnected these failures are.
 
 
 
+## [References](#references)
+[^1]: EigenLayer Team. Eigenlayer: The restaking collective. URL: https://docs.eigenlayer.xyz/overview/whitepaper, 2023
