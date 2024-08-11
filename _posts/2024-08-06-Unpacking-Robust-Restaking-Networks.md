@@ -71,7 +71,16 @@ In technical terms, if you have a restaking graph $G$, which maps out how valida
 Here, $G \downarrow B$ represents the network after some validators have been slashed and removed.
 
 ### Worst-Case Stake Loss: Preparing for the Worst
-- **Worst-Case Stake Loss $R_\psi(G)$**: Let’s imagine the worst-case scenario—a series of cascading attacks that snowballs into something catastrophic. The worst-case stake loss is a measure of how much damage these attacks could cause, calculated as:
+- **Worst-Case Stake Loss $R_\psi(G)$**: Now, let’s talk about the worst-case stake loss. This concept is all about understanding the absolute worst thing that could happen if cascading attacks were to occur.
+
+Here’s the idea:
+
+- **Starting with a Small Shock**: Let’s say something bad happens—a small group of validators loses their stake. This is the initial shock, represented by  $\psi$.
+- **Exploring All Possibilities**: We then look at all possible groups of validators who could be part of this initial shock. We’re essentially asking: What’s the worst group of validators that could be hit first?
+- **Impact on the Network**: Once these validators are out of the game, the network changes—it’s not as strong as it was before. We use the notation $G \downarrow D$ to represent the network after this initial group $D$ of validators has been slashed or removed.
+- **The Worst-Case Loss**: Now, we calculate the worst-case stake loss $R_\psi(G)$. This is a way of estimating the maximum amount of stake that could be lost as a result of cascading attacks that follow the initial shock. In other words, we’re trying to foresee how bad things could get if one bad event sets off a chain reaction of worse events.
+
+This metric is crucial because it helps us understand how vulnerable the network might be to a series of failures, and it’s a key tool in designing systems that can withstand even the worst possible scenarios. It is calculated as:
   
   $R_\psi(G) = \psi + \max_{D \in D_\psi(G)} \max_{(A_1, B_1), \dots, (A_T, B_T) \in C(G \downarrow D)} \frac{\sigma_{\bigcup_{t=1}^{T} B_t}}{\sigma_V}$
 
