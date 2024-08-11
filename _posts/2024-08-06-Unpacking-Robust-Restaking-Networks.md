@@ -91,7 +91,7 @@ This metric is crucial because it helps us understand how vulnerable the network
   $\sum_{s \in N_G(v)} \frac{\sigma_v}{\sigma_{N_G(s)}} \cdot \frac{\pi_s}{\alpha_s} \leq \sigma_v$
   If all validators in the network satisfy this condition, it means the network is safe from any potential attacks.
 
-Let's unpack this in bit more details. This is also **CLaim 1** in the paper. 
+Let's unpack this in bit more details. This is also **Claim 1** in the paper. 
 
 Claim 1 in the paper states that a restaking graph $G$ is secure if for each validator $v \in V$, the following inequality holds:
 
@@ -120,6 +120,25 @@ The inequality suggests that for the network to be secure, the weighted sum of t
 ### Reference Depth of Cascading Attacks: How Deep Does the Rabbit Hole Go?
 - **Reference Depth**: In a sequence of cascading attacks, the reference depth measures how far back each attack is influenced by the validators slashed in earlier attacks. It’s a way to understand the ripple effects across the network and gauge how interconnected these failures are.
 
+## [Overcollateralization Provides Robust Security](#overcollateralization-provides-robust-security)
+
+
+## [Lower Bounds for Global Security](#lower-bounds-for-global-security)
+
+
+## [Local Security](#local-security)
+
+
+## [Local Security Condition for Stable Attacks](#local-security-condition-for-stable-attacks)
+
+
+## [Lower Bounds for Local Security](#lower-bounds-for-local-security)
+
+
+## [Long Cascades](#long-cascades)
+
+
+## [Lower Bounds under a Bounded Profit-Stake Ratio](#lower-bounds-under-a-bounded-profit-stake-ratio)
 
 
 ## [References](#references)
