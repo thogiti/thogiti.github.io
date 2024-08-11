@@ -58,11 +58,17 @@ To understand the "Robust Restaking Networks" paper, we need to first lay down a
   for any subsets $A' \subseteq A$ and $B' \subseteq B$. This guarantees that every validator in $B$ is necessary for the attack's success, making the coalition solid and stable.
 
 ### Cascading Attacks: When One Attack Isn’t Enough
-- **Cascading Attack**: Sometimes, an attack doesn’t just hit one target—it sets off a chain reaction. A cascading attack is a sequence where each attack weakens the network, making the next one easier. In such a sequence:
+- **Cascading Attack**: Imagine a situation where a small attack or a problem in a network doesn’t just stay small—it grows and spreads, causing much bigger issues. That’s what the authors call a **cascading attack**.
+
+Here’s how it works:
+
+- **The Initial Spark**: It all starts with a minor attack or shock—maybe a few validators (the ones who keep the network secure) lose their stake due to some problem (e.g. a software error).  
+- **Chain Reaction**: This initial problem weakens the network just enough that another, bigger problem can happen. Because the network is now slightly less secure, it’s easier for the next attack to occur. This new attack weakens the network further, setting the stage for yet another attack, and so on. 
+- **A Cascading Attack**: We call this sequence of events a cascading attack. Each step in the sequence makes the next one more likely, leading to a chain reaction that can ultimately cause a significant loss in the network.
+
+In technical terms, if you have a restaking graph $G$, which maps out how validators are connected to services, each step in a cascading attack sequence $(A_1, B_1), (A_2, B_2), \dots, (A_T, B_T)$ is valid if it’s effective on the network that’s already been weakened by previous steps. $(A_t, B_t) \text{ is valid on } G \downarrow \bigcup_{i=1}^{t-1} B_i$
   
-  $(A_t, B_t) \text{ is valid on } G \downarrow \bigcup_{i=1}^{t-1} B_i$
-  
-  Here, $G \downarrow B$ represents the network after some validators have been slashed and removed.
+Here, $G \downarrow B$ represents the network after some validators have been slashed and removed.
 
 ### Worst-Case Stake Loss: Preparing for the Worst
 - **Worst-Case Stake Loss $R_\psi(G)$**: Let’s imagine the worst-case scenario—a series of cascading attacks that snowballs into something catastrophic. The worst-case stake loss is a measure of how much damage these attacks could cause, calculated as:
