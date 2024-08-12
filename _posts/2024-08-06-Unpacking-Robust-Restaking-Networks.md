@@ -97,7 +97,7 @@ Claim 1 in the paper states that a restaking graph $G$ is secure if for each val
 
 $\sum_{s \in N_G(v)} \frac{\sigma_v}{\sigma_{N_G(s)}} \cdot \frac{\pi_s}{\alpha_s} \leq \sigma_v$
 
-This claim is significant because it provides a sufficient condition for ensuring that the restaking network is secure, meaning that no valid attacks exist under the given conditions. Let's break down the claim and its proof step by step.
+This claim is significant because it provides a sufficient condition for ensuring that the restaking network is secure, meaning that no valid attacks exist under the given conditions. Let's break down the claim step by step to understand it.
 
 **Decomposing the Inequality**
 
@@ -121,6 +121,82 @@ The inequality suggests that for the network to be secure, the weighted sum of t
 - **Reference Depth**: In a sequence of cascading attacks, the reference depth measures how far back each attack is influenced by the validators slashed in earlier attacks. It’s a way to understand the ripple effects across the network and gauge how interconnected these failures are.
 
 ## [Overcollateralization Provides Robust Security](#overcollateralization-provides-robust-security)
+
+### [Lemma 1](#lemma-1)
+
+**Statement:** Let $G = (S, V, E, \pi, \sigma, \alpha)$ be an arbitrary restaking graph, and further suppose that $(A, B)$ is an attacking coalition on $G \downarrow D$, where $D \subseteq V$. Then, $(A, B \cup D)$ is an attacking coalition on $G$.
+   
+**Explanation**: We want to prove that if a set of validators $B$ can attack a set of services $A$ in a subgraph where some validators $D$ are removed, then the combined set $B \cup D$ can also attack $A$ in the original graph $G$.
+   
+#### Understanding the Components
+
+We have a restaking graph $G$, representing the interaction between validators and services.
+
+Subgraph $G \downarrow D$: This is the graph $G$ but with the validators in $D \subseteq V$ removed or slashed. The attack condition is checked in this reduced graph.
+   
+**Attack Condition**
+
+For $(A, B)$ to be an attacking coalition on the subgraph $G \downarrow D$, the validators in $B$ must control enough stake to meet the attack threshold for each service in $A$. Mathematically, this means:
+   
+   $\sigma_{B \cap N_G(s)} \geq \alpha_s \cdot \sigma_{N_G(s) \setminus D} \quad \forall s \in A$
+   
+Here:
+   - $\sigma_{B \cap N_G(s)}$ is the total stake of validators in $B$ that are connected to service $s$.
+   - $\sigma_{N_G(s) \setminus D}$ is the total stake of validators connected to $s$ excluding those in $D$.
+   
+#### The Proof   
+
+**Given Information**:
+   
+We know that $(A, B)$ is an attacking coalition in the subgraph $G \downarrow D$. This means for each service $s \in A$:
+
+$\sigma_{B \cap N_G(s)} \geq \alpha_s \cdot \sigma_{N_G(s) \setminus D}$
+
+This is the starting assumption.
+   
+**Goal**:   
+
+We need to show that the coalition $(A, B \cup D)$ is also an attacking coalition in the original graph $G$. Specifically, we want to prove:
+
+$\sigma_{(B \cup D) \cap N_G(s)} \geq \alpha_s \cdot \sigma_{N_G(s)} \quad \forall s \in A$
+
+This means that when we include the validators from $D$, the total stake of $B \cup D$ must still meet the attack threshold for each service $s \in A$.
+
+**The Stake Calculation**:
+
+For each service $s \in A$, the total stake of validators in $B \cup D$ that are connected to $s$ is:
+  
+  $\sigma_{(B \cup D) \cap N_G(s)} = \sigma_{B \cap N_G(s)} + \sigma_{D \cap N_G(s)}$
+  
+  - $\sigma_{B \cap N_G(s)}$: Stake of validators in $B$ connected to $s$.
+  - $\sigma_{D \cap N_G(s)}$: Stake of validators in $D$ connected to $s$.
+   
+**Incorporating the Attack Condition**:
+   
+Since $\sigma_{B \cap N_G(s)} \geq \alpha_s \cdot \sigma_{N_G(s) \setminus D}$ (from the assumption), we can plug this into the equation:
+
+$\sigma_{(B \cup D) \cap N_G(s)} = \sigma_{B \cap N_G(s)} + \sigma_{D \cap N_G(s)} \geq \alpha_s \cdot \sigma_{N_G(s) \setminus D} + \sigma_{D \cap N_G(s)}$
+
+Notice that $\sigma_{N_G(s)} = \sigma_{N_G(s) \setminus D} + \sigma_{D \cap N_G(s)}$.
+   
+**Simplifying the Expression**:
+   
+The above inequality can be rewritten as:
+
+$\sigma_{(B \cup D) \cap N_G(s)} \geq \alpha_s \cdot (\sigma_{N_G(s)} - \sigma_{D \cap N_G(s)}) + \sigma_{D \cap N_G(s)}$
+
+Since $\alpha_s \cdot \sigma_{N_G(s)} \geq \alpha_s \cdot \sigma_{D \cap N_G(s)}$, adding $\sigma_{D \cap N_G(s)}$ on both sides ensures:
+        
+$\sigma_{(B \cup D) \cap N_G(s)} \geq \alpha_s \cdot \sigma_{N_G(s)}$
+        
+This confirms that the total stake of $B \cup D$ meets the threshold required to attack $s$.
+   
+**Conclusion**:
+
+Therefore, the set $B \cup D$ can successfully attack $A$ in the original graph $G$.
+
+The lemma is thus proved, as $(A, B \cup D)$ is indeed an attacking coalition on $G$.
+   
 
 
 ## [Lower Bounds for Global Security](#lower-bounds-for-global-security)
