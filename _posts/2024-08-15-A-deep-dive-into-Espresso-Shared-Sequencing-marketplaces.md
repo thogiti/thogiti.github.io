@@ -35,8 +35,7 @@ The [Espresso Market design](https://hackmd.io/@EspressoSystems/market-design) i
        and
        
        
-
-       $v(B) = b(B) \quad \text{if }$ | $B$ | $\geq 2$
+       $v(B) = b(B) \quad \text{if } \|B\| \geq 2$.
        
 
    - **Challenges**: The problem of finding the optimal partition is combinatorial and can be computationally inefficient in general cases. However, in practical settings, only a limited subset of bundles may be economically viable, which can simplify the problem.
