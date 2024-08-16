@@ -71,7 +71,7 @@ The [Espresso Market design](https://hackmd.io/@EspressoSystems/market-design) i
    - The lottery design, combined with the repeated nature of the market, aims to prevent any single sequencer from dominating the market. The random allocation of sequencing rights, even among high bidders, introduces unpredictability and diversity in the selection process, promoting decentralization and resistance to censorship.
 
 
-## “Last Look” and Auction Settlement
+## [Last Look and Auction Settlement](#last-look-and-auction-settlement)
 
 The strategic bidding problem associated with the “last look” in auctions can severely undermine the efficiency and fairness of the auction process. Sequential auctions, or those that allow bids to be revealed before finalization, are particularly vulnerable to such manipulation. Using **sealed-bid auctions** or implementing a **VCG mechanism** are effective ways to counteract these issues. Both methods encourage honest bidding, prevent strategic late bids, and ensure that auction outcomes are socially efficient, maximizing both revenue and welfare.
 
