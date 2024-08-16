@@ -1,7 +1,9 @@
 ---
 title: 	A Deep Dive into Espresson Shared Sequencing Marketplaces
-tags: Ethereum Restaking Eigenlabs Eigenlayer Securing-Multi-Service-Validators Validator-Security Robust-Restaking-Networks Validator-Reuse-Risks Cascading-Attacks Cryptoeconomic-security Espresso shared-sequencing combinatorial-auctions auctions shared-sequencing-marketplaces shared-sequencing-mechanism-design shared-sequencing-auctions
+tags: Ethereum Rollups Espresso shared-sequencing combinatorial-auctions auctions shared-sequencing-marketplaces shared-sequencing-mechanism-design shared-sequencing-auctions
 ---
+
+## WIP - WORK IN PROGRESS
 
 In this article I will present some thoughts and meditations on the Espresso shared sequencing marketplace design and some challenges related to this design space. You can read the original Espresso's article on their design at [https://hackmd.io/@EspressoSystems/market-design](https://hackmd.io/@EspressoSystems/market-design).
 
@@ -9,7 +11,7 @@ _Note: Many thanks to  Terry @ EclipseLabs for sharing his notes on the Espresso
 
 ## [Espresso Shared Sequencing Market Design](#espresso-shared-sequencing-market-design)
 
-The [Espresso Market design](https://hackmd.io/@EspressoSystems/market-design) is a sophisticated mechanism tailored to facilitate a marketplace where rollups can sell sequencing timeslots to sequencers (proposers). This marketplace design leverages concepts from auction theory, combinatorial optimization, and economic incentives to achieve efficient, decentralized, and stable sequencing of rollup blocks. Here’s a high level overview of the mathematical model and key components involved.
+The [Espresso Market design](https://hackmd.io/@EspressoSystems/market-design) is a sophisticated mechanism designed to facilitate a marketplace where rollups can sell sequencing timeslots to sequencers (proposers). This marketplace design leverages concepts from auction theory, combinatorial optimization, and economic incentives to achieve efficient, decentralized, and stable sequencing of rollup blocks. Here’s a high level overview of the mathematical model and key components involved.
 
 ### Combinatorial Auction Model
    - **Overview**: The core of the Espresso Market design is a combinatorial auction where sequencers bid for the rights to sequence multiple rollups during specific timeslots. The auction is designed to allow sequencers to bid on bundles of rollups, treating them as complements, which means that the value of sequencing multiple rollups together is greater than sequencing them individually.
@@ -32,7 +34,9 @@ The [Espresso Market design](https://hackmd.io/@EspressoSystems/market-design) i
        
        and
        
-       $v(B) = b(B) \quad \text{if } |B| \geq 2$.
+       
+
+       $v(B) = b(B) \quad \text{if }$ | $B$ | $\geq 2$
        
 
    - **Challenges**: The problem of finding the optimal partition is combinatorial and can be computationally inefficient in general cases. However, in practical settings, only a limited subset of bundles may be economically viable, which can simplify the problem.
