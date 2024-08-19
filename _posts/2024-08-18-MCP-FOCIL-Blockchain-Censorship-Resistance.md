@@ -114,7 +114,7 @@ Implementing MCP, particularly the BRAID approach, involves several significant 
 
 - **Communication Overhead:** MCP requires sophisticated management of communication complexity. In BRAID, a single vote that includes all chains can reduce the communication burden, but the size of these messages could still grow significantly, especially as the number of chains increases.
 
-- **State Management:** Managing a single global state across multiple chains is inherently complex. In BRAID, all chains contribute to a single execution block, ordered by the execution layer. This centralized state management is critical for ensuring consistency and preventing issues like the **3DA problem** (free data availability).
+- **State Management:** Managing a single global state across multiple chains is inherently complex. In BRAID, all chains contribute to a single execution block, ordered by the execution layer. This centralized state management is critical for ensuring consistency and preventing issues like the **free DA problem** (free data availability).
 
 - **Finality Gadget:** The finality gadget used in BRAID finalizes the union of transactions from all chains. While it ensures eventual consensus, the complexity of merging transactions and resolving conflicts could impact system performance.
 
@@ -125,6 +125,20 @@ The BRAID approach, while enhancing censorship resistance, necessitates trade-of
 - **Networking and Storage:** Running multiple parallel chains increases the demands on network bandwidth and storage, as validators need to handle more data. This could lead to higher costs and make the system more resource-intensive compared to simpler models like FOCIL.
 
 - **Forks and State Inconsistencies:** The potential for forks and state inconsistencies is greater in MCP due to the parallel chain design. Ensuring that all chains are synchronized and that transactions are executed in a consistent order across chains presents a non-trivial challenge.
+
+## [FOCIL as a Lightweight Alternative](#focil-as-a-lightweight-alternative)
+
+In contrast to MCP, **FOCIL** offers a more lightweight and practical solution for enhancing censorship resistance:
+
+- **Committee-Based Inclusion:** By enforcing inclusion lists via a committee, FOCIL reduces the risk of censorship without the overhead of running multiple parallel chains. This makes it easier to implement and more compatible with existing blockchain protocols.
+
+- **Single-Proposer Simplicity:** FOCIL retains the single-proposer model, avoiding the complexities associated with managing multiple chains and ensuring that transaction ordering remains straightforward. This simplicity makes FOCIL an attractive option for systems that prioritize efficiency and lower resource consumption.
+
+FOCIL is built in three simple steps:
+
+- In each slot, a group of validators is chosen to form the Inclusion List (IL) committee. Each committee member then broadcasts a local inclusion list based on their individual view of the mempool.
+- The block proposer gathers and consolidates these local inclusion lists into a single aggregate list, which is then included in the block.
+- The attesters review the accuracy of the aggregate list by comparing it with their own view of the gossiped local lists, ensuring the block proposer has faithfully represented the available lists.
 
 
 ## [References](#references)
