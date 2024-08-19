@@ -156,6 +156,22 @@ FOCIL is built in three simple steps:
 **FOCIL for Layer 2 Solutions:** FOCIL’s simplicity and lower overhead make it an ideal candidate for Layer 2 solutions or other environments with resource constraints. Its compatibility with existing protocols and ease of integration make it well-suited for applications where maintaining efficiency and minimizing changes to the protocol are crucial.
 
 
+## [Balancing Security, Complexity, and Efficiency](#balancing-security-complexity-and-efficiency)
+
+**MCP** offers a robust and innovative solution to censorship resistance, particularly when implemented through designs like BRAID. By distributing block production across multiple proposers, MCP significantly increases the cost and difficulty of censoring transactions. However, the associated complexity, potential for timing games, and resource demands present significant challenges that may limit its applicability, particularly in protocols where efficiency and simplicity are critical.
+
+**FOCIL**, in contrast, provides a more straightforward approach that enhances censorship resistance with minimal changes to existing protocol structures. While it may not achieve the same level of decentralization as MCP, its simplicity and efficiency make it an attractive alternative for many use cases, especially in environments where resource constraints are a concern.
+
+Ultimately, the choice between MCP and FOCIL depends on the specific requirements of the protocol. Protocol designers must carefully weigh the trade-offs between enhanced censorship resistance, the complexity of implementation, and the demands on system resources. Future research should continue to explore these trade-offs, particularly as blockchain technology evolves and new applications emerge.
+
+**Recommendations:**
+
+- **Consider MCP for High-Security, Decentralized Applications**: MCP is best suited for environments where censorship resistance is paramount, and the protocol can bear the costs of increased complexity and resource demands. Applications like decentralized finance (DeFi) platforms or blockchain infrastructures that prioritize trustlessness and security may find MCP particularly beneficial.
+
+- **Adopt FOCIL for Layer 2 Solutions and Resource-Constrained Environments**: FOCIL’s lightweight and practical design makes it ideal for Layer 2 solutions, sharded blockchains, or other environments where simplicity, efficiency, and compatibility with existing protocols are crucial.
+
+- **Explore Hybrid Approaches with Caution**: While hybrid models combining elements of MCP and FOCIL could potentially offer a balance between censorship resistance and implementation complexity, these approaches are speculative and would require extensive research and validation before being considered viable solutions.
+
 
 ## [References](#references)
 [^1]: https://ethresear.ch/t/concurrent-block-proposers-in-ethereum/18777
