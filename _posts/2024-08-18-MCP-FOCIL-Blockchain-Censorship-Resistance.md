@@ -141,6 +141,22 @@ FOCIL is built in three simple steps:
 - The attesters review the accuracy of the aggregate list by comparing it with their own view of the gossiped local lists, ensuring the block proposer has faithfully represented the available lists.
 
 
+## [Impact on Existing and Future Protocols](#impact-on-existing-and-future-protocols)
+
+### [Impact on Existing Protocols (e.g., Ethereum)](#impact-on-existing-protocols-eg-ethereum)
+
+**MCP (BRAID):** MCP, particularly as implemented in BRAID, could significantly improve censorship resistance in Ethereum. It could also remove the need for several components in "the Scourge" roadmap such as [ePBS](https://thogiti.github.io/2024/04/18/A-Deep-dive-into-ePBS-Design-Specs.html), [PEPC](https://thogiti.github.io/2024/04/26/Ethereum-Beats-PBS-MEV-ePBS-ASP-PEPC.html), [FOCIL](https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870), [preconfs](https://thogiti.github.io/2024/04/07/Based-Preconfirmations.html), etc. However, its complexity and potential for timing games may limit its immediate applicability, particularly in systems where efficiency and simplicity are prioritized.
+
+**FOCIL:** FOCIL provides a more immediate, less disruptive improvement to censorship resistance. It could be implemented in Ethereum with fewer changes to the protocol, making it a practical choice for enhancing security while maintaining existing infrastructure.
+
+### [Relevance for Future Protocols](#relevance-for-future-protocols)
+
+**MCP for New Protocols:** Future blockchain protocols that prioritize decentralization and censorship resistance could benefit significantly from MCP. However, the potential challenges, such as timing games and increased resource demands, must be carefully managed. MCP is particularly suitable for high-security, decentralized applications where the cost of implementation complexity can be justified by the need for robust censorship resistance.
+
+**FOCIL for Layer 2 Solutions:** FOCIL’s simplicity and lower overhead make it an ideal candidate for Layer 2 solutions or other environments with resource constraints. Its compatibility with existing protocols and ease of integration make it well-suited for applications where maintaining efficiency and minimizing changes to the protocol are crucial.
+
+
+
 ## [References](#references)
 [^1]: https://ethresear.ch/t/concurrent-block-proposers-in-ethereum/18777
 [^2]: https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870
