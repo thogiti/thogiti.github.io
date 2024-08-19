@@ -1,9 +1,8 @@
 ---
-title: 	A Deep Dive into Espresson Shared Sequencing Marketplaces
+title: 	A Deep Dive into Espresso Shared Sequencing Marketplaces Design
 tags: Ethereum Rollups Espresso shared-sequencing combinatorial-auctions auctions shared-sequencing-marketplaces shared-sequencing-mechanism-design shared-sequencing-auctions
 ---
 
-## WIP - WORK IN PROGRESS
 
 In this article I will present some thoughts and meditations on the Espresso shared sequencing marketplace design and some challenges related to this design space. You can read the original Espresso's article on their design at [https://hackmd.io/@EspressoSystems/market-design](https://hackmd.io/@EspressoSystems/market-design).
 
@@ -13,7 +12,7 @@ _Note: Many thanks to  Terry @ EclipseLabs for sharing his notes on the Espresso
 
 The [Espresso Market design](https://hackmd.io/@EspressoSystems/market-design) is a sophisticated mechanism designed to facilitate a marketplace where rollups can sell sequencing timeslots to sequencers (proposers). This marketplace design leverages concepts from auction theory, combinatorial optimization, and economic incentives to achieve efficient, decentralized, and stable sequencing of rollup blocks. Here’s a high level overview of the mathematical model and key components involved.
 
-### Combinatorial Auction Model
+### [Combinatorial Auction Model](#combinatorial-auction-model)
 - **Overview**: The core of the Espresso Market design is a combinatorial auction where sequencers bid for the rights to sequence multiple rollups during specific timeslots. The auction is designed to allow sequencers to bid on bundles of rollups, treating them as complements, which means that the value of sequencing multiple rollups together is greater than sequencing them individually.
 - **Auction Phases**:
     - **Bidding Phase**: Sequencers submit bids for different bundles of rollups, with all bids being public and upfront payments required. This setup ensures that bids are credible and that the sequencers have the necessary funds to back their bids.
@@ -40,7 +39,9 @@ $$v(B) = b(B) \quad \text{if } \|B\| \geq 2$$.
 
  - **Challenges**: The problem of finding the optimal partition is combinatorial and can be computationally inefficient in general cases. However, in practical settings, only a limited subset of bundles may be economically viable, which can simplify the problem.
 
-### Lottery Mechanism to Mitigate Monopolization
+
+### [Lottery Mechanism to Mitigate Monopolization]
+
  - **Problem with Auctions**: A potential downside of pure combinatorial auctions is that a single bidder could dominate the market by consistently winning, leading to monopolization.
  - **Lottery Introduction**: To counter this, Espresso introduces a lottery mechanism where instead of a single bid, sequencers buy lottery tickets for each bundle. The winner for each bundle is then randomly chosen from the pool of ticket holders, with the probability of winning proportional to the number of tickets purchased.
  - **Mathematical Model**:
@@ -52,7 +53,7 @@ $$\text{Expected Revenue} = \frac{\text{Tickets Purchased}}{\text{Total Tickets 
      
  - **Stability**: The lottery mechanism helps in achieving a more diverse distribution of sequencing rights, reducing the risk of monopolization and ensuring a more decentralized market structure.
 
-### Revenue Allocation
+### [Revenue Allocation](#revenue-allocation)
  - **Objective**: Ensure that rollups are better off participating in the marketplace than sequencing independently.
  - **Revenue Splitting**: If a rollup is included in a bundle, it receives at least the highest bid for its singleton bundle. Additional revenue from shared sequencing (i.e., when the rollup is part of a bundle) is distributed proportionally based on the value of singleton bids.
 
@@ -63,11 +64,11 @@ $$\text{Payment to Rollup } i = \max(b_i, r_i) + \frac{b(B) - \sum_{j \in B} b_j
      
    - Here, $b_i$ is the highest bid for the singleton bundle containing only rollup $i$, and $b(B)$ is the highest bid for the entire bundle $B$.
 
-### Incentive Compatibility and Efficiency
+### [Incentive Compatibility and Efficiency](#incentive-compatibility-and-efficiency)
  - **Incentive Compatibility**: The Espresso market does not claim to be fully incentive-compatible, as achieving both DSIC (dominant strategy incentive compatible) and efficiency in complex combinatorial settings can be challenging. The design, however, aims to be sufficiently close to efficient by leveraging repeated interactions and smooth price adjustments.
  - **Efficiency**: The design attempts to ensure that sequencing rights are allocated to those who value them the most, which is typically aligned with achieving efficient outcomes.
 
-### Anti-Monopolization and Censorship Resistance
+### [Anti-Monopolization and Censorship Resistance](#anti-monopolization-and-censorship-resistance)
  - The lottery design, combined with the repeated nature of the market, aims to prevent any single sequencer from dominating the market. The random allocation of sequencing rights, even among high bidders, introduces unpredictability and diversity in the selection process, promoting decentralization and resistance to censorship.
 
 
@@ -77,7 +78,7 @@ The strategic bidding problem associated with the “last look” in auctions ca
 
 Let's study an example and understand how the "last look" works and how to mitigate its implications.
 
-### Strategic Bidding in Sequential Auctions
+### [Strategic Bidding in Sequential Auctions](#strategic-bidding-in-sequential-auctions)
 
 Let's consider a scenario described below. We have three items (e.g. rollup blocks) up for auction: $A$, $B$, and $A+B$ (the combination of A and B). The bids placed on these items are denoted by $b_A$, $b_B$, and $b_{A+B}$ respectively.
 
@@ -139,7 +140,7 @@ The same applies for $B$ and $A+B$.
 
 - The sealed-bid auction is more likely to result in socially efficient outcomes because bidders are encouraged to reveal their true valuations without concern for being outmaneuvered by others.
 
-### VCG (Vickrey-Clarke-Groves) Auction
+### [VCG (Vickrey-Clarke-Groves) Auction](#vcg-vickrey-clarke-groves-auction)
 
 The VCG auction mechanism is another approach that can solve the issues identified in sequential or last-look auctions.
 
@@ -170,7 +171,7 @@ In the context of the Espresso Execution Ticket (ET) model, bidders can purchase
 - **Valuation Complexity**: Bidders must evaluate the value of winning individual items versus combinations.
 - **Random Selection**: The selection of winning bids is random, adding a layer of probabilistic uncertainty to the decision-making process.
 
-### Mathematical Formulation:
+### [Mathematical Formulation](#mathematical-formulation)
 
 Let:
 
@@ -190,7 +191,7 @@ $$\mathbb{E}[U_B] = \text{Pr}(B) \cdot V_B - p_B$$
 $$\mathbb{E}[U_{A+B}] = \text{Pr}(A+B) \cdot V_{A+B} - p_{A+B}$$
 
 
-### Valuation and Utility Calculation:
+### [Valuation and Utility Calculation](#valuation-and-utility-calculation)
 
 **Valuation of Combinations**:
 
@@ -268,7 +269,7 @@ p_s \cdot \left(1 + 4\left(\frac{t - 1.5t}{0.5t}\right)\right) & \text{if } 1.5t
 $$
 
 
-### **Strategic Complexity and Optimization Problem:**
+### [Strategic Complexity and Optimization Problem](#strategic-complexity-and-optimization-problem)
 
 **Bidder's Optimization Problem**:
 
@@ -308,7 +309,7 @@ $$\sigma_{A+B}^* = \arg \max_{\sigma_{A+B}} \mathbb{E}[U(\sigma_{A+B} | \sigma_{
 
 Each bidder calculates their optimal ticket purchase strategy considering both the direct utility of winning an auction and the impact their actions have on prices in future iterations.
 
-### Further Exploration and Research
+### [Further Exploration and Research](#further-exploration-and-research)
 
 **Algorithmic and AI Bidding Agents**:
 
@@ -324,11 +325,11 @@ Further research could explore auction mechanisms that are robust to the complex
 
 Let's approach some of these tasks with some rigor and depth. The goal here is not only to suggest improvements to the existing dynamic pricing model in the Espresso design but also to provide a detailed mathematical framework and a research agenda for extending this work. 
 
-### Extensions of the Espresso Market Design
+## [Extensions of the Espresso Market Design](#extensions-of-the-espresso-market-design)
 
 The Espresso Market design already incorporates a piecewise pricing mechanism that balances stability with the need for dynamic adjustments based on demand. However, the current model can be extended and improved by incorporating additional factors, such as time-sensitive bidding strategies, smoothing mechanisms for price adjustments, and the consideration of asymmetric information among bidders. Below, we study these extensions, mathematical models and outlining how they can be systematically analyzed and tested.
 
-#### Incorporating Time into the Model
+### [Incorporating Time into the Model](#incorporating-time-into-the-model)
 
 **Concept Explanation:**
 
@@ -366,7 +367,7 @@ where $t_A(t)$ represents the number of tickets purchased at time $t$, and $T_A(
 **Empirical Validation:**
 - Conduct experiments with simulated auction environments to observe how time-sensitive bidding strategies affect auction outcomes, especially under different distributions of $t_{phase}$.
 
-#### Exploring Price Smoothing Mechanisms
+### [Exploring Price Smoothing Mechanisms](#exploring-price-smoothing-mechanisms)
 
 **Concept Explanation:**
 
@@ -411,7 +412,7 @@ $$\mathbb{E}[U_A(t)] = \frac{t_A(t)}{T_A(t)} \cdot V_A(t) - p_s \cdot e^{\gamma 
 **Simulation Studies:**
 - Implement these models in a simulated auction environment to observe how different smoothing functions influence bidding patterns, market dynamics, and overall auction efficiency.
 
-#### Advanced Equilibrium Analysis with Asymmetric Information
+### [Advanced Equilibrium Analysis with Asymmetric Information](#advanced-equilibrium-analysis-with-asymmetric-information)
 
 **Concept Explanation:**
 
