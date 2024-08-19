@@ -30,6 +30,59 @@ In traditional single-proposer systems (most blockchains to date), the leader of
 MCP as it is proposed would remove the need for several components in Ethereum's "the Scourge" roadmap such as [ePBS](https://thogiti.github.io/2024/04/18/A-Deep-dive-into-ePBS-Design-Specs.html), [PEPC](https://thogiti.github.io/2024/04/26/Ethereum-Beats-PBS-MEV-ePBS-ASP-PEPC.html), [FOCIL](https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870), [preconfs](https://thogiti.github.io/2024/04/07/Based-Preconfirmations.html), etc. in the Ethereum's "the scourge" roadmap.
 
 
+## [Mathematical and Game-Theoretic Foundations](#mathematical-and-game-theoretic-foundations)
+
+### [Formalizing Censorship Resistance](#formalizing-censorship-resistance)
+
+Censorship resistance can be quantified using a function $\phi(t)$, where $t$ is the tip offered by a transaction $tx$. The function $\phi(t)$ represents the minimum cost an adversary must pay to prevent the inclusion of $tx$ in a block[^4].
+
+**Single-Proposer Model:** 
+
+$$\phi_{\text{single}}(t) = t$$
+
+In this model, the adversary only needs to bribe the single proposer an amount equal to the transaction's tip.
+
+In a single-proposer model with burn $b$, this is quantified as:
+
+$$\phi_{\text{single}}(t) = max(t-b,0)$$
+
+
+**Multiple Concurrent Proposers (MCP):** 
+
+$$\phi_{\text{MCP}}(t) = n \times t$$
+
+Here, $n$ denotes the number of concurrent proposers. The adversary must bribe all $n$ proposers, making censorship $n$ times more expensive than in the single-proposer model.
+
+**Fork-Choice Enforced Inclusion Lists (FOCIL):** 
+
+$$\phi_{\text{FOCIL}}(t) = \Delta \times t$$
+
+$\Delta$ represents the overlap parameter that dictates the degree of enforcement by the committee. A higher $\Delta$ implies stronger censorship resistance, approaching that of MCP, though typically $\Delta < n$, making FOCIL somewhat less resistant than MCP.
+
+### [Game-Theoretic Considerations](#game-theoretic-considerations)
+
+In MCP, each proposer $i$ faces a decision between including a transaction (INC) or accepting a bribe (BC) to exclude it. The utility functions for each proposer are defined as:
+
+
+$$U_i(\text{INC}) = \frac{t}{n}$$
+
+$$U_i(\text{BC}) = B_i$$
+
+where $B_i$ is the bribe offered by the adversary. The Nash equilibrium is reached when all proposers choose INC, provided that $B_i < \frac{t}{n}$. This setup shows that MCP significantly increases the cost of censorship due to the need to bribe multiple proposers.
+
+In contrast, FOCIL's censorship resistance depends on the committee’s overlap parameter $\Delta$. The proposer $p$ and committee members $i$ have the following utilities:
+
+
+$$U_p(\text{INC}) = t$$
+
+
+$$U_p(\text{BC}) = B_p + \sum_{i=1}^{\Delta} B_i$$
+
+
+Here, $B_p$ is the bribe to the proposer, and $B_i$ are the bribes to committee members. FOCIL’s censorship resistance is generally robust but not as high as MCP unless $\Delta$ approaches $n$.
+
+
+
 ## [References](#references)
 [^1]: https://ethresear.ch/t/concurrent-block-proposers-in-ethereum/18777
 [^2]: https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870
