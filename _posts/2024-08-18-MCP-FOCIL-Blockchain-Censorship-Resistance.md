@@ -106,6 +106,27 @@ BRAID is the MCP proposal built on the work of Neuder and Resnick. In this artic
 - **Penalties:** Introducing **missed slot penalties** is another proposed strategy to deter proposers from delaying their transaction releases. However, the effectiveness of these penalties in a decentralized and adversarial environment remains to be fully explored.
 
 
+## [Practical Considerations and Implementation Challenges](#practical-considerations-and-implementation-challenges)
+
+### [Complexity and Resource Requirements](#complexity-and-resource-requirements)
+
+Implementing MCP, particularly the BRAID approach, involves several significant challenges:
+
+- **Communication Overhead:** MCP requires sophisticated management of communication complexity. In BRAID, a single vote that includes all chains can reduce the communication burden, but the size of these messages could still grow significantly, especially as the number of chains increases.
+
+- **State Management:** Managing a single global state across multiple chains is inherently complex. In BRAID, all chains contribute to a single execution block, ordered by the execution layer. This centralized state management is critical for ensuring consistency and preventing issues like the **3DA problem** (free data availability).
+
+- **Finality Gadget:** The finality gadget used in BRAID finalizes the union of transactions from all chains. While it ensures eventual consensus, the complexity of merging transactions and resolving conflicts could impact system performance.
+
+### [Trade-offs Between Decentralization and Efficiency](#trade-offs-between-decentralization-and-efficiency)
+
+The BRAID approach, while enhancing censorship resistance, necessitates trade-offs between decentralization and efficiency:
+
+- **Networking and Storage:** Running multiple parallel chains increases the demands on network bandwidth and storage, as validators need to handle more data. This could lead to higher costs and make the system more resource-intensive compared to simpler models like FOCIL.
+
+- **Forks and State Inconsistencies:** The potential for forks and state inconsistencies is greater in MCP due to the parallel chain design. Ensuring that all chains are synchronized and that transactions are executed in a consistent order across chains presents a non-trivial challenge.
+
+
 ## [References](#references)
 [^1]: https://ethresear.ch/t/concurrent-block-proposers-in-ethereum/18777
 [^2]: https://ethresear.ch/t/fork-choice-enforced-inclusion-lists-focil-a-simple-committee-based-inclusion-list-proposal/19870
