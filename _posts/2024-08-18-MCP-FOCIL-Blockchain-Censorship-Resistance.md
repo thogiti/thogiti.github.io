@@ -3,6 +3,10 @@ title: 	How MCP and FOCIL Could Transform Blockchain Censorship Resistance
 tags: Ethereum Rollups Multiple-concurrent-proposers censorship-resistance ethereum-roadmap focil inclusion-lists blockchain-security blockchain-censorship-resistance 
 ---
 
+![Ethereum MCP](/assets/images/20240801/ethereum-mcp.jpg)
+
+_Figure: Multiple Concurrent Proposers in Ethereum_ 
+
 In this article we study the strengths, weaknesses, and implementation challenges of **Multiple Concurrent Block Proposers (MCP)**[^1] and **Fork-Choice Enforced Inclusion Lists (FOCIL)**[^2], with a particular focus on the BRAID MCP model as discussed in the recent Paradigm Research Workshop[^3]. The primary goal of ths article is to provide a comprehensive understanding of how these mechanisms can enhance censorship resistance (CR) in blockchain systems.
 
 _Note that both MCP and FOCIL are recent topics in the blockchain research and not much has been written or published about these topics apart from few high level presentations and articles. It is too early in the research to critically argue about their technical specifications and design decisions._
@@ -140,6 +144,7 @@ FOCIL is built in three simple steps:
 - The block proposer gathers and consolidates these local inclusion lists into a single aggregate list, which is then included in the block.
 - The attesters review the accuracy of the aggregate list by comparing it with their own view of the gossiped local lists, ensuring the block proposer has faithfully represented the available lists.
 
+The aggregation of transactions in FOCIL is done through a union, making it resemble MCP in that each IL committee member functions similarly to a proposer. However, the key difference is that the block proposer retains exclusive control over other transactions and their ordering. FOCIL specifically targets the issue of censorship resistance, without addressing the broader problem of proposer monopolies over transaction ordering.
 
 ## [Impact on Existing and Future Protocols](#impact-on-existing-and-future-protocols)
 
@@ -161,6 +166,8 @@ FOCIL is built in three simple steps:
 **MCP** offers a robust and innovative solution to censorship resistance, particularly when implemented through designs like BRAID. By distributing block production across multiple proposers, MCP significantly increases the cost and difficulty of censoring transactions. However, the associated complexity, potential for timing games, and resource demands present significant challenges that may limit its applicability, particularly in protocols where efficiency and simplicity are critical.
 
 **FOCIL**, in contrast, provides a more straightforward approach that enhances censorship resistance with minimal changes to existing protocol structures. While it may not achieve the same level of decentralization as MCP, its simplicity and efficiency make it an attractive alternative for many use cases, especially in environments where resource constraints are a concern.
+
+View-merge protocols like MCP and FOCIL can enhance the user experience of inclusion commitments by involving multiple participants in defining the block’s contents. However, the effectiveness of this improvement depends on the specific implementation. For instance, in FOCIL, obtaining a commitment from someone other than the proposer offers only a probabilistic guarantee of inclusion. Yet, securing commitments from multiple committee members could increase that probability to nearly 100%. In MCP, as long as there is no liveness fault, obtaining an inclusion commitment from any single proposer in a slot provides the same level of assurance as a commitment from a monopolistic leader.
 
 Ultimately, the choice between MCP and FOCIL depends on the specific requirements of the protocol. Protocol designers must carefully weigh the trade-offs between enhanced censorship resistance, the complexity of implementation, and the demands on system resources. Future research should continue to explore these trade-offs, particularly as blockchain technology evolves and new applications emerge.
 
