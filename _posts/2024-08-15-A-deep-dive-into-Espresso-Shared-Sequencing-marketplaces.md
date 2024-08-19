@@ -4,7 +4,7 @@ tags: Ethereum Rollups Espresso shared-sequencing combinatorial-auctions auction
 ---
 
 
-In this article I will present some thoughts and meditations on the Espresso shared sequencing marketplace design and some challenges related to this design space. You can read the original Espresso's article on their design at [https://hackmd.io/@EspressoSystems/market-design](https://hackmd.io/@EspressoSystems/market-design).
+In this article I will present some thoughts and meditations on the Espresso shared sequencing marketplace design[^1] and some challenges related to this design space. You can read the original Espresso's article on their design at [https://hackmd.io/@EspressoSystems/market-design](https://hackmd.io/@EspressoSystems/market-design).
 
 _Note: Many thanks to  Terry @ EclipseLabs for sharing his notes on the Espresso. My analysis is largely inspired from a discussion with him._
 
@@ -444,3 +444,5 @@ $$\mathbb{E}[U_A(t | \theta_i)] = \frac{t_A(t | \theta_i)}{T_A(t)} \cdot V_A(t |
 **Empirical Testing:**
 - Conduct empirical studies or experiments to validate theoretical predictions. For example, analyze how asymmetric information affects bidding behavior in practice and whether the auction mechanism can be adjusted to mitigate any negative impacts.
 
+## [References](#references)
+[^1]: https://hackmd.io/@EspressoSystems/market-design
