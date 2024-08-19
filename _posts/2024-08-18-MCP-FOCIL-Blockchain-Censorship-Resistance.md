@@ -81,6 +81,29 @@ $$U_p(\text{BC}) = B_p + \sum_{i=1}^{\Delta} B_i$$
 
 Here, $B_p$ is the bribe to the proposer, and $B_i$ are the bribes to committee members. FOCIL’s censorship resistance is generally robust but not as high as MCP unless $\Delta$ approaches $n$.
 
+## [Key Design Features and Challenges of MCP](#key-design-features-and-challenges-of-mcp)
+
+Two protocols are designed to implement MCP, one by Duality Labs[^5], and one by Neuder and Resnick[^1]. In Duality Labs’ protocol, one of the producers is the leader and holds more power than the others, whereas in Neuder and Resnick’s protocol, all producers have equal power.
+
+Duality Labs’ protocol: Each honest validator within the committee sends his signed bundle of transactions to the leader. To form a valid block, the leader must incorporate at least two-thirds (weighted by stake) of received bundles, and then send the block for attestation.
+
+BRAID is the MCP proposal built on the work of Neuder and Resnick. In this article, we mainly focus on BRAID MCP proposal.
+
+### [Overview of the BRAID Approach](#overview-of-the-braid-approach)
+
+**BRAID** represents a straightforward yet powerful implementation of MCP[^3]. The key idea is to run multiple parallel chains, each with its own proposer. These chains are then finalized together by merging all transactions from the parallel chains into a single execution block. This design aims to distribute the power of block production across multiple chains, thereby enhancing censorship resistance.
+
+- **Simultaneous Release:** A critical aspect of BRAID is **simultaneous release**. All proposers release their transactions at the same time, preventing any single proposer from gaining an information advantage by observing others' transactions first. This simultaneous release is crucial for avoiding **timing games** where a proposer could exploit the order of transaction releases to engage in strategies like sandwich attacks.
+  
+- **Delayed Execution:** **Delayed execution** is another feature that complements the parallel chain design. By delaying the execution of transactions to the next block, the system ensures consistency and prevents conflicts that might arise from multiple proposers independently updating the state.
+
+### [Challenges: Timing Games and Cryptographic Solutions](#challenges-timing-games-and-cryptographic-solutions)
+
+**Timing games** are a significant challenge in MCP when proposers do not release their transactions simultaneously. The last proposer to release their transactions could exploit information asymmetry, leveraging strategies such as sandwich attacks or penny bids in auctions. This risk is particularly problematic because it centralizes power among more sophisticated or well-resourced validators.
+
+- **Cryptographic Solutions:** While techniques such as **threshold encryption** or **timelock encryption** are proposed as potential solutions to enforce simultaneous release and prevent information leakage, these methods are speculative and unproven in this context. Their implementation could introduce new complexities and vulnerabilities that must be carefully considered.
+
+- **Penalties:** Introducing **missed slot penalties** is another proposed strategy to deter proposers from delaying their transaction releases. However, the effectiveness of these penalties in a decentralized and adversarial environment remains to be fully explored.
 
 
 ## [References](#references)
