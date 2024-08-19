@@ -27,20 +27,22 @@ The [Espresso Market design](https://hackmd.io/@EspressoSystems/market-design) i
     
 $$\Pi^* = \arg\max_{\Pi} \sum_{B \in \Pi} v(B)$$
     
-    where $v(B)$ for a bundle $B$ is defined as:
+
+where $v(B)$ for a bundle $B$ is defined as:
     
+
 $$v(B) = \max(b(B), r_i) \quad \text{if } B = \{i\} \text{ (singleton bundle)}$$
     
-    and
+and
     
     
 $$v(B) = b(B) \quad \text{if } \|B\| \geq 2$$.
        
 
- - **Challenges**: The problem of finding the optimal partition is combinatorial and can be computationally inefficient in general cases. However, in practical settings, only a limited subset of bundles may be economically viable, which can simplify the problem.
+- **Challenges**: The problem of finding the optimal partition is combinatorial and can be computationally inefficient in general cases. However, in practical settings, only a limited subset of bundles may be economically viable, which can simplify the problem.
 
 
-### [Lottery Mechanism to Mitigate Monopolization]
+### [Lottery Mechanism to Mitigate Monopolization](#lottery-mechanism-to-mitigate-monopolization)
 
  - **Problem with Auctions**: A potential downside of pure combinatorial auctions is that a single bidder could dominate the market by consistently winning, leading to monopolization.
  - **Lottery Introduction**: To counter this, Espresso introduces a lottery mechanism where instead of a single bid, sequencers buy lottery tickets for each bundle. The winner for each bundle is then randomly chosen from the pool of ticket holders, with the probability of winning proportional to the number of tickets purchased.
