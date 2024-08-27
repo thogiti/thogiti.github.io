@@ -120,6 +120,13 @@ The inequality suggests that for the network to be secure, the weighted sum of t
 ### Reference Depth of Cascading Attacks: How Deep Does the Rabbit Hole Go?
 - **Reference Depth**: In a sequence of cascading attacks, the reference depth measures how far back each attack is influenced by the validators slashed in earlier attacks. It’s a way to understand the ripple effects across the network and gauge how interconnected these failures are.
 
+**Definition: Multiplicative Slack.**  
+We say that a restaking graph $G$ is secure with $\gamma$-slack if for all attacking coalitions $(A, B)$ on $G$,
+
+$$(1 + \gamma) \cdot \pi_A \leq \sigma_B $$ where
+
+Total profit from corrupting $A$ = $\pi_A$ and Total stake owned by validators $B$ = $\sigma_B$ (Equation 11)
+
 ## [Overcollateralization Provides Robust Security](#overcollateralization-provides-robust-security)
 
 ### [Lemma 1](#lemma-1)
@@ -205,9 +212,9 @@ $$\left( \bigcup_{t=1}^{T} A_t, \bigcup_{t=1}^{T} B_t \right)$$
 is also a valid attack on $G$.
 
 **Explanation**:
-This corollary is trying to prove that if you have a series of successful attacks on a network, then you can combine all these attacks into a single, larger attack, and it will still be successful. Essentially, it shows that a series of smaller attacks can be combined into one big attack without losing the validity of the attack conditions.
+This corollary is trying to prove that if we have a series of successful attacks on a network, then we can combine all these attacks into a single, larger attack, and it will still be successful. Essentially, it shows that a series of smaller attacks can be combined into one big attack without losing the validity of the attack conditions.
 
-#### **Understanding the Components:**
+#### Understanding the Components
 
 - **Restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$**.
 
@@ -218,14 +225,14 @@ This corollary is trying to prove that if you have a series of successful attack
   - $\bigcup_{t=1}^T A_t$ denotes the union of all services attacked across the sequence.
   - $\bigcup_{t=1}^T B_t$ denotes the union of all validators involved in these attacks.
 
-#### **What Needs to Be Proved?**
+#### What Needs to Be Proved?
 
 The goal is to show that the combined set of all services and all validators involved in the cascading attacks also forms a valid attack on the original graph $G$. Specifically, this means showing:
 
 - **Stake Condition**: The combined stake of the validators in $\bigcup_{t=1}^T B_t$ must be sufficient to attack the combined set of services $\bigcup_{t=1}^T A_t$.
 - **Profit Condition**: The total profit from attacking $\bigcup_{t=1}^T A_t$ must exceed the total stake of the validators in $\bigcup_{t=1}^T B_t$.
 
-#### **Proof Breakdown:**
+#### Proof Breakdown
 
 - **Applying Lemma 1**:
    - By repeatedly applying Lemma 1, the proof shows that each step in the sequence $(A_t, \bigcup_{i=1}^t B_i)$ is an attacking coalition on $G$. This is because as we progress through each attack $t$, the validators in $\bigcup_{i=1}^t B_i$ (those involved up to and including step $t$) are sufficient to attack the services in $A_t$.
@@ -247,6 +254,97 @@ The goal is to show that the combined set of all services and all validators inv
    - Since each individual step $(A_t, B_t)$ satisfies this condition (by the assumption that these are valid attacks), the sum of the profits will necessarily exceed the sum of the stakes across all steps.
 
    - Therefore, the combined attack $\left( \bigcup_{t=1}^T A_t, \bigcup_{t=1}^T B_t \right)$ is a valid attack on the original graph $G$, satisfying both the stake and profit conditions. This concludes the proof.
+
+### [Theorem 1](#theorem-1)
+
+**Statement:**  
+Suppose that a restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$ is secure with $\gamma$-slack for some $\gamma > 0$. Then, for any $\psi > 0$,
+
+$$R_\psi(G) < \left(1 + \frac{1}{\gamma}\right) \psi.$$
+
+
+**Explanation:**  
+The theorem aims to show that if a restaking network is secure with multiplicative slack, then the maximum possible loss in stake due to an initial shock $\psi$, including any cascading effects, is strictly controlled. Specifically, the worst-case loss, $R_\psi(G)$, will be at most $\left(1 + \frac{1}{\gamma}\right)\psi$. This means that the network's security ensures that even if a small portion of the stake is initially lost, the total loss won't grow uncontrollably.
+
+####  Understanding the Components
+
+- **Restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$**.
+
+#### What Needs to Be Proved?
+
+- **Multiplicative Slack $\gamma$**: The graph is considered secure with $\gamma$-slack if, for any potential attack coalition $(A, B)$ (where $A$ is a set of targeted services and $B$ is a set of validators attempting to attack), the following condition holds:
+   
+   $$(1 + \gamma) \cdot \pi_A \leq \sigma_B$$
+   
+   This means that the total stake controlled by the validators $B$ must be greater than the profit $\pi_A$ from attacking the services $A$, scaled by the factor $1 + \gamma$. The $\gamma$ term acts as a safety margin, ensuring validators have significantly more stake than the attack's potential profit.
+
+#### Proof Breakdown
+
+**The Initial Shock $\psi$:**
+- **Initial Shock $\psi$**: Imagine that an event occurs, causing a fraction $\psi$ of the total stake $\sigma_V$ to be lost suddenly. This shock could represent anything from a validator malfunction to an external attack.
+- The challenge is to assess how this initial loss might propagate through the network, potentially causing further losses—a process known as cascading failures.
+
+**Defining the Subgraph and Cascading Attacks:**
+- To analyze the effect of the initial shock, consider the subgraph $G \downarrow D$, where $D$ is the set of validators that lost their stake due to the initial shock. Thus, $G \downarrow D$ is the graph after removing these validators.
+- **Cascading Attacks**: A sequence of attacks $(A_1, B_1), \dots, (A_T, B_T)$ could occur in this subgraph. These attacks represent possible successive failures or attacks that might happen after the initial shock.
+
+**Using Corollary 1 to Aggregate Attacks:**
+- According to **Corollary 1**, we can combine all these cascading attacks into a single, larger attack on the original graph $G$. Define:
+   
+   $$A := \bigcup_{t=1}^T A_t \quad \text{and} \quad B := \bigcup_{t=1}^T B_t$$
+   
+   This aggregated set $(A, B)$ represents an overall attack on the graph after considering all cascading effects.
+
+**Understanding the Attack Condition:**
+- For $(A, B)$ to be an effective attack in the subgraph $G \downarrow D$, the profit from attacking the services in $A$ must exceed the total stake held by validators in $B$:
+   
+   $$\pi_A > \sigma_B$$
+   
+   This inequality shows that $B$ alone cannot cover the profit potential from attacking $A$.
+
+**Applying the $\gamma$-Slack Condition:**
+- Since the original graph $G$ is secure with $\gamma$-slack, when we include the validators from the initial shock $D$ back into the equation, the slack condition should still hold:
+   
+   $$(1 + \gamma) \cdot \pi_A \leq \sigma_{B \cup D}$$
+   
+   Where $\sigma_{B \cup D} = \sigma_B + \sigma_D$ represents the combined stake of the attacking validators and those that suffered the initial shock.
+
+**Simplifying and Analyzing the Inequality:**
+- Substitute the known inequality $\pi_A > \sigma_B$ into the slack condition:
+   
+   $$(1 + \gamma) \cdot \sigma_B < (1 + \gamma) \cdot \pi_A \leq \sigma_B + \sigma_D$$
+   
+   This tells us that the total stake of validators involved in the cascading failures is not enough to meet the required stake threshold after accounting for the initial shock.
+
+**Deriving the Bound on Worst-Case Loss:**
+- Rearrange the inequality:
+   
+   $$\gamma \cdot \sigma_B \leq \sigma_D$$
+   
+   Since $\sigma_D$ represents the stake loss due to the initial shock $\psi$, express this as:
+   
+   $$\sigma_D = \psi \cdot \sigma_V \quad \Rightarrow \quad \gamma \cdot \sigma_B \leq \psi \cdot \sigma_V$$
+   
+- Normalize by dividing by $\sigma_V$ (the total stake in the network):
+   
+   $$\frac{\sigma_B}{\sigma_V} \leq \frac{\psi}{\gamma}$$
+   
+   This inequality shows that the proportion of stake lost due to cascading failures is limited by the initial shock scaled by $\frac{1}{\gamma}$.
+
+**Summing the Losses:**
+- Finally, sum the initial shock $\psi$ and the cascading loss $\frac{\sigma_B}{\sigma_V}$:
+   
+   $$\psi + \frac{\sigma_B}{\sigma_V} \leq \psi + \frac{\psi}{\gamma} = \left(1 + \frac{1}{\gamma}\right)\psi$$
+   
+   This bound on the total loss $R_\psi(G)$ ensures that no matter how severe the initial shock and subsequent cascades, the total loss remains within this predictable limit.
+
+#### Key Insights of Theorem 1
+
+- **Multiplicative Slack $\gamma$** provides a crucial safety buffer that limits the impact of cascading failures. By requiring that validators hold more stake than the potential profit from attacks (scaled by $1 + \gamma$), the network can absorb shocks without triggering uncontrollable losses.
+- **Controlled Cascading:** The proof shows that even in the worst-case scenario, where losses cascade through the network, the total loss is bounded and predictable. This bound is crucial for network designers to ensure the resilience and stability of blockchain systems.
+
+
+
 
 
 ## [Lower Bounds for Global Security](#lower-bounds-for-global-security)
