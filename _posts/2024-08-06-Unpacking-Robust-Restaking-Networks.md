@@ -198,6 +198,56 @@ Therefore, the set $B \cup D$ can successfully attack $A$ in the original graph 
 The lemma is thus proved, as $(A, B \cup D)$ is indeed an attacking coalition on $G$.
    
 
+### [Corollary 1](#corollary-1)
+
+**Statement:** Let $G = (S, V, E, \pi, \sigma, \alpha)$ be an arbitrary restaking graph, and further suppose that $(A_1, B_1), \dots, (A_T, B_T) \in \mathcal{C}(G)$ is a valid sequence of cascading attacks on $G$. Then, 
+$$\left( \bigcup_{t=1}^{T} A_t, \bigcup_{t=1}^{T} B_t \right)$$
+is also a valid attack on $G$.
+
+**Explanation**:
+This corollary is trying to prove that if you have a series of successful attacks on a network, then you can combine all these attacks into a single, larger attack, and it will still be successful. Essentially, it shows that a series of smaller attacks can be combined into one big attack without losing the validity of the attack conditions.
+
+#### **Understanding the Components:**
+
+- **Restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$**.
+
+- **Cascading Attacks**:
+  - A sequence of cascading attacks $(A_1, B_1), \dots, (A_T, B_T)$ refers to a sequence where each $(A_t, B_t)$ is an attack at step $t$, potentially enabled by the preceding attacks.
+
+- **Union of Sets**:
+  - $\bigcup_{t=1}^T A_t$ denotes the union of all services attacked across the sequence.
+  - $\bigcup_{t=1}^T B_t$ denotes the union of all validators involved in these attacks.
+
+#### **What Needs to Be Proved?**
+
+The goal is to show that the combined set of all services and all validators involved in the cascading attacks also forms a valid attack on the original graph $G$. Specifically, this means showing:
+
+- **Stake Condition**: The combined stake of the validators in $\bigcup_{t=1}^T B_t$ must be sufficient to attack the combined set of services $\bigcup_{t=1}^T A_t$.
+- **Profit Condition**: The total profit from attacking $\bigcup_{t=1}^T A_t$ must exceed the total stake of the validators in $\bigcup_{t=1}^T B_t$.
+
+#### **Proof Breakdown:**
+
+- **Applying Lemma 1**:
+   - By repeatedly applying Lemma 1, the proof shows that each step in the sequence $(A_t, \bigcup_{i=1}^t B_i)$ is an attacking coalition on $G$. This is because as we progress through each attack $t$, the validators in $\bigcup_{i=1}^t B_i$ (those involved up to and including step $t$) are sufficient to attack the services in $A_t$.
+
+- **Inspection of the Attack Condition (Eq. 1)**:
+   - Since each $(A_t, \bigcup_{i=1}^t B_i)$ is an attacking coalition, by the attack condition in Eq. 1, we can say that the combined stake of validators across these steps is sufficient to attack their respective services.
+
+- **Disjointness of the Sets**:
+   - The services $A_t$ and the validators $B_t$ are considered to be disjoint across different $t$. This disjointness is key to combining the attack sets without overlap.
+   - Specifically, the disjointness ensures that the combined attack over all steps meets the necessary conditions for a valid attack when considering the entire sequence.
+
+- **Profit vs. Stake (Eq. 2)**:
+   - For the combined set to be a valid attack, it must hold that:
+     
+     $$\sum_{t=1}^T \pi_{A_t} > \sum_{t=1}^T \sigma_{B_t}$$
+     
+   - This means the total profit from attacking all the services in the sequence must exceed the total stake of the validators involved in the attacks.
+
+   - Since each individual step $(A_t, B_t)$ satisfies this condition (by the assumption that these are valid attacks), the sum of the profits will necessarily exceed the sum of the stakes across all steps.
+
+   - Therefore, the combined attack $\left( \bigcup_{t=1}^T A_t, \bigcup_{t=1}^T B_t \right)$ is a valid attack on the original graph $G$, satisfying both the stake and profit conditions. This concludes the proof.
+
 
 ## [Lower Bounds for Global Security](#lower-bounds-for-global-security)
 
