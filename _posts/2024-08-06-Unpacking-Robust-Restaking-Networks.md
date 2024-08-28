@@ -387,10 +387,73 @@ This corollary aims to show that if every validator in the network satisfies the
 - In practice, this means that network designers can ensure security by verifying this condition for all validators, which is much easier than checking the entire network's security directly.
 
 
-
-
-
 ## [Lower Bounds for Global Security](#lower-bounds-for-global-security)
+
+### [Theorem 2](#theorem-2)
+
+**Statement:**  
+For any $0 < \epsilon < 1$, there exists a restaking graph $G$ that is secure and meets the EigenLayer condition (as specified in Equation 3), but has $R_\psi(G) = 1$ for all $\psi \geq \epsilon$.
+
+
+**Explanation:**
+This theorem is asserting that even if a restaking graph $G$ satisfies the security condition laid out by the EigenLayer (as defined in Equation 3), it is still possible for the network to experience a catastrophic loss where the worst-case stake loss $R_\psi(G)$ equals $1$, meaning the entire stake could be lost, if the initial shock $\psi$ is above a certain threshold $\epsilon$. In simpler terms, this theorem highlights a scenario where satisfying the security condition is not enough to prevent complete network failure under certain conditions.
+
+
+####  Understanding the Components
+
+- Consider a restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$.
+- **Services:** $S$ = { $x$ }, with only one service $x$.
+- **Validators:** $V$ = { $a, b$ }, with two validators, $a$ and $b$.
+- **Edges:** Each validator is connected to the service $x$ by an edge, so $E$ = { $(x, a), (x, b)$ }.
+
+- **Define Stakes and Parameters:**
+- $\sigma_a = \epsilon$ (stake of validator $a$).
+- $\sigma_b = 1 - \epsilon$ (stake of validator $b$).
+- $\pi_x = 1$ (profit from attacking service $x$).
+- $\alpha_x = 1$ (fraction of the total stake required to attack service $x$).
+
+- We assume $\psi < 1$, since $R_1(G) = 1$ for any restaking graph $G$. This assumption simplifies the analysis and focuses on shocks less than the total stake.
+
+#### Proof Breakdown
+
+- **Applying the EigenLayer Condition (Claim 1) to Validators $a$ and $b$:**
+  - The EigenLayer condition states that the graph $G$ is secure if for each validator $v \in V$,
+    
+    $$\sum_{s \in N_G(\{v\})} \frac{\sigma_v}{\sigma_{N_G(\{s\})}} \cdot \frac{\pi_s}{\alpha_s} \leq \sigma_v$$
+    
+  - For validator $a$:
+    
+    $$\frac{\sigma_a}{\sigma_a + \sigma_b} \cdot \frac{\pi_x}{\alpha_x} = \frac{\epsilon}{\epsilon + (1 - \epsilon)} \cdot 1 = \epsilon$$
+    
+    This equals $\sigma_a$, satisfying the condition.
+
+  - For validator $b$:
+    
+    $$\frac{\sigma_b}{\sigma_a + \sigma_b} \cdot \frac{\pi_x}{\alpha_x} = \frac{1 - \epsilon}{\epsilon + (1 - \epsilon)} \cdot 1 = 1 - \epsilon$$
+    
+    This equals $\sigma_b$, also satisfying the condition.
+
+- Since both validators satisfy the condition, the restaking graph $G$ is secure according to Claim 1.
+
+- **Introducing the Initial Shock $D = \{a\}$:**
+
+  - Consider an initial shock $D = \{a\}$, meaning validator $a$ loses its entire stake $\sigma_a = \epsilon$.
+  - Given that $\sigma_a / \sigma_V = \epsilon / (\epsilon + (1 - \epsilon)) = \epsilon \leq \psi$, this shock fits within the shock $\psi$.
+
+- **Resulting Graph After the Shock:**
+  - After removing $a$, the remaining graph $G \downarrow D$ consists of the service $x$ supported only by validator $b$.
+
+- **Determining the Attack Condition:**
+  - The pair $(\{x\}, \{b\})$ represents an attack coalition on $G \downarrow D$.
+  - Since $b$ is the only remaining validator supporting $x$, the attack can succeed if $\sigma_b < \pi_x$. Given that $\sigma_b = 1 - \epsilon$ and $\pi_x = 1$, this condition is satisfied.
+
+- **Calculating the Worst-Case Stake Loss:**
+  - The total stake after the shock $D = \{a\}$ is $\sigma_b = 1 - \epsilon$.
+  - Since $b$ is insufficient to fully protect $x$, the attack succeeds, leading to a total stake loss of $R_\psi(G) \geq \frac{\sigma_a + \sigma_b}{\sigma_V} = \frac{1}{1} = 1$.
+
+#### Key Insights from Theorem 2
+- Thus, the proof demonstrates that even though the graph $G$ satisfies the EigenLayer condition, it is still vulnerable to a total loss when the initial shock $\psi$ is large enough.
+- Specifically, for any $\psi \geq \epsilon$, the entire network’s stake can be wiped out, validating the theorem's statement that $R_\psi(G) = 1$ for $\psi \geq \epsilon$.
 
 
 ## [Local Security](#local-security)
