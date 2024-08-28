@@ -344,6 +344,49 @@ The theorem aims to show that if a restaking network is secure with multiplicati
 - **Controlled Cascading:** The proof shows that even in the worst-case scenario, where losses cascade through the network, the total loss is bounded and predictable. This bound is crucial for network designers to ensure the resilience and stability of blockchain systems.
 
 
+### [Corollary 2](#corollary-2)
+
+**Statement:**  
+Let $G$ be a restaking graph such that, for all validators $v \in V$,
+
+$$\sum_{s \in N_G(\{v\})} \frac{\sigma_v}{\sigma_{N_G(\{s\})}} \cdot \frac{(1 + \gamma)\pi_s}{\alpha_s} \leq \sigma_v$$
+
+Then, the worst-case stake loss $R_\psi(G)$ is less than $\left(1 + \frac{1}{\gamma}\right)\psi$.
+
+**Explanation:**  
+This corollary aims to show that if every validator in the network satisfies the particular risk condition, then the entire network is secure. Specifically, this condition ensures that the potential losses due to attacks (even if magnified by the slack factor $\gamma$) are always covered by the stake of the validators. Consequently, the worst-case stake loss across the network remains bounded.
+
+####  Understanding the Components
+
+**Interpreting the Condition (Equation 17):**
+- **Validator's Stake $\sigma_v$**: This is the total stake controlled by validator $v$.
+- **Service $s$**: Each service $s$ in $N_G(\{v\})$ is directly supported by validator $v$.
+- **Fraction of Stake Supporting Service $s$**: The term $\frac{\sigma_v}{\sigma_{N_G(\{s\})}}$ represents the proportion of total stake supporting service $s$ that comes from validator $v$. This is crucial because it scales the risk each validator faces based on their contribution to the service’s security.
+- **Modified Profit Term $(1 + \gamma)\pi_s$**: This term reflects the potential profit from corrupting service $s$, inflated by the multiplicative slack $\gamma$. The inflation by $1 + \gamma$ means that even if the attack is more profitable (due to slack), the validator must still have enough stake to cover this increased risk.
+
+#### What Needs to Be Proved?
+
+- The inequality states that the sum of potential losses (accounted for by the slack-adjusted profit terms) across all services supported by a validator must not exceed the validator's own stake. If this holds for every validator, then the network is secure.
+
+#### How Does This Condition Ensure Security?
+
+- **Risk Containment for Each Validator:** If each validator's total stake can cover the worst-case scenario of supporting all their connected services (considering the slack), then no single validator is overexposed to risk. This containment at the validator level directly supports the global security of the network.
+- **Preventing Cascades:** By ensuring that no validator is overleveraged relative to the services they support, the condition helps prevent a domino effect where the failure of one validator could trigger further losses.
+
+#### Proof Breakdown
+
+**Connecting to Theorem 1 and Claim 1:**
+
+- **Theorem 1 Recap:** Theorem 1 states that if the entire network is secure with $\gamma$-slack, then the worst-case loss $R_\psi(G)$ is bounded by $\left(1 + \frac{1}{\gamma}\right)\psi$.
+- **Claim 1:** This claim (not fully detailed here but referenced in the proof) likely provides a sufficient condition for the absence of valid attacks when profits are scaled by $1 + \gamma$.
+- **Applying to Corollary 2:** The proof shows that if each validator satisfies the condition in Equation 17, it implies that the entire network is secure under the slack-adjusted conditions. Essentially, Equation 17 is a localized version of the global security condition in Theorem 1. By applying the condition from Claim 1, which ensures no valid attacks under the adjusted profits, the corollary concludes that the network’s worst-case loss remains bounded as stated in Theorem 1.
+
+**Key Insights of Corollary 2:**
+
+- If every validator satisfies the localized risk condition in Equation 17, the network as a whole is guaranteed to resist large cascading losses. The slack-adjusted potential profits from attacks are never able to overwhelm the validators' stakes, thereby ensuring the network remains robust.
+- In practice, this means that network designers can ensure security by verifying this condition for all validators, which is much easier than checking the entire network's security directly.
+
+
 
 
 
