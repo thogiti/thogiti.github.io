@@ -456,6 +456,94 @@ This theorem is asserting that even if a restaking graph $G$ satisfies the secur
 - Specifically, for any $\psi \geq \epsilon$, the entire network’s stake can be wiped out, validating the theorem's statement that $R_\psi(G) = 1$ for $\psi \geq \epsilon$.
 
 
+### [Theorem 3](#theorem-3)
+
+**Statement:**  
+For any $\psi$, $\gamma$, $\epsilon > 0$ such that
+
+$$0 \leq \left( 1 + \frac{1}{\gamma} \right) \psi - \epsilon \leq 1 \tag{20}$$
+
+there exists a restaking graph $G$ that satisfies the condition $(17)$ from Corollary 2 but has $R_{\psi}(G) \geq \left( 1 + \frac{1}{\gamma} \right) \psi - \epsilon$.
+
+**Explanation:**
+
+Theorem 3 says that even if a restaking graph $G$ satisfies the security condition from **Corollary 2**, it can still experience substantial losses. Specifically, the theorem asserts that there can exist a graph where the worst-case loss $R_\psi(G)$ is at least $\left(1 + \frac{1}{\gamma}\right)\psi - \epsilon$, indicating that the security condition from **Corollary 2** is not sufficient to fully protect against significant losses in the presence of a shock $\psi$.
+
+####  Understanding the Components
+
+- **Graph Components:**
+  - The graph $G = (S, V, E, \pi, \sigma, \alpha)$ is constructed with:
+    - **Service:** $S$ = { $x$ } (one service $x$).
+    - **Validators:** $V$ = { $a, b, c$ } (three validators: $a$, $b$, and $c$).
+    - **Edges:** Each validator is connected to the single service $x$ through the edges $E$ = { $(x, a), (x, b), (x, c)$ }.
+
+- **Stakes and Parameters:**
+  - **Stakes:**
+    - $\sigma_a > 0$: Assume $\sigma_a$ is any positive constant.
+    - $\sigma_b = \sigma_a \left( \frac{1}{\gamma} - \frac{\epsilon}{\psi} \right)$: Stake of validator $b$.
+    - $\sigma_c = \sigma_a \left( \frac{1 - \psi + \epsilon}{\psi} - \frac{1}{\gamma} \right)$: Stake of validator $c$.
+  - **Service Profit:** $\pi_x = \left(1 + \frac{1}{\gamma}\right)\psi - \epsilon$ (the profit from attacking service $x$).
+  - **Security Requirement:** $\alpha_x = 1$ (the fraction of the total stake needed to compromise service $x$).
+
+#### Proof Breakdown
+
+- **Validator $b$:**
+  - The stake $\sigma_b \geq 0$ is ensured by the condition $\epsilon \leq \frac{\psi}{\gamma}$, guaranteeing that $b$ has a non-negative stake.
+
+- **Validator $c$:**
+  - Similarly, $\sigma_c \geq 0$ is ensured by the inequality $1 \geq \left(1 + \frac{1}{\gamma}\right)\psi - \epsilon$, confirming that $c$ has a non-negative stake.
+
+- **Total Stake:**
+  - The total stake in the network before the shock is given by $\sigma_V = \sigma_a + \sigma_b + \sigma_c$.
+  
+    $$\sigma_V = \sigma_a + \sigma_b + \sigma_c = \sigma_a \left( \left(1 + \frac{1}{\gamma}\right) - \frac{\epsilon}{\psi} + \frac{1 - \psi + \epsilon}{\psi} - \frac{1}{\gamma} \right) = \frac{\sigma_a}{\psi}$$
+
+
+- **Validator $a$:**
+  - The condition from **Corollary 2** requires that each validator $v$ satisfies:
+    
+    $$\sum_{s \in N_G(\{v\})} \frac{\sigma_v}{\sigma_{N_G(\{s\})}} \cdot (1 + \gamma)\pi_s \leq \sigma_v$$
+    
+  - For validator $a$, substituting the values confirms that:
+    
+    $$\sigma_a = \sigma_a$$
+    
+    Thus, the condition is satisfied.
+
+- **Validator $b$:**
+  - A similar calculation for validator $b$ shows that the condition from **Corollary 2** is also met for $b$.
+
+- **Initial Shock $D$ = { $a$ }:**
+  - The shock $D$ = { $a$ } removes validator $a$ and its stake $\sigma_a$ from the network. The remaining validators $b$ and $c$ now support the service $x$.
+
+- **Attack Incentive for Validator $b$:**
+  - After the shock, we need to determine whether validator $b$ is incentivized to attack the service $x$. Validator $b$ would attack if the expected profit from attacking $x$ exceeds its remaining stake:
+    
+    $$\pi_x - \sigma_b > 0$$
+    
+  - Substituting the values, the expression becomes:
+    
+    $$\pi_x - \sigma_b = \left[\left(1 + \frac{1}{\gamma}\right)\psi - \epsilon\right] - \left[\frac{\sigma_a}{\gamma} - \frac{\sigma_a \epsilon}{\psi}\right]$$
+    
+    Simplifying further:
+    
+    $$\pi_x - \sigma_b = \gamma \epsilon \cdot \frac{\sigma_a}{(1 + \gamma)\psi} > 0$$
+    
+  - Since the expression is positive, validator $b$ is indeed incentivized to attack service $x$.
+
+
+- **Calculating the Loss $R_\psi(G)$:**
+  - After $b$ attacks, the total loss is given by:
+    
+    $$R_\psi(G) \geq \frac{\sigma_a + \sigma_b}{\sigma_V} = \left(1 + \frac{1}{\gamma}\right)\psi - \epsilon$$
+    
+  - This proves that the network suffers a substantial loss, as the theorem states.
+
+#### Key Insights from Theorem 3 
+
+- Theorem 3 demonstrates that it is possible to construct a restaking graph $G$ that meets the security condition from **Corollary 2** but still incurs substantial losses when subjected to a significant shock $\psi$. This reveals a critical vulnerability in the condition, showing that it is not sufficient to prevent large-scale failures under certain circumstances. The proof highlights the importance of developing more robust security measures that go beyond the conditions provided by **Corollary 2**, ensuring the resilience of decentralized networks against catastrophic events.
+
+
 ## [Local Security](#local-security)
 
 
