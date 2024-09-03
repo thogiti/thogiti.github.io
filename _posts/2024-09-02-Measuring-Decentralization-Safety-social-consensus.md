@@ -151,8 +151,8 @@ $$DN(p) = \sum_{i=1}^{k} R_i$$
 
 - **For example:**
   - $DN(50)$ represents the minimum cumulative resource held by the smallest number of participants who control 50\% of the network’s total resources.
-  - A **high** $DN(50)$ suggests a decentralized network where many participants are needed to control 50\% of resources.
-  - A **low** $DN(50)$ indicates centralization, where few participants dominate.
+  - A high $DN(50)$ suggests a decentralized network where many participants are needed to control 50\% of resources.
+  - A low $DN(50)$ indicates centralization, where few participants dominate.
 
 **Network Participant Count Metric (DL50):**
 
@@ -164,8 +164,8 @@ $$DL(p) = \min \lbrace k : \sum_{i=1}^{k} R_i \geq \frac{p}{100} \times \sum_{i=
 
 - **For example:**
   - $DL(50)$ represents the minimum number of participants required to control 50\% of the network’s resources.
-  - A **smaller** $DL(50)$ indicates centralization.
-  - A **larger** $DL(50)$ indicates decentralization.
+  - A smaller $DL(50)$ indicates centralization.
+  - A larger $DL(50)$ indicates decentralization.
 
 **Example Clarification:**
 
@@ -214,8 +214,8 @@ This metric calculates the total fault tolerance capacity controlled by the smal
 
 - **For example:**
   - $SFN(50)$ represents the smallest group of participants whose combined security capacity accounts for 50\% of the total network security.
-  - A **higher** $SFN(50)$ suggests that the network’s fault tolerance is well-distributed, making it more resilient.
-  - A **lower** $SFN(50)$ indicates that fault tolerance is concentrated, which could be a vulnerability.
+  - A higher $SFN(50)$ suggests that the network’s fault tolerance is well-distributed, making it more resilient.
+  - A lower $SFN(50)$ indicates that fault tolerance is concentrated, which could be a vulnerability.
 
 **Safety Participant Count Metric (SFL50):**
 
@@ -230,8 +230,8 @@ This metric identifies the smallest number of participants $k$ whose cumulative 
 
 - **For example:**
   - $SFL(50)$ represents the number of participants required to account for 50\% of the network’s fault tolerance.
-  - A **smaller** $SFL(50)$ suggests centralization of fault tolerance.
-  - A **larger** $SFL(50)$ indicates distributed fault tolerance, enhancing network resilience.
+  - A smaller $SFL(50)$ suggests centralization of fault tolerance.
+  - A larger $SFL(50)$ indicates distributed fault tolerance, enhancing network resilience.
 
 **Example Clarification:**
 
@@ -280,8 +280,8 @@ This metric calculates the total influence controlled by the smallest group of p
   
 - **For example:**
   - $CN(50)$ represents the minimum cumulative voting power held by the smallest number of participants controlling 50\% of the network’s influence.
-  - A **high** $CN(50)$ suggests decentralized influence.
-  - A **low** $CN(50)$ indicates concentrated power.
+  - A high $CN(50)$ suggests decentralized influence.
+  - A low $CN(50)$ indicates concentrated power.
 
 
 **Influence Participant Count Metric (CL50):**
@@ -296,8 +296,8 @@ This metric identifies the smallest number of participants $k$ whose cumulative 
 
 - **For example:**
     - $CL(50)$ represents the minimum number of participants controlling 50\% of the network’s influence.
-    - A **smaller** $CL(50)$ indicates centralization.
-    - A **larger** $CL(50)$ reflects greater decentralization.
+    - A smaller $CL(50)$ indicates centralization.
+    - A larger $CL(50)$ reflects greater decentralization.
 
 **Example Clarification**
 
