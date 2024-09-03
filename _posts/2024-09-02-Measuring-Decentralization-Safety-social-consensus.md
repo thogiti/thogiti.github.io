@@ -3,9 +3,14 @@ title: Quantifying Decentralization and Safety of Social Consensus in Blockchain
 tags: Ethereum Decentralization Social-Consensus Safety measuring-Safety measuring-Decentralization
 ---
 
+## Introduction
+
+Social consensus is often treated like a magic fix for safety faults in blockchain networks, especially in the fast-paced conversations on Crypto Twitter (CT). But if history has taught us anything—whether it's the bitter small block vs. big block debates or the Ethereum split after the DAO fork—it's that social consensus is anything but easy. It’s messy, expensive, and incredibly hard to pull off.
+
+So when we talk about decentralization, it’s not enough to just measure it **before** we call in social consensus. We need to think about what happens **after** social consensus is invoked. How decentralized is a blockchain really, once the dust settles? To get the full picture, we need to quantify the effectiveness and the true cost of social consensus itself. The below framework provides a simple and structured approach to quantifying decentralization, safety, and the effectiveness of social consensus mechanisms in blockchain systems. 
+
 _Note: Many thanks to  [Terry @ EclipseLabs](https://x.com/0xtaetaehoho)  for sharing his notes on the social consensus. My analysis is largely inspired from a discussion with him._
 
-The below framework provides a simple and structured approach to quantifying decentralization, safety, and the effectiveness of social consensus mechanisms in blockchain systems. 
 
 ## Definitions and Notations
 
