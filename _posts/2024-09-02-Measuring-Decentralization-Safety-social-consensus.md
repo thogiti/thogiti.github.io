@@ -136,7 +136,7 @@ In genomics, [N50-based metrics](https://en.wikipedia.org/wiki/N50,_L50,_and_rel
 
 - **Definition:** The Network Resource Share Metric, $DN(p)$, measures the minimum cumulative share of resources (e.g., hashing power in PoW or stake in PoS) held by the smallest subset of participants (such as miners, validators, or stakers) that collectively control $p\%$ of the total network resources.
   
-Mathematically, $DN(p)$ is defined as:
+Mathematically, $DN(p)$ can be defined as:
 
 Let $R_1 \geq R_2 \geq \cdots \geq R_N$ be the ordered resource shares of participants, where $R_i$ is the resource share of the $i$-th participant and $N$ is the total number of participants.
 
@@ -158,7 +158,7 @@ $$DN(p) = \sum_{i=1}^{k} R_i$$
 
 - **Definition:** The Network Participant Count Metric, $DL(p)$, is the smallest number of participants needed to control $p\%$ of the total network resources.
 
-Mathematically:
+Mathematically, $DL(p)$ can be defined as follows:
 
 $$DL(p) = \min \lbrace k : \sum_{i=1}^{k} R_i \geq \frac{p}{100} \times \sum_{i=1}^{N} R_i \rbrace$$
 
@@ -183,7 +183,7 @@ Suppose we have a network with resource shares R = [40%, 30%, 10%, 10%, 5%, 5%]:
 
 - **Definition:** The Target Resource Share Metric, $NG(p)$, measures the minimum cumulative share of resources required to reach $p\%$ of a predefined target resource distribution, often based on an ideal decentralized model.
 
-Mathematically:
+Mathematically, $NG(p)$ can be defined as follows:
 
 $$NG(p) = \min \lbrace k : \sum_{i=1}^{k} R_i \geq \frac{p}{100} \times \text{Target Resource} \rbrace$$
 
@@ -197,7 +197,7 @@ $$NG(p) = \min \lbrace k : \sum_{i=1}^{k} R_i \geq \frac{p}{100} \times \text{Ta
 
 - **Definition:** The Safety Fault Tolerance Metric, $SFN(p)$, measures the cumulative security capacity (e.g., the ability to detect and mitigate attacks) of the smallest group of participants that together provide $p\%$ of the network’s total fault tolerance.
 
-Mathematically, $SFN(p)$ is defined as follows:
+Mathematically, $SFN(p)$ can be defined as follows:
 
 Let $S_1 \geq S_2 \geq \cdots \geq S_N$ be the ordered fault tolerance capacities of participants, where $S_i$ is the fault tolerance capacity of the $i$-th participant, and $N$ is the total number of participants.
 
@@ -221,7 +221,7 @@ This metric calculates the total fault tolerance capacity controlled by the smal
 
 - **Definition:** The Safety Participant Count Metric, $SFL(p)$, is the minimum number of participants needed to provide $p\%$ of the network’s fault tolerance capacity.
 
-Mathematically:
+Mathematically, $SFL(p)$ can be defined as follows:
 
 $$SFL(p) = \min \lbrace k : \sum_{i=1}^{k} S_i \geq \frac{p}{100} \times \sum_{i=1}^{N} S_i \rbrace$$
 
@@ -250,7 +250,7 @@ Suppose we have a network with fault tolerance capacities S = [50%, 30%, 10%, 5%
 
 - **Definition:** The Target Fault Tolerance Metric, $UG(p)$, measures the minimum cumulative fault tolerance required to reach $p\%$ of a predefined safety target, based on an ideal model.
 
-Mathematically:
+Mathematically, $UG(p)$ can be defined as follows:
 
 $$UG(p) = \min \lbrace k : \sum_{i=1}^{k} S_i \geq \frac{p}{100} \times \text{Target Fault Tolerance} \rbrace$$
 
@@ -316,7 +316,7 @@ Suppose we have a network with influence shares V = [45%, 35%, 10%, 5%, 5%]:
 
 - **Definition:** The Target Influence Metric, $UG(p)$, measures the minimum cumulative influence required to reach $p\%$ of a predefined influence distribution target, based on an ideal governance model.
 
-Mathematically:
+Mathematically, $UG(p)$ can be defined as follows:
 
 $$UG(p) = \min \lbrace k : \sum_{i=1}^{k} V_i \geq \frac{p}{100} \times \text{Target Influence Distribution} \rbrace$$
 
