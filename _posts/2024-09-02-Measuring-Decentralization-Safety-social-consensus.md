@@ -150,8 +150,8 @@ Then, the Network Resource Share Metric is:
 $$DN(p) = \sum_{i=1}^{k} R_i$$
 
 - **For example:**
-  - $DN(50)$ represents the minimum cumulative resource held by the smallest number of participants who control 50\% of the network’s total resources.
-  - A high $DN(50)$ suggests a decentralized network where many participants are needed to control 50\% of resources.
+  - $DN(50)$ represents the minimum cumulative resource held by the smallest number of participants who control 50% of the network’s total resources.
+  - A high $DN(50)$ suggests a decentralized network where many participants are needed to control 50% of resources.
   - A low $DN(50)$ indicates centralization, where few participants dominate.
 
 **Network Participant Count Metric (DL50):**
@@ -189,7 +189,7 @@ $$NG(p) = \min \lbrace k : \sum_{i=1}^{k} R_i \geq \frac{p}{100} \times \text{Ta
 
 
 - **For example:**
-  - $NG(50)$ represents the minimum cumulative resource needed to reach 50\% of an ideal target distribution. If the target is 50 participants, but the network achieves this with only 20, then $NG(50) = 20$.
+  - $NG(50)$ represents the minimum cumulative resource needed to reach 50% of an ideal target distribution. If the target is 50 participants, but the network achieves this with only 20, then $NG(50) = 20$.
 
 ### Safety Fault Tolerance Metrics
 
@@ -213,7 +213,7 @@ $$SFN(p) = \sum_{i=1}^{k} S_i$$
 This metric calculates the total fault tolerance capacity controlled by the smallest number of participants whose cumulative capacity meets or exceeds $p\%$ of the total network fault tolerance.
 
 - **For example:**
-  - $SFN(50)$ represents the smallest group of participants whose combined security capacity accounts for 50\% of the total network security.
+  - $SFN(50)$ represents the smallest group of participants whose combined security capacity accounts for 50% of the total network security.
   - A higher $SFN(50)$ suggests that the network’s fault tolerance is well-distributed, making it more resilient.
   - A lower $SFN(50)$ indicates that fault tolerance is concentrated, which could be a vulnerability.
 
@@ -226,10 +226,10 @@ Mathematically, $SFL(p)$ can be defined as follows:
 $$SFL(p) = \min \lbrace k : \sum_{i=1}^{k} S_i \geq \frac{p}{100} \times \sum_{i=1}^{N} S_i \rbrace$$
 
 
-This metric identifies the smallest number of participants $k$ whose cumulative fault tolerance capacity meets or exceeds $p \%$ of the total network fault tolerance.
+This metric identifies the smallest number of participants $k$ whose cumulative fault tolerance capacity meets or exceeds $p\%$ of the total network fault tolerance.
 
 - **For example:**
-  - $SFL(50)$ represents the number of participants required to account for 50\% of the network’s fault tolerance.
+  - $SFL(50)$ represents the number of participants required to account for 50% of the network’s fault tolerance.
   - A smaller $SFL(50)$ suggests centralization of fault tolerance.
   - A larger $SFL(50)$ indicates distributed fault tolerance, enhancing network resilience.
 
@@ -255,7 +255,7 @@ Mathematically, $UG(p)$ can be defined as follows:
 $$UG(p) = \min \lbrace k : \sum_{i=1}^{k} S_i \geq \frac{p}{100} \times \text{Target Fault Tolerance} \rbrace$$
 
 - **For example:**
-  - $UG(50)$ represents the smallest group of participants required to meet 50\% of the safety target. If the target is met with 12 participants instead of 25, $UG(50) = 12$.
+  - $UG(50)$ represents the smallest group of participants required to meet 50% of the safety target. If the target is met with 12 participants instead of 25, $UG(50) = 12$.
 
 ### Centralization and Concentration Metrics
 
@@ -279,7 +279,7 @@ $$CN(p) = \sum_{i=1}^{k} W_i$$
 This metric calculates the total influence controlled by the smallest group of participants whose combined influence meets or exceeds $p \%$ of the total network influence.
   
 - **For example:**
-  - $CN(50)$ represents the minimum cumulative voting power held by the smallest number of participants controlling 50\% of the network’s influence.
+  - $CN(50)$ represents the minimum cumulative voting power held by the smallest number of participants controlling 50% of the network’s influence.
   - A high $CN(50)$ suggests decentralized influence.
   - A low $CN(50)$ indicates concentrated power.
 
@@ -295,7 +295,7 @@ $$CL(p) = \min \lbrace k : \sum_{i=1}^{k} W_i \geq \frac{p}{100} \times \sum_{i=
 This metric identifies the smallest number of participants $k$ whose cumulative influence meets or exceeds $p\%$ of the total network influence.
 
 - **For example:**
-    - $CL(50)$ represents the minimum number of participants controlling 50\% of the network’s influence.
+    - $CL(50)$ represents the minimum number of participants controlling 50% of the network’s influence.
     - A smaller $CL(50)$ indicates centralization.
     - A larger $CL(50)$ reflects greater decentralization.
 
@@ -304,11 +304,11 @@ This metric identifies the smallest number of participants $k$ whose cumulative 
 Suppose we have a network with influence shares V = [45%, 35%, 10%, 5%, 5%]:
 
 - For $CN(50)$:
-  - The smallest group controlling at least 50\% of influence consists of the first participant alone (45\%) and a portion of the second (5\% from 35\%).
+  - The smallest group controlling at least 50% of influence consists of the first participant alone (45%) and a portion of the second (5% from 35%).
   - Therefore, $CN(50) = 50\%$.
 
 - For $CL(50)$:
-  - The smallest number of participants controlling at least 50\% of influence is the first two participants.
+  - The smallest number of participants controlling at least 50% of influence is the first two participants.
   - Therefore, $CL(50) = 2$.
 
 
@@ -321,7 +321,7 @@ Mathematically, $UG(p)$ can be defined as follows:
 $$UG(p) = \min \lbrace k : \sum_{i=1}^{k} V_i \geq \frac{p}{100} \times \text{Target Influence Distribution} \rbrace$$
 
 - **For example:**
-  - $UG(50)$ represents the smallest group of participants needed to reach 50\%\ of the target influence. If the target is met with 15 participants instead of 30, $UG(50) = 15$.
+  - $UG(50)$ represents the smallest group of participants needed to reach 50% of the target influence. If the target is met with 15 participants instead of 30, $UG(50) = 15$.
 
 
 
