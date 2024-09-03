@@ -461,7 +461,7 @@ This theorem is asserting that even if a restaking graph $G$ satisfies the secur
 **Statement:**  
 For any $\psi$, $\gamma$, $\epsilon > 0$ such that
 
-$$0 \leq \left( 1 + \frac{1}{\gamma} \right) \psi - \epsilon \leq 1 \tag{20}$$
+$$0 \leq \left( 1 + \frac{1}{\gamma} \right) \psi - \epsilon \leq 1 $$
 
 there exists a restaking graph $G$ that satisfies the condition $(17)$ from Corollary 2 but has $R_{\psi}(G) \geq \left( 1 + \frac{1}{\gamma} \right) \psi - \epsilon$.
 
