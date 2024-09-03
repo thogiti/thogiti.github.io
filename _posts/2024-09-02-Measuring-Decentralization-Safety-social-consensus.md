@@ -163,9 +163,12 @@ Mathematically, $DL(p)$ can be defined as follows:
 $$DL(p) = \min \lbrace k : \sum_{i=1}^{k} R_i \geq \frac{p}{100} \times \sum_{i=1}^{N} R_i \rbrace$$
 
 - **For example:**
-  - $DL(50)$ represents the minimum number of participants required to control 50\% of the network’s resources.
+  - $DL(50)$ represents the minimum number of participants required to control 50% of the network’s resources.
   - A smaller $DL(50)$ indicates centralization.
   - A larger $DL(50)$ indicates decentralization.
+
+_Often in PBFT protocols, you only need 1/3 dishonest actors to compromise safety and liveness of the network. So for practical purposes we are looking for the information on $DN(33)$ and $DL(33)$._ 
+
 
 **Example Clarification:**
 
@@ -276,7 +279,7 @@ Then, the Concentration Influence Metric is:
 $$CN(p) = \sum_{i=1}^{k} W_i$$
 
 
-This metric calculates the total influence controlled by the smallest group of participants whose combined influence meets or exceeds $p \%$ of the total network influence.
+This metric calculates the total influence controlled by the smallest group of participants whose combined influence meets or exceeds $p\%$ of the total network influence.
   
 - **For example:**
   - $CN(50)$ represents the minimum cumulative voting power held by the smallest number of participants controlling 50% of the network’s influence.
