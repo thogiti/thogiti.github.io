@@ -26,21 +26,21 @@ Our goal in this article is to formalize this trade-off with mathematical model,
 
 ## Definitions and Notations
 
-- $C$: **Composability**—the ability of decentralized applications (dApps) to interact seamlessly. $C \in [0, 1]$, where 0 represents no composability and 1 represents full atomic composability.
-- $M$: **MEV Capture**—the extent to which a system captures **endogenous** and **exogenous** MEV. $M \in [0, 1]$, where 0 represents no MEV capture and 1 represents full MEV capture.
-- $G_d$: **Gas Efficiency**—the efficiency of gas usage in a specific domain $d$. $G_d \in [0, 1]$, where 1 represents the maximum gas efficiency.
-- $S$: **Security**—the system’s ability to resist attacks such as front-running or re-entrancy. $S \in [0, 1]$, where 1 represents full security.
-- $L$: **Latency**—the time taken for transaction finality. Lower values represent faster finality.
+- $C$: Composability—the ability of decentralized applications (dApps) to interact seamlessly. $C \in [0, 1]$, where 0 represents no composability and 1 represents full atomic composability.
+- $M$: MEV Capture—the extent to which a system captures endogenous and exogenous MEV. $M \in [0, 1]$, where 0 represents no MEV capture and 1 represents full MEV capture.
+- $G_d$: Gas Efficiency—the efficiency of gas usage in a specific domain $d$. $G_d \in [0, 1]$, where 1 represents the maximum gas efficiency.
+- $S$: Security—the system’s ability to resist attacks such as front-running or re-entrancy. $S \in [0, 1]$, where 1 represents full security.
+- $L$: Latency—the time taken for transaction finality. Lower values represent faster finality.
 
 ### Domain-Specific Gas Efficiency Function
 
-Since **gas efficiency** varies across different blockchains, we define it as a **domain-specific function** $G_d$, where $d$ represents the blockchain (e.g., **Solana**, **Monad**, **Ethereum**,):
+Since gas efficiency varies across different blockchains, we define it as a domain-specific function $G_d$, where $d$ represents the blockchain (e.g., Solana, Monad, Ethereum, etc.):
 
 
 $$G_d = f_d(C, M, S, L)$$
 
 
-The function $f_d$ depends on the specific characteristics of the blockchain in question. For example, **Solana’s access lists** allow for better optimization of gas usage, while **Monad** lacks such features, resulting in different trade-offs.
+The function $f_d$ depends on the specific characteristics of the blockchain in question. For example, Solana’s access lists allow for better optimization of gas usage, while Monad lacks such features, resulting in different trade-offs.
 
 Let’s take a closer look at how this gas efficiency function works for each domain.
 
