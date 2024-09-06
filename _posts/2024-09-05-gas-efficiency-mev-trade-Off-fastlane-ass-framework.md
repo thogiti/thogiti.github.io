@@ -11,6 +11,11 @@ In this technical blog, we will explore deeper into the gas efficiency trade-off
 
 Understanding the trade-offs between critical factors such as composability, MEV capture, and gas efficiency is key to optimizing blockchain architectures. Fastlane's ASS framework provides an initial approach to visualizing these trade-offs. However, the simplified model often overlooks domain-specific factors, particularly regarding gas efficiency, where different blockchain systems impose unique constraints and opportunities.
 
+
+![Fastlane's ASS framework](/assets/images/20240901/ASS-Spectrum-MEV-composability-landscape.jpg)
+_Figure: Fastlane's ASS framework, source: Fastlane[^1_
+
+
 ## Overview - The Gas Efficiency Trade-Off in Blockchain Architectures
 
 In any blockchain system, gas efficiency reflects the cost of computational resources required to execute transactions. Optimizing gas efficiency is crucial for scalability, user experience, and long-term viability. However, improving gas efficiency often comes with trade-offs—particularly in MEV (Maximum Extractable Value) capture and composability.
@@ -62,10 +67,6 @@ $$G_{\text{Monad}} = C^\alpha \cdot M^\beta \cdot S^\gamma \cdot L^\delta \cdot 
 
 Here, $h(M)$ is a penalty function that grows with MEV capture, reflecting the higher cost in gas efficiency as the system tries to capture more MEV. This term penalizes the system for lack of composability optimizations and reflects a steeper trade-off curve.
 
-
-
-![Fastlane's ASS framework](/assets/images/20240901/ASS-Spectrum-MEV-composability-landscape.jpg)
-_Figure: Fastlane's ASS framework, source: Fastlane_
 
 ## References
 [^1]: https://x.com/ThogardPvP/status/1829331564029005924
