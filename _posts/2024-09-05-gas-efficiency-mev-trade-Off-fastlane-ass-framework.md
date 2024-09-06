@@ -13,7 +13,7 @@ Understanding the trade-offs between critical factors such as composability, MEV
 
 
 ![Fastlane's ASS framework](/assets/images/20240901/ASS-Spectrum-MEV-composability-landscape.jpg)
-_Figure: Fastlane's ASS framework, source: Fastlane[^1_
+_Figure: Fastlane's ASS framework, source: Fastlane[^1]_
 
 
 ## Overview - The Gas Efficiency Trade-Off in Blockchain Architectures
