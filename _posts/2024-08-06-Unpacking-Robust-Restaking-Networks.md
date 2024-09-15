@@ -546,6 +546,49 @@ Theorem 3 says that even if a restaking graph $G$ satisfies the security conditi
 
 ## [Local Security](#local-security)
 
+### Theorem 4
+
+**Statement**:
+For any local security condition $f$, any secure restaking graph $G$, and coalition of services $C \subseteq S$ such that $f(C, G) = 1$, there exists a secure $C$-local variant $G'$ of $G$ such that $R_0(C, G') = 1$.
+
+**Explanation**:
+Theorem 4 proves that for any secure configuration of a restaking network, we can always construct a variant of the network where the coalition of services $C$ can experience the worst-case stake loss scenario. This is done by manipulating the overcollateralization and introducing new services and validators to engineer a valid attack on the augmented graph $G'$.
+
+#### Proof Breakdown
+
+**Defining Total Overcollateralization $\Delta$**:
+- **$\Delta = \sigma_{N_G C} - \pi_C$**:
+  - $\sigma_{N_G C}$: The total stake from validators in the neighborhood of coalition $C$, i.e., validators directly securing services in $C$.
+  - $\pi_C$: The profit that could be made by corrupting the coalition $C$, essentially the value to be gained by attackers.
+
+- $\Delta$ represents the excess collateral securing the coalition $C$, which is important for understanding whether the services in $C$ are overcollateralized (secure).
+
+
+**Augmenting the Graph $G$ to Create $G'$**:
+- The proof creates an augmented graph $G'$ by adding a new service $s^\*$ and two validators, $a$ and $b$, adjacent only to this new service $s^*$.
+  
+- **New Validator Stakes**:
+  - $\sigma_a = \Delta + \epsilon$: Validator $a$'s stake is the overcollateralization of $C$ plus a small amount $\epsilon$, ensuring that $a$'s stake is large enough.
+  - $\sigma_b = \epsilon$: Validator $b$ has a small stake $\epsilon$, used for controlling part of the new attack structure.
+
+- **Profit of New Service $s^*$**:  
+  The new service $s^\*$ has a profit from corruption $\pi_{s^*} = \Delta + 2\epsilon$, ensuring that its profit potential is directly related to the overcollateralization of $C$.
+
+
+**Validity of the Attack**:
+- Validator $a$ is not path-connected to the coalition $C$, meaning that no other validator is dependent on $a$ for the security of services in $C$.
+  
+- This is important because it guarantees that modifying $a$'s stake or security settings will not affect the original security structure of $C$ in graph $G$.
+
+- By construction, the attack $(C \cup \{s^*\}, N_G C \cup \{b\})$ is valid on the new graph $G'$, meaning that the attack could lead to the maximal worst-case loss $R_0(C, G') = 1$.
+  
+- This proves that for any local security condition $f$, there always exists a modified graph $G'$ where the worst-case scenario for the coalition $C$ results in a maximal stake loss.
+
+
+#### Key Insights from Theorem 4
+
+- Even if a network appears secure under normal conditions, theorem 4 shows that it is always possible to create a localized variant of the network that makes the coalition of services vulnerable to the worst possible attack scenario.
+
 
 ## [Local Security Condition for Stable Attacks](#local-security-condition-for-stable-attacks)
 
