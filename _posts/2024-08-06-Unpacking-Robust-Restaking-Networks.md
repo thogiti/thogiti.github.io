@@ -586,11 +586,60 @@ Theorem 4 proves that for any secure configuration of a restaking network, we ca
 
 
 #### Key Insights from Theorem 4
-
-- Even if a network appears secure under normal conditions, theorem 4 shows that it is always possible to create a localized variant of the network that makes the coalition of services vulnerable to the worst possible attack scenario.
+- Even if a coalition of services $C$ is secure, Theorem 4 says that it’s always possible to modify the network slightly—by adding a new service and some validators—such that the worst possible loss for $C$ becomes as bad as it can get. In this modified network, the security becomes local to $C$, and the coalition $C$ can be attacked with maximal loss.
 
 
 ## [Local Security Condition for Stable Attacks](#local-security-condition-for-stable-attacks)
+
+### Theorem 5
+
+**Statement**: In a restaking graph $G$, let $C \subseteq S$ be a coalition of services. If, for all attack headers $(X, Y)$ where $X \subseteq C$, the inequality $(1 + \gamma) \pi_X \leq \sigma_Y$ holds, then the worst-case loss $R_\psi(C, G)$ for coalition $C$ is strictly less than $\left(1 + \frac{1}{\gamma} \right)\psi$. Furthermore, the function that checks whether this inequality holds for all attack headers is a local security condition.
+
+**Explanation**: Theorem 5 guarantees that a well-collateralized network can limit the potential loss from any attack, and it provides a method to check this condition locally, making it more practical for real-world use in securing blockchain networks.
+
+
+#### Proof Breakdown
+
+**Condition for Limiting Worst-Case Loss**:
+
+- The condition that needs to be satisfied for the worst-case loss to be limited is:
+  
+  $$(1 + \gamma)\pi_X \leq \sigma_Y$$
+  
+  This inequality states that the stake of the validators protecting the services in $X$ must be large enough to cover the potential profit from corrupting the services, scaled by a safety margin $\gamma$. This ensures that attackers cannot easily exploit the coalition of services $C$ because the validators have sufficient collateral to protect against attacks.
+
+
+**Sequence of Attacks and Validator Loss**:
+
+- The proof considers an arbitrary sequence of cascading attacks on the coalition $C$, represented by $(A_1, B_1), \dots, (A_T, B_T)$, where each attack involves a subset of services $A_t$ being attacked and validators $B_t$ potentially losing their stake.
+
+- For each attack step $t$, a set $L_t$ is defined, representing the validators who were lost in that specific attack. These are the validators who were exclusively securing the services in $C$ and were compromised during the attack.
+
+
+**Maximal Set of Services $A_t'$**:
+
+- The proof introduces the set $A_t'$, which is defined as the maximal subset of services that can still be considered part of an attack coalition in each step. These services are secured by a combination of validators from $B_t$ and other validators remaining in the system.
+
+- The services in $A_t'$ satisfy the condition:
+  
+  $$\sigma_{B_t \setminus L_t} \geq \alpha_s \cdot \sigma_{N_G\{s\} \setminus \left( \bigcup_{i=1}^{t-1} B_i \cup D \right)}$$
+  
+  meaning that the remaining validators $B_t \setminus L_t$ provide enough stake to meet the attack resistance required for the services in $A_t'$.
+
+
+- The proof concludes by showing that under the condition $(1 + \gamma) \pi_X \leq \sigma_Y$, the worst-case loss $R_\psi(C, G)$ remains strictly less than $\left( 1 + \frac{1}{\gamma} \right)\psi$. In other words, the maximum possible stake loss for the coalition $C$ is effectively bounded and controlled.
+
+- Additionally, the function that checks whether the condition holds for all attack headers is a local security condition. This means that it can be verified by examining only the services and validators in the immediate neighborhood of $C$, without needing to consider the entire network.
+
+
+### **Key Insights from Theorem 5**
+
+Theorem 5 provides a framework for bounding the worst-case loss in a restaking network by ensuring that validators have enough stake to cover any potential attack on a coalition of services. Specifically, it shows that:
+
+- If validators’ stake is greater than the attack profit for all possible attack scenarios, the worst-case loss for the coalition will not exceed a specific upper bound. This ensures that the network remains resilient to attacks.
+  
+- The process of checking whether this condition holds is local, meaning it can be done efficiently by focusing on the relevant subset of services and validators, rather than analyzing the entire network.
+
 
 
 ## [Lower Bounds for Local Security](#lower-bounds-for-local-security)
