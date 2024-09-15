@@ -338,7 +338,7 @@ The theorem aims to show that if a restaking network is secure with multiplicati
    
    This bound on the total loss $R_\psi(G)$ ensures that no matter how severe the initial shock and subsequent cascades, the total loss remains within this predictable limit.
 
-#### Key Insights of Theorem 1
+### Key Insights of Theorem 1
 
 - **Multiplicative Slack $\gamma$** provides a crucial safety buffer that limits the impact of cascading failures. By requiring that validators hold more stake than the potential profit from attacks (scaled by $1 + \gamma$), the network can absorb shocks without triggering uncontrollable losses.
 - **Controlled Cascading:** The proof shows that even in the worst-case scenario, where losses cascade through the network, the total loss is bounded and predictable. This bound is crucial for network designers to ensure the resilience and stability of blockchain systems.
@@ -381,7 +381,7 @@ This corollary aims to show that if every validator in the network satisfies the
 - **Claim 1:** This claim (not fully detailed here but referenced in the proof) likely provides a sufficient condition for the absence of valid attacks when profits are scaled by $1 + \gamma$.
 - **Applying to Corollary 2:** The proof shows that if each validator satisfies the condition in Equation 17, it implies that the entire network is secure under the slack-adjusted conditions. Essentially, Equation 17 is a localized version of the global security condition in Theorem 1. By applying the condition from Claim 1, which ensures no valid attacks under the adjusted profits, the corollary concludes that the network’s worst-case loss remains bounded as stated in Theorem 1.
 
-**Key Insights of Corollary 2:**
+### Key Insights of Corollary 2
 
 - If every validator satisfies the localized risk condition in Equation 17, the network as a whole is guaranteed to resist large cascading losses. The slack-adjusted potential profits from attacks are never able to overwhelm the validators' stakes, thereby ensuring the network remains robust.
 - In practice, this means that network designers can ensure security by verifying this condition for all validators, which is much easier than checking the entire network's security directly.
@@ -451,7 +451,7 @@ This theorem is asserting that even if a restaking graph $G$ satisfies the secur
   - The total stake after the shock $D = \{a\}$ is $\sigma_b = 1 - \epsilon$.
   - Since $b$ is insufficient to fully protect $x$, the attack succeeds, leading to a total stake loss of $R_\psi(G) \geq \frac{\sigma_a + \sigma_b}{\sigma_V} = \frac{1}{1} = 1$.
 
-#### Key Insights from Theorem 2
+### Key Insights from Theorem 2
 - Thus, the proof demonstrates that even though the graph $G$ satisfies the EigenLayer condition, it is still vulnerable to a total loss when the initial shock $\psi$ is large enough.
 - Specifically, for any $\psi \geq \epsilon$, the entire network’s stake can be wiped out, validating the theorem's statement that $R_\psi(G) = 1$ for $\psi \geq \epsilon$.
 
@@ -539,7 +539,7 @@ Theorem 3 says that even if a restaking graph $G$ satisfies the security conditi
     
   - This proves that the network suffers a substantial loss, as the theorem states.
 
-#### Key Insights from Theorem 3 
+### Key Insights from Theorem 3 
 
 - Theorem 3 demonstrates that it is possible to construct a restaking graph $G$ that meets the security condition from **Corollary 2** but still incurs substantial losses when subjected to a significant shock $\psi$. This reveals a critical vulnerability in the condition, showing that it is not sufficient to prevent large-scale failures under certain circumstances. The proof highlights the importance of developing more robust security measures that go beyond the conditions provided by **Corollary 2**, ensuring the resilience of decentralized networks against catastrophic events.
 
@@ -585,7 +585,7 @@ Theorem 4 proves that for any secure configuration of a restaking network, we ca
 - This proves that for any local security condition $f$, there always exists a modified graph $G'$ where the worst-case scenario for the coalition $C$ results in a maximal stake loss.
 
 
-#### Key Insights from Theorem 4
+### Key Insights from Theorem 4
 - Even if a coalition of services $C$ is secure, Theorem 4 says that it’s always possible to modify the network slightly—by adding a new service and some validators—such that the worst possible loss for $C$ becomes as bad as it can get. In this modified network, the security becomes local to $C$, and the coalition $C$ can be attacked with maximal loss.
 
 
@@ -632,7 +632,7 @@ Theorem 4 proves that for any secure configuration of a restaking network, we ca
 - Additionally, the function that checks whether the condition holds for all attack headers is a local security condition. This means that it can be verified by examining only the services and validators in the immediate neighborhood of $C$, without needing to consider the entire network.
 
 
-### **Key Insights from Theorem 5**
+### Key Insights from Theorem 5
 
 Theorem 5 provides a framework for bounding the worst-case loss in a restaking network by ensuring that validators have enough stake to cover any potential attack on a coalition of services. Specifically, it shows that:
 
@@ -643,6 +643,81 @@ Theorem 5 provides a framework for bounding the worst-case loss in a restaking n
 
 
 ## [Lower Bounds for Local Security](#lower-bounds-for-local-security)
+
+### Theorem 6
+
+
+**Statement**:  
+For any $\gamma > 0$, there exists a restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$ that satisfies condition (17) from Corollary 2, but there also exists a coalition $C \subseteq S$ such that the worst-case loss $R_0(C, G) = 1$. 
+
+**Explanation**:  
+This means that even though the graph satisfies the security condition for some services, it is still possible for a subset of services to experience the maximal possible loss in a worst-case attack scenario.
+
+
+
+#### Proof Breakdown
+
+**Defining the Restaking Graph**:
+
+- **Services and Validators**:  
+  Let the services be $S = \{x, y, z\}$, and the validators be $V = \{a, b, c\}$. The edges $E$ define which validators secure which services, and they are given by:
+  
+  $$E = \{(x, a), (x, b), (y, b), (y, c), (z, c), (z, a)\}$$
+  
+  This creates a circular pattern where each validator is responsible for securing two services.
+
+- **Setting Stake and Profit Parameters**:
+  - Set the profit for each service as $\pi_x = \pi_y = \pi_z = \pi$, where $\pi > 0$ is an arbitrary positive constant.
+  - Set the stake of validator $a$ to $\sigma_a$, and choose $\sigma_a$ such that:
+    
+    $$\sigma_a < 2\pi$$
+    
+  - Set the stakes of validators $b$ and $c$ as:
+    
+    $$\sigma_b = 2(1 + \gamma)\pi, \quad \sigma_c = 2(1 + \gamma)\pi$$
+    
+
+**Checking Security Condition (17) from Corollary 2**:
+
+- The security condition (17) from Corollary 2 must be satisfied, which ensures that the validators' stakes are sufficient to secure the services. We need to verify this for the given stake values.
+
+- For validator $a$:
+  
+  $$\frac{\sigma_a}{\sigma_a + \sigma_b} \cdot (1 + \gamma)\pi + \frac{\sigma_a}{\sigma_a + \sigma_c} \cdot (1 + \gamma)\pi < (1 + \gamma)\pi$$
+  
+  Simplifying this expression ensures that validator $a$’s stake satisfies the security condition.
+
+- For validators $b$ and $c$, similar inequalities are checked:
+  
+  $$\frac{\sigma_b}{\sigma_a + \sigma_b} \cdot (1 + \gamma)\pi + \frac{\sigma_b}{\sigma_b + \sigma_c} \cdot (1 + \gamma)\pi < \sigma_b$$
+  
+  
+  $$\frac{\sigma_c}{\sigma_a + \sigma_c} \cdot (1 + \gamma)\pi + \frac{\sigma_c}{\sigma_b + \sigma_c} \cdot (1 + \gamma)\pi < \sigma_c$$
+  
+  These inequalities confirm that the graph satisfies condition (17), meaning that the validators' stakes are sufficient to protect the services under normal conditions.
+
+**Defining the Coalition $C$**:
+
+- Let $C = \{x, z\}$ be the coalition of services that will be targeted in a potential attack.
+
+- Consider a shock $D = \{b, c\}$, where validators $b$ and $c$ experience a failure or attack. Since their stakes are large, their failure could cause cascading losses.
+
+**Establishing the Maximal Loss**:
+
+- Since $\sigma_a < 2\pi$ and $\pi_x + \pi_z = 2\pi$, the stake of validator $a$ is not enough to cover the total profit from corrupting the services $x$ and $z$.
+  
+- As a result, the set $\{x, z\}$ and the validator $\{a\}$ form a stable attack coalition, leading to the maximal loss for the coalition of services $C = \{x, z\}$.
+
+- The shock $D = \{b, c\}$ removes validators $b$ and $c$, leaving only $a$ to secure $C$. Since $a$’s stake is insufficient, the services in $C$ are compromised, and $R_0(C, G) = 1$.
+
+
+### Key Insights from Theorem 6
+
+Theorem 6 demonstrates that even if a restaking graph satisfies the security condition from Corollary 2, there can still exist a coalition of services that experiences the worst-case loss in a particular attack scenario. Specifically, this shows that:
+
+- Security conditions can be satisfied globally, but there may still be local vulnerabilities that allow a subset of services to experience catastrophic losses.
+  
+- By carefully constructing the stake distribution and service-validator connections, it is possible to create scenarios where a specific subset of services $C$ becomes vulnerable to attacks, despite the overall network appearing secure.
 
 
 ## [Long Cascades](#long-cascades)
