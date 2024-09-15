@@ -32,6 +32,8 @@ To understand the "Robust Restaking Networks" paper, we need to first lay down a
 
 - **Neighbors $N_G(A)$**: Neighbors in this graph are the direct connections. If you’re looking at a service $s$, $N_G(s)$ tells you which validators are backing it. If you’re focusing on validators, $N_G(v)$ shows you the services they support.
 
+![A general restaking network](/assets/images/20240901/rrn-restaking-graph.png)
+
 ### Attack Dynamics: How Validators and Services Clash
 - **Attacking Coalition $(A, B)$**: When validators decide to team up and go rogue, they form an attacking coalition. Here’s what that means:
   - **$A$**: The set of services under attack.
@@ -47,6 +49,10 @@ To understand the "Robust Restaking Networks" paper, we need to first lay down a
       
 
 - **Valid Attack**: This is an attack that checks both boxes: the validators have enough power, and the attack is financially worthwhile.
+
+
+![a valid attack on the restaking network](/assets/images/20240901/rrn-valid-attack-network.png)
+
 
 ### Restaking Graph After an Attack $G \downarrow B$: The Aftermath
 - **Graph After Attack $G \downarrow B$**: After an attack, the network isn’t the same. $G \downarrow B$ represents the state of the network after the validators in $B$ have been slashed. It’s like a map showing what’s left after a battle—some validators are gone, and the network has to carry on with the remaining ones.
@@ -127,6 +133,8 @@ $$(1 + \gamma) \cdot \pi_A \leq \sigma_B $$ where
 Total profit from corrupting $A$ = $\pi_A$ and Total stake owned by validators $B$ = $\sigma_B$ (Equation 11)
 
 ## [Overcollateralization Provides Robust Security](#overcollateralization-provides-robust-security)
+
+![Overcollateralization](assets/images/20240901/rrn-overcollateralization.png)
 
 ### [Lemma 1](#lemma-1)
 
