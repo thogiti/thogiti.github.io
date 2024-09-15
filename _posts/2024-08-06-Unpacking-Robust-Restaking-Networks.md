@@ -3,7 +3,6 @@ title: 	Unpacking Robust Restaking Networks - Cascading Attacks and Validator Se
 tags: Ethereum Restaking Eigenlabs Eigenlayer Securing-Multi-Service-Validators Validator-Security Robust-Restaking-Networks Validator-Reuse-Risks Cascading-Attacks Cryptoeconomic-security
 ---
 
-## WIP - Work in Progress
 
 ## [Overview](#Overview)
 
@@ -779,18 +778,82 @@ $$\sigma_{B_t'} > \gamma \sum_{j=i+1}^{\lfloor T/k \rfloor} \sigma_{B_j'}$$
 
 Theorem 7 provides an upper bound on the number of attack rounds that can occur in a restaking network. It demonstrates that:
 
-- **Attacks are limited by validator stake and slack**:  
+- **Attacks are limited by validator stake and slack**  
   - The propagation of attacks through the network is constrained by the smallest validator stake and the security buffer provided by the $\gamma$-slack.
 
-- **Cascading failures are bounded**:  
+- **Cascading failures are bounded**  
   - While an attack may spread through the network, the number of stages or rounds the attack can propagate is limited. This ensures that the system can recover after a finite number of rounds, rather than experiencing an unbounded collapse.
 
-- **Security condition controls the depth of the attack**:  
+- **Security condition controls the depth of the attack**
   - The depth of the attack (how far it spreads) is controlled by the reference depth $k$ and the logarithmic factor involving the validator stake and slack. Networks with larger slack or better-collateralized validators can withstand deeper attacks without catastrophic failure.
 
 
-
 ## [Lower Bounds under a Bounded Profit-Stake Ratio](#lower-bounds-under-a-bounded-profit-stake-ratio)
+
+### Theorem 8
+
+**Statement**:
+For any $0 < \epsilon < 1$, there exists a secure restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$ that meets the EigenLayer condition (denoted by Equation (3)), with the ratio $\max_{(s, v) \in S \times V} \frac{\pi_s}{\sigma_v} = 2$. However, there exist proper subsets $C \subset S$ such that the worst-case loss $R_0(C, G) = 1$, meaning maximal loss for the subset $C$. Furthermore, for any $\psi \geq \epsilon$, the cascading loss $R_\psi(S, G) = 1$, meaning that the entire graph can experience cascading failures for sufficiently large disturbances.
+
+**Explanation**: Theorem 8 shows that while a network might appear secure overall, there can still be pockets of vulnerability where certain subsets of services are at risk of total failure. Moreover, large disturbances can cause these vulnerabilities to spread, leading to widespread losses across the entire network.
+
+
+### Proof Breakdown
+
+**Setting up the graph structure**:
+
+- **Choice of Validators $V$ and Services $S$**:  
+  Let $n$ represent the number of validators, and choose $n$ such that $n$ is divisible by 6 (i.e., $6 \mid n$). The set of validators $V$ consists of $n$ validators, each with a stake $\sigma_v = 1$.
+
+  Next, define the set of services $S$ to consist of $3N$ services, where $N = \frac{n}{6}$. Each service $s \in S$ has a profit from corruption $\pi_s = 2$ and a parameter $\alpha_s = 1$.
+
+**Partitioning the services**:
+
+- Split the services $S$ into two disjoint sets:
+  - $S_6$ contains $N$ services, where each service in $S_6$ secures 6 validators.
+  - $S_3$ contains the remaining $2N$ services, where each service in $S_3$ secures 3 validators.
+
+**Defining the edges in the graph**:
+
+- The edges $E$ are defined to create a single connected component:
+  - For services in $S_6$, the edges are drawn such that the neighborhood $N_G\{s\}$ partitions the set of validators $V$ into groups of 6.
+  - For services in $S_3$, the edges are drawn so that $N_G\{s\}$ partitions the validators into groups of 3.
+
+- This configuration ensures that each validator $v \in V$ is adjacent to one service from $S_6$ and one service from $S_3$.
+
+**Satisfying the EigenLayer condition (3)**:
+
+- To check whether the EigenLayer condition is satisfied, we evaluate the security equation for any validator $v \in V$:
+  
+  $$\sum_{s \in N_G\{v\}} \frac{\sigma_v}{\sigma_{N_G\{s\}}} \cdot \frac{\pi_s}{\alpha_s} = \frac{1}{6} \cdot 2 + \frac{1}{3} \cdot 2 = \sigma_v$$
+  
+  Since each validator is connected to one service in $S_6$ and one in $S_3$, the sum on the left-hand side equals the validator’s stake $\sigma_v = 1$. This confirms that the graph satisfies the EigenLayer condition.
+
+**Demonstrating maximal loss for subsets $C$**:
+
+- The theorem constructs subsets $C \subset S$ where the worst-case loss occurs. Specifically, it identifies proper subsets of services $C$ where the entire subset is compromised, leading to the maximal loss $R_0(C, G) = 1$.
+
+- The configuration of services and validators ensures that if a disturbance $\psi$ affects the right set of services, it can result in the full loss of stake for validators securing those services.
+
+**Cascading failures for $\psi \geq \epsilon$**:
+
+- When the disturbance $\psi$ exceeds the threshold $\epsilon$, the network experiences cascading failures. The initial attack on a subset of services triggers a chain reaction that causes the entire graph $G$ to collapse, leading to $R_\psi(S, G) = 1$.
+
+- This shows that while the graph satisfies the EigenLayer condition, it is still vulnerable to large disturbances that can propagate through the network.
+
+
+### Key Insights from Theorem 8
+
+Theorem 8 provides an important insight into the vulnerability of restaking networks, even when they satisfy important security conditions like the EigenLayer condition. Specifically, it demonstrates that:
+
+- **Global security doesn’t prevent local failures**
+  - Even though the network as a whole satisfies the EigenLayer condition, it is possible to identify subsets of services that can experience maximal losses in a worst-case attack. This highlights that global security guarantees do not always protect against localized failures.
+
+- **Cascading failures**
+  - For large enough disturbances $\psi$, the network can experience cascading failures, where an initial attack spreads through the network, causing validators to lose all their stake. This shows that systemic risk can still exist, even in networks that are designed to be secure under normal conditions.
+
+- **Real-world relevance**
+  - In real-world restaking networks (such as those involving cross-staked validators securing multiple services), Theorem 8 highlights the need to carefully analyze local vulnerabilities and the potential for cascading failures, even when the system meets broader security criteria.
 
 
 ## [References](#references)
