@@ -571,7 +571,7 @@ Theorem 4 proves that for any secure configuration of a restaking network, we ca
   - $\sigma_a = \Delta + \epsilon$: Validator $a$'s stake is the overcollateralization of $C$ plus a small amount $\epsilon$, ensuring that $a$'s stake is large enough.
   - $\sigma_b = \epsilon$: Validator $b$ has a small stake $\epsilon$, used for controlling part of the new attack structure.
 
-- Profit of New Service $s^*$:  
+- Profit of New Service $s^\*$ :  
   The new service $s^\*$ has a profit from corruption $\pi_{s^*} = \Delta + 2\epsilon$, ensuring that its profit potential is directly related to the overcollateralization of $C$.
 
 
