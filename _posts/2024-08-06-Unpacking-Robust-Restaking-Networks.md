@@ -722,6 +722,73 @@ Theorem 6 demonstrates that even if a restaking graph satisfies the security con
 
 ## [Long Cascades](#long-cascades)
 
+### Theorem 7
+
+**Statement**: Suppose that a restaking graph $G = (S, V, E, \pi, \sigma, \alpha)$ is secure with $\gamma$-slack for some $\gamma > 0$. Let $\sigma_V$ denote the minimum stake held by any validator. For any $\psi > 0$, let $B_0 \in D_\psi(C, G)$ represent the initial disturbance or set of compromised validators. Then for the reference depth $k$, the number of attack rounds $T$ must satisfy:
+
+$$T < k \left( 1 + \log_{1 + \gamma} \frac{\psi \cdot \sigma_V}{\epsilon \gamma} \right)$$
+
+where $\epsilon$ represents the threshold for cascading failures within the network.
+
+**Explanation**: Theorem 7 guarantees that while an attack can spread through a restaking network, it cannot propagate forever. The system is designed to limit the number of rounds an attack can last, ensuring that the network eventually stabilizes and avoids total collapse.
+
+
+#### Proof Breakdown
+
+**Reference Depth and Attack Cascade**:
+
+- The theorem analyzes how an attack propagates through the network by focusing on the reference depth $k$, which measures how deeply the attack can penetrate the system. The cascading impact is broken down into multiple stages or attack rounds.
+
+- For each attack sequence $(A_1, B_1), \dots, (A_T, B_T)$, the attack propagates from the initial disturbance $B_0$ and compromises additional validators in each round.
+
+- The attack must satisfy certain constraints based on the validator stake, the slack factor $\gamma$, and the number of stages the attack can progress.
+
+**Attack Propagation and Validator Loss**:
+
+- At each stage $i$, the validators securing the services in the attack sequence $A_i$ are lost, leading to a cascading failure. The sets $A_i'$ and $B_i'$ represent the maximum set of services and validators compromised in each round, respectively.
+
+- By applying the conditions in Corollary 1, we can validate that each stage of the attack sequence is a valid attack on the restaking graph $G$, and the number of validators lost in each round is calculated.
+
+- The attack propagates by moving through validators and services in the system, but there are constraints on how many rounds of attacks can occur based on the available stake and security conditions.
+
+**Validity of Attack at Each Stage**:
+
+- The proof ensures that the sequence of attacks remains valid by applying Corollary 1 multiple times. At each stage, the condition must hold, meaning the stake of the compromised validators exceeds the cumulative stake required to secure the remaining validators in future stages.
+
+$$\sigma_{B_t'} > \gamma \sum_{j=i+1}^{\lfloor T/k \rfloor} \sigma_{B_j'}$$
+
+- This ensures that each stage of the attack has a sufficient impact to continue propagating, but the number of attack rounds is constrained by the slack factor $\gamma$.
+
+
+**Inductive Argument and Upper Bound on Attack Rounds**:
+
+- The proof concludes by using an inductive argument to show that the sequence of attacks leads to a decreasing stake for the compromised validators at each stage. The sequence $X_i$ is defined to measure the remaining stake at each step, starting with an initial stake $X_0$.
+
+- The total number of attack rounds $T$ is bounded by the reference depth $k$ and the logarithmic factor involving the minimum validator stake $\sigma_V$, the disturbance size $\psi$, and the slack factor $\gamma$.
+
+**Final Bound on Attack Rounds $T$**:
+
+- The final result shows that the number of attack rounds $T$ must satisfy the inequality:
+  
+  $$T < k \left( 1 + \log_{1 + \gamma} \frac{\psi \cdot \sigma_V}{\epsilon \gamma} \right)$$
+  
+  This means that the attack cannot continue indefinitely, and the number of rounds is constrained by the security conditions of the network. The slack factor $\gamma$ and the minimum validator stake $\sigma_V$ both play a key role in limiting the attack's propagation.
+
+
+### Key Insights from Theorem 7
+
+Theorem 7 provides an upper bound on the number of attack rounds that can occur in a restaking network. It demonstrates that:
+
+- **Attacks are limited by validator stake and slack**:  
+  - The propagation of attacks through the network is constrained by the smallest validator stake and the security buffer provided by the $\gamma$-slack.
+
+- **Cascading failures are bounded**:  
+  - While an attack may spread through the network, the number of stages or rounds the attack can propagate is limited. This ensures that the system can recover after a finite number of rounds, rather than experiencing an unbounded collapse.
+
+- **Security condition controls the depth of the attack**:  
+  - The depth of the attack (how far it spreads) is controlled by the reference depth $k$ and the logarithmic factor involving the validator stake and slack. Networks with larger slack or better-collateralized validators can withstand deeper attacks without catastrophic failure.
+
+
 
 ## [Lower Bounds under a Bounded Profit-Stake Ratio](#lower-bounds-under-a-bounded-profit-stake-ratio)
 
