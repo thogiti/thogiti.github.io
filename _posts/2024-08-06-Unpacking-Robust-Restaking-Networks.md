@@ -134,7 +134,7 @@ Total profit from corrupting $A$ = $\pi_A$ and Total stake owned by validators $
 
 ## [Overcollateralization Provides Robust Security](#overcollateralization-provides-robust-security)
 
-![Overcollateralization](assets/images/20240901/rrn-overcollateralization.png)
+![Overcollateralization](/assets/images/20240901/rrn-overcollateralization.png)
 
 ### [Lemma 1](#lemma-1)
 
