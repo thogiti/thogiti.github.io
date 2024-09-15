@@ -17,7 +17,7 @@ Robust Restaking Networks by Naveen Durvasula, and Tim Roughgarden, arXiv:2407.2
 To understand the "Robust Restaking Networks" paper, we need to first lay down a solid foundation. These definitions and notations are your toolkit for understanding. Let’s break it down.
 
 ### Validators and Services: The Backbone of the Network
-- **Validators $V$**: Validators are the unsung heroes of blockchain—they validate transactions, maintain network integrity, and keep things running smoothly. Each validator $v$ stakes a certain amount of cryptocurrency $\sigma_v$ (like ETH in Ethereum) as collateral. If they act maliciously, they risk losing this stake, which is why it’s crucial.
+- **Validators $V$**: Validators are the unsung heroes of blockchain—they validate transactions, maintain network integrity, and keep things running smoothly. Each validator $v$ stakes a certain amount of cryptocurrency $\sigma_v$ (like ETH in Ethereum) as collateral. If they act maliciously, they risk losing this stake, which is why it’s important.
 
 - **Services $S$**: These are the tasks or applications that validators support. Think of services as different jobs that validators can take on—everything from running the core consensus protocol to ensuring data availability. Each service $s$ has a corruption profit $\pi_s$, which is basically the bounty an attacker could earn by compromising it.
 
@@ -85,7 +85,7 @@ Here’s the idea:
 - **Impact on the Network**: Once these validators are out of the game, the network changes—it’s not as strong as it was before. We use the notation $G \downarrow D$ to represent the network after this initial group $D$ of validators has been slashed or removed.
 - **The Worst-Case Loss**: Now, we calculate the worst-case stake loss $R_\psi(G)$. This is a way of estimating the maximum amount of stake that could be lost as a result of cascading attacks that follow the initial shock. In other words, we’re trying to foresee how bad things could get if one bad event sets off a chain reaction of worse events.
 
-This metric is crucial because it helps us understand how vulnerable the network might be to a series of failures, and it’s a key tool in designing systems that can withstand even the worst possible scenarios. It is calculated as:
+This metric is important because it helps us understand how vulnerable the network might be to a series of failures, and it’s a key tool in designing systems that can withstand even the worst possible scenarios. It is calculated as:
   
   $R_\psi(G) = \psi + \max_{D \in D_\psi(G)} \max_{(A_1, B_1), \dots, (A_T, B_T) \in C(G \downarrow D)} \frac{\sigma_{\bigcup_{t=1}^{T} B_t}}{\sigma_V}$
 
@@ -347,8 +347,8 @@ The theorem aims to show that if a restaking network is secure with multiplicati
 
 ### Key Insights of Theorem 1
 
-- **Multiplicative Slack $\gamma$** provides a crucial safety buffer that limits the impact of cascading failures. By requiring that validators hold more stake than the potential profit from attacks (scaled by $1 + \gamma$), the network can absorb shocks without triggering uncontrollable losses.
-- **Controlled Cascading:** The proof shows that even in the worst-case scenario, where losses cascade through the network, the total loss is bounded and predictable. This bound is crucial for network designers to ensure the resilience and stability of blockchain systems.
+- **Multiplicative Slack $\gamma$** provides a important safety buffer that limits the impact of cascading failures. By requiring that validators hold more stake than the potential profit from attacks (scaled by $1 + \gamma$), the network can absorb shocks without triggering uncontrollable losses.
+- **Controlled Cascading:** The proof shows that even in the worst-case scenario, where losses cascade through the network, the total loss is bounded and predictable. This bound is important for network designers to ensure the resilience and stability of blockchain systems.
 
 
 ### [Corollary 2](#corollary-2)
@@ -368,7 +368,7 @@ This corollary aims to show that if every validator in the network satisfies the
 **Interpreting the Condition (Equation 17):**
 - **Validator's Stake $\sigma_v$**: This is the total stake controlled by validator $v$.
 - **Service $s$**: Each service $s$ in $N_G(\{v\})$ is directly supported by validator $v$.
-- **Fraction of Stake Supporting Service $s$**: The term $\frac{\sigma_v}{\sigma_{N_G(\{s\})}}$ represents the proportion of total stake supporting service $s$ that comes from validator $v$. This is crucial because it scales the risk each validator faces based on their contribution to the service’s security.
+- **Fraction of Stake Supporting Service $s$**: The term $\frac{\sigma_v}{\sigma_{N_G(\{s\})}}$ represents the proportion of total stake supporting service $s$ that comes from validator $v$. This is important because it scales the risk each validator faces based on their contribution to the service’s security.
 - **Modified Profit Term $(1 + \gamma)\pi_s$**: This term reflects the potential profit from corrupting service $s$, inflated by the multiplicative slack $\gamma$. The inflation by $1 + \gamma$ means that even if the attack is more profitable (due to slack), the validator must still have enough stake to cover this increased risk.
 
 #### What Needs to Be Proved?
