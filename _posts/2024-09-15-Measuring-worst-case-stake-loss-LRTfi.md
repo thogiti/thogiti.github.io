@@ -65,10 +65,10 @@ Cross-contagion risk refers to the propagation of risk from one part of the netw
 
 
     Where:
-    - $C_1 \subseteq LRT_1$: A set of validators or services in LRT_1.
-    - $C_2 \subseteq LRT_2$: A set of validators or services in LRT_2.
-    - Correlation measures the interdependence or risk transfer between the two sets of validators/services.
-    - $R_\psi(C_1)$ measures the worst-case stake loss for set $C_1$, capturing the total loss from the initial shock that could propagate.
+      - $C_1 \subseteq LRT_1$: A set of validators or services in LRT_1.
+      - $C_2 \subseteq LRT_2$: A set of validators or services in LRT_2.
+      - Correlation measures the interdependence or risk transfer between the two sets of validators/services.
+      - $R_\psi(C_1)$ measures the worst-case stake loss for set $C_1$, capturing the total loss from the initial shock that could propagate.
 
 
 - **Cross-Staking Dependency Factor:**
