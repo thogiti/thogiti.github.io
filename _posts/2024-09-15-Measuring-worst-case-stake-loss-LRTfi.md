@@ -1,11 +1,12 @@
 ---
-title: Unlocking Liquid Restaking - Measuring Worst-Case Stake Loss, Cross-Contagion Risk, and LTV in LRT Networks
+title: Unlocking Liquid Restaking - Measuring Worst-Case Stake Loss, Cross-Contagion Risk, and LTV in LRTfi Networks
 
 tags: Ethereum Restaking Eigenlabs Eigenlayer Securing-Multi-Service-Validators Validator-Security Robust-Restaking-Networks Validator-Reuse-Risks Cascading-Attacks Cryptoeconomic-security Liquid-Restaking Worst-Case-Stake-Loss Cross-Contagion-Risk LRTfi
 ---
 
 
-Let’s develop a framework around how Liquid Restaking Token (LRT) providers could measure and relay the worst-case stake loss $R_\psi(C)$ for different validators, calculate cross-contagion risk (which is important when validators are interconnected or share market risks), and how this could feed into an overall system like Nucleus to provide more resilient staking ecosystems.
+Let’s develop a framework around how Liquid Restaking Token (LRT) providers could measure and relay the worst-case stake loss $R_\psi(C)$ for different validators, calculate cross-contagion risk (which is important when validators are interconnected or share market risks), and how this could feed into an overall system like Nucleus to provide more resilient staking ecosystems and assist in creating resilient LRTfi protocols..
+
 
 ## Overview
 
@@ -36,7 +37,7 @@ The function $R_\psi(C)$ measures the worst-case stake loss in a restaking netwo
    where $\sigma_v$ is the stake of validator $v$ and $\sigma_V$ is the total stake in the system.
 
 - **Cascading Failures (Restaking Networks):**
-   - In a **restaking network**, if a fraction $\psi$ of the stake is lost, validators that rely on cross-staking (validators staking for multiple services) could be affected. The failure of one validator might increase the likelihood of another validator failing, creating cascading losses.
+   - In a restaking network, if a fraction $\psi$ of the stake is lost, validators that rely on cross-staking (validators staking for multiple services) could be affected. The failure of one validator might increase the likelihood of another validator failing, creating cascading losses.
    - $R_\psi(C)$ is calculated by summing both direct and cascading losses:
    
    $$R_\psi(C) = \sum_{v \in C} \left( \frac{\sigma_v}{\sigma_V} \cdot \psi \right) + \sum_{v' \in N(C)} \left( \frac{\sigma_{v'}}{\sigma_V} \cdot \psi_{\text{cascading}} \right)$$
@@ -60,9 +61,14 @@ Cross-contagion risk refers to the propagation of risk from one part of the netw
    - Cross-contagion in validators could be modeled using network theory, where validators are nodes and edges represent the dependencies between them (e.g., how much of their stake relies on another validator).
    - **Formula for Cross-Contagion Risk:**
      
-     $$\text{Cross-Contagion Risk} = \sum_{v \in C} \sum_{v' \in N(v)} \text{Correlation}(v, v') \cdot R_\psi(v)$$
-     
-     where $N(v)$ represents the neighbors of validator $v$, and Correlation measures how likely validator $v'$ is to fail given that $v$ has failed.
+     $$\text{Cross-Contagion Risk}(LRT1, LRT2) = \sum_{C_1 \subseteq LRT1} \sum_{C_2 \subseteq LRT2} \text{Correlation}(C_1, C_2) \cdot R_{\psi}(C_1)$$
+
+
+    Where:
+    - $C_1 \subseteq LRT_1$: A set of validators or services in LRT_1.
+    - $C_2 \subseteq LRT_2$: A set of validators or services in LRT_2.
+    - Correlation** measures the interdependence or risk transfer between the two sets of validators/services.
+    - $R_\psi(C_1)$ measures the worst-case stake loss for set $C_1$, capturing the total loss from the initial shock that could propagate.
 
 - **Cross-Staking Dependency Factor:**
    - Validators are not isolated; their risks are interdependent, especially in cross-staking environments. If a validator stakes for multiple services, the failure in one service could impact their ability to maintain stake in another.
