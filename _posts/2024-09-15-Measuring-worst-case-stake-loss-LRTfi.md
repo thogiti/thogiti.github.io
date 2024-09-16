@@ -75,7 +75,7 @@ Cross-contagion risk refers to the propagation of risk from one part of the netw
 
 ## Market Beta and Cross-Contagion Impact from Market Factors
 
-Another factor in cross-contagion is the influence of **market beta**, which refers to how much the LRT index (or its individual components) moves in relation to the broader market. Market beta is important in determining how the value of LRT tokens responds to overall market conditions, as a downturn in the market could cause liquidity crunches or price slippage, further exacerbating losses due to validator failures.
+Another factor in cross-contagion is the influence of market beta, which refers to how much the LRT index (or its individual components) moves in relation to the broader market. Market beta is important in determining how the value of LRT tokens responds to overall market conditions, as a downturn in the market could cause liquidity crunches or price slippage, further exacerbating losses due to validator failures.
 
 ### Market Beta in the LRT System
 
