@@ -129,8 +129,47 @@ By controlling sequencing, dApps can:
 - Mitigate MEV risks: Reduce unwanted MEV extraction by external parties.
 - Optimize user experience: Provide more predictable and stable transaction fees to users.
 - Align incentives: Ensure that sequencer behavior is directly aligned with the application's goals.
+- Offer protection from external congestion: The application is insulated from network congestion caused by unrelated activities on other platforms.
+
+By customizing the sequencing infrastructure, applications can achieve:
+
+- Higher throughput: Optimize for the specific transaction patterns and volumes of the application.
+- Lower latency: Reduce delays by fine-tuning the sequencing process to the application's needs.
+- Specialized features: Implement custom functionalities, such as local fee markets, MEV redistribution, advanced cryptographic techniques or state access optimizations.
+
+
+## Application-Specific Sequencing Frameworks
+
+The design space for Application-Specific Sequencing is very vast. In this article we will review two such frameworks:
+- Fastlane's composability VS value capture trade off framework
+- Astria's infrastructure options framework
+
+
+
+### Fastlane' ASS Framework
+
+
+### Astria' ASS Framework
+
 
 ## Application-Specific Sequencing - Current Landscape
+
+### Fastlane
+
+
+### Sorella
+
+
+### Vertex
+
+
+### Semantic 
+
+
+### Astria
+
+
+### Penumbra
 
 
 ## References
