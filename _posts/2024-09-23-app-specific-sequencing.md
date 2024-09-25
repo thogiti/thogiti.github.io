@@ -75,6 +75,23 @@ Sequencing refers to the process of ordering transactions before they are execut
   - Incentive misalignment: Different rollups may have conflicting economic incentives.
   - Risk propagation: Issues in one rollup could affect others sharing the sequencers.
 
+### Based Sequencing
+- Definition: Base Sequencing is a model where the sequencing of transactions for an L2 rollup is integrated directly with the L1 blockchain's proposer or validator set. In this setup, L1 validators are responsible for both proposing blocks on the main chain and sequencing transactions on the rollup. 
+- Advantages: 
+  - Leverage existing infrastructure: The primary benefit is to leverage the existing security and decentralization of the L1 network to benefit the L2 rollup.
+  - Censorship resistance: Since the sequencing is performed by the entire set of L1 validators, it becomes significantly harder for any single entity to censor transactions on the rollup.
+  - Enhanced liveness: The rollup benefits from the L1's liveness properties, ensuring that transactions are processed promptly as long as the L1 network remains operational.
+  - Security guarantees: By relying on the L1 validators, the rollup inherits the economic security provided by the staked assets or computational work securing the L1 chain.
+  - Atomic composability: It can facilitate transactions that are atomically composable across L1 and L2, enabling complex interactions and seamless cross-layer functionality.
+- Disadvantages:
+  - Incentive misalignment: In the Base Sequencing model, execution revenue—including transaction fees and MEV—flows to the L1 validators rather than to the rollup itself. This diversion of revenue can undermine the economic sustainability of the rollup.
+  - Reduced decentralization in practice: To address the incentive misalignment, some Base rollup designs introduce an execution ticket mechanism.  In this system, (i) L1 validators can choose to participate in sequencing for the rollup by purchasing execution tickets and (ii) only the validators who opt-in and run the necessary software become part of the rollup's sequencer set. This approach means that the rollup does not utilize the entire L1 validator set but instead relies on a subset of validators. Consequently, the rollup's censorship resistance and liveness are tied to this smaller group, reducing the decentralization benefits that were initially sought.
+  - Increased complexity and operational overhead: L1 validators must operate additional nodes or software components to handle L2 sequencing tasks. Participation may involve purchasing and managing execution tickets, adding to the operational burden. Sequencing L2 transactions may require processing and storing more data, potentially increasing resource requirements.
+- Economic and security implications: The dependence on a subset of L1 validators who have economic incentives tied to both the L1 and L2 layers introduces complex dynamics:
+  - Incentive compatibility: L1 Validators may prioritize activities that maximize their revenue on the L1 chain, potentially neglecting optimal sequencing on the L2 rollup.
+  - Security risks: If the subset of L1 validators is small, the network may become vulnerable to collusion or attacks that could compromise the rollup's integrity.
+
+
 ### Incentives and Challenges for Dapps
 
 **Desire for isolated fee markets**
