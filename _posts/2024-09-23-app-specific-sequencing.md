@@ -149,7 +149,7 @@ The design space for Application-Specific Sequencing is very vast. In this artic
 ### Fastlane' ASS Framework
 
 ![Fastlane's ASS framework](/assets/images/20240901/ASS-Spectrum-MEV-composability-landscape.jpg)
-_Figure: Fastlane's ASS framework, source: Fastlane
+_Figure: Fastlane's ASS framework, source: Fastlane_
 
 
 Fastlane's ASS Spectrum framework provides a nuanced perspective on the balance of optimizing both composability and value capture, illustrating how different sequencing approaches impact an application's ability to interact with others (composability) and to internalize value (such as MEV). So, lets unpack the details of Fastlane's framework, exploring the trade-offs inherent in various ASS strategies and examining specific use cases that exemplify these concepts.
@@ -204,6 +204,14 @@ Here, Dapps begin to limit their interactions with others to specific phases or 
   - Reduced flexibility: Users may need to perform multiple transactions to achieve complex operations.
   - Potential user friction: Less seamless experience compared to full composability.
 
+Transactions are segmented into phases:
+
+- Intake Phase: $T_{\text{intake}}$
+- Processing Phase: $T_{\text{process}}$
+- Settlement Phase: $T_{\text{settle}}$
+
+Interactions with other dApps occur only during $T_{\text{settle}}$.
+
 #### Low composability end of the spectrum
 
 At this end, Dapps focus on internalizing value and optimizing operations, often at the expense of interacting with other applications.
@@ -212,7 +220,7 @@ At this end, Dapps focus on internalizing value and optimizing operations, often
 
 - Characteristics: Dapps rely on protocol-level mechanisms rather than direct interactions with other applications. Composability is achieved through consensus processes, which may be less efficient.
 
-- Advantages**:
+- Advantages:
   - Maximum control over sequencing: Dapps can fully manage transaction ordering, internalizing MEV.
   - Enhanced security: Reduced exposure to external manipulation and MEV extraction.
 
@@ -220,6 +228,219 @@ At this end, Dapps focus on internalizing value and optimizing operations, often
   - Limited interoperability: Difficulty in integrating with other Dapps, potentially isolating the application.
   - User experience challenges: May require users to navigate additional steps or processes.
 
+#### Implications for Value Capture
+
+As dApps move along the spectrum toward reduced composability, they gain increased capacity to internalize value.
+
+**Internalizing Endogenous MEV**
+
+- Definition: Capturing value generated within the dApp itself, such as profits from transaction sequencing that directly affect the application's operations.
+
+- Mechanisms:
+  - Backrunning: Executing transactions that capitalize on changes caused by prior transactions within the dApp.
+  - Oracle extractable value (OEV): Profiting from timely access to updated external data sources (e.g., price feeds).
+
+- Benefits:
+  - Revenue generation: Directly increases the dApp's profitability.
+  - User protection: Can be designed to mitigate negative impacts on users, such as frontrunning.
+
+Mathematically, the dApp aims to maximize endogenous MEV:
+
+$$\max_{\sigma} V_{\text{MEV}}^{\text{endo}}(\sigma)$$
+
+where:
+
+- $\sigma$ is the transaction sequencing.
+- $V_{\text{MEV}}^{\text{endo}}$ represents endogenous MEV.
+
+**Internalizing Exogenous MEV**
+
+- Definition: Capturing value from actions not sequenced by the dApp, including opportunities arising from interactions with external markets or applications.
+
+- Mechanisms:
+  - Top-of-block arbitrage: Exploiting price discrepancies at the beginning of a block.
+  - CEX-DEX arbitrage: Capitalizing on price differences between centralized and decentralized exchanges.
+
+- Benefits:
+  - Expanded profit sources: Access to a broader range of MEV opportunities.
+  - Increased competitiveness: Ability to engage in strategies that external actors might otherwise exploit.
+
+The dApp seeks to capture exogenous MEV:
+
+$$V_{\text{MEV}}^{\text{exo}} = V_{\text{arbitrage}} + V_{\text{liquidation}} + \ldots$$
+
+
+#### Gas Fee Reduction Strategies
+Further along the spectrum, dApps can implement methods to reduce operational costs associated with gas fees.
+
+**Partial Gas Fee Reduction**
+- Approach:
+
+  - Atomic viewing and locking: The dApp atomically locks the necessary state on the network.
+  - Off-Network processing: Executes transactions in a separate domain.
+  - Result settlement: Finalizes the outcome back on the main network.
+
+- Advantages:
+
+  - Cost savings: Reduces gas fees associated with on-chain execution.
+  - Maintained security: Atomic locking ensures state consistency.
+
+- Trade-Offs:
+
+  - Complexity: Requires additional infrastructure and coordination.
+  - Latency: Off-network processing may introduce delays.
+
+**Significant Gas Fee Reduction and Full Integration**
+
+- Approach:
+
+  - Non-Atomic locking: Locks the state in a non-atomic manner, allowing for greater flexibility.
+  - Off-Network Execution: Processes transactions entirely off-chain.
+  - Result settlement: Settles outcomes back on the network, potentially batching multiple transactions.
+
+Advantages:
+
+  - Maximum cost efficiency: Significantly lowers gas expenses.
+  - Operational efficiency: Optimizes resource usage.
+
+- Trade-Offs:
+
+  - Increased risk: Non-atomic operations may expose the dApp to state inconsistencies or security vulnerabilities.
+  - Reduced transparency: Off-chain execution is less visible to users and auditors.
+
+The goal is to minimize total gas costs:
+
+$$\min_{C_{\text{gas}}} \left( C_{\text{on-chain}} + C_{\text{off-chain}} \right)$$
+
+
+#### Specific Use Cases Illustrating the Spectrum
+
+**Backrun Arbitrage and OEV**
+
+- Context: dApps capture value from transaction sequences within their own operations, such as executing a trade immediately after a significant price-impacting transaction.
+
+- Implementation:
+
+  - Sequencing Control: The dApp orders transactions to position itself favorably.
+  - User Protection: By internalizing MEV, the dApp can prevent external actors from extracting value at the users' expense.
+
+- Benefits:
+
+  - Enhanced Revenue: The dApp retains profits from MEV opportunities.
+  - Improved User Experience: Reduces the likelihood of users being adversely affected by MEV extraction.
+  - Position on Spectrum: Leans toward internalizing endogenous MEV while maintaining some composability.
+
+- **Mathematical Formulation**
+
+Expected value from backrun arbitrage:
+
+$$E[V_{\text{backrun}}] = \sum_{i} P_{i} \cdot \Delta_{\text{price}, i} \cdot V_{\text{trade}, i}$$
+
+where:
+
+- $P_{i}$: Probability of a profitable backrun opportunity.
+- $\Delta_{\text{price}, i}$: Price impact of transaction $i$.
+- $V_{\text{trade}, i}$: Volume of the trade.
+
+
+**Rollup-Based Solutions**
+
+- Context: dApps leverage layer 2 solutions or app-specific chains to optimize performance and reduce costs.
+
+- Implementation:
+
+  - Custom Execution Environment: The dApp operates on a rollup or L2 tailored to its needs.
+  - State Settlement: Periodically settles state back to the main network.
+
+- Benefits:
+
+  - Significant gas fee reduction: Offloads execution from the main chain, lowering costs.
+  - Operational control: Gains extensive control over sequencing and execution parameters.
+
+- Trade-Offs:
+
+  - Isolation: Limited direct interaction with dApps on the main network.
+  - Security considerations: Must ensure the security of the rollup or L2 environment.
+  - Position on spectrum: Occupies the far end, prioritizing value capture and operational efficiency over composability.
+
+- **Mathematical Considerations**
+
+Cost reduction:
+
+
+$$C_{\text{total}} = C_{\text{rollup}} + C_{\text{settlement}}$$
+
+where $C_{\text{rollup}}$ is significantly less than $C_{\text{on-chain}}$ execution costs.
+
+Security model requires ensuring:
+
+$$P_{\text{security breach}} \ll \epsilon$$
+
+where $\epsilon$ is an acceptably low probability threshold.
+
+
+**Anti-LVR Auctions**
+
+- LVR Explained: LPs suffer losses when arbitrageurs exploit stale prices in AMMs. LVR quantifies this loss compared to an optimally rebalanced portfolio.
+- Objective: Implement mechanisms to mitigate LVR, protecting LPs from value extraction.
+
+- Implementation
+
+  - Auction mechanism: dApps conduct auctions to determine transaction ordering that minimizes LVR.
+  - Smart Contract updates: Modifications are required to support auction logic and enforce sequencing rules.
+
+- **Mathematical Formulation**
+
+Minimizing LVR:
+
+$$\min_{\sigma} L_{\text{LVR}}(\sigma)$$
+
+where $L_{\text{LVR}}$ is the loss due to LVR, and $\sigma$ represents the sequencing strategy.
+
+- **Model Components**
+
+- **Price Discrepancy**:
+
+   $$\Delta P = P_{\text{external}} - P_{\text{AMM}}$$
+   
+- **Arbitrage Volume**:
+   
+   $$Q_{\text{arb}} = f(\Delta P)$$
+   
+   Where $f$ is a function representing how arbitrage volume responds to price discrepancies.
+
+- **LVR Calculation**:
+   
+   $$L_{\text{LVR}} = Q_{\text{arb}} \cdot \Delta P$$
+   
+- **Impact of Batching**:
+
+   By batching, $\Delta P$ is reduced as the AMM's price is updated less frequently, and the clearing price better reflects $P_{\text{external}}$.
+
+
+#### Strategic Considerations for dApp Developers
+When evaluating where to position your applications on the ASS spectrum, developers must consider:
+
+**Application Goals**
+
+- User experience: Is seamless integration with other dApps essential for your users?
+- Revenue objectives: How critical is internalizing MEV to your business model?
+- Security priorities: Do you need heightened control over transaction sequencing to mitigate risks?
+
+**Technical Constraints**
+
+- Infrastructure availability: Are the necessary tools and platforms available to implement your desired sequencing strategy?
+- Development resources: Do you have the expertise and capacity to build and maintain more complex sequencing mechanisms?
+
+**Ecosystem Dynamics**
+
+- Market expectations: How will your positioning affect user adoption and trust?
+- Competitive landscape: Are other dApps offering similar features with different sequencing approaches?
+
+**Regulatory and Compliance Factors**
+
+- Transparency requirements: Off-chain execution and reduced composability may impact compliance obligations.
+- Risk management: Consider potential vulnerabilities introduced by non-standard sequencing methods.
 
 
 ### Astria' ASS Framework
@@ -228,10 +449,218 @@ At this end, Dapps focus on internalizing value and optimizing operations, often
 
 ## Application-Specific Sequencing - Current Landscape
 
-### Fastlane
+### Fastlane's Atlas Protocol
+
+Fastlane's Atlas Protocol is a generalized execution abstraction designed to facilitate programmable MEV mitigation at the application layer. Atlas simplifies the deployment of custom Order Flow Auctions (OFAs), enabling developers to implement application-specific sequencing with greater ease and flexibility. By leveraging Execution Abstraction (EA), a subset of Account Abstraction (AA), Atlas replaces the need for certain guarantees from block builders, setting the way for permissionless order flow and decentralized MEV mitigation strategies across any EVM chain.
+
+#### The Motivation Behind Atlas
+
+**Challenges in DeFi Trade Execution**
+
+DeFi has revolutionized financial services by providing decentralized alternatives to traditional finance. However, it faces significant challenges:
+
+- Liquidity fragmentation: Liquidity is scattered across various platforms and protocols, making it difficult for users to achieve optimal trade execution.
+- Complex transaction paths: Users often need to specify the full computational path of a transaction, which can lead to inefficiencies and errors.
+- MEV exploitation: Users are vulnerable to MEV attacks like frontrunning and sandwich attacks, where malicious actors extract value by manipulating transaction ordering.
+
+**Centralization Risks in Existing OFAs**
+
+OFAs like UniswapX, 1inch Fusion, and CowSwap have gained traction by implementing MEV-aware execution. However, they present new challenges:
+
+- Solver centralization: A few solvers dominate these platforms, leading to potential rent-seeking behavior and reduced competition.
+- Opaque MEV supply chain: Centralization can lead to less transparency, increasing the risk of censorship and manipulation by block builders or validators.
+
+**The Need for Default MEV Protection**
+
+Current MEV protection solutions often require users to change their RPC endpoints, introducing:
+
+- Security risks: Switching RPCs can expose users to malicious nodes.
+- Trust assumptions: Users must place trust in new entities, which may not align with decentralization principles.
+
+Atlas addresses these issues by enabling default MEV protection without requiring users to change their RPC settings, targeting unsophisticated users who need protection the most.
+
+#### Atlas Architecture Overview
+
+At its core, Atlas provides a modular and customizable framework that allows dApps to define their own transaction sequencing logic. The key components include:
+
+- Atlas `EntryPoint` contract: The central smart contract that orchestrates the execution of user and solver operations.
+- Atlas SDK: A software development kit that simplifies integration with the Atlas Protocol.
+- Key roles: Originator, Auctioneer, Operations Relay (OR), Bundler, and Solver.
+- Execution environment (EE): A secure environment for executing operations.
+- atlETH: A wrapped ETH token used within Atlas for value transfer and gas fee management.
+- DAppControl contracts (Atlas Modules): Customizable modules where developers define application-specific logic and parameters.
+
+![Atlas Transaction Lifecycle](/assets/images/20240901/Atlas-transaction-lifecycle.png)
+
+*Figure: A high-level overview of the Atlas transaction lifecycle. Source*
+
+#### Key Roles in Atlas
+
+**Originator**
+
+- Role: Initiates the Atlas process by generating a `UserOperation`, an EIP-712 signed message representing the user's intent.
+- Flexibility: Can be an end-user, smart contract, or any entity capable of verification by the Atlas `EntryPoint` contract.
+- Impact: Sets the parameters and initial conditions for the transaction, influencing downstream execution.
+
+**Auctioneer**
+
+- Role: Aggregates `UserOperations` with `SolverOperations`, sorts them using a bid valuation function defined in the `DAppControl` module, and ensures the correct execution order.
+- Assignment: Often the originator or a trusted entity designated by the application.
+- Impact: Determines the priority of solver bids, directly affecting the transaction sequencing.
+
+**Operations Relay (OR)**
+
+- Role: Facilitates communication between originators, auctioneers, and solvers.
+- Customization: Applications choose an OR based on their needs—prioritizing decentralization, latency, or privacy.
+- Impact: Transmits operations efficiently while potentially mitigating frontrunning and censorship.
+
+**Bundler**
+
+- Role: Packages the full Atlas transaction and submits it to the network for inclusion in a block.
+- Configurations:
+  - Permissionless: Any entity can act as a bundler.
+  - Designated: Specific, trusted entities or decentralized solutions handle bundling.
+- Impact: Ensures transactions are included on-chain without altering the execution order, due to the `CallChainHash` mechanism.
+
+**Solver**
+
+- Role: Competes to provide the best execution for a given `UserOperation`, potentially capturing MEV for the benefit of users or applications.
+- Impact: Enhances execution quality and efficiency by finding optimal transaction paths or backrun opportunities.
+
+#### Technical Mechanisms Enabling Application-Specific Sequencing
+
+**Atlas EntryPoint Contract**
+
+The Atlas `EntryPoint` contract is the backbone of the protocol:
+
+- Central coordination: Manages the execution flow of `UserOperations` and `SolverOperations`.
+- Execution Abstraction: Uses Account Abstraction to allow applications to define custom execution logic.
+- `CallChainHash` verification: Ensures the prescribed sequence of operations is preserved, preventing tampering by any intermediary.
+
+**CallChainHash**
+
+- Definition: A cryptographic hash representing the ordered sequence of operations in an Atlas transaction.
+- Function: Guarantees the integrity and order of operations, making the transaction sequence immutable once signed.
+- Generation: Created using the `getCallChainHash(SolverOperations[])` function and signed by the auctioneer.
+
+**Execution Environment (EE)**
+
+- Purpose: Provides a secure, trust-minimized environment for executing operations via `delegateCall`.
+- Permit69: A specialized token permittance function that enhances security by verifying token transfer origins, preventing unauthorized transfers.
+- Impact: Ensures that application-specific logic is executed securely and as intended.
+
+**atlETH**
+
+- Definition: A wrapped ETH token used within Atlas.
+- Functions:
+  - Gas fee escrow: Solvers pre-fund gas fees, ensuring they cover the cost of their operations.
+  - Value transfer: Facilitates secure and efficient value transfer within transactions.
+- Cross-operation flash loans: Enables complex financial operations by allowing temporary borrowing of atlETH within a transaction.
+
+**Native Bundling**
+
+- Concept: Aggregating multiple operations into a single transaction, leveraging AA to simplify execution and gas fee management.
+- Benefits:
+  - Permissionless execution: Removes dependency on block builders for transaction inclusion guarantees.
+  - Atomicity: Ensures all operations execute as a unit, maintaining the integrity of the transaction sequence.
+  - MEV mitigation: Allows applications to capture and redistribute MEV according to their own policies.
+
+#### How Atlas Achieves Application-Specific Sequencing
+
+Atlas empowers applications to control transaction sequencing through several mechanisms:
+
+- Custom execution logic: Developers define execution parameters and sequencing rules in the `DAppControl` module.
+- Immutable sequencing with allChainHash: The signed `CallChainHash` locks the sequence of operations, preventing any alterations.
+- Execution Abstraction: Users submit intents rather than full transaction paths, allowing applications to interpret and execute as per their logic.
+- Solver competition: Solvers submit `SolverOperations`, and applications decide their execution order based on custom bid valuation functions.
+- Native bundling and atomic execution: Operations are bundled and executed atomically, ensuring adherence to the application's sequencing.
+- Cross-chain compatibility: Atlas does not rely on specific block builder guarantees, making it adaptable to any EVM-compatible chain.
+
+#### Handling MEV and Backrun Auctions
+
+**Intent-Centric Auctions**
+
+- Process: Users submit intents (desired outcomes), and solvers compete to fulfill them efficiently.
+- MEV Capture: Potential MEV generated is captured and can be shared with users or allocated according to application policies.
+- Application Control: Full control over how intents are processed and how value is distributed.
+
+**Backrun Auctions**
+
+- Process: Users specify full transaction paths, and solvers attach backruns to extract MEV.
+- Integration: The backrun is natively included in the transaction, ensuring users benefit from MEV capture.
+- Application Control: Applications define the conditions and parameters for backruns, including value allocation.
+
+#### Security and Trust Minimization
+
+**Permit69 and Execution Environment**
+
+- Enhanced security: Permit69 prevents unauthorized token transfers by verifying the source of transfer requests within the EE.
+- `DelegateCall` Execution: Ensures that operations affect the intended contracts and adhere to application logic.
+
+**Solver Accountability with atlETH**
+
+- Gas fee coverage: Solvers escrow atlETH to cover gas fees, preventing them from imposing costs on others if their operations fail.
+- Spam prevention: Limits solvers to one operation per block per address and requires sufficient atlETH balance.
+
+**Trust Minimization Strategies**
+
+- Immutable Sequencing: CallChainHash prevents bundlers or validators from altering the transaction sequence.
+- Permissionless solvers: Encourages a decentralized solver market, reducing the risk of centralization.
+- Simplified bundler role: Bundlers cannot interfere with execution order, minimizing the trust required in them.
+
+#### Gas Costs and Efficiency Considerations
+
+While Atlas introduces additional gas costs due to its checks and verifications, these are often offset by the benefits:
+
+- Solver responsibility: Solvers typically absorb extra gas costs as they benefit from successful executions.
+- Cost-Benefit analysis: Applications can assess whether MEV capture and improved execution justify the additional costs.
+- Fallback options: If no solver accepts the gas cost, users can proceed with standard transactions outside of Atlas.
+
+#### Integration Steps for Applications
+
+Integrating Atlas into an application involves three steps:
+
+1. Embed the Atlas SDK: Incorporate the SDK into the application's interface to interact with Atlas.
+2. Create and publish a DAppControl module: Define custom logic, hooks, and parameters in a smart contract specific to the application.
+3. Initialize the DAppControl contract: Interact with the Atlas EntryPoint contract to link the module and configure settings.
+
+**DAppControl Modules and Hooks**
+
+- BidFormat: Specifies the currencies accepted in bids.
+- BidValue: Defines how bids are evaluated and ranked.
+- AllocateValue: Determines how captured MEV is distributed.
+- Hooks:
+  - PreOps: Executes before the user's operation.
+  - PreSolver: Executes before each solver's operation.
+  - PostSolver: Executes after a solver's operation.
+  - PostOps: Executes after all solver operations and value allocation.
+
+#### Practical Example: Fastlane Online On-Chain Flow
+
+Consider a user initiating a token swap using Atlas:
+
+1. Token Permit: The user approves the FastLaneControl contract to transfer tokens.
+2. Solver Registration: Solvers register their **SolverOperations** with the **FastLaneControl**.
+3. Swap Initiation: The user calls the `fastOnlineSwap(UserOperation)` function.
+4. Token Transfer: Tokens are moved from the user to the control contract.
+5. Atlas Metacall: The `FastLaneControl` calls `metacall(Bundle)` on the Atlas contract.
+6. Execution Sequence:
+   - The Execution Environment processes the `UserOperation`.
+   - Solvers' operations are attempted in order, based on bids.
+   - If a solver succeeds, tokens are exchanged accordingly.
+7. Value allocation: The `allocateValue` function distributes any captured MEV as defined by the application.
+8. Fallback mechanism: If all solvers fail, a baseline swap can be executed using the `PostOps` hook.
+9. Completion: The user receives the desired tokens, and the transaction concludes successfully.
+
+![Fastlane Online On-Chain Flow](/assets/images/20240901/fastlane-online-onchain.png)
+
+*Figure: A detailed flowchart illustrating the on-chain transaction process using Atlas. Source[]*
 
 
 ### Sorella
+
+
+### EIP-7727 
 
 
 ### Vertex
@@ -246,8 +675,12 @@ At this end, Dapps focus on internalizing value and optimizing operations, often
 ### Penumbra
 
 
+
 ## References
 
 Sorella Labs https://www.youtube.com/watch?v=fw5Qu400ySY
 https://x.com/ThogardPvP/status/1829331564029005924
+https://github.com/FastLane-Labs/atlas/tree/main
 App Specific Sequencing Infrastructure Tradeoffs - Lily Johnson  https://www.youtube.com/watch?v=lLR_6tnKL2I 
+https://ethereum-magicians.org/t/eip-7727-evm-transaction-bundles/20322
+
