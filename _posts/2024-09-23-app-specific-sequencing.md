@@ -704,7 +704,7 @@ The attribution problem refers to the difficulty in identifying the specific par
  - Centralization: MEV profits concentrate among sophisticated actors (searchers, builders, proposers), leading to centralization of power and resources.
  - User distrust: Persistent exploitation can erode user confidence in DeFi platforms.
 
-### Sorella's Vision: Sovereign Applications and Application-Specific Sequencing
+#### Sorella's Vision: Sovereign Applications and Application-Specific Sequencing
 
 To address these challenges, Sorella Labs advocates for the development of sovereign applications that are both attributable and sovereign, utilizing application-specific sequencing to enhance control and fairness.
 
