@@ -850,6 +850,10 @@ The LVR auction ensures:
 
 #### Angstrom Network Architecture
 
+![Angstrom Network Topology](/assets/images/20240901/Angstrom-Network-Topology.png)
+
+*Figure: Angstrom Network Topology.*
+
 **Overview of Angstrom Network and Nodes**
 
 - Angstrom network: A decentralized transaction ordering network aligning the incentives of searchers, swappers, and LPs.
