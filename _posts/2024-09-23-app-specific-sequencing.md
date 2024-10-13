@@ -3,13 +3,16 @@ title:  A Deep Dive into Application Specific Sequencing
 tags: Ethereum Rollups Application-Specific-Sequencing app-sequencing shared-sequencing decentralized-sequencing shared-sequencing-marketplaces shared-sequencing-mechanism-design shared-sequencing-auctions
 ---
 
+*Special thank yous to @ThogardPvP & @jacobeth4 from @0xFastLane, @ballsyalchemist from @sorella\_labs, and @DariusTabai from @vertex\_protocol for reading early versions of this article and providing feedback.* 
+
+
 ## Introduction
 
-As blockchain technology matures, decentralized applications (Dapps) face increasing challenges in managing transaction sequencing to optimize user experience, value retention, and security. Traditional blockchain architectures often leave Dapps at the mercy of external actors—such as miners, validators, MEV (Miner Extractable Value) extractors and rollup sequencers—who control transaction ordering and inclusion. This lack of control can lead to value leakage, unfair user outcomes, and vulnerabilities to malicious behaviors like frontrunning or sandwich attacks.
+As blockchain technology matures, decentralized applications (dApps) face increasing challenges in managing transaction sequencing to optimize user experience, value retention, and security. Traditional blockchain architectures often leave dApps at the mercy of external actors—such as miners, validators, searcher-builders —who control transaction ordering and inclusion. This lack of control can lead to value leakage, unfair user outcomes, including vulnerabilities to malicious behaviors like front-running or sandwich attacks.
 
-Application-Specific Sequencing (ASS) emerges as an important shift, granting Dapps greater control over the inclusion and ordering of transactions affecting their state. By customizing sequencing mechanisms to their specific needs, Dapps can mitigate negative externalities, internalize value, and enhance overall system efficiency. However, implementing ASS introduces complex trade-offs, particularly between composability and value capture, and raises critical questions about infrastructure design, incentive structures, and the expansive design space.
+Application-Specific Sequencing (ASS) emerges as a pivotal innovation, granting dApps greater control over the inclusion and ordering of transactions affecting their state, without the overhead and loss of asset composability of having to build and maintain their own appchains. By customizing sequencing mechanisms to their specific needs, dApps can mitigate negative externalities, internalize value, and enhance overall system efficiency. However, implementing ASS does come with complex trade-offs, particularly between composability and value capture, and raises critical questions about infrastructure design and incentive structures.
 
-This article explores the details of ASS, synthesizing insights from current projects and exploring the relationships and trade-offs inherent in this design space. I aim to provide a comprehensive view for researchers and developers to further investigate and optimize ASS mechanisms.
+This article explores the nuances of ASS, synthesizing insights from current projects, and examines the inherent trade-offs in this design space. Our goal is to provide a comprehensive view for researchers and developers to further investigate and optimize ASS mechanisms.
 
 Before we get deep into the application specific sequencing, let us briefly understand the fundamental concepts around sequencing and the vast design spectrum of sequencing, decentralized sequencing and shared sequencing.
 
@@ -17,18 +20,18 @@ Before we get deep into the application specific sequencing, let us briefly unde
 
 ### Motivation -  Importance of Transaction Sequencing
 
-In blockchain networks, transaction sequencing—the process of determining which transactions are included in a block and in what order—is fundamental to the operation of Dapps. The sequence directly impacts:
+In blockchain networks, transaction sequencing—the process of determining which transactions are included in a block and in what order—is fundamental to the operation of dAapps. The sequence directly impacts:
 
-- Value ownership and flow: Determines how assets are transferred and who gains control over them.
-- User experience: Affects transaction confirmation times, fees, and the predictability of outcomes.
-- Security and fairness: Influences vulnerability to MEV extraction and manipulative practices like frontrunning and sandwich attacks.
+* Value ownership and flow: The sequencer (generic) plays an important role in how assets are transferred and who gains control over them.  
+* User experience: Affects transaction confirmation times, fees, and predictability.  
+* Transaction integrity and fairness: Influences vulnerability to MEV extraction and manipulative practices.
 
 ### The Role of MEV in Transaction Sequencing
 
-MEV refers to the profit miners or validators can make by reordering, including, or excluding transactions within the blocks they produce. MEV can manifest in various forms:
+MEV refers to the profit miners or validators  or other extractors can make by reordering, including, or excluding transactions within the blocks they produce. MEV can manifest in various forms:
 
 - Arbitrage MEV: Exploiting price differences across exchanges.
-- Liquidation MEV: Profiting from liquidating under-collateralized positions.
+- Liquidation MEV: Profiting from liquidating undercollateralized positions.
 - Sandwich MEV: Placing transactions before and after a target transaction to manipulate prices.
 - Time-Bandit MEV: Reorganizing past blocks to extract additional value.
 
@@ -48,7 +51,7 @@ Sequencing refers to the process of ordering transactions before they are execut
  - Simplicity: Easier to implement and maintain.
 - Special preferences: Can enforce sequencer operator's preference of transaction ordering that can prevent MEV extraction (FCFS).
 - Disadvantages:
- - Censorship risk: A central sequencer can censor or reorder transactions unfairly.
+ - Censorship risks: A central sequencer can censor or reorder transactions unfairly.
  - Liveness issues: If the sequencer fails or becomes malicious, the entire system can halt.
  - Trust concerns: Users must trust the sequencer's integrity and reliability.
 
@@ -60,9 +63,9 @@ Sequencing refers to the process of ordering transactions before they are execut
  - Enhanced security: Distributed control reduces the risk of attacks.
 - Disadvantages:
  - Increased complexity: More complex to implement due to coordination among sequencers.
- - Potential performance Trade-offs: Consensus mechanisms can introduce latency.
+ - Potential performance trade-offs: Consensus mechanisms can introduce latency.
  - Economic incentive challenges: Aligning incentives among participants can be difficult.
-- Centralization risks: Execution Tickets and Execution Auctions dramatically increase centralization in the market for block proposals, even without multi-block MEV concerns.
+- Centralization risks: Execution Tickets and Execution Auctions mechanisms used in decentralized sequencing dramatically increase centralization in the market for block proposals, even without multi-block MEV concerns.
 
 ### Shared Sequencing
 - Definition: Shared sequencing involves multiple rollups or chains utilizing a common set of sequencers. Instead of each rollup having its own sequencers, they share sequencing infrastructure. They share a decentralized network of sequencers.
@@ -73,27 +76,43 @@ Sequencing refers to the process of ordering transactions before they are execut
 - Disadvantages:
  - Coordination complexity: Managing sequencing across diverse rollups with different requirements.
  - Incentive misalignment: Different rollups may have conflicting economic incentives.
- - Risk propagation: Issues in one rollup could affect others sharing the sequencers.
+ - Risk propagation: Issues in one rollup could affect others sharing the sequencers (noisy neighbor problem).
 
 ### Based Sequencing
-- Definition: In Based Sequencing, L2 rollup transactions are sequenced by the L1 blockchain’s validators or proposers. L1 validators handle both L1 block proposals and L2 transaction sequencing.
-  
+- Definition: In Based Sequencing, L2 rollup transactions are sequenced by the L1 blockchain’s validators or proposers. L1 validators handle both L1 block proposals and L2 transaction sequencing.  
 - Advantages:
   - Leverage L1 security: Uses L1’s existing security and decentralization for the rollup.
   - Censorship resistance: Sequencing is distributed across L1 validators, reducing censorship risk.
   - Liveness: Inherits L1 liveness, ensuring consistent transaction processing.
   - Security: Benefits from the economic security of L1 validators.
   - Atomic composability: Enables cross-layer composability between L1 and L2.
-
-- Disadvantages**:
+- Disadvantages:
   - Incentive misalignment: Revenue from fees and MEV flows to L1, not the rollup.
   - Reduced decentralization: Only a subset of validators may opt into sequencing, weakening decentralization.
   - Complexity: L1 validators must run additional software, increasing operational overhead.
-
-- Risks**:
+- Risks:
   - Incentive conflicts: Validators may prioritize L1 revenue over optimal L2 sequencing.
   - Security vulnerabilities: A smaller validator subset increases the risk of collusion or attacks.
 
+### Sequencing Mechanisms Today
+
+Transaction sequencing decides the order in which blockchain transactions are processed. Different methods aim to improve performance, fairness, and security. The main mechanisms used today are:
+
+* Proposer-Builder Separation (PBS) with Relays**  
+  * What it is: PBS separates the roles of block proposers (validators) and block builders. Builders create blocks that maximize profit via harvesting MEV, while relays securely pass these blocks to proposers.  
+  * How it works: Proposers auction off the block rights through relays. Builders assemble blocks, relays deliver them securely, and proposers choose the most valuable block to add to the blockchain.  
+  * Pros: Optimized block construction, higher validator revenue.  
+  * Cons: Risk of builder/relay centralization and trust in relays, added complexity.  
+* Sequencers with Priority Fees or First-Come-First-Served (FCFS)**  
+  * What it is: In Layer 2s and appchains, sequencers order transactions by priority fee or arrival time (FCFS).  
+  * How it works: Sequencers collect transactions; high-fee transactions are processed first or in the order in which they arrive to the sequencer   
+  * Pros: Better performance, simpler design, FCFS changes MEV to latency games  
+  * Cons: Centralized sequencers can manipulate transaction ordering, leading to MEV exploitation.  
+* Application-Specific Sequencing (ASS)**  
+  * What it is: dApps control how their own transactions are ordered to reduce MEV risks and improve user experience.  
+  * How it works: dApps set rules for transaction order, preventing manipulative tactics like front-running.  
+  * Pros: Better security, user experience, control over MEV, and retains composability as compared to being on your own app chain.  
+  * Cons: Less interoperability, added complexity, possible centralization.
 
 ### Incentives and Challenges for Dapps
 
@@ -111,7 +130,7 @@ In a shared sequencing environment, fee markets can become merged. This merging 
 
 Dapps are increasingly interested in capturing a portion of the execution revenue and MEV generated by their platforms. In the context of rollups, Dapps are looking for two main things:
 
-- MEV Leakage: Without control over sequencing, external entities can extract MEV, reducing the revenue potential for the dApp itself.
+- MEV leakage: Without control over sequencing, external entities can extract MEV, reducing the revenue potential for the dApp itself.
 - Desire for revenue sharing: Dapps seek mechanisms to receive a share of the fees and MEV generated by their users' transactions or their user's interactions with the applications.
 
 
@@ -126,7 +145,7 @@ To address these challenges, some applications are exploring application-specifi
 - Dedicated sequencers: The application runs its own sequencer or has greater control over the sequencing process.
 - Custom fee structures: Ability to implement custom fee mechanisms that align with the application's economic model.
 - Direct revenue capture: Enhanced capability to retain fees and MEV within the application.
-- Custom ordering logic: A transaction ordering solution using decentralized oracle networks (DON) to mitigate the detrimental effects of MEV, like Themis [].
+- Custom ordering logic: A transaction ordering solution using decentralized oracle networks (DON) to mitigate the detrimental effects of MEV, like Themis.
 
 By controlling sequencing, Dapps can:
 
@@ -144,197 +163,31 @@ By customizing the sequencing infrastructure, applications can achieve:
 
 ## Application-Specific Sequencing Frameworks
 
-The design space for Application-Specific Sequencing is very vast. In this article we will review two such frameworks:
-- Fastlane's composability VS value capture trade off framework
-- Astria's infrastructure options framework
-
-
-
 ### Fastlane' ASS Framework
 
-![Fastlane's ASS framework](/assets/images/20240901/ASS-Spectrum-MEV-composability-landscape.jpg)
+![Fastlane's ASS framework](/assets/images/20240901/Fastlane-ASS-Spectrum-MEV-composability-landscape-v10.08.jpeg)
 _Figure: Fastlane's ASS framework, source: Fastlane_
 
+[FastLane’s ASS Spectrum framework](https://x.com/ThogardPvP/status/1829331564029005924) illustrates the balance between composability and value capture, showing how different sequencing approaches impact an application's ability to interact with others and internalize value.
 
-Fastlane's ASS Spectrum framework provides a nuanced perspective on the balance of optimizing both composability and value capture, illustrating how different sequencing approaches impact an application's ability to interact with others (composability) and to internalize value (such as MEV). So, lets unpack the details of Fastlane's framework, exploring the trade-offs inherent in various ASS strategies and examining specific use cases that exemplify these concepts.
+* High Composability vs. Value Capture: dApps that prioritize seamless interactions with other applications (high composability) may sacrifice some control over transaction sequencing, making them more susceptible to MEV attacks and less able to capture value internally.  
+* Low Composability vs. Value Capture: dApps that limit interactions with others gain more control over transaction ordering, allowing them to better protect against MEV exploitation and capture more value. However, this can reduce interoperability and potentially affect user experience.  
+* This tradeoff exists because the transaction ordering is determined within a separate mempool. The ASS orderer and bundler do not have knowledge of other transactions nor their state and therefore cannot provide atomic composability guarantees.  
+* Finding the Right Balance: Each dApp must consider its priorities and choose a sequencing approach that balances the need for composability with the desire to internalize value and protect users. This involves strategic decisions about how much to interact with other applications and how to structure transaction processing to optimize security and functionality.
 
-Before diving into the framework, it's important to understand the fundamental elements at play in teh framework:
+**Examples**
 
-- Composability: The degree to which a dApp can interact with other applications within the blockchain network. High composability enables seamless integration and atomic transactions involving multiple Dapps.
-- Value capture: The ability of a dApp to internalize value generated within its operations, particularly MEV. This includes profits from transaction ordering, arbitrage opportunities, and other forms of value that can be extracted from the transaction flow.
-
-#### High composability end of the spectrum
-
-At this end, Dapps are designed to maximize interaction with other applications, encouraging a highly interconnected ecosystem.
-
-**Bidirectional, Full Execution**
-
-- Characteristics: Dapps can both call and be called by other applications on the same blockchain or rollup. Transactions are executed atomically, ensuring that complex multi-dApp operations either occur entirely or not at all.
-
-- Advantages:
- - Seamless integration: Users can interact with multiple Dapps in a single transaction.
- - Shared liquidity and resources: Access to broader pools of assets and functionalities.
- - Enhanced user experience: Simplifies complex operations, reducing friction.
-
-- Trade-Offs:
- - Limited control over sequencing: Dapps relinquish some control over transaction ordering, potentially exposing them to MEV extraction by external actors.
- - Value leakage: Profits from MEV opportunities may not be internalized, reducing potential revenue.
-
-**Unidirectional, Full Execution**
-
-- Characteristics: Dapps can initiate calls to other applications but may not be callable in the same manner.
-
-- Advantages:
- - Controlled interactions: Maintains some level of composability while allowing Dapps to manage outgoing calls.
- - Reduced exposure: Slightly more control over sequencing compared to bidirectional execution.
-
-- Trade-Offs:
- - Partial Composability: Limited in how other Dapps can interact, potentially reducing integration opportunities.
- - Continued value leakage: External MEV extraction remains a concern.
-
-#### Middle of the spectrum: Reduced Composability
-
-Here, Dapps begin to limit their interactions with others to specific phases or conditions.
-
-**Limited Callouts**
-
-- Characteristics: Dapps can interact with others during defined phases, such as intake or settlement periods. This interaction is unidirectional and not necessarily atomic.
-
-- Advantages:
- - Increased control: Greater ability to manage transaction sequencing within the dApp.
- - Targeted Composability: Interactions are strategic, occurring when most beneficial.
-
-- Trade-Offs:
- - Reduced flexibility: Users may need to perform multiple transactions to achieve complex operations.
- - Potential user friction: Less seamless experience compared to full composability.
-
-Transactions are segmented into phases:
-
-- Intake Phase: $T_{\text{intake}}$
-- Processing Phase: $T_{\text{process}}$
-- Settlement Phase: $T_{\text{settle}}$
-
-Interactions with other dApps occur only during $T_{\text{settle}}$.
-
-#### Low composability end of the spectrum
-
-At this end, Dapps focus on internalizing value and optimizing operations, often at the expense of interacting with other applications.
-
-**No Direct Calls, Consensus-Level Solutions**
-
-- Characteristics: Dapps rely on protocol-level mechanisms rather than direct interactions with other applications. Composability is achieved through consensus processes, which may be less efficient.
-
-- Advantages:
- - Maximum control over sequencing: Dapps can fully manage transaction ordering, internalizing MEV.
- - Enhanced security: Reduced exposure to external manipulation and MEV extraction.
-
-- Trade-Offs:
- - Limited interoperability: Difficulty in integrating with other Dapps, potentially isolating the application.
- - User experience challenges: May require users to navigate additional steps or processes.
-
-#### Implications for Value Capture
-
-As dApps move along the spectrum toward reduced composability, they gain increased capacity to internalize value.
-
-**Internalizing Endogenous MEV**
-
-- Definition: Capturing value generated within the dApp itself, such as profits from transaction sequencing that directly affect the application's operations.
-
-- Mechanisms:
- - Backrunning: Executing transactions that capitalize on changes caused by prior transactions within the dApp.
- - Oracle extractable value (OEV): Profiting from timely access to updated external data sources (e.g., price feeds).
-
-- Benefits:
- - Revenue generation: Directly increases the dApp's profitability.
- - User protection: Can be designed to mitigate negative impacts on users, such as frontrunning.
-
-Mathematically, the dApp aims to maximize endogenous MEV:
-
-$$\max_{\sigma} V_{\text{MEV}}^{\text{endo}}(\sigma)$$
-
-where:
-
-- $\sigma$ is the transaction sequencing.
-- $V_{\text{MEV}}^{\text{endo}}$ represents endogenous MEV.
-
-**Internalizing Exogenous MEV**
-
-- Definition: Capturing value from actions not sequenced by the dApp, including opportunities arising from interactions with external markets or applications.
-
-- Mechanisms:
- - Top-of-block arbitrage: Exploiting price discrepancies at the beginning of a block.
- - CEX-DEX arbitrage: Capitalizing on price differences between centralized and decentralized exchanges.
-
-- Benefits:
- - Expanded profit sources: Access to a broader range of MEV opportunities.
- - Increased competitiveness: Ability to engage in strategies that external actors might otherwise exploit.
-
-The dApp seeks to capture exogenous MEV:
-
-$$V_{\text{MEV}}^{\text{exo}} = V_{\text{arbitrage}} + V_{\text{liquidation}} + \ldots$$
-
-
-#### Gas Fee Reduction Strategies
-Further along the spectrum, dApps can implement methods to reduce operational costs associated with gas fees.
-
-**Partial Gas Fee Reduction**
-- Approach:
-
- - Atomic viewing and locking: The dApp atomically locks the necessary state on the network.
- - Off-Network processing: Executes transactions in a separate domain.
- - Result settlement: Finalizes the outcome back on the main network.
-
-- Advantages:
-
- - Cost savings: Reduces gas fees associated with on-chain execution.
- - Maintained security: Atomic locking ensures state consistency.
-
-- Trade-Offs:
-
- - Complexity: Requires additional infrastructure and coordination.
- - Latency: Off-network processing may introduce delays.
-
-**Significant Gas Fee Reduction and Full Integration**
-
-- Approach:
-
- - Non-Atomic locking: Locks the state in a non-atomic manner, allowing for greater flexibility.
- - Off-Network Execution: Processes transactions entirely off-chain.
- - Result settlement: Settles outcomes back on the network, potentially batching multiple transactions.
-
-Advantages:
-
- - Maximum cost efficiency: Significantly lowers gas expenses.
- - Operational efficiency: Optimizes resource usage.
-
-- Trade-Offs:
-
- - Increased risk: Non-atomic operations may expose the dApp to state inconsistencies or security vulnerabilities.
- - Reduced transparency: Off-chain execution is less visible to users and auditors.
-
-The goal is to minimize total gas costs:
-
-$$\min_{C_{\text{gas}}} \left( C_{\text{on-chain}} + C_{\text{off-chain}} \right)$$
+* Highly Composable dApp: A lending platform that integrates with multiple other dApps to offer a wide range of services, accepting that it cannot fully control transaction sequencing but provides a rich user experience.  
+* Low Composability dApp: A decentralized exchange that focuses on securing transactions within its own platform, preventing MEV attacks by controlling transaction ordering, but offering limited interoperability with other applications.
 
 
 #### Specific Use Cases Illustrating the Spectrum
 
 **Backrun Arbitrage and OEV**
 
-- Context: dApps capture value from transaction sequences within their own operations, such as executing a trade immediately after a significant price-impacting transaction.
-
-- Implementation:
-
- - Sequencing Control: The dApp orders transactions to position itself favorably.
- - User Protection: By internalizing MEV, the dApp can prevent external actors from extracting value at the users' expense.
-
-- Benefits:
-
- - Enhanced Revenue: The dApp retains profits from MEV opportunities.
- - Improved User Experience: Reduces the likelihood of users being adversely affected by MEV extraction.
- - Position on Spectrum: Leans toward internalizing endogenous MEV while maintaining some composability.
-
-- **Mathematical Formulation**
+* Oracle Extractable Value (OEV) refers to the value that dApps can capture by controlling the sequencing of transactions that rely on external data from oracles. By managing the order in which these transactions are processed, dApps like API3 or Warlock can optimize the use of oracle-provided information, preventing external actors from manipulating transaction outcomes to extract value.  
+* The value captured through OEV is redistributed to various stakeholders within the ecosystem, including: dApp, users, and LPs.
+* Mathematical Formulation**
 
 Expected value from backrun arbitrage:
 
@@ -349,25 +202,8 @@ where:
 
 **Rollup-Based Solutions**
 
-- Context: dApps leverage layer 2 solutions or app-specific chains to optimize performance and reduce costs.
-
-- Implementation:
-
- - Custom Execution Environment: The dApp operates on a rollup or L2 tailored to its needs.
- - State Settlement: Periodically settles state back to the main network.
-
-- Benefits:
-
- - Significant gas fee reduction: Offloads execution from the main chain, lowering costs.
- - Operational control: Gains extensive control over sequencing and execution parameters.
-
-- Trade-Offs:
-
- - Isolation: Limited direct interaction with dApps on the main network.
- - Security considerations: Must ensure the security of the rollup or L2 environment.
- - Position on spectrum: Occupies the far end, prioritizing value capture and operational efficiency over composability.
-
-- **Mathematical Considerations**
+* Leveraging layer 2 solutions or app-specific chains optimizes performance and reduces costs. DApps gain extensive control over sequencing and execution parameters but may face challenges with isolation, security considerations, and bootstrapping liquidity, middleware integrations. 
+* Mathematical Considerations**
 
 Cost reduction:
 
@@ -395,31 +231,21 @@ where $\epsilon$ is an acceptably low probability threshold.
 
 - **Mathematical Formulation**
 
-Minimizing LVR:
+  Minimizing LVR:
 
 $$\min_{\sigma} L_{\text{LVR}}(\sigma)$$
 
-where $L_{\text{LVR}}$ is the loss due to LVR, and $\sigma$ represents the sequencing strategy.
+  where $L_{\text{LVR}}$ is the loss due to LVR, and $\sigma$ represents the sequencing strategy.
 
-- **Model Components**
-
- - **Price Discrepancy**:
-
-   $$\Delta P = P_{\text{external}} - P_{\text{AMM}}$$
-   
- - **Arbitrage Volume**:
-   
-   $$Q_{\text{arb}} = f(\Delta P)$$
-   
-    Where $f$ is a function representing how arbitrage volume responds to price discrepancies.
-
- - **LVR Calculation**:
-   
-   $$L_{\text{LVR}} = Q_{\text{arb}} \cdot \Delta P$$
-   
- - **Impact of Batching**:
-
-    By batching, $\Delta P$ is reduced as the AMM's price is updated less frequently, and the clearing price better reflects $P_{\text{external}}$.
+  $$\Delta P = P_{\text{external}} - P_{\text{AMM}}$$
+  
+  $$Q_{\text{arb}} = f(\Delta P)$$
+  
+  Where $f$ is a function representing how arbitrage volume responds to price discrepancies.
+  
+  $$L_{\text{LVR}} = Q_{\text{arb}} \cdot \Delta P$$
+  
+  By batching, $\Delta P$ is reduced as the AMM's price is updated less frequently, and the clearing price better reflects $P_{\text{external}}$.
 
 
 #### Strategic Considerations for dApp Developers
@@ -447,53 +273,44 @@ When evaluating where to position your applications on the ASS spectrum, develop
 - Risk management: Consider potential vulnerabilities introduced by non-standard sequencing methods.
 
 
-
 ## Application-Specific Sequencing - Current Landscape
 
 ### Fastlane's Atlas Protocol
 
-Fastlane's Atlas Protocol is a generalized execution abstraction designed to facilitate programmable MEV mitigation at the application layer. Atlas simplifies the deployment of custom Order Flow Auctions (OFAs), enabling developers to implement application-specific sequencing with greater ease and flexibility. By leveraging Execution Abstraction (EA), a subset of Account Abstraction (AA), Atlas replaces the need for certain guarantees from block builders, setting the way for permissionless order flow and decentralized MEV mitigation strategies across any EVM chain.
+[FastLane’s Atlas](https://github.com/FastLane-Labs/atlas) Protocol is a generalized execution abstraction designed to facilitate programmable MEV mitigation at the application layer. Atlas simplifies the deployment of custom Order Flow Auctions (OFAs), enabling developers to implement application-specific sequencing with greater ease and flexibility. By leveraging Execution Abstraction (EA), a subset of Account Abstraction (AA), Atlas replaces the need for certain guarantees from block builders, setting the way for permissionless order flow and decentralized MEV mitigation strategies across any EVM chain.
 
 #### The Motivation Behind Atlas
 
-**Challenges in DeFi Trade Execution**
-
-DeFi has revolutionized financial services by providing decentralized alternatives to traditional finance. However, it faces significant challenges:
-
-- Liquidity fragmentation: Liquidity is scattered across various platforms and protocols, making it difficult for users to achieve optimal trade execution.
-- Complex transaction paths: Users often need to specify the full computational path of a transaction, which can lead to inefficiencies and errors.
-- MEV exploitation: Users are vulnerable to MEV attacks like frontrunning and sandwich attacks, where malicious actors extract value by manipulating transaction ordering.
-
-**Centralization Risks in Existing OFAs**
-
-OFAs like UniswapX, 1inch Fusion, and CowSwap have gained traction by implementing MEV-aware execution. However, they present new challenges:
-
-- Solver centralization: A few solvers dominate these platforms, leading to potential rent-seeking behavior and reduced competition.
-- Opaque MEV supply chain: Centralization can lead to less transparency, increasing the risk of censorship and manipulation by block builders or validators.
-
-**The Need for Default MEV Protection**
-
-Current MEV protection solutions often require users to change their RPC endpoints, introducing:
-
-- Security risks: Switching RPCs can expose users to malicious nodes.
-- Trust assumptions: Users must place trust in new entities, which may not align with decentralization principles.
-
-Atlas addresses these issues by enabling default MEV protection without requiring users to change their RPC settings, targeting unsophisticated users who need protection the most.
+Existing OFAs present centralization risks such as solver dominance and opaque MEV supply chains,. Atlas aims to provide default MEV protection without requiring users to change their RPC settings, targeting unsophisticated users who need protection the most.
 
 #### Atlas Architecture Overview
 
-At its core, Atlas provides a modular and customizable framework that allows dApps to define their own transaction sequencing logic. The key components include:
-
-- Atlas `EntryPoint` contract: The central smart contract that orchestrates the execution of user and solver operations.
-- Atlas SDK: A software development kit that simplifies integration with the Atlas Protocol.
-- Key roles: Originator, Auctioneer, Operations Relay (OR), Bundler, and Solver.
-- Execution environment (EE): A secure environment for executing operations.
-- atlETH: A wrapped ETH token used within Atlas for value transfer and gas fee management.
-- DAppControl contracts (Atlas Modules): Customizable modules where developers define application-specific logic and parameters.
-
 ![Atlas Transaction Lifecycle](/assets/images/20240901/Atlas-transaction-lifecycle.png)
 
-*Figure: A high-level overview of the Atlas transaction lifecycle. Source*
+*Figure: A high-level overview of the Atlas transaction lifecycle. Source: FastLane Atlas.*
+
+At its core, Atlas provides a modular and customizable framework that allows dApps to define their own transaction sequencing logic. The key components include:
+
+* EntryPoint Contract: This smart contract orchestrates the entire transaction flow. It manages user and solver operations and ensures that the correct bundle bid is selected and executed, guaranteeing the proper sequence of actions.  
+* SDK: Simplifies integration with the protocol.  
+* Key Roles:   
+  * Originator \- Initiates the Atlas process by generating a UserOperation, a smart contract call or EIP-712 signed message representing the user's intent.   
+  * Auctioneer- Aggregates UserOperations with SolverOperations, sorts them using a bid valuation function defined in the DAppControl module, and ensures the correct execution order.   
+  * Operations Relay \- Facilitates communication between originators, auctioneers, and solvers. This can be a traditional relay, an L3, or even a smart contract on the same network as the application.  
+  * Bundler \- Packages the full Atlas transaction and submits it to the network for inclusion in a block.   
+  * Solver \- Competes to provide the best execution for a given UserOperation, potentially capturing MEV for the benefit of users or applications.  
+* Execution Environment: Secure operation execution using `delegateCall` and `Permit69`.  
+* atlETH: Wrapped ETH for value transfer and gas management.  
+* DAppControl Contracts: Define application-specific logic and parameters.
+
+In FastLane’s Atlas protocol, the Bundler can be run by:
+
+* Anyone (Permissionless): Any entity can act as a bundler, allowing for a decentralized system.  
+* Designated Entities: A smart contract (such as a batch aggregator), a trusted entity, or a group chosen by the application can bundle transactions.  
+* Self-Bundling: The originator (user) or solver can bundle and submit their own transactions.  
+* Secure Solutions: Advanced setups using secure environments (like TEEs) ensure bundlers can’t tamper with transactions.
+
+The CallChainHash guarantees that bundlers can’t change the order of operations, keeping the process secure.
 
 #### Key Roles in Atlas
 
@@ -528,7 +345,7 @@ At its core, Atlas provides a modular and customizable framework that allows dAp
 - Role: Competes to provide the best execution for a given `UserOperation`, potentially capturing MEV for the benefit of users or applications.
 - Impact: Enhances execution quality and efficiency by finding optimal transaction paths or backrun opportunities.
 
-#### Technical Mechanisms Enabling Application-Specific Sequencing
+#### Technical Mechanisms
 
 **Atlas EntryPoint Contract**
 
@@ -579,453 +396,199 @@ Atlas empowers applications to control transaction sequencing through several me
 
 #### Handling MEV and Backrun Auctions
 
-**Intent-Centric Auctions**
+* Intent-Centric auctions: Users submit intents, and solvers compete to fulfill them efficiently, capturing MEV for the benefit of users or applications.  
+* Backrun auctions: Solvers attach backruns to extract MEV or OEV, with value shared according to application policies.  
+* Batching auctions: Solvers compete to sequence a batch of UserOperations in the most measurably efficient manner, as defined by the DAppControl’s bid valuation function.  
+* “Top of Block” auctions: For DApps willing to reduce composability to internalize exogenous MEV (such as LVR), Solvers compete to be the first to interact with the application each block.
 
-- Process: Users submit intents (desired outcomes), and solvers compete to fulfill them efficiently.
-- MEV Capture: Potential MEV generated is captured and can be shared with users or allocated according to application policies.
-- Application Control: Full control over how intents are processed and how value is distributed.
+#### **Handling Flashloans in Atlas Protocol**
 
-**Backrun Auctions**
+Atlas Protocol features an integrated, Atlas-native cross-operation flashloan system designed to enhance the flexibility and efficiency of decentralized financial operations. Within Atlas, smart contract hooks can initiate flashloans by invoking the borrow() function before the solver phase of the transaction lifecycle. This seamless integration allows originators to access liquidity without needing to hold gas tokens, facilitating transactions that interact with smart contracts dependent on the msg.value parameter. 
 
-- Process: Users specify full transaction paths, and solvers attach backruns to extract MEV.
-- Integration: The backrun is natively included in the transaction, ensuring users benefit from MEV capture.
-- Application Control: Applications define the conditions and parameters for backruns, including value allocation.
+Additionally, these flashloans serve as collateral to support and manage multi-stage settlements during the atomic creation and sale of structured products or derivatives between originators and solvers. 
+
+By embedding flashloan capabilities directly into the Atlas framework, the protocol enables complex financial strategies while ensuring secure and efficient transaction sequencing. This design not only streamlines capital utilization for users but also maintains the integrity and robustness of the DeFi ecosystem by preventing common flashloan exploits and ensuring fair value distribution among all stakeholders.
 
 #### Security and Trust Minimization
 
-**Permit69 and Execution Environment**
+* Immutable Sequencing: Atlas uses CallChainHash, a cryptographic hash, to ensure transaction orders remain unaltered, preventing intermediaries from tampering with the sequence.  
+* Secure Execution Environment: The EntryPoint Contract manages operations securely using *delegateCall* and *Permit69*, which verifies token transfers and blocks unauthorized access, safeguarding user assets.  
+* Solver accountability: Solvers must escrow funds in atlETH to cover gas fees, promoting honest behavior and discouraging spam or malicious actions since they bear the cost of failed transactions.  
+* Decentralized solver competition: A market of solvers competes to execute user operations, reducing reliance on any single entity and minimizing trust assumptions.  
+* MEV mitigation: By controlling transaction sequencing at the application layer, Atlas mitigates MEV risks like front-running and sandwich attacks, protecting users from value extraction by external actors.  
+* Atomic Execution: Atlas enables atomic execution of operations, ensuring that either all operations succeed or none do, maintaining consistency and security.  
+* Transparency: Open-source code allows community auditing and verification, enhancing transparency and reducing the need for users to trust the system blindly.  
+* Customizable Security: Developers can define custom execution logic and security settings through DAppControl modules, tailoring security features to their application’s specific needs.
 
-- Enhanced security: Permit69 prevents unauthorized token transfers by verifying the source of transfer requests within the EE.
-- `DelegateCall` Execution: Ensures that operations affect the intended contracts and adhere to application logic.
-
-**Solver Accountability with atlETH**
-
-- Gas fee coverage: Solvers escrow atlETH to cover gas fees, preventing them from imposing costs on others if their operations fail.
-- Spam prevention: Limits solvers to one operation per block per address and requires sufficient atlETH balance.
-
-**Trust Minimization Strategies**
-
-- Immutable Sequencing: CallChainHash prevents bundlers or validators from altering the transaction sequence.
-- Permissionless solvers: Encourages a decentralized solver market, reducing the risk of centralization.
-- Simplified bundler role: Bundlers cannot interfere with execution order, minimizing the trust required in them.
-
-#### Gas Costs and Efficiency Considerations
-
-While Atlas introduces additional gas costs due to its checks and verifications, these are often offset by the benefits:
-
-- Solver responsibility: Solvers typically absorb extra gas costs as they benefit from successful executions.
-- Cost-Benefit analysis: Applications can assess whether MEV capture and improved execution justify the additional costs.
-- Fallback options: If no solver accepts the gas cost, users can proceed with standard transactions outside of Atlas.
 
 #### Integration Steps for Applications
 
 Integrating Atlas into an application involves three steps:
 
-1. Embed the Atlas SDK: Incorporate the SDK into the application's interface to interact with Atlas.
-2. Create and publish a DAppControl module: Define custom logic, hooks, and parameters in a smart contract specific to the application.
-3. Initialize the DAppControl contract: Interact with the Atlas EntryPoint contract to link the module and configure settings.
+1. Embed the Atlas SDK: Developers incorporate the SDK into their application to interact with the protocol.  
+2. Create and Publish a DAppControl Module: Define the custom logic, permissions, sequencing rules, and parameters for transaction processing.  
+3. Initialize the DAppControl Contract: Link the application’s DAppControl module to the Atlas EntryPoint contract and configure the necessary settings.
 
-**DAppControl Modules and Hooks**
+### Sorella Labs' Angstrom
 
-- BidFormat: Specifies the currencies accepted in bids.
-- BidValue: Defines how bids are evaluated and ranked.
-- AllocateValue: Determines how captured MEV is distributed.
-- Hooks:
- - PreOps: Executes before the user's operation.
- - PreSolver: Executes before each solver's operation.
- - PostSolver: Executes after a solver's operation.
- - PostOps: Executes after all solver operations and value allocation.
-
-#### Practical Example: Fastlane Online On-Chain Flow
-
-Consider a user initiating a token swap using Atlas:
-
-1. Token Permit: The user approves the FastLaneControl contract to transfer tokens.
-2. Solver Registration: Solvers register their **SolverOperations** with the **FastLaneControl**.
-3. Swap Initiation: The user calls the `fastOnlineSwap(UserOperation)` function.
-4. Token Transfer: Tokens are moved from the user to the control contract.
-5. Atlas Metacall: The `FastLaneControl` calls `metacall(Bundle)` on the Atlas contract.
-6. Execution Sequence:
-  - The Execution Environment processes the `UserOperation`.
-  - Solvers' operations are attempted in order, based on bids.
-  - If a solver succeeds, tokens are exchanged accordingly.
-7. Value allocation: The `allocateValue` function distributes any captured MEV as defined by the application.
-8. Fallback mechanism: If all solvers fail, a baseline swap can be executed using the `PostOps` hook.
-9. Completion: The user receives the desired tokens, and the transaction concludes successfully.
-
-![Fastlane Online On-Chain Flow](/assets/images/20240901/fastlane-online-onchain.png)
-
-*Figure: A detailed flowchart illustrating the on-chain transaction process using Atlas. Source[]*
-
-
-### Sorella 
-
-Sorella Labs is pioneering an innovative approach to these MEV challenges with Angstrom, a fully permissionless hook that introduces Application Specific Sequencing as a service. By treating LPs and uninformed swappers as first-class citizens, Angstrom redirects value from builders and proposers—who traditionally benefit from MEV—back to the parties adversely affected by MEV extraction. Central to this vision is the implementation of Application Specific Sequencing, empowering dApps to control their transaction ordering and state management independently.
-
-#### The Mechanics of MEV
-
-As you already know that MEV arises from the ability of miners or validators or block builders to manipulate transaction ordering within a block for profit. Two prevalent forms of MEV extraction are:
-
-**Sandwich Attacks**
-
-A sandwich attack involves an attacker front-running and back-running a user's transaction on a DEX:
-
-- Frontrun: The attacker observes a pending large buy order and places their own buy order ahead of it, increasing the asset's price.
-- User's transaction: The user's transaction executes at a higher price due to the attacker's prior purchase.
-- Back run: The attacker sells the asset immediately after the user's transaction, profiting from the price difference.
-- Impact: The user experiences slippage, receiving fewer assets than expected, while the attacker profits from the price manipulation.
-
-**Just-In-Time (JIT) Arbitrage (CEX-DEX Arbitrage)**
-
-JIT arbitrage exploits price discrepancies between CEXs and DEXs:
-
-- Price movement on CEX: A significant trade on a CEX moves the price of an asset.
-- Information asymmetry: There's a delay before this price change is reflected on-chain.
-- Arbitrage opportunity: Arbitrageurs quickly trade on the DEX at stale prices before the on-chain price updates, profiting from the discrepancy.
-- Impact: Liquidity providers on the DEX incur LVR, as they provide liquidity at unfavorable prices, effectively subsidizing the arbitrageurs' profits.
+[Sorella Labs](https://sorellalabs.xyz/) introduces Angstrom, a fully permissionless hook that implements application-specific sequencing. Currently on Uniswap V4, they are integrated with decentralized ASS.
 
 #### The LP Dilemma
 
 LPs provide liquidity to DEXs, enabling users to trade assets. However, they often face:
 
-- Adverse selection: LPs are unaware of real-time CEX prices and provide quotes that may be stale, making them vulnerable to arbitrage.
-- LVR losses: LPs incur losses when arbitrageurs exploit price discrepancies between the DEX and CEX.
+* Adverse selection: LPs are unaware of real-time CEX prices and provide quotes that may be stale, making them vulnerable to arbitrage.  
+* LVR losses: LPs incur losses when arbitrageurs exploit price discrepancies between the DEX and CEX.
 
 #### The Attribution Problem in MEV
 
 The attribution problem refers to the difficulty in identifying the specific parties affected by MEV extraction and ensuring they are appropriately compensated. Current blockchain architectures lack the granularity to:
 
-- Trace MEV sources: Pinpoint which users or LPs are adversely affected.
-- Redistribute value fairly: Allocate MEV profits back to those who incurred losses.
+* Trace MEV sources: Pinpoint which users or LPs are adversely affected.  
+* Redistribute value fairly: Allocate MEV profits back to those who incurred losses.
 
-- Consequences:
+#### Addressing MEV Problems
 
- - Misaligned incentives: Users inadvertently fund the MEV extraction mechanisms through fees, even as they are victimized by them.
- - Centralization: MEV profits concentrate among sophisticated actors (searchers, builders, proposers), leading to centralization of power and resources.
- - User distrust: Persistent exploitation can erode user confidence in DeFi platforms.
+Angstrom uses competitive the top of bundle auctions, LVR auctions, batch auction mechanisms, and integrates searchers to create a market for LVR. This allows LPs to recover losses from adverse selection, swappers to receive optimal execution, and searchers to access arbitrage opportunities.
 
-#### Sorella's Vision: Sovereign Applications and Application-Specific Sequencing
+![Fastlane's Angstrom Network Topology](/assets/images/20240901/Angstrom-Network-Topology.png)
+*Figure: Angstrom Network Topology, Source: Fastlane* 
 
-To address these challenges, Sorella Labs advocates for the development of sovereign applications that are both attributable and sovereign, utilizing application-specific sequencing to enhance control and fairness.
-
-#### Attributable Applications
-
-Definition: Applications capable of uniquely identifying all participating entities and their strategies, allowing for precise value attribution and redistribution based on the outcomes of their interactions.
-
-**Key Characteristics**:
-
-- Granular control: Ability to monitor and record individual actions within the application.
-- Fair redistribution: Mechanisms to compensate adversely affected parties, such as users and LPs.
-
-Here are some Examples:
-
-- Uniform Clearing Batch Auctions:
-
-  - Mechanism: Aggregates all buy and sell orders within a time interval and executes them at a single, uniform clearing price.
-  - Benefits:
-    - Eliminates price slippage for users.
-    - Reduces MEV opportunities by preventing front-running and sandwich attacks.
-    - Encourages competitive pricing from market makers.
-
-- MEV Taxes:
-
-  - Mechanism: Imposes a tax on transaction priority fees paid by actors seeking favorable ordering (e.g., front-runners).
-  - Redistribution: Collected taxes are redistributed to the adversely affected parties, such as LPs or users who experienced slippage.
-  - Outcome: Deters malicious ordering practices and compensates victims of MEV extraction.
-
-#### Sovereign Applications
-
-Definition: Applications that maintain exclusive control over their state and transaction ordering, preventing external entities from interfering or composing transactions with them.
-
-Key Characteristics:
-
-- State isolation: The application's state is locked and cannot be accessed or modified by external transactions during execution.
-- Non-composability: Transactions within the application cannot be atomically composed with transactions from other applications.
-- Internal ordering control: The application dictates the ordering of transactions according to its own rules and logic.
-
-Layer 2 Solutions like rollups are sovereign in that they process transactions independently before committing a batch to the main chain.
-
-
-#### Overview of Angstrom
-
-Angstrom from Sorella is a fully permissionless hook designed to:
-
-- Treat LPs and uninformed swappers as first-class citizens: Redirecting value back to those adversely affected by MEV.
-- Implement Application Specific Sequencing: Allowing the DEX to be agnostic to block position and transaction ordering.
-- Create a market for LVR: Enabling LPs to recover losses from adverse selection.
-
-#### How Angstrom Addresses the LP Dilemma and MEV Problems
-
-- **Competitive LVR Auctions**: Searchers compete in permissionless auctions to capture CEX-DEX arbitrage opportunities, with the value directed back to LPs.
-- **Batch Auction Mechanism**: Offers swappers reliable settlement guarantees at a uniform clearing price, ensuring MEV protection.
-- **Integration of Searchers**: Sophisticated players who previously profited at LPs' expense now compete to provide value back to LPs.
 
 #### How Angstrom Works
 
-**Players and Incentives**
-
-- Liquidity Providers (LPs):
-
-  - Role: Provide liquidity to the DEX.
-  - Incentives:
-    - Repayment of LVR losses: LPs are compensated for adverse selection.
-    - Trading fees: Earn fees from uninformed flow and searcher limit orders.
-    - Composable liquidity positions: Ability to create custom tick ranges and utilize concentrated liquidity features.
-
-- Swappers:
-
-- Role: Users who execute trades on the DEX.
-- Incentives:
-  - Guaranteed execution: Transactions execute at specified limit prices or better.
-  - Lower gas fees: More efficient transaction processing.
-  - Complete MEV protection: Atomic transaction structure prevents MEV exploitation.
-  - Execution near true price: Trades execute close to the centralized exchange price.
-
-- Searchers:
-
-  - Role: Arbitrageurs and sophisticated traders.
-  - Incentives:
-    - Access to arbitrage opportunities: Continue extracting CEX-DEX arbitrage profits without paying excessive bribes to builders.
-    - Compete to fill large orders: Provide better execution prices for large user orders.
-    - Contribute to LP compensation: Their bids in the LVR auction redirect value back to LPs.
-
-- Angstrom Nodes:
-
-  - Role: Nodes that construct optimal bundles and determine auction winners.
-  - Incentives:
-    - Earn protocol fees: Receive rewards for staking and running the node.
-    - Participate in a decentralized network: Contribute to the network's censorship resistance and efficiency.
-
-**The LVR Auction Mechanism**
-
-The LVR auction ensures:
-
-- Competitive bidding: searchers compete to capture arbitrage opportunities, bidding value back to LPs.
-- Guaranteed arbitrage opportunities: Construction of the DEX ensures arbitrage exists in every block when there's a price delta.
-- Repayment to LPs: The value extracted from arbitrage is redirected to compensate LPs for their losses.
-
-**Settlement Timeline**
-
-1. Order submission: Users send swap orders via the Angstrom frontend or compatible interfaces.
-2. Transaction relay: Orders are relayed to Angstrom nodes' specialized mempools.
-3. Deterministic settlement: Nodes deterministically settle transactions at a uniform clearing price.
-4. Searcher participation: Searchers submit their arbitrage transactions and bids to the Angstrom network.
-5. Bundle construction: Angstrom nodes construct the optimal bundle, including user and searcher orders.
-6. Bundle inclusion: The builder includes the bundle in the block, often with minimal fees due to the bundle's block position agnosticism.
-7. Trade settlement: Users' and searchers' trades are settled, completing the transaction cycle.
-
-**Bundle Exclusivity and Preventing Value Leakage**
-
-- Exclusive bundles: Angstrom's atomic bundles are executed in a specific order, making them agnostic to their position within a block.
-- Preventing value leakage: This structure eliminates the need for searchers to pay large bribes to builders and proposers, ensuring that value is directed back to LPs and users.
-- Censorship resistance: By reducing the economic incentives for builders and proposers to censor transactions, Angstrom promotes a more decentralized and fair network.
+* Stakeholders:  
+  * Liquidity Providers (LPs): Provide liquidity and are compensated for LVR losses.  
+  * Swappers: Execute trades with guaranteed execution and MEV protection.  
+  * Searchers: Arbitrageurs who bid in LVR auctions, contributing to LP compensation.  
+  * Angstrom nodes: Construct optimal bundles and earn protocol fees.  
+* LVR auction mechanism: Ensures competitive bidding and directs value back to LPs.  
+* Settlement timeline: From order submission to trade settlement, ensuring deterministic and fair execution.  
+* Bundle exclusivity: Atomic bundles executed in a specific order, preventing value leakage and reducing censorship incentives.
 
 #### Technical Details
 
-**Ensuring Existence of CEX-DEX Arbitrage Opportunities**
-
-- Guaranteed arbitrage: Angstrom's construction ensures that arbitrage opportunities exist whenever there's a price delta between the DEX and CEX.
-- Searchers' strategy: Searchers can always profit from small price movements, ensuring continuous competition and value redirection to LPs.
-- Competitive auctions: Searchers' bids in the LVR auction converge to the value of the arbitrage opportunity minus their costs, maximizing LP compensation.
-
-**Limit Orders and Uniform Clearing Price**
-
-- Transient limit orders: Both users and searchers submit transient limit orders that are partially fillable and last one block.
-- Uniform clearing price: Orders are executed at a single price that clears the market, minimizing slippage and ensuring fair execution.
-- Benefits:
-  - Prevents market order attacks: Mitigates the risk of searchers exploiting large user orders.
-  - Enhances user execution quality: Searchers compete to offer the best prices, improving outcomes for users.
-
-**Market Order Attack Vector and Solution**
-
-- Attack vector: In a market-order-only system, searchers could manipulate execution prices by immediately matching large user orders and moving the price unfavorably.
-- Solution: Implementing transient limit orders and a uniform clearing price prevents this by ensuring all orders are executed fairly, regardless of submission timing.
-
-**Uniform Clearing Price: In-Depth Overview**
-
-- Mechanism: The intersection of supply and demand curves from limit orders and underlying pool liquidity determines the clearing price.
-- Result:
-  - Fairness: All participants transact at the same price.
-  - Incentivizes competition: Market makers and searchers compete to improve the clearing price.
-
-#### Angstrom Network Architecture
-
-![Angstrom Network Topology](/assets/images/20240901/Angstrom-Network-Topology.png)
-
-*Figure: Angstrom Network Topology.*
-
-**Overview of Angstrom Network and Nodes**
-
-- Angstrom network: A decentralized transaction ordering network aligning the incentives of searchers, swappers, and LPs.
-- Angstrom nodes:
-  - Role: Gossip, cache, verify orders, and construct optimal bundles.
-  - Operation: Run a lightweight sidecar module to the Rust Ethereum execution client (Reth).
-  - Staking: Operators stake $STROM tokens and restaked ETH via EigenLayer to participate and secure the network.
-
-**Bundle Lifecycle**
-
-- Gossip Phase:
-   - Nodes broadcast valid orders across the network.
-   - Ensure all nodes share the same view of incoming orders.
-
-- Pre-Proposal Phase:
-   - Nodes form a global view by combining orders received.
-   - Sign and send their views to the leader node.
-
-- Submit Phase:
-   - The leader constructs the final bundle from at least 2/3+1 of the signed views.
-   - The bundle is submitted to block builders for inclusion.
-
-**Protocol Incentives and Tokenomics**
-
-- Incentive Design:
-  - Competition among searchers: Drives the value back to LPs.
-  - Node rewards: Nodes earn $STROM tokens and protocol fees for their participation.
-- Slashing Mechanisms:
-  - Ensuring honest behavior: Nodes can be slashed for submitting suboptimal bundles or dishonest actions.
-  - Redistribution: Slashed funds are redistributed to affected parties.
+* Ensuring arbitrage opportunities: Angstrom's construction ensures arbitrage exists whenever there's a price delta between the DEX and CEX.  
+* Limit orders and uniform clearing price: Transient limit orders are executed at a single clearing price, minimizing slippage and preventing market order attacks.  
+* Angstrom Network Architecture:  
+  * Nodes: Gossip, cache, verify orders, and construct optimal bundles.  
+  * Bundle Lifecycle: Includes gossip, pre-proposal, and submit phases.  
+  * Incentives: Competition among searchers drives value to LPs; nodes earn rewards and can be slashed for dishonest actions.
 
 #### Benefits and Impact
 
-**Democratizing Arbitrage and Curtailing Censorship**
+* Democratizing arbitrage: Reduces the influence of high-frequency traders and promotes a competitive landscape.  
+* Neutralizing proposer timing games: Eliminates timing advantages and simplifies consensus.  
+* Stakeholder Benefits:  
+  * LPs: Recover losses and are incentivized to provide liquidity.  
+  * Swappers: Receive fair prices with MEV protection.  
+  * Searchers: Access profit opportunities without excessive bribes.  
+  * Nodes: Earn rewards and contribute to decentralization.
 
-- Empowering neutral builders: By moving CEX-DEX arbitrage auctions to the application layer, Angstrom reduces the undue influence of HFT builders.
-- Reducing economic incentives for censorship: The diminished need for large bribes to builders and proposers makes censorship less economically viable.
-- Encouraging a competitive landscape: Opens block building to a more diverse set of participants, promoting decentralization.
+#### Security and Trust Minimization
 
-**Neutralizing Proposer Timing Games**
+Sorella’s Angstrom enhances security and minimizes trust requirements through application-specific sequencing, directly addressing vulnerabilities associated with MEV.
 
-- Eliminating timing advantages: The bundle's block position agnosticism removes the incentive for proposers to strategically delay actions.
-- Simplifying consensus: Reduces unnecessary latency and complexity in block production.
+* Eliminating MEV exploitation: Batch auctions with uniform clearing prices prevent front-running and sandwich attacks by settling trades at a single price. Transient one-block limit orders further reduce MEV extraction by minimizing exploitation windows.  
 
-**Benefits for Stakeholders**
+* Trust minimization through decentralization: Permissionless participation allows anyone to run a node or act as a searcher, enhancing decentralization and reducing reliance on central authorities. Node operators re-staked and staked native tokens, aligning their incentives with network security; dishonest behavior results in slashed stakes, discouraging malicious actions.  
 
-- Liquidity Providers
+* Censorship resistance: Atomic bundle execution reduces incentives for miners or validators to censor transactions by executing them in a predetermined order. Decentralized order relay eliminates centralized intermediaries, reducing the risk of censorship or manipulation. The decentralized order relay is achieved through a network of node operators who participate in peer-to-peer broadcasting of orders, collective verification, and consensus on transaction inclusion. By requiring over ⅔ of the network’s signatures and preventing any single node from controlling the order flow, Angstrom enhances censorship resistance and reduces the risk of manipulation.  
 
-  - Fair compensation: Recover losses from adverse selection through LVR auctions.
-  - Incentivized participation: Increased rewards encourage more liquidity provision.
+* Protection against market manipulation: Limit orders and uniform clearing prices prevent attackers from manipulating prices through large orders, ensuring fair execution for all participants. Arbitrage profits from searchers are redirected to compensate liquidity providers for adverse selection losses.  
 
- - Swappers
+* Secure and transparent auctions: Competitive, permissionless auctions promote fair market dynamics and reduce collusion risks. MEV is accurately attributed and redistributed to affected parties, enhancing fairness and trust.  
 
-  - Guaranteed execution: Fair prices and reduced slippage.
-  - MEV protection: Transactions are protected from exploitation.
+* Economic incentives aligned with security: Rewards for node operators incentivize honest participation and contribute to network security. Searchers profit without excessive bribes, encouraging compliance with protocol rules. Users and liquidity providers receive fair compensation and MEV protection, fostering trust and engagement.  
 
-- Searchers
+* Resilience against attacks: Staking requirements deter Sybil attacks by increasing the cost of creating multiple identities. Fault tolerance ensures network functionality even if some nodes fail or act maliciously. Efficient order handling mitigates denial-of-service attacks by reducing the effectiveness of attempts to overwhelm the network.  
 
-  - Continued profit opportunities: Access to arbitrage without excessive bribes.
-  - Competitive fairness: Level playing field encourages innovation and efficiency.
+* Minimizing trust assumptions: Transparency through open-source protocols and auditable processes allows participants to verify security properties independently, reducing reliance on trust. Internalizing MEV opportunities reduces dependence on external systems, minimizing potential vulnerabilities.
 
-- Angstrom Nodes
+### Vertex Protocol
 
-  - Economic rewards: Earn tokens and fees for participating in the network.
-  - Contribute to decentralization: Help build a censorship-resistant transaction ordering network.
+[Vertex](https://docs.vertexprotocol.com/getting-started/vertex-edge) is a perp and spot DEX. It employs application-specific sequencing through an off-chain sequencer to optimize performance and minimize MEV risks.
 
+#### Key Features
 
-### Vertex
+* Hybrid liquidity model: Combines a central limit order book (CLOB) with an integrated AMM, enhancing liquidity utilization.  
+* Application-Specific Sequencing: Off-chain sequencer achieves order-matching latency comparable to top-tier centralized exchanges.  
+* Universal cross-margining: Allows users to manage multiple positions from a single account, enhancing capital efficiency.  
+* Vertex Edge: Extends liquidity across multiple chains, addressing liquidity fragmentation.
 
-#### Overview
+#### Addressing Challenges
 
-Vertex Protocol is a vertically integrated DEX that unifies spot trading, perpetual futures, and money market operations into a single platform. Deployed on Arbitrum, Vertex combines a central limit order book (CLOB) with an integrated AMM to offer a hybrid liquidity solution. This design enhances trading efficiency and capital utilization, providing users with:
+Vertex addresses DeFi challenges by:
 
-- Lightning-fast performance: Achieving order-matching latency between 5 to 15 milliseconds, rivaling top-tier CEXs.
-- Universal cross-margining: Allowing users to manage multiple positions across different markets from a single account.
-- Self-custody: Ensuring users retain control over their assets through a non-custodial architecture.
-- Application-Specific Sequencing: Utilizing an off-chain sequencer to optimize performance and minimize MEV risks.
-
-#### Challenges in DeFi Trading
-
-Despite the advantages of decentralization, DeFi platforms face several obstacles:
-
-- High latency: On-chain order matching leads to slower trade execution.
-- Fragmented liquidity: Isolated liquidity pools across different platforms and chains.
-- Poor user experience: Complex interfaces and lack of advanced trading features.
-- Capital inefficiency: Isolated margin accounts increase collateral requirements.
-- MEV vulnerabilities: On-chain transactions are susceptible to front-running and sandwich attacks.
-
-Vertex Protocol addresses these challenges through its innovative architecture and design choices.
-
-
-#### The Hybrid Liquidity Model
-
-At the core of Vertex's innovation is its hybrid liquidity model, which combines the strengths of a CLOB with an integrated AMM. The CLOB operates off-chain through an application-specific sequencer known as the Vertex Sequencer. This off-chain operation enables high-speed order matching with latency comparable to top-tier CEXs, aggregating liquidity from both manual traders and automated strategies via APIs.
-
-The integrated AMM, deployed on-chain within Arbitrum's smart contracts, acts as a fallback mechanism—termed "Slo-Mo Mode"—ensuring continuous operation even if the off-chain sequencer encounters issues. The AMM provides baseline liquidity and functions as an additional market maker, enhancing the depth of the order book.
-
-By combining these two models, Vertex offers enhanced liquidity utilization. The hybrid approach allows for flexibility, catering to different trading strategies and user preferences. It ensures resilience by maintaining on-chain liquidity provision through the AMM, even when the off-chain components are not accessible.
-
-#### Application-Specific Sequencing
-
-The Vertex Sequencer plays a pivotal role in achieving high-performance trading while preserving the principles of decentralization. Operating off-chain, the sequencer handles order intake, matching, and execution. It achieves order-matching latency between 5 to 15 milliseconds, enabling real-time trading experiences that are essential for high-frequency traders and market makers.
-
-The sequencer maintains synchronization with the on-chain state by regularly committing batches of transactions to the Arbitrum network. This batching reduces the frequency of on-chain transactions, lowering gas costs for users. By handling the majority of operations off-chain, the sequencer minimizes MEV exposure. Front-running and sandwich attacks, common in on-chain DEXs, become significantly more difficult to execute against Vertex's architecture.
-
-Technically, the sequencer nodes run a custom implementation of the EVM in Rust, optimized for parallel processing and high throughput. The state management employs a sharded approach, allowing the sequencer to handle multiple chains concurrently in the Vertex Edge extension.
-
-#### Universal Cross-Margining
-
-Vertex introduces a universal cross-margining system that enhances capital efficiency for traders. Users manage all positions and balances from a single trading account, allowing them to offset positions across different markets. This approach reduces the total margin required, enabling traders to take larger positions or diversify their strategies without additional capital.
-
-Automatic portfolio health calculations help users maintain adequate margin levels, providing real-time insights into their risk exposure. This system supports complex trading strategies like basis trades and hedging, offering greater strategic flexibility. By sharing collateral across positions, users can optimize their capital usage and enhance potential returns.
-
-Mathematically, the portfolio margin is calculated as the sum of each position's size multiplied by its price and a risk factor. The available margin is determined by subtracting the portfolio margin from the total collateral. This formula ensures that the risk associated with each position is appropriately accounted for, maintaining the integrity of the trading system.
-
-#### Vertex Edge: Synchronous Cross-Chain Liquidity
-
-Vertex Edge is an extension of the protocol that unifies liquidity across different blockchain networks, addressing the issue of liquidity fragmentation. By connecting various Vertex instances on multiple chains, such as Arbitrum, Blast, Sui, and Mantle, Vertex Edge aggregates liquidity pools into a single, synchronous order book.
-
-The Vertex Sequencer operates across these chains, sharing liquidity through a sharded state approach. Orders from one chain are cloned and matched against liquidity from all supported chains. This means that a user on one chain can trade against the combined liquidity of multiple chains without the need to switch networks or bridge assets.
-
-Trades are settled on the user's origin chain, maintaining network activity and security. For example, if Alice on Chain A wants to buy ETH and Bob on Chain B wants to sell ETH, the Vertex Sequencer matches their orders. Alice receives ETH on Chain A, and Bob receives payment on Chain B, with the sequencer balancing positions across chains to maintain neutrality.
-
-**Impact on Core Products**
-
-Vertex Edge enhances the core products of the platform in several ways:
-
-- Spot trading: Users can trade native assets across different chains without bridging. The unified order book provides enhanced market depth and reduces slippage, improving the trading experience.
-
-- Perpetual futures: Interchain funding rates are standardized, preventing arbitrage discrepancies and enabling efficient basis trading opportunities. Traders can exploit price differences across chains more effectively.
-
-- Money markets: Multi-chain collateral support allows users to deposit collateral on one chain and borrow on another. Unified interest rates across chains optimize capital allocation, ensuring that passive capital receives optimized yields while traders benefit from cheap loans.
-
-**Technical Challenges and Solutions**
-
-Latency and synchronization are critical challenges in cross-chain operations. The sequencer's architecture ensures minimal latency despite handling operations across multiple chains. Security considerations are addressed through local settlement and robust risk management protocols, mitigating cross-chain risks associated with asset transfers and transaction finality.
+* High performance: Off-chain sequencer enables real-time trading experiences essential for high-frequency traders and better price discovery  
+* MEV mitigation: Minimizes exposure to front-running and sandwich attacks by handling operations off-chain.  
+* Capital efficiency: Cross-margining reduces collateral requirements and supports complex trading strategies.  
+* Liquidity aggregation: Vertex Edge unifies liquidity pools across chains, reducing slippage and market impact.
 
 #### Capturing Value for Users
 
-Vertex Protocol captures value for users through several key mechanisms:
+Users benefit from:
 
-- Performance: High-speed trading improves execution quality, reducing the likelihood of slippage and unfavorable price movements.
-- Capital efficiency: Universal cross-margining lowers collateral requirements, allowing users to deploy their capital more effectively.
-- Cost savings: Reduced gas fees and minimized MEV exposure enhance net returns for traders.
-- Access to liquidity: Vertex Edge provides deeper liquidity pools by aggregating across chains, reducing market impact for large trades.
-- Flexibility: Integrated services reduce the need to navigate multiple platforms, streamlining the user experience and simplifying complex strategies.
+* Performance improvements: Reduced slippage and improved execution quality.  
+* Cost savings: Lower gas fees and minimized MEV exposure enhance net LP returns.  
+* Access to liquidity: Aggregated liquidity provides deeper markets.  
+* Flexibility: Integrated services streamline the user experience.
 
-Quantitatively, users benefit from reduced slippage due to aggregated liquidity, higher leverage opportunities through efficient margining, and optimized yields on idle assets via the integrated money markets.
+#### Security and Trust Minimization
 
-#### Alignment Between Protocol and Base Layers
+* Mitigating MEV exploitation: By processing orders off-chain with an off-chain sequencer, Vertex reduces exposure to MEV attacks like front-running and sandwich attacks, since transactions aren’t publicly broadcast before execution. Low-latency execution (5–15 milliseconds) further minimizes the window for potential attackers to exploit transaction information.  
 
-Vertex Protocol aligns incentives between the application layer and the underlying base layer networks. By settling all trades on the user's origin chain, Vertex increases network activity and blockspace demand, benefiting miners and validators. This approach avoids the liquidity drain often associated with DEXs built on application-specific chains that siphon activity away from general-purpose base layers.
+* Trust minimization: The sequencer regularly commits batches of transactions to the blockchain, ensuring transparency and allowing users to verify that off-chain operations align with on-chain records. Through a non-custodial design, users retain control of their assets, eliminating the need to trust centralized intermediaries.  
 
-Vertex Edge fosters a positive-sum relationship among connected networks. Increased usage on one chain benefits others through shared liquidity and activity, promoting collaborative growth rather than competition for liquidity and users. This alignment ensures that the success of the protocol translates to success for the base layers, strengthening the overall ecosystem.
+* Protection against manipulation: Transparent order books provide users with real-time market data, reducing the potential for price manipulation. Secure state synchronization ensures the sequencer maintains accurate alignment with the on-chain state, preventing inconsistencies that could be exploited.  
 
+* Economic incentives aligned with security: Incentive structures align participants’ interests toward maintaining a secure and fair trading environment. Risk management protocols—including real-time monitoring and automatic margin checks—protect the system from excessive risk and potential defaults.  
+
+* Resilience against attacks: Sharded state management enhances scalability and reduces the attack surface in cross-chain operations. Advanced synchronization techniques such as off-chain parallel processing of orders, atomic cross-chain transactions, efficient cross-chain communication protocols and more frequent state consistency checks may mitigate latency and prevent timing-based attacks during cross-chain transactions.  
+
+* Minimizing trust assumptions: Open-source code allows users to audit and verify the protocol’s security, reducing the need for blind trust.
+
+
+#### Security Considerations
+
+While Vertex Protocol offers impressive performance and innovative features, its reliance on an off-chain sequencer introduces certain security concerns:
+
+* Sequencer misbehavior: The off-chain sequencer handles order matching, which could potentially allow it to engage in unfair practices like front-running or trading against users. This is akin to MEV exploits, where privileged entities profit at the expense of regular users.
+
+* Censorship risks: Since the sequencer controls which transactions are processed, there’s a possibility it could censor specific users or transactions, undermining the platform’s neutrality and censorship resistance.
+
+* Fairness in order matching: Without full transparency into the sequencer’s operations, users may question whether orders are matched fairly and in the correct sequence. Ensuring that the matching process is transparent and verifiable is essential for maintaining trust.
+
+#### Alignment with Base Layers
+
+Vertex aligns incentives with underlying networks by settling trades on users' origin chains, increasing network activity and benefiting validators. Vertex Edge fosters collaborative growth among connected networks.
 
 ### Semantic Layer
 
-Semantic Layer's approach to Application-Specific Sequencing centers around enabling dApps to implement Verifiable Sequencing Rules (VSR) and Verifiable Aggregation Rules (VAR). VSRs are meta smart contracts that allow developers to specify how transactions interacting with their dApps should be ordered and executed, effectively giving them control over transaction sequencing. VARs define how transactions should be aggregated before execution, optimizing processing and enabling batch operations. 
+Semantic Layer enables dApps to implement Verifiable Sequencing Rules (VSR) and Verifiable Aggregation Rules (VAR), giving them control over transaction sequencing and execution. This allows dApps to:
 
-By integrating VSR and VAR, Semantic Layer empowers dApps to observe user transactions before they are executed, enforce custom execution policies, and autonomously execute functions without relying on external triggers. This not only mitigates issues like MEV leakage and poor transaction readability but also opens the door for innovative dApp designs that can implement real-time circuit breakers, intercept malicious transactions, and achieve execution layer independence.
+* Observe transactions: View user transactions before execution.  
+* Enforce execution policies: Implement custom rules and real-time circuit breakers.  
+* Autonomously execute functions: Reduce reliance on external triggers.
 
+By empowering dApps with sequencing sovereignty, Semantic Layer mitigates MEV leakage and opens possibilities for innovative designs, such as AI-powered applications and execution layer independence.
+
+## Conclusion
+
+Application-Specific Sequencing represents a significant advancement, allowing dApps to balance composability and value capture according to their needs. By granting control over transaction sequencing and execution, ASS enables dApps to mitigate MEV risks, optimize operations, and innovate.
+
+Projects like FastLane's Atlas Protocol, Sorella Labs' Angstrom, Vertex Protocol, and Semantic Layer showcase diverse approaches to implementing ASS. Each addresses unique challenges and offers solutions tailored to their objectives, contributing to a richer and more resilient decentralized ecosystem.
+
+Application-Specific Sequencing will play a crucial role in empowering dApps to achieve greater sovereignty, efficiency, and fairness, driving broader adoption and innovation in decentralized applications.
 
 
 ## References
 
-- Sorella Labs https://www.youtube.com/watch?v=fw5Qu400ySY
+- https://www.youtube.com/watch?v=fw5Qu400ySY
 - https://x.com/ThogardPvP/status/1829331564029005924
 - https://github.com/FastLane-Labs/atlas/tree/main
-- App Specific Sequencing Infrastructure Tradeoffs - Lily Johnson  https://www.youtube.com/watch?v=lLR_6tnKL2I
-- https://ethereum-magicians.org/t/eip-7727-evm-transaction-bundles/20322
-- Centralization in Attester-Proposer Separation, https://arxiv.org/abs/2408.03116
+- https://github.com/FastLane-Labs/atlas_whitepaper/blob/main/Atlas_Whitepaper.pdf 
+- https://www.youtube.com/watch?v=lLR_6tnKL2I
 - https://www.youtube.com/watch?v=tHpAazIFDtQ 
 - https://x.com/0x94305/status/1580169706413051904 
 - https://chain.link/education-hub/maximal-extractable-value-mev 
@@ -1034,4 +597,9 @@ By integrating VSR and VAR, Semantic Layer empowers dApps to observe user transa
 - https://docs.vertexprotocol.com/getting-started/vertex-edge 
 - https://eprint.iacr.org/2021/1465
 - https://www.youtube.com/watch?v=6jWf8zuBg2g
-
+- https://www.youtube.com/watch?v=MaoZmrsH0iA
+- https://www.youtube.com/watch?v=iV1XhAA8AZo
+- https://www.youtube.com/watch?v=G2Cbh9z1ags
+- https://www.youtube.com/watch?v=9uTXfD9kYJw 
+- https://ethereum-magicians.org/t/eip-7727-evm-transaction-bundles/20322
+- Centralization in Attester-Proposer Separation, https://arxiv.org/abs/2408.03116
