@@ -144,54 +144,54 @@ Without loss of generality, the analysis can be easily extended to any distribut
 
 #### Equilibrium Strategies
 - **First Mover (FM)**:
-  - Bid function: \( b_1(v_1) = \frac{v_1}{2 - r} \), where \( r \) is the risk aversion parameter.
+  - Bid function: $b_1(v_1) = \frac{v_1}{2 - r}$, where $r$ is the risk aversion parameter.
 - **Second Mover (SM)**:
-  - If \( b_1 \leq v_2 \): \( b_2(b_1, v_2) = b_1 \).
-  - If \( b_1 > v_2 \): \( b_2(b_1, v_2) < b_1 \).
+  - If $b_1 \leq v_2$: $b_2(b_1, v_2) = b_1$.
+  - If $b_1 > v_2$: $b_2(b_1, v_2) < b_1$.
 
 #### Expected Payoffs
-- **FM**: \( E[\pi_{FM}] = \int_0^1 \left[ (1 - p) \left( v_1 - \frac{v_1}{2 - r} \right) + p \left( v_1 - b_2(b_1, v_2) \right) \right] f(v_1) dv_1 \)
-- **SM**: \( E[\pi_{SM}] = \int_0^1 \left[ p \left( v_2 - b_1 \right) + (1 - p) \left( v_2 - \frac{v_2}{2 - r} \right) \right] f(v_2) dv_2 \)
+- **FM**: $E[\pi_{FM}] = \int_0^1 \left[ (1 - p) \left( v_1 - \frac{v_1}{2 - r} \right) + p \left( v_1 - b_2(b_1, v_2) \right) \right] f(v_1) dv_1$
+- **SM**: $E[\pi_{SM}] = \int_0^1 \left[ p \left( v_2 - b_1 \right) + (1 - p) \left( v_2 - \frac{v_2}{2 - r} \right) \right] f(v_2) dv_2$
 
 ##### **Equilibrium Bidding Strategy**
-- **First Mover (FM)**: \( b_1(v_1) = \frac{v_1}{2 - r} \)
+- **First Mover (FM)**: $b_1(v_1) = \frac{v_1}{2 - r}$
 - **Second Mover (SM)**: 
-  - If \( b_1 \leq v_2 \): \( b_2(b_1, v_2) = b_1 \)
-  - If \( b_1 > v_2 \): \( b_2(b_1, v_2) < b_1 \)
+  - If $b_1 \leq v_2$: $b_2(b_1, v_2) = b_1$
+  - If $b_1 > v_2$: $b_2(b_1, v_2) < b_1$
 
 ##### **Impact of Bid Leakage**
-- **With probability \( p \), SM sees FM's bid**:
-  - If \( SM \) sees \( b_1 \), they can place a bid to just win if their valuation is higher, leading to \( b_2 = b_1 \).
-  - If \( SM \) doesn't see \( b_1 \) (\( 1 - p \)), they place their bid based on their own valuation: \( b_2 = \frac{v_2}{2 - r} \).
+- **With probability $p$, SM sees FM's bid**:
+  - If $SM$ sees $b_1$, they can place a bid to just win if their valuation is higher, leading to $b_2 = b_1$.
+  - If $SM$ doesn't see $b_1$ ($1 - p$), they place their bid based on their own valuation: $b_2 = \frac{v_2}{2 - r}$.
 
 ##### **Expected Payoffs**
 - **FM Surplus**:
-  \[
-  E[\pi_{FM}] = \int_0^1 \left[ (1 - p) \left( v_1 - \frac{v_1}{2 - r} \right) + p \left( v_1 - b_2(b_1, v_2) \right) \right] f(v_1) dv_1
-  \]
+  
+  $$E[\pi_{FM}] = \int_0^1 \left[ (1 - p) \left( v_1 - \frac{v_1}{2 - r} \right) + p \left( v_1 - b_2(b_1, v_2) \right) \right] f(v_1) dv_1$$
+  
 - **SM Surplus**:
-  \[
-  E[\pi_{SM}] = \int_0^1 \left[ p \left( v_2 - b_1 \right) + (1 - p) \left( v_2 - \frac{v_2}{2 - r} \right) \right] f(v_2) dv_2
-  \]
+  
+  $$E[\pi_{SM}] = \int_0^1 \left[ p \left( v_2 - b_1 \right) + (1 - p) \left( v_2 - \frac{v_2}{2 - r} \right) \right] f(v_2) dv_2$$
+  
 
 ##### **Auction Efficiency**
 - **Efficiency Loss**:
-  \[
-  \text{Efficiency Loss} = \int_0^1 \int_0^1 \left[ \text{Valuation of higher bidder} - \text{Winning bid} \right] dv_1 dv_2
-  \]
+  
+  $$\text{Efficiency Loss} = \int_0^1 \int_0^1 \left[ \text{Valuation of higher bidder} - \text{Winning bid} \right] dv_1 dv_2$$
+  
 
-In the FPA, the efficiency loss increases with bid leakage probability \( p \), as SM can exploit the leaked information to win with a lower bid.
+In the FPA, the efficiency loss increases with bid leakage probability $p$, as SM can exploit the leaked information to win with a lower bid.
 
 
 ### Mathematical Model for Second-Price Auction (SPA)
 
 #### Equilibrium Strategies
 - **SP-Truthful**:
-  - \( b_2(b_1, v_2) = v_2 \)
+  - $b_2(b_1, v_2) = v_2$
 - **SP-Spiteful**:
-  - \( b_2(b_1, v_2) \approx b_1 \)
+  - $b_2(b_1, v_2) \approx b_1$
 - **SP-Cooperative**:
-  - \( b_2(b_1, v_2) = 0 \)
+  - $b_2(b_1, v_2) = 0$
 
 #### Expected Payoffs
 - **FM**: Depends on the selected equilibrium (truthful, spiteful, cooperative).

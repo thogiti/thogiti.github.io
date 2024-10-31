@@ -98,17 +98,17 @@ Sequencing refers to the process of ordering transactions before they are execut
 
 Transaction sequencing decides the order in which blockchain transactions are processed. Different methods aim to improve performance, fairness, and security. The main mechanisms used today are:
 
-* Proposer-Builder Separation (PBS) with Relays**  
+* Proposer-Builder Separation (PBS) with Relays
   * What it is: PBS separates the roles of block proposers (validators) and block builders. Builders create blocks that maximize profit via harvesting MEV, while relays securely pass these blocks to proposers.  
   * How it works: Proposers auction off the block rights through relays. Builders assemble blocks, relays deliver them securely, and proposers choose the most valuable block to add to the blockchain.  
   * Pros: Optimized block construction, higher validator revenue.  
   * Cons: Risk of builder/relay centralization and trust in relays, added complexity.  
-* Sequencers with Priority Fees or First-Come-First-Served (FCFS)**  
+* Sequencers with Priority Fees or First-Come-First-Served (FCFS)
   * What it is: In Layer 2s and appchains, sequencers order transactions by priority fee or arrival time (FCFS).  
   * How it works: Sequencers collect transactions; high-fee transactions are processed first or in the order in which they arrive to the sequencer   
   * Pros: Better performance, simpler design, FCFS changes MEV to latency games  
   * Cons: Centralized sequencers can manipulate transaction ordering, leading to MEV exploitation.  
-* Application-Specific Sequencing (ASS)**  
+* Application-Specific Sequencing (ASS)
   * What it is: dApps control how their own transactions are ordered to reduce MEV risks and improve user experience.  
   * How it works: dApps set rules for transaction order, preventing manipulative tactics like front-running.  
   * Pros: Better security, user experience, control over MEV, and retains composability as compared to being on your own app chain.  
