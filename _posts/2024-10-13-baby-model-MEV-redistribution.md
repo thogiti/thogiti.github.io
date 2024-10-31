@@ -3,7 +3,7 @@ title:  Exploring of MEV Redistribution - Integrating Mathematical Models and St
 tags: Ethereum Rollups MEV mev-redistribution Application-Specific-Sequencing app-sequencing shared-sequencing decentralized-sequencing shared-sequencing-marketplaces shared-sequencing-mechanism-design 
 ---
 
-
+## WORK IN PROGRESS
 
 ---
 
