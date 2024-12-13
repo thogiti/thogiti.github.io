@@ -144,7 +144,7 @@ Existence of Equilibrium:
 Under reasonable assumptions—bounded load, stationary arrival rates, continuous and monotone fee-response functions—Brouwer’s Fixed Point Theorem[^3] guarantees at least one fixed point. In short, if you raise fees when load increases and load decreases when fees are too high, the system should find a stable operating point.
 
 Stability:
-Stability depends on the sensitivity of $G$ and tuning parameters ($K_p, K_i, K_d$ or $\alpha, \beta, \gamma, \delta$). By linearizing around $F^*$, standard control theory (Routh-Hurwitz conditions) can verify that no persistent oscillations occur.
+Stability depends on the sensitivity of $G$ and tuning parameters ($K_p, K_i, K_d$ or $\alpha, \beta, \gamma, \delta$). By linearizing around $F^*$, standard control theory (Routh-Hurwitz conditions)[^4] can verify that no persistent oscillations occur.
 
 ---
 
@@ -184,3 +184,4 @@ This ensures the system’s lookback window converges to a stable range, balanci
 [^1]: https://docs.google.com/document/d/1Piwlc1VZyfh6uaYwY_OsMae8MApPQSxisjE3S-oBf0c/edit?usp=drivesdk
 [^2]: https://x.com/aeyakovenko/status/1867218480640262529?s=46
 [^3]: https://en.wikipedia.org/wiki/Brouwer_fixed-point_theorem
+[^4]: https://en.wikipedia.org/wiki/Routh%E2%80%93Hurwitz_stability_criterion
