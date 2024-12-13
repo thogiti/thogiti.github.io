@@ -111,7 +111,7 @@ For a transaction at time $t$ touching accounts $A_T \subseteq \mathcal{A}$, we 
 $$F(t) = \max\{ M_{global}(t), \max_{a \in A_T \cap C(t)} M_a(t) \} \cdot G(L(t)),$$
 
 
-where $G: \mathbb{R}_{\ge 0}^2 \to \mathbb{R}_{>0}$ is a monotone non-decreasing function representing how we scale fees up or down based on load.
+where $G: \mathbb{R}_{\ge 0}^2 \to$  $\mathbb{R}\_{> 0}$ is a monotone non-decreasing function representing how we scale fees up or down based on load.
 
 ### Defining the Load-Scaling Function $G$
 
@@ -125,7 +125,7 @@ Alternatively, for more refined control, use a control-theoretic feedback loop (
 
 $$G(L(t)) = \exp\bigl( K_p E(t) + K_i \sum_{\tau=0}^{t} E(\tau) \Delta\tau + K_d \frac{E(t)-E(t-1)}{\Delta\tau}\bigr),$$
 
-where $E(t) = S(t) - S^*$ measures deviation from a target scheduler backlog $S^*$.
+where $E(t) = S(t) - S^\*$ measures deviation from a target scheduler backlog $S^\*$.
 
 ---
 
@@ -134,7 +134,7 @@ where $E(t) = S(t) - S^*$ measures deviation from a target scheduler backlog $S^
 Goal: Show that the system can reach a stable equilibrium. An equilibrium occurs when fees, load, and arrival rates stabilize.
 
 - Let $\lambda$ be the steady-state transaction arrival rate.
-- At equilibrium, we have a fixed point $(F^*, L^*)$ where:
+- At equilibrium, we have a fixed point $(F^\*, L^\*)$ where:
 
 $$F^* = \Phi(F^*, L^*) \quad \text{and} \quad L^* = \Psi(F^*, \lambda),$$
 
