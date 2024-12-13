@@ -1,5 +1,5 @@
 ---
-title: Adaptive, Load-Responsive Fee Markets on Solana - A Rigorous LRU-Based Control-Theoretic Framework
+title: Adaptive, Load Responsive Fee Markets on Solana - A Rigorous LRU-Based Control-Theoretic Framework
 tags: Solana solana-fee-markets dynamics-fee-markets blockchain-fee-markets
 ---
 
@@ -8,7 +8,7 @@ tags: Solana solana-fee-markets dynamics-fee-markets blockchain-fee-markets
 *Special thank yous to [Terry](https://x.com/0xtaetaehoho) and [Fikunmi](https://x.com/fikunmi_ap) for reading early versions of this article and providing feedback.* 
 
 
-**Introduction**
+## Introduction
 
 Solana is a high-throughput blockchain that aims to maintain full capacity utilization without artificially constraining blockspace. Unlike Ethereum—which relies on a dynamic base fee model (EIP-1559) that makes blockspace explicitly scarce—Solana’s design philosophy emphasizes abundant capacity and low latency. Yet, this introduces a unique challenge: how can the network guide users toward paying fees that reflect real-time contention without relying on traditional fee models that depend on block saturation?
 
@@ -32,15 +32,15 @@ Our approach: a refined LRU cache design that stores recent median fees for the 
 
 ## Formalizing the Setting
 
-**Time and Slots:**  
+Time and Slots:
 We assume discrete time intervals $t \in \mathbb{N}$, where each slot corresponds to one Solana block.
 
-**Accounts and Fees:**  
+Accounts and Fees:
 - Let $\mathcal{A}$ be the set of all accounts on the network.
 - For each slot $t$, let $A_t \subseteq \mathcal{A}$ be the set of accounts touched by transactions in that slot.
 - Let $f_{t}(a)$ represent the observed median priority fee paid by transactions that access account $a$ at slot $t$. If no transactions touch $a$ in slot $t$, then $f_{t}(a) = \emptyset.$
 
-**Global Fees:**  
+Global Fees:
 We define a global median fee $f_t^{(global)}$ as the median priority fee of all transactions included in slot $t$.
 
 ---
@@ -131,7 +131,7 @@ where $E(t) = S(t) - S^*$ measures deviation from a target scheduler backlog $S^
 
 ## Equilibrium Analysis
 
-**Goal:** Show that the system can reach a stable equilibrium. An equilibrium occurs when fees, load, and arrival rates stabilize.
+Goal: Show that the system can reach a stable equilibrium. An equilibrium occurs when fees, load, and arrival rates stabilize.
 
 - Let $\lambda$ be the steady-state transaction arrival rate.
 - At equilibrium, we have a fixed point $(F^*, L^*)$ where:
@@ -140,10 +140,10 @@ $$F^* = \Phi(F^*, L^*) \quad \text{and} \quad L^* = \Psi(F^*, \lambda),$$
 
 for some continuous functions $\Phi$ and $\Psi$.
 
-**Existence of Equilibrium:**  
+Existence of Equilibrium:
 Under reasonable assumptions—bounded load, stationary arrival rates, continuous and monotone fee-response functions—Brouwer’s Fixed Point Theorem[^3] guarantees at least one fixed point. In short, if you raise fees when load increases and load decreases when fees are too high, the system should find a stable operating point.
 
-**Stability:**  
+Stability:
 Stability depends on the sensitivity of $G$ and tuning parameters ($K_p, K_i, K_d$ or $\alpha, \beta, \gamma, \delta$). By linearizing around $F^*$, standard control theory (Routh-Hurwitz conditions) can verify that no persistent oscillations occur.
 
 ---
@@ -152,14 +152,14 @@ Stability depends on the sensitivity of $G$ and tuning parameters ($K_p, K_i, K_
 
 A key feature of this approach is balancing responsiveness with predictability:
 
-- **If no accounts are contentious:**  
+- If no accounts are contentious:
   If no hot accounts are found in the cache, and load is low, we have:
   
   $$F(t) \approx M_{global}(t).$$
   
   This ensures stable, low fees under normal conditions.
 
-- **If certain accounts are contentious:**  
+- If certain accounts are contentious:
   If an account is highly demanded, then:
   
   $$\max_{a \in A_T \cap C(t)} M_a(t) > M_{global}(t),$$
