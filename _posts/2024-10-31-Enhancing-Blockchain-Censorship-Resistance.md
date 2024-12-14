@@ -29,7 +29,7 @@ The integration of stochastic gas price modeling extends the original determinis
 
 The failure cost in the Atlas framework is defined as:
 
-$$cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma$$
+$$cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i)$$
 
 Here, $b(o_i)$ represents the bid of Solver operation $o_i$, $b(o^*_i)$ is the bid of the successful Solver operation $o^*_i$, $g(o_i)$ denotes the gas reserved for Solver operation $o_i$, and $\Gamma$ is the total gas available for Solver operations.
 
@@ -46,7 +46,7 @@ In this equation, $\mathcal{F}$ represents a probability distribution (such as N
 Incorporating this into the failure cost formula, we can adjust it to account for dynamic gas prices:
 
 $$
-cfail(o_i, \phi_t) = \frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma \cdot \phi_t
+cfail(o_i, \phi_t) = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i)  \cdot \phi_t
 $$
 
 This modification ensures that the penalty reflects current network conditions, maintaining the economic deterrent against malicious Solver behavior.
@@ -54,13 +54,13 @@ This modification ensures that the penalty reflects current network conditions, 
 Furthermore, we can derive the expected failure cost under stochastic gas prices:
 
 $$
-\mathbb{E}[cfail(o_i)] = \frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma \cdot \mathbb{E}[\phi_t]
+\mathbb{E}[cfail(o_i)] = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i) \cdot \mathbb{E}[\phi_t]
 $$
 
 Assuming $\phi_t$ is independent of $o_i$, the expectation simplifies to:
 
 $$
-\mathbb{E}[cfail(o_i)] = \frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma \cdot \mu
+\mathbb{E}[cfail(o_i)] = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i) \cdot \mu
 $$
 
 ### Further Mathematical Analysis
@@ -86,7 +86,7 @@ $$
 Incorporating the dynamic failure cost, the expected utility becomes:
 
 $$
-\mathbb{E}[U_i(b_i, v_i, \phi_t)] = P(o_i \text{ wins}) \times (v_i - b_i - \mu) + P(o_i \text{ fails}) \times \left(\frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma \cdot \mu - \mu \right)
+\mathbb{E}[U_i(b_i, v_i, \phi_t)] = P(o_i \text{ wins}) \times (v_i - b_i - \mu) + P(o_i \text{ fails}) \times \left(\frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i) \cdot \mu - \mu \right)
 $$
 
 ### Implications
@@ -119,7 +119,7 @@ The integration of reputation scores and staking requirements extends beyond the
 The original failure cost in the Atlas framework is defined as:
 
 $$
-cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma
+cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i)
 $$
 
 ### Proposed Mathematical Enhancements
@@ -264,7 +264,7 @@ This formulation ensures that higher-reputation Solvers have a proportionally hi
 We integrate reputation scores into the failure cost calculation to dynamically adjust penalties:
 
 $$
-cfail(o_i, \rho_i) = \frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma \cdot \rho_i
+cfail(o_i, \rho_i) = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i) \cdot \rho_i
 $$
 
 Lower-reputation Solvers face higher failure costs, further deterring malicious behavior.
@@ -533,7 +533,7 @@ $$
 Each Solver operation $o_{ij}$ on chain $i$ has an associated failure cost:
 
 $$
-cfail(o_{ij}, \phi_t^{(Chain_i)}) = \frac{b(o_{ij}) - b(o^*_{ij})}{g(o_{ij})} \Gamma_i \cdot \phi_t^{(Chain_i)}
+cfail(o_{ij}, \phi_t^{(Chain_i)}) = \frac{b(o_{ij}) - b(o^*_{ij})}{\Gamma_i} g(o_{ij}) \cdot \phi_t^{(Chain_i)}
 $$
 
 where $\Gamma_i$ is the total gas available on chain $i$, and $\phi_t^{(Chain_i)}$ is the gas price on chain $i$.
@@ -715,7 +715,7 @@ The integration of time-locks, staking requirements, multi-dimensional bidding, 
 The original Atlas framework incorporates failure costs and adjusts gas limits as follows:
 
 $$
-cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{g(o_i)} \Gamma
+cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i)
 $$
 
 $$
