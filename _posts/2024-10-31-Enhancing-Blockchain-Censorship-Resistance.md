@@ -3,8 +3,6 @@ title: Enhancing Blockchain Censorship Resistance - Advanced Mechanisms and Math
 tags: Ethereum Fastlane Fastlane-Atlas MEV Censorship-Resistance mechanisms failure-costs solvers application-specific-sequencing app-sequencing gas-escrow multi-phase-auctions time-locked-commitments solver-operations-blockchain reputation-systems-solvers partial-reverts-solvers solvers-sybil-collusion-attacks
 ---
 
-## WIP - WORK IN PROGRESS
-
 ## Introduction
 
 Maintaining censorship resistance (CR) is important to ensure the integrity, fairness, and decentralization of decentralized applications (dApps). Censorship resistance safeguards against malicious actors attempting to manipulate transaction processing, thereby preserving the foundational principles of blockchain systems.
@@ -31,7 +29,7 @@ The failure cost in the Atlas framework is defined as:
 
 $$cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i)$$
 
-Here, $b(o_i)$ represents the bid of Solver operation $o_i$, $b(o^*_i)$ is the bid of the successful Solver operation $o^*_i$, $g(o_i)$ denotes the gas reserved for Solver operation $o_i$, and $\Gamma$ is the total gas available for Solver operations.
+Here, $b(o_i)$ represents the bid of Solver operation $o_i$, $b(o^\*_i)$ is the bid of the successful Solver operation $o^\*_i$, $g(o_i)$ denotes the gas reserved for Solver operation $o_i$, and $\Gamma$ is the total gas available for Solver operations.
 
 ### Proposed Mathematical Enhancements
 
