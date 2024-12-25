@@ -29,7 +29,7 @@ The failure cost in the Atlas framework is defined as:
 
 $$cfail(o_i) = \frac{b(o_i) - b(o^*_i)}{\Gamma} g(o_i)$$
 
-Here, $b(o_i)$ represents the bid of Solver operation $o_i$, $b(o^\*_i)$ is the bid of the successful Solver operation $o^\*_i$, $g(o_i)$ denotes the gas reserved for Solver operation $o_i$, and $\Gamma$ is the total gas available for Solver operations.
+Here, $b(o_i)$ represents the bid of Solver operation $o_i$, $b(o^*_i)$ is the bid of the successful Solver operation $o^*_i$, $g(o_i)$ denotes the gas reserved for Solver operation $o_i$, and $\Gamma$ is the total gas available for Solver operations.
 
 ### Proposed Mathematical Enhancements
 
