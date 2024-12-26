@@ -14,9 +14,9 @@ Solana’s promise of fast, high-throughput blockchain operations relies on an e
 
 **Why do we need a queueing theory perspective?** Because whenever requests (transactions) arrive at a rate that approaches or exceeds the system’s capacity, congestion naturally arises. Solana’s approach to local fee markets—prioritizing high-fee transactions at certain stages—resembles classical priority scheduling in queueing systems. By translating Solana’s pipeline into queueing models, we can:
 
-- Quantify how load (arrival rate $\lambda$) and capacity (service rate $\mu$) interact;  
-- Determine when high-fee transactions truly benefit from priority scheduling;  
-- Identify how dynamic fee floors (admission control) ensure stability, preventing infinite queue buildup.
+- Quantify how load (arrival rate $\lambda$) and capacity (service rate $\mu$) interact  
+- Determine when high-fee transactions truly benefit from priority scheduling
+- Identify how dynamic fee floors (admission control) ensure stability, preventing infinite queue buildup
 
 In Part 1, we introduce the basic M/M/1 queue (single server, Poisson arrivals, exponential service). We then extend it to two-class priority queues, showing how high-fee transactions behave in a congested system. Finally, we examine load shedding (fee floors) and multi-server M/M/k scenarios. This theoretical groundwork sets the stage for Part 2, where we map Solana’s multi-stage pipeline to tandem queues and propose control-theoretic solutions that keep the system stable under varied loads.
 
@@ -100,7 +100,7 @@ Exact formula derivations can be found in texts like *Kleinrock’s Queueing Sys
   
   where $\rho_1 = \lambda_1/\mu$ and $\Phi(\rho_1, \rho_2)$ captures how Class 1 may occasionally wait behind a Class 2 job already in service.
 
-- **Class 2 (Low-Fee) Mean Wait, $W_{q,2}$** is **necessarily larger** because Class 1 cuts in front.
+- **Class 2 (Low-Fee) Mean Wait, $W_{q,2}$** is necessarily larger because Class 1 cuts in front.
 
 #### Key Insight
 
