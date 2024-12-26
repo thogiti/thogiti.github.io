@@ -3,8 +3,6 @@ title: Adaptive, Load Responsive Fee Markets on Solana - A Rigorous LRU-Based Co
 tags: Solana solana-fee-markets dynamics-fee-markets blockchain-fee-markets
 ---
 
-## WIP - WORK IN PROGRESS
-
 *Special thank yous to [Terry](https://x.com/0xtaetaehoho) and [Fikunmi](https://x.com/fikunmi_ap) for reading early versions of this article and providing feedback.* 
 
 

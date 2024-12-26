@@ -3,8 +3,6 @@ title: From RPC to Execution - A Queueing-Theoretic View of Solana’s Fee Marke
 tags: Solana solana-fee-markets solana-transaction-pipeline dynamics-fee-markets blockchain-fee-markets solana-multi-stage-queue
 ---
 
-## WIP - WORK IN PROGRESS
-
 # Part 2: Multi-Stage Solana's Transaction Supply Chain and Control-Theoretic Optimization
 
 ## Recap of Part 1 and Overview of Part 2
@@ -60,12 +58,49 @@ _Fig 1. Solana's Transaction Pipeline_
 
 Solana’s transaction flow involves multiple sequential stages:
 
-1. Ingress (NIC / RPC acceptance)
-2. Signature Verification
-3. Scheduler (where local fee logic can reside)  
-4. Execution
+1. **RPC**  
+   The transaction originates from an RPC node, which sends the transaction to the validator (leader). This can be seen as a logical “ingress” point into the network.
+
+2. **Network Interface Card (NIC)**  
+   The NIC is where packets arrive from the network. In queueing terms, we can think of this as the initial “arrival” into the system.
+
+3. **Validator (Deserialization + Signature Verification)**  
+   - **Deserialization**: The validator unpacks the transaction from its packet format.  
+   - **Signature Verification**: The validator checks that all required signatures are valid (“Sig Verify Stage”).  
+   In our queueing model, signature verification can be viewed as one of the service “stages” (e.g., $S_$ in a tandem queue). Transactions pass from NIC (stage $S_1$, though sometimes simplified) to signature verification (stage $S_2$).
+
+4. **Scheduler (Waiting Stage)**  
+   Once signatures are verified, transactions move into a scheduler queue, where local fee market logic (i.e., priority rules, dynamic fee floors, etc.) can apply. This is the “waiting stage” in our queueing model, frequently labeled $S_3$.
+
+5. **Execution Thread**  
+   The scheduler pulls transactions off its queue and forwards them to an execution thread (stage $S_4$). This is where the transaction is actually processed and state changes occur on-chain.
+
 
 In queueing terms, each stage $S_i$ is modeled as an **M/M/1** queue with service rate $\mu_i$. Transactions arrive at an overall rate $\lambda$ and must pass through $S_1 \to S_2 \to S_3 \to S_4$. 
+
+### Mapping Diagram Stages to Tandem Queues
+
+In our tandem M/M/1 framework:
+
+- **Stage $S_1$ (Ingress/NIC):**  
+  $\mu_1$ is the effective throughput of network ingress + initial acceptance.  
+  If many transactions arrive ($\lambda$ is high), $S_1$ can become a bottleneck before they even reach signature verification.
+
+- **Stage $S_2$ (Signature Verification):**  
+  $\mu_2$ represents the capacity for deserialization + sig verify. A large backlog here means even high-fee transactions wait unless there is priority scheduling at this stage.
+
+- **Stage $S_3$ (Scheduler Queue):**  
+  $\mu_3$ is the capacity to pull transactions from the waiting queue and prepare them for execution. Under heavy load, the scheduler can reorder transactions based on fees (local fee market logic).
+
+- **Stage $S_4$ (Execution Thread):**  
+  $\mu_4$ is the actual execution throughput. If the execution environment is slower than the earlier stages, a queue forms here, delaying final transaction confirmation.
+
+By seeing the Solana's transaction “supply chain” steps in both a sequence diagram and a tandem queue structure, we can appreciate how each real-life step aligns with a queueing model stage. This connection to Queuing Theory clarifies:
+
+- Where congestion can occur (e.g., Sig Verify or Scheduler might become bottlenecks).  
+- Why priority or fee floors matter at each stage (to ensure high-fee transactions leapfrog low-fee ones in both the scheduler and earlier queues).  
+- How dynamic load shedding (raising a fee floor) effectively reduces $\lambda_2$ at the earliest stages, preventing queues from spiraling out of control.
+
 
 ### Stability Condition in a Tandem System
 
@@ -79,6 +114,8 @@ If one stage has $\mu_i < \lambda$, that stage will become a bottleneck and caus
 
 Just as in Part 1, we maintain two classes of transactions—Class 1 (high-fee, $\lambda_1$) and Class 2 (low-fee, $\lambda_2$). Each queue at stage $S_i$ implements a non-preemptive priority policy, ensuring high-fee traffic is always served first when the stage is idle or switching tasks. However, if $\lambda$ is near or above $\mu_i$ for all $i$, congestion can overwhelm even high-fee transactions.
 
+
+
 ---
 
 ## Dynamic Fee Floor in a Tandem System
@@ -87,7 +124,7 @@ Just as in Part 1, we maintain two classes of transactions—Class 1 (high-fee, 
 
 A local fee market can do more than passively queue up high-fee traffic—it can also reject (or heavily delay) transactions that pay below a certain fee floor $f$. By dynamically adjusting $f$, Solana can keep $\lambda_2$ in check.
 
-A straightforward way to do this is with a **threshold-based control**:
+A straightforward way to do this is with a [threshold-based control](https://hal.science/hal-04666859/document):
 
 1. Track the sum of queue lengths across all stages:
    
@@ -101,11 +138,11 @@ This approach provides backpressure: when queues get too long, low-fee arrivals 
 
 ### Control-Theoretic / MDP Formulation
 
-For an even more rigorous approach, one can model each stage’s queue length $Q_i(t)$ and the fee floor $f(t)$ as part of a **Markov Decision Process (MDP)**. The state is
+For an even more rigorous approach, one can model each stage’s queue length $Q_i(t)$ and the fee floor $f(t)$ as part of a [Markov Decision Process (MDP)](https://en.wikipedia.org/wiki/Markov_decision_process). The state is
 
 $$x(t) \;=\; \bigl(Q_1(t),\,Q_2(t),\,Q_3(t),\,Q_4(t),\, f(t)\bigr),$$
 
-and the action $a(t)$ is how much to raise or lower $f(t)$. One then defines an **objective function** balancing:
+and the action $a(t)$ is how much to raise or lower $f(t)$. One then defines an objective function balancing:
 
 - **Latency** (for Class 1 and Class 2 transactions that do get admitted),
 - **Drop Rate** (how many low-fee transactions get rejected),
@@ -131,7 +168,7 @@ and the action $a(t)$ is how much to raise or lower $f(t)$. One then defines an 
   where $\alpha,\beta>0$ are user-defined weights.
 
 
-Solving such an MDP exactly can be computationally heavy, but **threshold** or **PID-like** controllers are often effective in practice.
+Solving such an MDP exactly can be computationally heavy, but [threshold](https://bpb-us-e1.wpmucdn.com/wordpressua.uark.edu/dist/7/795/files/2016/08/comparing_static_and_dynami.pdf) or [PID-like](https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller) controllers are often effective in practice.
 
 ---
 
@@ -139,7 +176,7 @@ Solving such an MDP exactly can be computationally heavy, but **threshold** or *
 
 ### Approximate Analysis
 
-Exact formulae for tandem priority queues can be very complex. However, **Jackson network theory** provides approximations or product-form solutions under certain assumptions. For each queue $S_i$:
+Exact formulae for tandem priority queues can be very complex. However, [Jackson network theory](https://en.wikipedia.org/wiki/Jackson_network) provides approximations or product-form solutions under certain assumptions. For each queue $S_i$:
 
 1. Treat arrivals as roughly Poisson($\lambda$) (or $\lambda_1$, $\lambda_2$ for each class).  
 2. Use M/M/1 with priority calculations to estimate mean waiting times $W_{q,i,1}$ and $W_{q,i,2}$.  
@@ -163,6 +200,8 @@ Given the complexity of exact solutions, Solana developers can build simulators 
 ---
 
 ## Putting Theory into Practice
+
+Let's bring it all together.
 
 1. **Measure $\mu_i$**: Benchmark each stage’s max throughput (NIC, Sig verify, scheduling, execution).  
 2. **Estimate $\lambda_1,\lambda_2$**: Identify how many transactions typically arrive in each “fee class.”  

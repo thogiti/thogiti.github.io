@@ -3,7 +3,6 @@ title: From RPC to Execution - A Queueing-Theoretic View of Solana’s Fee Marke
 tags: Solana solana-fee-markets solana-transaction-pipeline dynamics-fee-markets blockchain-fee-markets solana-multi-stage-queue
 ---
 
-## WIP - WORK IN PROGRESS
 
 # Part 1: Foundations of Queueing Theory for Solana’s Fee Markets
 
@@ -39,6 +38,8 @@ $$\rho \;=\; \frac{\lambda}{\mu}.$$
 A necessary condition for stability is $\rho < 1$. If $\lambda \ge \mu$, the queue grows without bound.
 
 #### **Little’s Law:**  
+
+[Little’s Law](https://en.wikipedia.org/wiki/Little%27s_law) is a fundamental theorem in queuing theory that describes the relationship between the average number of items in a queuing system, the average arrival rate of items, and the average time an item spends in the system
 
 $$L \;=\; \lambda \,\times\, W,$$  
 
