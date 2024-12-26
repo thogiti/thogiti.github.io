@@ -67,7 +67,7 @@ Solana’s transaction flow involves multiple sequential stages:
 3. **Validator (Deserialization + Signature Verification)**  
    - **Deserialization**: The validator unpacks the transaction from its packet format.  
    - **Signature Verification**: The validator checks that all required signatures are valid (“Sig Verify Stage”).  
-   In our queueing model, signature verification can be viewed as one of the service “stages” (e.g., $S_$ in a tandem queue). Transactions pass from NIC (stage $S_1$, though sometimes simplified) to signature verification (stage $S_2$).
+   In our queueing model, signature verification can be viewed as one of the service “stages” (e.g., $S_2$ in a tandem queue). Transactions pass from NIC (stage $S_1$, though sometimes simplified) to signature verification (stage $S_2$).
 
 4. **Scheduler (Waiting Stage)**  
    Once signatures are verified, transactions move into a scheduler queue, where local fee market logic (i.e., priority rules, dynamic fee floors, etc.) can apply. This is the “waiting stage” in our queueing model, frequently labeled $S_3$.
