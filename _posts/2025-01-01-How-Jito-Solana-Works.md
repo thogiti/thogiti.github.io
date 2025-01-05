@@ -862,3 +862,11 @@ Finally, each staker uses a merkle proof to claim their portion, ensuring a trus
 - This process removes the single point of failure; no single party can alter or withhold the merkle root.
 - Adds slashing conditions to penalize misbehavior, thereby aligning operator incentives.
 - Improves overall transparency and fairness in how MEV rewards are distributed.
+
+# References
+- [Jito Solana](https://github.com/jito-foundation/jito-solana)
+- [Jito relayer](https://github.com/jito-foundation/jito-relayer)
+- [Jito Tip Router](https://github.com/jito-foundation/jito-tip-router)
+- [Jito Rewards NCN](https://github.com/jito-foundation/jito-rewards-ncn)
+- [Jito docs](https://jito-foundation.gitbook.io/)
+- [Jito Labs Technical Specifications](https://docs.google.com/document/d/1PNSpqR-bmQpRp-Vq5wmy-wwp9g8Ni4ikoWmRYnWO-CY/edit?tab=t.0#heading=h.rde1dhp9fma8) 
