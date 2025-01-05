@@ -11,7 +11,7 @@ tags: Solana Jito Jito-solana jito-mev mev-redistribution jito-block-engine jito
 
 Jito is a modified Solana stack that enables more efficient, profitable, and equitable MEV extraction. It builds on the standard Solana validator with additional off-chain components (the Relayer and Block Engine) and two core on-chain programs (the Tip Payment and Tip Distribution programs).
 
-The ultimate goal of Jito is to extract MEV—monetizable opportunities inside Solana blocks—while redistributing those earnings to validators and delegators, all with minimal trust assumptions. Eventually, the `TipRouter NCN` (Node Consensus Network) further decentralizes the reward distribution, removing single points of failure.
+The ultimate goal of Jito is to extract MEV—monetizable opportunities inside Solana blocks—while redistributing those earnings to validators and delegators, all with minimal trust assumptions. Eventually, the `Tip Rewards NCN` (Node Consensus Network) further decentralizes the reward distribution, removing single points of failure.
 
 # **Jito System Architecture**
 
@@ -24,11 +24,11 @@ Source: Jito-Solana, [https://docs.jito.wtf/](https://docs.jito.wtf/)
 **Components**
 
 - Validator (Jito-Solana Client): A Solana validator, modified with extra “stages” to handle MEV bundles.
-- Relayer: Intercepts transactions at the TPU layer and forwards them to the Block Engine (and eventually to the validator).
-- [Block Engine](https://www.notion.so/How-Jito-works-A-Deep-Dive-16d4a0230830809984a1f0f00bc5dc04?pvs=21): Handles transaction ingestion, MEV bundle simulation, and bundle selection.
-- Tip Payment Program (On-Chain): Stores MEV tips in designated `PDAs`.
-- Tip Distribution Program (On-Chain): Distributes the accumulated tips to validators and stakers.
-- `TipRouter NCN` (Node Consensus Network): Decentralizes the final step of uploading merkle roots that define the final tip distribution.
+- [Relayer](#jito-relayer): Intercepts transactions at the TPU layer and forwards them to the Block Engine (and eventually to the validator).
+- [Block Engine](#jito-block-engine): Handles transaction ingestion, MEV bundle simulation, and bundle selection.
+- [Tip Payment Program (On-Chain)](#jito-tip-payment-program): Stores MEV tips in designated `PDAs`.
+- [Tip Distribution Program (On-Chain)](#jito-tip-distribution-program): Distributes the accumulated tips to validators and stakers.
+- [`Tip Rewards NCN` (Node Consensus Network)](#decentralized-distribution-with-the-tip-rewards-ncn): Decentralizes the final step of uploading merkle roots that define the final tip distribution.
 
 Before diving deeper, let’s first understand how jito bundles work. 
 
