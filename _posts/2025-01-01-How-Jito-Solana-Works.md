@@ -3,9 +3,7 @@ title: How Jito-Solana Works
 tags: Solana Jito Jito-solana jito-mev mev-redistribution jito-block-engine jito-tip-router jito-tip-distribution jito-tips
 ---
 
-# WORK IN PROGRESS
-
-## How Jito-Solana Works - A Deep Dive
+# How Jito-Solana Works - A Deep Dive
 
 # **Introduction**
 
