@@ -815,8 +815,6 @@ Operators who do not vote within the voting window or fail to reach consensus ca
 
 ## **End-of-Epoch Distribution Flow (with TipRouter NCN)**
 
-*(We will discuss the details on TipRouter NCN later in the article.)*
-
 NCN node operators each compute the merkle root. Once two-thirds consensus is reached, the root is posted on-chain, and the reward distribution automatically includes the 3% fee for the DAO and NCN participants.
 
 ```mermaid
