@@ -3,8 +3,6 @@ title: How Jito-Solana Works - A Deep Dive
 tags: Solana Jito Jito-solana jito-mev mev-redistribution jito-block-engine jito-tip-router jito-tip-distribution jito-tips
 ---
 
-# WORK IN PROGRESS
-
 # **Introduction**
 
 ![Solana REV; Jito Tips are colored in green. Source: Blockworks.](/assets/images/2025/Solana-REV-20250111.png)
@@ -75,7 +73,28 @@ A bundle is a group of transactions (at most five transactions) that must execut
 
 ## **Bundle Flow and Execution**
 
-![jito-bundle-flow](/assets/images/2025/bundle-flow.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Relayer
+    participant Searcher
+    participant BlockEngine
+    participant JitoValidator
+    participant TipPaymentProgram
+
+    User->>Relayer: Submit tx with MEV tip via auction
+    Relayer->>JitoValidator: Holds txs for 200 ms and then send 
+    Searcher->>BlockEngine: Create and submit bundles
+    BlockEngine->>BlockEngine: Simulate & pick best bundles
+    JitoValidator->>BlockEngine: Send txs (gRPC)
+    BlockEngine->>JitoValidator: Send chosen bundle (gRPC)
+    JitoValidator->>JitoValidator: Ensure tip_receiver = TDA for epoch
+    JitoValidator->>BundleStage: Execute bundle atomically
+    BundleStage->>BankingStage: Commit if success
+    BankingStage->>TipPaymentProgram: Execute tip-paying tx, deposit lamports in tip PDAs
+    JitoValidator->>JitoValidator: Finalize block
+
+```
 
 * The Block Engine receives normal transactions \+ user-submitted “MEV” transactions.  
 * The Block Engine simulates bundles, ranking them by potential profit.  
