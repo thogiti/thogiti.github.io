@@ -3,8 +3,6 @@ title: Ensuring Correct Integer Division in Circom - Avoiding Multiple Solutions
 tags: Circom Zero-Knowledge-Proofs ZKP integer-division
 ---
 
-# WIP - Work in progress
-
 # Overview
 
 Integer division is a textbook example of how arithmetic in a prime field $\mathbb{F}_p$ can subtly diverge from integer arithmetic. The naive approach often appears correct but can lead to multiple valid solutions in zero-knowledge proofs (ZKP), breaking the soundness property of ZKP. This can lead to multiple security vulnerabilities in ZKP implementations. By adding the appropriate constraints at the circuits level—whether by implementing a bitwise division algorithm or by bounding the quotient—you can restore uniqueness and ensure your circuit truly encodes the integer division you intended.
