@@ -52,7 +52,7 @@ Ethereum’s EIP-1559 introduced a global base fee that adjusts block by block, 
 
 ### Base‐Fee Computation
 
-At its core, the Ethereum protocol compares each block’s size (gas usage) to a target block size $s^*$. If the previous block used more gas than the target, the base fee goes up; if it used less, the base fee goes down. Formally, if $b[i - 1]$ is the base fee in the previous block $i-1$ and $s[i - 1]$ is the measured gas usage in that block, then the new block’s base fee $b[i]$ is:
+At its core, the Ethereum protocol compares each block’s size (gas usage) to a target block size $s^\*$. If the previous block used more gas than the target, the base fee goes up; if it used less, the base fee goes down. Formally, if $b[i - 1]$ is the base fee in the previous block $i-1$ and $s[i - 1]$ is the measured gas usage in that block, then the new block’s base fee $b[i]$ is:
 
 $$
 b[i]
@@ -99,7 +99,7 @@ Of the user’s total payment:
 ### Practical Impact
 
 - Automated Fee Adjustment: Because $b[i]$ updates every block to reflect whether the previous block was over or under the target, users no longer need to guess a gas price from scratch. In stable conditions, the base fee converges near an equilibrium, functioning like a “posted price” for the network.  
-- Mitigating Spam: If spam or bots fill the block above $s^*$, then $b[i]$ rises, making spam increasingly expensive and eventually forcing spam transactions out.  
+- Mitigating Spam: If spam or bots fill the block above $s^\*$, then $b[i]$ rises, making spam increasingly expensive and eventually forcing spam transactions out.  
 - Priority Tipping: High‐value or latency‐sensitive users can ensure inclusion by raising the tip $\varepsilon$. This local mechanism coexists with the global base‐fee logic.
 - Burning a significant portion of base fees will also avoid malicious behavior such as block stuffing by the block proposers to generate fake demand and thus raise base fees even in the absence of congestion. 
 
@@ -109,7 +109,7 @@ Of the user’s total payment:
 In a parallel or “multi‐threaded” blockchain like Solana, a direct EIP‐1559 approach may need adjustments:
 
 - Block Size vs. Compute Units: Instead of measuring gas usage $s[i-1]$, Solana’s runtime might track “compute unit usage” across all threads.  
-- Target vs. Maximum: Just as Ethereum sets $s^*$ at half the maximum block size, Solana could define a target compute usage to allow ephemeral bursts up to 2X that target.  
+- Target vs. Maximum: Just as Ethereum sets $s^\*$ at half the maximum block size, Solana could define a target compute usage to allow ephemeral bursts up to 2X that target.  
 - Local vs. Global: Solana’s local fee markets for “hot” accounts remain relevant for fine‐grained prioritization, while a global EIP‐1559‐style base fee can protect the entire system from block‐wide congestion or spam.
 
 Nevertheless, the equation for updating the base fee, the notion of fee cap $\bigl(c\bigr)$, and the tip $\bigl(\varepsilon\bigr)$ carry over directly, provided the chain implements an on‐chain logic to measure each block’s usage relative to a desired target.
@@ -161,9 +161,9 @@ $$
   M_n \times \exp\!\Bigl(\alpha \,(\,\phi_n - \phi^*)\Bigr),
 $$
 
-- $\phi^*$ is the target fill ratio (e.g., 50% or 90%).  
+- $\phi^\*$ is the target fill ratio (e.g., 50% or 90%).  
 - $\alpha$ is a sensitivity parameter controlling how fast fees respond to usage.  
-- If $\phi_n > \phi^*$, fees rise; if $\phi_n < \phi^*$, fees fall.
+- If $\phi_n > \phi^\*$, fees rise; if $\phi_n < \phi^\*$, fees fall.
 
 ## Accounting for Parallel Threads
 
@@ -187,7 +187,7 @@ Let’s define a minimal set of equations to describe the system:
 - Usage: $u_n = \sum_{t=1}^{T} u_n^{(t)} \le B$.  
 - Fill Ratio: $\phi_n = u_n / B$.  
 - Base-Fee Multiplier: $M_n$.  
-- Target Fill Ratio: $\phi^*$ (e.g., 0.9 if we aim for 90% usage).  
+- Target Fill Ratio: $\phi^\*$ (e.g., 0.9 if we aim for 90% usage).  
 - Update Rule:
 
 $$
@@ -222,7 +222,7 @@ There are several benefits to this approach:
    Transactions that use more compute time or heavier operations pay more, deterring non-optimized programs from hogging the network.
 
 - Preserves Parallel Efficiency  
-   The local fee market (priority tips) still governs micro-level contention. The global base-fee layer simply ensures that system-wide usage remains at or near the target $\phi^*$.
+   The local fee market (priority tips) still governs micro-level contention. The global base-fee layer simply ensures that system-wide usage remains at or near the target $\phi^\*$.
 
 - Fee Stability  
    If $\alpha$ is tuned appropriately, the base fee adjusts smoothly over multiple blocks, minimizing wild fee fluctuations while still responding to rising or falling demand.
@@ -243,7 +243,7 @@ There are some potential challenges with this approach:
    Updating a base-fee multiplier each block and enforcing it in parallel threads can require deeper changes to the Solana runtime. The payoff is a robust, automated, and fairer fee market.
 
 - Defining the Target Fill Ratio  
-   Setting $\phi^*$ at 50% leaves “headroom” for demand surges, but might underutilize the chain. Setting $\phi^*$ at 90% yields near-maximum usage but less buffer for sudden spikes. Governance or developer consensus is required for an optimal choice.
+   Setting $\phi^\*$ at 50% leaves “headroom” for demand surges, but might underutilize the chain. Setting $\phi^\*$ at 90% yields near-maximum usage but less buffer for sudden spikes. Governance or developer consensus is required for an optimal choice.
 
 ---
 
