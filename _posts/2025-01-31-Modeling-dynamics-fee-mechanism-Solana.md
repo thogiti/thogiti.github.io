@@ -67,12 +67,12 @@ $$
 
 where:
 
-- $s^*$ = the target block size, e.g., half of the maximum allowed block size ($2\,s^*$).  
+- $s^\*$ = the target block size, e.g., half of the maximum allowed block size ($2s^\*$).  
 - $\phi$ = an adjustment parameter controlling how sensitively the base fee responds to over/under‐target block usage (on Ethereum mainnet, $\phi$ is typically $1/8$).  
 
-For example, if $s[i-1]$ is larger than $s^*$, indicating high demand, $b[i]$ grows proportionally to $\frac{s[i - 1] - s^*}{s^*}$. Conversely, if the block used fewer gas units than $s^*$, the base fee decreases.
+For example, if $s[i-1]$ is larger than $s^\*$, indicating high demand, $b[i]$ grows proportionally to $\frac{s[i - 1] - s^\*}{s^\*}$. Conversely, if the block used fewer gas units than $s^\*$, the base fee decreases.
 
-> Initial Conditions: In Ethereum, $b[0]$ was set to 1 Gwei, and the block size could expand up to $2\,s^*$. Solana or other blockchains adopting a similar model could choose a different starting fee or block‐size parameters.
+> Initial Conditions: In Ethereum, $b[0]$ was set to 1 Gwei, and the block size could expand up to $2s^\*$. Solana or other blockchains adopting a similar model could choose a different starting fee or block‐size parameters.
 
 ### Transaction Fee Cap & Tip
 
