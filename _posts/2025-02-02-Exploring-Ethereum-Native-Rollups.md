@@ -5,6 +5,8 @@ tags: Ethereum Native-rollups Rollups Based-Rollups L2 Layer-2 Ethereum-Alignmen
 
 # WIP - WORK IN PROGRESS
 
+
+
 ---
 
 # Introduction: The Convergence of L1 and L2
