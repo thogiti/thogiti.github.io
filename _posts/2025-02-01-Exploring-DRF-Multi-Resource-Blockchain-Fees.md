@@ -223,6 +223,44 @@ The Future Work (Section 9.1) of the DRF paper points out several directions tha
 
 ---
 
+# Validator Manipulations & Multi-Resource Measurement: Two Important Questions
+
+A multi-resource fee system can be highly robust against validator manipulation and fair to all users—but it demands careful design around resource tracking and honest measurement.
+
+## Can Validators Adjust Their Usage Patterns to Minimize Fees?
+
+Short Answer: While validators might try reorganizing transactions or splitting them in clever ways, a well-designed multi-resource fee framework (inspired by DRF) limits the advantages of such manipulation—especially if resource usage is measured accurately and aggregated properly.
+
+### Adjusting Personal Transactions
+Validators who submit their own transactions may attempt to split large, resource-heavy transactions into multiple smaller ones to reduce the “dominant resource” cost. However, DRF’s strategy-proofness (assuming accurate resource measurement) ensures that artificially gaming the system usually provides little or no net benefit. Splitting transactions often merely redistributes resource usage, but doesn’t fundamentally lower total fees if the protocol sums usage across all transactions within a block.
+
+### Favoring Certain Transactions in Block Production
+A validator might omit or reorder user transactions to keep next-block fees lower. However, the next block’s fee also depends on global usage and other validators’ choices. Moreover, dropping transactions means forfeiting potential tip revenue, which typically disincentivizes such manipulations.
+
+
+## How Difficult Is It to Measure Multi-Resource Utilization Accurately?
+
+Short Answer: Measuring CPU, memory, network, and I/O usage per transaction is non-trivial, especially in a Byzantine environment. It requires robust instrumentation, potential cross-validator checks, or trusted hardware to ensure honest reporting.
+
+### Instrumentation Complexity
+- CPU usage is relatively straightforward (e.g., compute units).  
+- Memory usage attribution can be tricky in a parallel execution environment.  
+- I/O tracking requires detailed logging of reads/writes at runtime.  
+- Network usage can be especially challenging to track if multiple nodes handle partial data.
+
+### Possible Approaches
+- Runtime-Based Instrumentation: Validators monitor resource consumption in near-real time and record usage per transaction.  
+- Trusted Hardware (TEE): Secure enclaves or other TEE solutions can provide tamper-proof usage metrics.  
+- Cross-Validator Verification: Multiple validators re-check usage data for consistency, detecting any anomalies. This may additionally require some incentive mechanism to incentivize validators to report accurately.  
+
+### Risk of Manipulation
+If a validator can unilaterally misreport its own transactions’ usage, it could underpay fees. Mitigations include strict runtime checks (to minimize manual reporting) or proof-of-measurement schemes.
+
+### Balancing Overhead & Fairness
+Accurate tracking of each resource adds implementation complexity and runtime overhead, but the benefit is true multi-dimensional fairness—charging transactions for the resources they actually consume, not just for “compute.”
+
+---
+
 # Conclusion & Research Directions
 
 By adopting Dominant Resource Fairness ideas, a multi-resource fee model on Solana can potentially achieve strong fairness and spam deterrence across CPU, memory, I/O, and network usage. DRF’s proven properties—strategy-proofness, envy-freeness, bottleneck fairness, Pareto efficiency—give it a theoretical foundation that purely one-dimensional or ad hoc pricing methods often lack. 
