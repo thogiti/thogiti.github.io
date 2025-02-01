@@ -3,8 +3,6 @@ title: Dominant Resource Fairness for High Performance Blockchains - A Multi-Dim
 tags: Solana fee-mechanism local-fee-markets solana-local-fee-markets dynamics-base-fees solana-fee-markets Dominant-Resource-Fairness Multi-Resource-Blockchain-Fees Multi-Dimensional-Blockchain-Fees blockchain-fee-mechanism Multi-Resource-blockchain-fee-mechanism
 ---
 
-# WIP - WORK IN PROGRESS
-
 # Introduction 
 
 What if high performance blockchain like Solana’s fee model could automatically adjust not just for compute usage, but also for memory, network bandwidth, and I/O? In high-throughput environments, multiple resource bottlenecks can emerge—yet traditional one-dimensional fee mechanisms rarely capture this reality.
