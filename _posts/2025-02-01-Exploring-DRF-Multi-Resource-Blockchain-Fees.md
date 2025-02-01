@@ -15,7 +15,7 @@ In [Part 1 of our series](https://thogiti.github.io/2025/01/31/Modeling-dynamics
 - Keep fees low when utilization is modest, and  
 - Charge transactions proportionally to their “compute unit” usage.
 
-But compute units aren’t the only bottleneck. Modern blockchain nodes can also saturate memory, network bandwidth, or disk I/O. Enter Dominant Resource Fairness (DRF). Borrowed from HPC and data-center scheduling, DRF is a multi-dimensional fairness mechanism that recognizes how each job (or transaction) can stress multiple resources. By aligning Solana’s dynamic fees with DRF principles—envy-freeness, strategy-proofness, and Pareto efficiency—we can ensure that:
+But compute units aren’t the only bottleneck. Modern blockchain nodes can also saturate memory, network bandwidth, or disk I/O. Let me introduce you to Dominant Resource Fairness (DRF). Borrowed from HPC and data-center scheduling, DRF is a multi-dimensional fairness mechanism that recognizes how each job (or transaction) can stress multiple resources. By aligning Solana’s dynamic fees with DRF principles—envy-freeness, strategy-proofness, and Pareto efficiency—we can ensure that:
 
 - Heavy memory users pay a premium if memory is scarce,  
 - Network-intensive transactions pay more if network bandwidth is the true bottleneck,  
