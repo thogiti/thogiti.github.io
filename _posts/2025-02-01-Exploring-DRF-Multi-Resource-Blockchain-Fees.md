@@ -21,7 +21,7 @@ But compute units aren’t the only bottleneck. Modern blockchain nodes can also
 - Network-intensive transactions pay more if network bandwidth is the true bottleneck,  
 - No single dimension becomes a hidden choke point where cheap spam can flood the system.
 
-This article explores why and how to extend Solana’s dynamic fee model to handle all major resource types. We’ll show how DRF’s “dominant resource” approach—max-min fairness (MMF) generalized to multiple resources—can naturally merge with the EIP-1559-like fee updates discussed in [Part 1](https://thogiti.github.io/2025/01/31/Modeling-dynamics-fee-mechanism-Solana.html). The result? A multi-resource mechanism that scales with real-world constraints and automatically prices each transaction based on its actual burden on the network.
+This article explores why and how to extend Solana’s dynamic fee model to handle all major resource types. We’ll show how DRF’s “dominant resource” approach—max-min fairness (MMF) generalized to multiple resources—can naturally merge with the EIP-1559-like fee updates discussed in [Part 1](https://thogiti.github.io/2025/01/31/Modeling-dynamics-fee-mechanism-Solana.html). The result is a multi-resource mechanism that scales with real-world constraints and automatically prices each transaction based on its actual burden on the network.
 
 So if you’re curious about the next leap in blockchain fee mechanism—beyond simple CUs—read on. We’ll lay out the theoretical foundations from the [DRF paper (SIGCOMM 2011)](https://amplab.cs.berkeley.edu/wp-content/uploads/2011/06/Dominant-Resource-Fairness-Fair-Allocation-of-Multiple-Resource-Types.pdf), the practical challenges in a blockchain environment, and the benefits of bringing multi-dimensional fairness to unstoppable throughput.
 
@@ -55,6 +55,7 @@ To appreciate how DRF can inform a blockchain fee market, it helps to restate it
      s_i \;=\; \max_{r \in \mathcal{R}}
          \Bigl(\tfrac{d_i^{(r)}}{B^{(r)}}\Bigr),
    $$
+   
    where $d_i^{(r)}$ is user $i$’s usage of resource $r$ and $B^{(r)}$ is the total capacity of resource $r$.
 
 - Progressive Filling Algorithm: Intuitively, DRF keeps “filling” allocations proportionally to each user’s demand vector until at least one resource saturates for that user. This ensures no user can increase her “dominant share” without decreasing someone else’s share.
@@ -94,12 +95,14 @@ In DRF, each user ends up with an allocation that equalizes the “dominant reso
 - Conversely, if user $i$ uses minimal amounts of each resource, their total cost is lower.
 
 This suggests a dynamic base-fee multiplier that penalizes large dominant shares. For instance, the cost of user $i$’s transactions might be:
+
 $$
   \text{Cost}(i) 
   \;=\; 
   M \times \max_{r}\Bigl\{ w^{(r)}\,d_i^{(r)}\Bigr\}
   + \text{tip}(i),
 $$
+
 where $w^{(r)}$ are resource weights, and $M$ is the global scaling factor that rises or falls with overall system load. This is essentially an adaptation of DRF’s “dominant resource” principle into a pricing model.
 
 ## Dynamic Updates (Block to Block)
@@ -132,7 +135,7 @@ A hallmark of DRF is that users cannot gain by demanding resources they do not n
 ## Envy-Freeness and Bottleneck Fairness
 
 - Envy-Freeness: If user $i$’s dominant share is equalized with user $j$, then $i$ cannot prefer $j$’s resource usage because that would push $i$’s dominant fraction up (and lead to higher fees). Translating envy-freeness to a fee system suggests that no user would prefer to pay the cost of another user’s usage bundle.  
-- Bottleneck Fairness: DRF ensures that if one resource is the bottleneck for a user, *everyone else also sees at least the same fraction* of their personal bottleneck. In a blockchain, this would ensure that no single user’s resource usage “unfairly” dominates a dimension relative to others, unless they also pay proportionately higher fees.
+- Bottleneck Fairness: DRF ensures that if one resource is the bottleneck for a user, everyone else also sees at least the same fraction of their personal bottleneck. In a blockchain, this would ensure that no single user’s resource usage “unfairly” dominates a dimension relative to others, unless they also pay proportionately higher fees.
 
 ---
 
@@ -142,7 +145,8 @@ Let us sketch a more formal version of the block-level DRF-based fee mechanism:
 
 - Users & Demand Vectors:  
    - In block $n$, we have $N_n$ active users (addresses) $\{1,\dots,N_n\}$.  
-   - User $i$ proposes a set of transactions whose combined resource demand is $\mathbf{d}_{i,n}$. We measure $\mathbf{d}_{i,n}$ via actual runtime metrics.
+   - User $i$ proposes a set of transactions whose combined resource demand is $\mathbf{d}_{i,n}$. 
+   - We measure $\mathbf{d}_{i,n}$ via actual runtime metrics.
 
 - Capacities:  
    - Each resource $r\in\mathcal{R}$ has a block capacity $B^{(r)}$. For block $n$, we do not exceed $B^{(r)}$ in resource usage.  
@@ -172,7 +176,7 @@ Let us sketch a more formal version of the block-level DRF-based fee mechanism:
      or equivalently $M_n \cdot \max_{r} \{w^{(r)}\,d_{i,n}^{(r)}\}$ if we incorporate weighting. (One can also interpret $s_{i,n}$ as a dimensionless fraction and scale it by each resource’s “cost” if needed.)
 
 - Fee Update:  
-   - After the block completes, measure total usage $\mathbf{u}_n=\sum_i \mathbf{d}_{i,n}$.  
+   - After the block completes, measure total usage $u_n = \sum_i d_{i,n}$.    
    - Define $\phi_n = \max_{r} (u_n^{(r)}/B^{(r)})$.  
    - Update 
      $$
@@ -200,7 +204,7 @@ Let us sketch a more formal version of the block-level DRF-based fee mechanism:
 
 # Handling Discrete Tasks, Fragmentation, and Placement Constraints
 
-The Future Work (Section 9.1) of the DRF paper points out several directions that also appear in blockchain contexts:
+The Future Work (Section 9.1) of the DRF paper points out several directions that also look relevant in blockchain contexts:
 
 - Minimizing Fragmentation:  
    - Blockchains have discrete “slots” for transactions. If partial resource usage of a dimension is leftover, but no single transaction can fit in it, that capacity is effectively wasted. This is akin to bin-packing or scheduling tasks on discrete machines.  
@@ -246,3 +250,4 @@ In summary, DRF offers a rigorous blueprint for fair, multi-dimensional resource
 # References
 1. [Dominant Resource Fairness: Fair Allocation of Multiple Resource Types](https://amplab.cs.berkeley.edu/wp-content/uploads/2011/06/Dominant-Resource-Fairness-Fair-Allocation-of-Multiple-Resource-Types.pdf)
 2. [Modeling dynamic base fees in Solana](https://thogiti.github.io/2025/01/31/Modeling-dynamics-fee-mechanism-Solana.html)
+3. [Fair Allocation through Competitive Equilibrium from Generic Incomes](https://dl.acm.org/doi/10.1145/3287560.3287582)
