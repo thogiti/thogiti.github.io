@@ -43,9 +43,9 @@ Here’s a diagram showing the conceptual flow:
 ```mermaid
 flowchart LR
     A[Original Data] --> B[Split into K Data Chunks]
-    B --> C[Encode into N Shards (Matrix Mult)]
-    C -- Some shards lost --> D[(Only K Shards Remain)]
-    D --> E[Decode (Submatrix Inversion)]
+    B --> C[Encode into N Shards Matrix Mult]
+    C -- Some shards lost --> D[Only K Shards Remain]
+    D --> E[Decode Submatrix Inversion]
     E --> F[Reconstructed Data]
 ```
 
