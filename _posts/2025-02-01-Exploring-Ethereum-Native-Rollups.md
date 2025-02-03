@@ -78,7 +78,7 @@ Because verifying a whole L2 block can be expensive, the `EXECUTE` call has its 
 
 ## Naive Re-Execution
 
-Approach: L1 nodes literally re-run L2 transactions for each `EXECUTE` call, using stateless Merkle witnesses posted in call-data or data blobs.
+L1 nodes literally re-run L2 transactions for each `EXECUTE` call, using stateless Merkle witnesses posted in calldata or data blobs.
 
 - Pros: 
   - Conceptually simple—just use the real EVM. 
@@ -86,11 +86,11 @@ Approach: L1 nodes literally re-run L2 transactions for each `EXECUTE` call, usi
 - Cons:
   - Potential large overhead if the L2 block is big (you must post all state proofs). 
   - Must keep a tight “EXECUTE” gas limit. 
-  - Could “spam” call-data with huge Merkle proofs if not carefully regulated.
+  - Could “spam” calldata with huge Merkle proofs if not carefully regulated.
 
 ## ZK Proofs with Off-Chain Distribution
 
-Approach: Each L1 node obtains a zero-knowledge proof that the `EXECUTE` call is correct, skipping re-execution on-chain. The proof is never posted in a contract, but is gossiped among nodes or integrated directly into the client code:
+Each L1 node obtains a zero-knowledge proof that the `EXECUTE` call is correct, skipping re-execution on-chain. The proof is never posted in a contract, but is gossiped among nodes or integrated directly into the client code:
 
 - Pros:
   - Large L2 blocks can be verified quickly if the ZK prover is trusted or can be run locally.
@@ -119,7 +119,7 @@ Outcome: If you want zero governance overhead and pure L1 EVM usage, you must ke
 # Data and Execution Overheads
 
 ## Data Overhead for Stateless Traces
-Naive re-execution demands full state-access proofs in call-data or blobs. This can balloon data usage by a factor of 2–5 relative to custom compression or specialized proofs. 
+Naive re-execution demands full state-access proofs in calldata or blobs. This can balloon data usage by a factor of 2–5 relative to custom compression or specialized proofs. 
 
 Mitigation:
 - Single-Round Fraud Proof: L2 is “optimistic,” but if there’s a dispute, the challenger calls `EXECUTE` on a small chunk. 
