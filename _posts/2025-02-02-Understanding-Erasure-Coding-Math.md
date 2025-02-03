@@ -76,19 +76,19 @@ Let's understand what's going on in the above diagram.
 
 At the core of erasure coding lies matrix multiplication. We treat data chunks as vectors and multiply by an encoder matrix. Some key definitions:
 
-- A vector $v$ in $\mathbb{R}^K$ is $\begin{bmatrix}v_1 \\ v_2 \\ \vdots \\ v_K \end{bmatrix}$.  
+- A vector $v$ in $\mathbb{R}^K$ is $\begin{bmatrix}v_1 \\ v_2 \\ \dots \\ v_K \end{bmatrix}$.  
 - An $(N\times K)$ matrix $M$ is an array of $N$ rows and $K$ columns.  
 - Matrix multiplication: $M \cdot v$ yields an $N\times 1$ vector.
 
 For erasure coding, we construct a matrix $E$ (size $N\times K$). The encoded shards are simply:
 
 $$
-\text{encoded} = E \times \text{data\_vector}.
+\text{encoded} = E \times \text{datavector}.
 $$
 
 ## Cauchy Matrices: Guaranteed Invertibility
 
-To be more precise, not just any matrix works. We need that *any* $K \times K$ submatrix is invertible over our chosen field. Cauchy matrices are a classic choice:
+To be more precise, not just any matrix works. We need that *any* $K \times K$ submatrix is invertible over our chosen field. [Cauchy matrices](https://en.wikipedia.org/wiki/Cauchy_matrix) are a classic choice:
 
 $$
 C_{i,j} = \frac{1}{x_i - y_j}, \quad 1 \leq i \leq N,\ 1 \leq j \leq K,
@@ -439,7 +439,12 @@ $$
 \end{bmatrix}.
 $$
 
-We recover $\begin{bmatrix}2\\2\end{bmatrix}$ exactly—our original data vector.
+We recover 
+
+$$\begin{bmatrix}2\\
+2\end{bmatrix}$$ 
+
+exactly—our original data vector.
 
 ---
 
