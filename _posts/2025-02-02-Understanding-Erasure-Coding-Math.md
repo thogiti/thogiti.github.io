@@ -233,10 +233,10 @@ $$
    $$
    Combine like terms (remember additions are XOR, so repeated terms vanish):  
    $$
-   y^2 + y^3 + 1.
+   y^2 + y^3 + 1 = y^2 + y + 1 + 1 = y^2 + y.
    $$
 
-This result, $\alpha^2 + \alpha^3 + 1$, is another polynomial in $GF(8)$. Tracking these steps carefully ensures exact, *lossless* arithmetic.
+This result, $\alpha^2 + \alpha$, is another polynomial in $GF(8)$. Tracking these steps carefully ensures exact, *lossless* arithmetic.
 
 ---
 
@@ -250,7 +250,7 @@ While $GF(2^n)$ arithmetic is conceptually clean, direct polynomial multiplicati
 Moreover, many real systems skip the explicit matrix representation and simply do repeated XOR operations in hardware. For example, if you only have coefficients $0$ or $1$, you can pick an encoding matrix with lots of $0/1$ patterns, so each row’s multiplication is basically:
 
 $$
-\text{shard} = \bigoplus_{\substack{\text{positions } j \\ \text{where row}[j]=1}} \text{data\_block}_j,
+\text{shard} = \bigoplus_{\substack{\text{positions } j \\ \text{where row}[j]=1}} \text{datablock}_j,
 $$
 
 where $\oplus$ is XOR.
