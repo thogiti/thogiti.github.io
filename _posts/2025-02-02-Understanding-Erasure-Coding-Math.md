@@ -293,7 +293,7 @@ Now, lets understand how arithmetic operations work in $GF(2^3)$.
 
 - Subtraction  
    - Same as addition in characteristic 2 (since each element is its own negative).  
-   - Example: $6 - 6 = 110 $\oplus$ 110 = 000 = 0$.
+   - Example: $6 - 6 = 110 \oplus 110 = 000 = 0$.
 
 - Multiplication  
    - Multiply the polynomials, then reduce modulo $y^3 + y + 1$.  
