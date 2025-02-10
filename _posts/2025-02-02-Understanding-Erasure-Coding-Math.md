@@ -397,21 +397,21 @@ That yields 3 output shards for each block. Let’s do each block in detail:
 
 - Shard 1 = $[1, 1] \cdot [2, 2]$  
    - In $GF(2^3)$, addition is XOR, so $(1\times2) \oplus (1\times2)$.  
-   - $1\times2 = 2$. Then $2 \oplus 2 = 0$. So Shard 1 = `000`.
+   - $1\times 2 = 2$. Then $2 \oplus 2 = 0$. So Shard 1 = `000`.
 
 - Shard 2 = $[2, 3] \cdot [2, 2]$  
-   - $2 \times 2 = (y)\times(y) = y^2 = 4$ in decimal (`100`).  
-   - $3 \times 2 = (y+1)\times(y) = y^2 + y = `110` = 6.  
-   - Then XOR them: $4 \oplus 6 = `100` ⊕ `110` = `010` = 2.  
+   - $2 \times 2 = y \times y = y^2 = 4$ in decimal (`100`).  
+   - $3 \times 2 =$ ( $y+1$ ) $\times y = y^2 + y =$ `110` = 6.  
+   - Then XOR them: $4 \oplus 6 =$ `100` $\oplus$ `110` = `010` = 2.  
    - So Shard 2 = `010` (decimal 2).
 
 - Shard 3 = $[4, 5] \cdot [2,2]$  
    - $4 \times 2 = (y^2)\times(y) = y^3$.  
      Since $y^3 = y + 1$ in our irreducible polynomial, that’s `011` = 3.  
-   - $5 \times 2 = (y^2 + 1)\times(y) = y^3 + y.  
+   - $5 \times 2 =$ ( $y^2 + 1$ ) $\times y = y^3 + y$.  
      - $y^3 = y + 1$, so $y^3 + y = (y+1) \oplus y = 1$.  
      - That’s `001` in binary, decimal 1.  
-   - XOR them: $3 \oplus 1 = `011` ⊕ `001` = `010` = 2.  
+   - XOR them: $3 \oplus 1 =$ `011` $\oplus$ `001` = `010` = 2.  
    - So Shard 3 = `010` (decimal 2).
 
 Thus, Block 1 encodes to Shard vector = $[0,\; 2,\; 2]$.
@@ -422,7 +422,7 @@ Thus, Block 1 encodes to Shard vector = $[0,\; 2,\; 2]$.
 - Multiply:
 
 - Shard 1 = $[1, 1] \cdot [3, 2]$  
-   - $1\times3 \oplus 1\times2 = 3 \oplus 2 = `011` ⊕ `010` = `001` = 1.  
+   - $1 \times 3 \oplus 1 \times 2 = 3 \oplus 2 =$ `011` $\oplus$ `010` = `001` = 1.  
 
 - Shard 2 = $[2, 3] \cdot [3, 2]$  
    - $2 \times 3 = (y)\times(y+1)$. That’s $y^2 + y$, or `110` = 6.  
@@ -432,7 +432,7 @@ Thus, Block 1 encodes to Shard vector = $[0,\; 2,\; 2]$.
 - Shard 3 = $[4, 5] \cdot [3, 2]$  
    - $4 \times 3 = (y^2)\times(y+1) = y^3 + y^2$.  
      - $y^3 = (y+1)$, so $y^3 + y^2 = (y+1) ⊕ (y^2)$. That’s `011` ⊕ `100` = `111` = 7.  
-   - $5 \times 2 = (y^2+1)\times(y) = y^3 + y = 1, as seen earlier.  
+   - $5 \times 2 =$ ( $y^2+1$ ) $\times y = y^3 + y = 1$, as seen earlier.  
    - XOR them: `111` ⊕ `001` = `110` = 6.  
 
 Hence, Block 2 → $[1, 0, 6]$ in decimal, i.e. `[001, 000, 110]` in binary.
@@ -444,17 +444,17 @@ Hence, Block 2 → $[1, 0, 6]$ in decimal, i.e. `[001, 000, 110]` in binary.
 - Multiply:
 
 - Shard 1 = $[1,1]\cdot [5,4]$  
-   - $5 \oplus 4 = `101` ⊕ `100` = `001` = 1.  
+   - $5 \oplus 4 =$ `101` ⊕ `100` = `001` = 1.  
 
 - Shard 2 = $[2,3]\cdot [5,4]$  
-   - $2 \times 5 = (y)\times(y^2+1) = y^3 + y = 1 (as above).  
+   - $2 \times 5 = (y)\times(y^2+1) = y^3 + y = 1$ (as above).  
    - $3 \times 4 = (y+1)\times (y^2)$.  
-     - That’s $y^3 + y^2$. With $y^3 = y + 1$, we get $(y+1) \oplus y^2 = `011` ⊕ `100` = `111`= 7.  
+     - That’s $y^3 + y^2$. With $y^3 = y + 1$, we get $(y+1) \oplus y^2 =$ `011` ⊕ `100` = `111`= 7.  
    - XOR them: `001` ⊕ `111` = `110` = 6.  
 
 - Shard 3 = $[4,5]\cdot [5,4]$  
    - $4 \times 5 = (y^2)\times (y^2+1) = y^4 + y^2.$  
-     - $y^4 = y\times y^3 = y(y+1)= y^2 + y. So $y^4 + y^2 = (y^2+y)\oplus y^2 = y.  
+     - $y^4 = y \times y^3 = y(y+1)= y^2 + y$. So $y^4 + y^2 = (y^2+y)\oplus y^2 = y$.  
      - So that’s `010` = 2 in decimal.  
    - $5 \times 4 = (y^2+1)\times(y^2) = y^4 + y^2$. Same expansion, also `010` = 2.  
    - XOR them: 2 ⊕ 2 = 0.  
