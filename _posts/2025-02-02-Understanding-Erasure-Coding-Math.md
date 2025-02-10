@@ -325,40 +325,183 @@ A small portion of the multiplication table for $GF(2^3)$ might look like this:
 
 ### Encoding Example: “CCDCFE” in a $[3, 2]$ Code over $GF(2^3)$
 
-Suppose you’re erasure-coding the short melody “C, C, D, C, F, E” (each note mapped to numbers `2`, `2`, `3`, `2`, `5`, `4`) but now you want to avoid chunk inflation. You choose $GF(2^3)$, which handles 3-bit chunks directly—no wasted bits.
+Suppose you’re erasure-coding the short melody “C, C, D, C, F, E” (each note mapped to numbers `2`, `2`, `3`, `2`, `5`, `4`) but now you want to avoid chunk inflation. You choose $GF(2^3)$, which handles 3-bit chunks directly—no wasted bits. Lets work out the encoding/decoding details.
 
-- Data Blocks  
-   Break the melody into blocks of size $K = 2$. For instance:
-   - Block 1 (CC) = $[2, 2]$
-   - Block 2 (DC) = $[3, 2]$
-   - Block 3 (FE) = $[5, 4]$
+#### Map Notes to $GF(2^3)$ Elements
 
-   Each element (like `2`) is `010` in $GF(2^3)$.
+We have the melody: C, C, D, C, F, E. Suppose we assign the following numeric representations:
 
-- Encoder Matrix  
-   Construct a $[3 \times 2]$ Cauchy matrix in $GF(2^3)$. Let’s label it:
+- C → 2  
+- D → 3  
+- E → 4  
+- F → 5  
+
+These numbers are elements in $GF(2^3)$ if we interpret them in binary:
+
+- 2 → `010`  (polynomial $y$)  
+- 3 → `011`  ($y + 1$)  
+- 4 → `100`  ($y^2$)  
+- 5 → `101`  ($y^2 + 1$)
+
+Hence, the sequence “CCDCFE” is: `[2, 2, 3, 2, 5, 4]`.
+
+#### Block the Data (K=2)
+
+For a $[3,2]$ Erasure code, each data block has size $K=2$. Break the 6-note sequence into 3 blocks:
+
+1. Block 1: $[C, C]$ = $[2, 2]$  
+2. Block 2: $[D, C]$ = $[3, 2]$  
+3. Block 3: $[F, E]$ = $[5, 4]$
+
+#### Choose an Encoder Matrix (N=3, K=2)
+
+We need an $3 \times 2$ matrix $E$ in $GF(2^3)$ whose every $2\times 2$ submatrix is invertible. A common approach is to pick or adapt a Cauchy-like matrix. For example, we can use:
+
+$$
+E \;=\; 
+\begin{bmatrix}
+1 & 1\\
+2 & 3\\
+4 & 5
+\end{bmatrix},
+$$
+where each entry is an element in $GF(2^3)$. In binary/polynomial form:
+
+- $1$ is `001` ($y^0$)  
+- $2$ is `010` ($y$)  
+- $3$ is `011` ($y + 1$)  
+- $4$ is `100` ($y^2$)  
+- $5$ is `101` ($y^2 + 1$)
+
+#### Encode Each Block
+
+To encode a block $\begin{bmatrix} x \\ y \end{bmatrix}$, we compute:
+
+$$
+\begin{bmatrix}
+\text{Shard}_1\\
+\text{Shard}_2\\
+\text{Shard}_3
+\end{bmatrix}
+= 
+E \times
+\begin{bmatrix} x\\ y\end{bmatrix}.
+$$
+
+That yields 3 output shards for each block. Let’s do each block in detail:
+
+**Block 1: [2, 2]**
+
+- Data vector: $\begin{bmatrix}2\\2\end{bmatrix}$  
+- Multiply:
+
+- Shard 1 = $[1, 1] \cdot [2, 2]$  
+   - In $GF(2^3)$, addition is XOR, so $(1\times2) \oplus (1\times2)$.  
+   - $1\times2 = 2$. Then $2 \oplus 2 = 0$. So Shard 1 = `000`.
+
+- Shard 2 = $[2, 3] \cdot [2, 2]$  
+   - $2 \times 2 = (y)\times(y) = y^2 = 4$ in decimal (`100`).  
+   - $3 \times 2 = (y+1)\times(y) = y^2 + y = `110` = 6.  
+   - Then XOR them: $4 \oplus 6 = `100` ⊕ `110` = `010` = 2.  
+   - So Shard 2 = `010` (decimal 2).
+
+- Shard 3 = $[4, 5] \cdot [2,2]$  
+   - $4 \times 2 = (y^2)\times(y) = y^3$.  
+     Since $y^3 = y + 1$ in our irreducible polynomial, that’s `011` = 3.  
+   - $5 \times 2 = (y^2 + 1)\times(y) = y^3 + y.  
+     - $y^3 = y + 1$, so $y^3 + y = (y+1) \oplus y = 1$.  
+     - That’s `001` in binary, decimal 1.  
+   - XOR them: $3 \oplus 1 = `011` ⊕ `001` = `010` = 2.  
+   - So Shard 3 = `010` (decimal 2).
+
+Thus, Block 1 encodes to Shard vector = $[0,\; 2,\; 2]$.
+
+**Block 2: [3, 2]**
+
+- Data vector: $\begin{bmatrix}3 \\ 2\end{bmatrix}$  
+- Multiply:
+
+- Shard 1 = $[1, 1] \cdot [3, 2]$  
+   - $1\times3 \oplus 1\times2 = 3 \oplus 2 = `011` ⊕ `010` = `001` = 1.  
+
+- Shard 2 = $[2, 3] \cdot [3, 2]$  
+   - $2 \times 3 = (y)\times(y+1)$. That’s $y^2 + y$, or `110` = 6.  
+   - $3 \times 2 = (y+1)\times y$. Same as above, also `110` = 6.  
+   - XOR them: `110` ⊕ `110` = `000` = 0.  
+
+- Shard 3 = $[4, 5] \cdot [3, 2]$  
+   - $4 \times 3 = (y^2)\times(y+1) = y^3 + y^2$.  
+     - $y^3 = (y+1)$, so $y^3 + y^2 = (y+1) ⊕ (y^2)$. That’s `011` ⊕ `100` = `111` = 7.  
+   - $5 \times 2 = (y^2+1)\times(y) = y^3 + y = 1, as seen earlier.  
+   - XOR them: `111` ⊕ `001` = `110` = 6.  
+
+Hence, Block 2 → $[1, 0, 6]$ in decimal, i.e. `[001, 000, 110]` in binary.
+
+
+**Block 3: [5, 4]**
+
+- Data vector: $\begin{bmatrix}5 \\ 4\end{bmatrix}$  
+- Multiply:
+
+- Shard 1 = $[1,1]\cdot [5,4]$  
+   - $5 \oplus 4 = `101` ⊕ `100` = `001` = 1.  
+
+- Shard 2 = $[2,3]\cdot [5,4]$  
+   - $2 \times 5 = (y)\times(y^2+1) = y^3 + y = 1 (as above).  
+   - $3 \times 4 = (y+1)\times (y^2)$.  
+     - That’s $y^3 + y^2$. With $y^3 = y + 1$, we get $(y+1) \oplus y^2 = `011` ⊕ `100` = `111`= 7.  
+   - XOR them: `001` ⊕ `111` = `110` = 6.  
+
+- Shard 3 = $[4,5]\cdot [5,4]$  
+   - $4 \times 5 = (y^2)\times (y^2+1) = y^4 + y^2.$  
+     - $y^4 = y\times y^3 = y(y+1)= y^2 + y. So $y^4 + y^2 = (y^2+y)\oplus y^2 = y.  
+     - So that’s `010` = 2 in decimal.  
+   - $5 \times 4 = (y^2+1)\times(y^2) = y^4 + y^2$. Same expansion, also `010` = 2.  
+   - XOR them: 2 ⊕ 2 = 0.  
+
+Hence, Block 3 → $[1,6,0]$.
+
+
+#### Final Encoded Shards
+
+Putting it all together, the encoded shards for each block (in decimal) look like:
+
+- Block 1 = $\bigl[0,\; 2,\; 2\bigr]$  
+- Block 2 = $\bigl[1,\; 0,\; 6\bigr]$  
+- Block 3 = $\bigl[1,\; 6,\; 0\bigr]$
+
+In binary (3-bit each):
+
+- Block 1 shards = `[000, 010, 010]`  
+- Block 2 shards = `[001, 000, 110]`  
+- Block 3 shards = `[001, 110, 000]`
+
+Each row is stored in a separate code shard (Shard 1, Shard 2, Shard 3). If any single shard fails, you can decode from the remaining two.
+
+#### Decoding an Example
+
+Suppose in Block 2 we lose Shard 2 but keep Shard 1 and Shard 3:
+
+- Known: 
+   - Shard 1 = `001` (decimal 1)  
+   - Shard 3 = `110` (decimal 6)  
+- Corresponding Rows: Rows #1 and #3 in $E$:
 
    $$
-   E = \begin{bmatrix}
-     1 & 1 \\
-     1 & \alpha \\
-     \alpha^2 & \alpha + 1
+   E' = 
+   \begin{bmatrix}
+   1 & 1 \\
+   4 & 5
    \end{bmatrix}
+   \ (\text{in GF}(2^3)).
    $$
-   where $\alpha$ is, say, the polynomial for `010` (`y`), or a chosen root in $GF(2^3)$. The exact picks ensure each 2×2 submatrix is invertible.
 
-- Encoding  
-   For each block of data $\begin{bmatrix} x \\ y \end{bmatrix}$, compute  
-   $$
-   \begin{bmatrix} \text{Shard}_1 \\ \text{Shard}_2 \\ \text{Shard}_3 \end{bmatrix}
-   \;=\;
-   E \times
-   \begin{bmatrix}x\\ y\end{bmatrix}.
-   $$
-   Each $\text{Shard}_i$ is a 3-bit value in $GF(2^3)$, so the total overhead is minimal: just 3 bits per shard, no wasted space.
+- Inverse $E'$:  
+   - We compute $\det(E')$ and do the usual polynomial-based inverse in $GF(2^3)$. (Omitted for brevity, but it’s a standard procedure using polynomial arithmetic or a small lookup table.)  
 
-- Decoding from Any 2 Shards  
-   If shard 1 and shard 3 survive, for example, form the 2X2 submatrix of $E$ from rows 1 & 3, invert it in $GF(2^3)$, then multiply by the corresponding shards to recover $\begin{bmatrix}x \\ y\end{bmatrix}$.
+- Recover Original $\begin{bmatrix}x\\ y\end{bmatrix}$ = $(E')^{-1} \cdot [\text{Shard1}, \text{Shard3}]^T$.  
+
+You’d find $\begin{bmatrix}3\\2\end{bmatrix}$ emerges, confirming the data block `[3,2]` (D, C).
 
 This approach aligns perfectly with the binary data. No “unused permutations” or partial bits are wasted—every possible 3-bit string is a valid element.
 
