@@ -392,7 +392,7 @@ That yields 3 output shards for each block. Let’s do each block in detail:
 
 **Block 1: [2, 2]**
 
-- Data vector: $\begin{bmatrix}2\\2\end{bmatrix}$  
+- Data vector: $[2, 2]$ 
 - Multiply:
 
 - Shard 1 = $[1, 1] \cdot [2, 2]$  
@@ -418,7 +418,7 @@ Thus, Block 1 encodes to Shard vector = $[0,\; 2,\; 2]$.
 
 **Block 2: [3, 2]**
 
-- Data vector: $\begin{bmatrix}3 \\ 2\end{bmatrix}$  
+- Data vector: $[3, 2]$  
 - Multiply:
 
 - Shard 1 = $[1, 1] \cdot [3, 2]$  
@@ -440,7 +440,7 @@ Hence, Block 2 → $[1, 0, 6]$ in decimal, i.e. `[001, 000, 110]` in binary.
 
 **Block 3: [5, 4]**
 
-- Data vector: $\begin{bmatrix}5 \\ 4\end{bmatrix}$  
+- Data vector: $[5, 4]$  
 - Multiply:
 
 - Shard 1 = $[1,1]\cdot [5,4]$  
@@ -501,7 +501,7 @@ Suppose in Block 2 we lose Shard 2 but keep Shard 1 and Shard 3:
 
 - Recover Original $\begin{bmatrix}x\\ y\end{bmatrix}$ = $(E')^{-1} \cdot [\text{Shard1}, \text{Shard3}]^T$.  
 
-You’d find $\begin{bmatrix}3\\2\end{bmatrix}$ emerges, confirming the data block `[3,2]` (D, C).
+You’d find $[3, 2]$ emerges, confirming the data block `[3,2]` (D, C).
 
 This approach aligns perfectly with the binary data. No “unused permutations” or partial bits are wasted—every possible 3-bit string is a valid element.
 
