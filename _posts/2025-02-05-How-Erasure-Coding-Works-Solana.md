@@ -39,7 +39,9 @@ Decentralized blockchain networks often face the scalability trilemma: balancing
 *Flow - Solana's Ledger Architecture, Source: [syndica.io](https://blog.syndica.io/sig-engineering-part-4-solanas-ledger-and-blockstore/?t)*
 ## The Blockstore: A Solana's Decentralized Database
 
-Let's first understand the complete flow of the Solana's ledger architecture. Each validator in Solana runs a Blockstore that manages:
+Let's first understand the complete flow of the Solana's ledger architecture. 
+
+Each validator in Solana runs a Blockstore that manages:
 - Shreds: The atomic data units (roughly 1–2 KB each).  
 - Entries: Small batches of transactions.  
 - Blocks: Collections of entries (or shreds) for each slot (~400 ms).  
@@ -74,9 +76,9 @@ A typical “erasure set” might be 32 data shreds + 32 code shreds (32:32), bu
 
 # Turbine: Solana’s Block Propagation Protocol
 
-Turbine is the mechanism by which shreds (both data and coding) are broadcast to all validators. The central idea is to organize the network in a tree rather than relying on a “one-to-all” or simple gossip mechanism. By doing so, Solana alleviates the bandwidth burden on any single node and improves scalability.
+Turbine is the mechanism by which shreds (both data and coding) are broadcasted to all validators. The central idea is to organize the network in a tree rather than relying on a “one-to-all” or simple gossip mechanism. By doing so, Solana alleviates the bandwidth burden on any single node and improves scalability.
 
-## Turbine Tree: Root Nodes, Layer Formation, and Fallback
+## Turbine Tree: Root Nodes, and Layer Formation
 
 When the leader finishes generating and erasure-coding a shred group, it sends those shreds in a network packet to a special root node. This root node is responsible for figuring out which validators will participate in the first layer of data relay. The overall process includes:
 
@@ -94,7 +96,7 @@ When the leader finishes generating and erasure-coding a shred group, it sends t
 
    Because of this relatively large fanout, most validators are only a couple of hops (often 2 or 3 hops) away from the leader, helping shreds propagate quickly through the network.
 
-The Turbine Tree—known to all—lets each validator determine precisely where it should forward the shred next. The approach strikes a balance between speed (high fanout) and resilience (stake-based prioritization, per-shred randomization). In practice, this yields low-latency, multi-hop propagation that can saturate a global network in mere milliseconds.
+The Turbine Tree lets each validator determine precisely where it should forward the shred next. The approach strikes a balance between speed (high fanout) and resilience (stake-based prioritization, per-shred randomization). In practice, this yields low-latency, multi-hop propagation that can saturate a global network in mere milliseconds.
 
 ## Fallback: Gossip and Repair
 
@@ -127,12 +129,14 @@ While the previous two sections described the “why” and “how,” let’s l
 Solana currently uses [QUIC](https://www.helius.dev/blog/all-you-need-to-know-about-solana-and-quic) for block propagation, but it used to use UDP.  
 
 - UDP (User Datagram Protocol): Historically Solana chose UDP because it has minimal overhead—no handshake, no built-in congestion control, which is desirable for low-latency block propagation.  
-- QUIC: A modern transport layer protocol that runs over UDP but includes congestion control, improved security (TLS 1.3), and more robust error recovery. Solana is exploring QUIC to handle extremely high transaction rates with better reliability than raw UDP alone.
+- QUIC: A modern transport layer protocol that runs over UDP but includes congestion control, improved security (TLS 1.3), and more robust error recovery. Solana switched to QUIC to handle extremely high transaction rates with better reliability than raw UDP alone.
 
 
 ---
 
 # Erasure Coding Mechanics: From Theory to Implementation
+
+If you want to quickly refresh your theoretical foundations on Erasure coding, you can refer to [this article.](https://thogiti.github.io/2025/02/02/Understanding-Erasure-Coding-Math.html)
 
 ## The Alternative: Naive Replication
 Without erasure coding, one might replicate entire blocks to ensure reliability. This quickly becomes prohibitively expensive for large blocks or frequent transmissions, wasting bandwidth and network resources.
@@ -140,7 +144,8 @@ Without erasure coding, one might replicate entire blocks to ensure reliability.
 ## Polynomial Interpolation & Reed–Solomon
 Reed–Solomon Erasure Coding sees each data shred as a point on a polynomial. With a few extra parity points, one can reconstruct the polynomial even if some points (data shreds) are missing. This is significantly more efficient than raw replication and is well-suited for partial loss recovery.
 
-## Data Shreds vs. Code Shreds
+**Data Shreds vs. Code Shreds**
+
 - Data Shreds: Contain the raw transaction data.  
 - Code Shreds: Generated from data shreds using Reed–Solomon codes. By collecting enough total shreds (data + code), nodes can recover any missing data shards.
 
@@ -205,7 +210,7 @@ fn data_shreds_to_coding_shreds(
 }
 ```
 
-A brief explanation on Whats happening:
+Key Steps in the Process: 
 - Groups data shreds by their FEC index.  
 - Uses `get_erasure_batch_size()` to decide how many total shreds (data + coding) are needed.  
 - Generates coding shreds (via Reed–Solomon) in parallel if multiple FEC sets are present.
@@ -356,7 +361,7 @@ Flow Explanation:
 - Reconstructs the missing shards by calling `reconstruct_data()`.  
 - Reassembles recovered bytes into standard data shred objects.
 
-These two diagrams reflect how functions like `data_shreds_to_coding_shreds()`, `generate_coding_shreds()`, and `try_recovery()` interact in practice. They show the end-to-end flow: from ledger entries → data shreds → coding shreds (encoding) and from partial data shreds + coding → full data shreds (decoding/recovery).
+These two diagrams show how functions like `data_shreds_to_coding_shreds()`, `generate_coding_shreds()`, and `try_recovery()` interact in practice. They show the end-to-end flow: from ledger entries → data shreds → coding shreds (encoding) and from partial data shreds + coding → full data shreds (decoding/recovery).
 
 ---
 
@@ -385,13 +390,7 @@ For instance:
 - `ERASURE_BATCH_SIZE[8] = 30` → 8 data + 22 code.
 
 ## Underlying Probability Analysis
-- Reference Standard: 32:32 typically offers ~99%+ block recovery if each shred arrives with ~65% success probability.  
-- Binomial/Combinatorial Analysis:  
-   - Probability that *k* or more shreds arrive out of *n* total.  
-   - The network tests different (data, code) combos to see which ones meet or exceed 32:32’s success threshold.  
-- Lookup Generation:  
-   - For each possible number of data shreds *d*, find the minimal total *n* (data + code) that yields ≥ 99% success under typical packet success probabilities.
-- Each erasure set–and its probability of success–can be found in [this table](https://docs.google.com/spreadsheets/d/1SpzC5c0Uf254FZWKHCFrMPrEKgtyU9-kyuLMmUvlVYs?ref=blog.syndica.io). 
+Solana's reference standard is 32:32 Erasure set as it typically offers ~99%+ block recovery if each shred arrives with ~65% success probability.  
 
 ### The Probability Table
 In [this table](https://docs.google.com/spreadsheets/d/1SpzC5c0Uf254FZWKHCFrMPrEKgtyU9-kyuLMmUvlVYs?ref=blog.syndica.io) a binomial or combinatorial analysis was done for each row (erasure set size) under various network conditions (per-shred success from 1% to 100%). The table shows:
@@ -410,11 +409,13 @@ This is how the code ensures that smaller partial sets (like 1 data shred or 8 d
 
 - Binomial (or Combinatorial) Analysis  
    Each shred’s arrival is (roughly) independent with probability $p$. For an erasure set of size $N = (\text{data} + \text{code})$, you can lose up to $\text{code}$ shreds and still recover. The probability of a successful full recovery can be computed via the binomial distribution:
+
    $$
      \Pr(\text{recover}) 
      \;=\; \sum_{k=0}^{\text{code}} 
      \binom{N}{k} \, p^{(N-k)} \, (1-p)^{k}.
    $$
+   
    Solana’s table or script tests different permutations of data shreds vs. code shreds until it finds the combinations that reach the same target success probability as 32:32.
 
 - Look‐Up for Each Data Count  
@@ -440,7 +441,7 @@ The `ERASURE_BATCH_SIZE` array simply picks the minimal `(data+code)` total that
 ## Performance
 
 ### Bandwidth Efficiency
-- Naive Approach: Re-sending entire blocks is not scalable.  
+- Naive Approach: Re-sending entire blocks is not scalable for blockchains like Solana.  
 - Reed–Solomon Encoding: Typically adds ~50% overhead (e.g., 32:32), achieving ~99% success if each shred has at least a ~65% chance of arriving. This is a significant bandwidth saving over raw duplication, since you only transmit parity data once per FEC set rather than replicating the entire dataset multiple times.
 
 ### Latency Benchmarks
@@ -449,7 +450,7 @@ The `ERASURE_BATCH_SIZE` array simply picks the minimal `(data+code)` total that
 
 ### Storage Optimization
 - Blockstore compresses and indexes shreds for local storage. This is essential because of Solana’s high transaction rate—raw data can grow extremely quickly.  
-- Historical Data may be archived externally, e.g., with IPFS, Filecoin, or dedicated archiver nodes, to reduce the on-chain storage burden on validators.
+- Historical data may be archived externally, e.g., with IPFS, Filecoin, or dedicated archiver nodes, to reduce the on-chain storage burden on validators.
 
 **Solana vs. Ethereum**
 
@@ -501,3 +502,4 @@ By pairing these coding strategies with features like Merkle proofs, signatures,
 - [Firedancer's Reed-Solomon module](https://github.com/firedancer-io/firedancer/pull/244)
 - [Solana and QUIC](https://www.helius.dev/blog/all-you-need-to-know-about-solana-and-quic)
 - [Reed Solomon Codes GitHub repo](https://github.com/rust-rse/reed-solomon-erasure/tree/ac2b561e406fedcccd144a436580921906d3eee9)
+- [Understanding Erasure Coding from First Principles](https://thogiti.github.io/2025/02/02/Understanding-Erasure-Coding-Math.html)
