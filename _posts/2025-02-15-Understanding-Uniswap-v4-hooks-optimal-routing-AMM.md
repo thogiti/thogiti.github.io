@@ -254,6 +254,26 @@ $$
 
 For different shapes of $\sigma^2(\Delta)$, one obtains a curve of “attainable risk vs. return.” As the target $\tau$ increases, the user must allocate more to the non‐composable hook (with presumably better price) but pay more risk. This yields Figures 14–15 in the paper, illustrating how quickly risk grows for superlinear or quadratic variance.
 
+# Why Some Hooks Preserve Convexity, Others Don’t
+
+- Preserves Convexity  
+   - Hooks that produce a $\textit{trading set } T_i$ of the form
+
+   $$
+       T_i \;=\; 
+       \bigl\{\,
+         \Delta \mid 
+         f_j(\Delta) \le 0 \text{ for } j=1,\dots,k
+       \bigr\},
+    $$
+     
+     where each $f_j$ is convex, keep the routing problem a standard convex feasibility. Equivalently, if hooking leads to a forward exchange function $G(\Delta)$ that is concave in $\Delta$, you typically keep the nice convex structure.
+
+- Breaks Convexity
+   - Hooks that produce $\textit{discrete jumps}$, piecewise definitions with discontinuities, or complicated dependencies on block state can yield a non-convex set of feasible $\Delta$.  
+   - Example: “First 10k of volume pays fee 0.3%, then next 20k volume pays 0.5%.” The boundary between 10k and 20k might make the set of $(\Delta_1,\ldots,\Delta_m)$ trades in that block an effectively “mixed-integer” or piecewise problem, which can become $\text{NP-hard}$.
+
+
 ---
 
 # Conclusions
