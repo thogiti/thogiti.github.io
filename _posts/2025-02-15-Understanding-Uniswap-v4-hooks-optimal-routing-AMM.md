@@ -6,7 +6,7 @@ tags: Ethereum uniswap uniswap-v4 uniswap-v4-hooks amm automated-market-making a
 
 For those familiar with Uniswap, you know its power lies in its simplicity: liquidity pools governed by constant function market maker (CFMM) formulas. Recently, [Uniswap V4](https://github.com/Uniswap/v4-core/tree/main/docs/whitepaper) introduced Hooks which are smart contract "extensions" that inject custom logic into these pools. Imagine: dynamic fees adjusting to volatility, on-chain limit orders directly within AMMs, and markets reacting to external data feeds. Hooks are poised to unlock a new level of sophistication and customization in DeFi markets.
 
-A recent paper by [Tarun et.al, "Optimal Routing in the Presence of Hooks: Three Case Studies,"](https://arxiv.org/abs/2502.02059) dives deep into the implications of hooks for optimal trade routing. 
+A recent paper by [Tarun et al., "Optimal Routing in the Presence of Hooks: Three Case Studies,"](https://arxiv.org/abs/2502.02059) dives deep into the implications of hooks for optimal trade routing. 
 
 This paper tackles a crucial question: How do we optimally route trades in this new landscape of hook-enhanced CFMMs? The authors provide rigorous mathematical frameworks and three insightful case studies.
 
