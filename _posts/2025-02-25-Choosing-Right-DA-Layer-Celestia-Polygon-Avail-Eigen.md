@@ -155,7 +155,6 @@ sequenceDiagram
   - ~10-minute finality wait to confirm no withheld data (fraud-proof window).  
   - No *direct* Ethereum enforcement (unless bridging solutions mature).  
 
-> Note on Data Retention: In Celestia, full nodes store data on-chain, but older data might eventually be pruned beyond a certain challenge window. Light nodes only need block headers plus random sampling to confirm new blocks. Archival nodes can keep older data if needed for extended verification.
 
 ## Projects Using Celestia
 Celestia only launched its mainnet in late 2023, but several projects are already building on it. 
