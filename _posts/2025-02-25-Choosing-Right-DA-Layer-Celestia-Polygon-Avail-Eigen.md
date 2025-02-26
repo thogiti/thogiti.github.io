@@ -172,7 +172,7 @@ These early adopters are attracted by Celestia’s low costs and throughput: one
 
 # Polygon Avail
 
-Polygon Avail is another standalone DA chain (initially incubated at Polygon) with a focus on KZG polynomial commitments, offering *faster finality* than Celestia’s fraud-proof approach. Built on Substrate, it uses BABE for block production and GRANDPA for finality (~40 seconds).
+Polygon Avail is another standalone DA chain (initially incubated at Polygon) with a focus on [KZG polynomial commitments](https://thogiti.github.io/2024/03/22/Mastering-KZG-by-hands.html), offering *faster finality* than Celestia’s fraud-proof approach. Built on Substrate, it uses BABE for block production and GRANDPA for finality (~40 seconds).
 
 ## Full Data Availability Flow
 
@@ -473,3 +473,5 @@ As rollups continue to evolve, choosing the right data availability layer can ma
 4. General Comparisons  
    - [The Rollup Newsletter: DA Layers Overview](https://therollup.co/research/exploring-the-data-availability-layer)  
    - [MT Capital Research Report: Celestia vs EigenDA](https://m.theblockbeats.info/en/news/50536)  
+5. KZG
+   - [Mastering KZG PCS](https://thogiti.github.io/2024/03/22/Mastering-KZG-by-hands.html)  
