@@ -168,7 +168,7 @@ Celestia only launched its mainnet in late 2023, but several projects are alread
 
 These early adopters are attracted by Celestia’s low costs and throughput: one analysis noted Celestia was ~64% cheaper per MB than Ethereum’s proto-danksharding blobs over a test period ([conduit.xyz](https://www.conduit.xyz/blog/data-availability-costs-ethereum-blobs-celestia/#:~:text=Data%20Availability%20Costs%3A%20Ethereum%20Blobs,56)). The trade-off, as always, is accepting Celestia’s separate trust domain for DA.
 
-> Note on Data Retention: In Celestia, full nodes store data on-chain, but older data might eventually be pruned beyond a certain challenge window. Light nodes only need block headers plus random sampling to confirm new blocks. Archival nodes can keep older data if needed for extended verification.
+> Note on Data Retention: In Celestia, full nodes store data on-chain, but older data (2+ weeks) might eventually be pruned beyond a certain challenge window. Light nodes only need block headers plus random sampling to confirm new blocks. Archival nodes can keep older data if needed for extended verification.
 
 ---
 
