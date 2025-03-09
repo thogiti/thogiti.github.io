@@ -3,7 +3,6 @@ title: Hook-Enabled Forward Exchange Functions - A Rigorous Mathematical Framewo
 tags: Ethereum uniswap uniswap-v4 uniswap-v4-hooks amm automated-market-making automated-market-maker amm-v4-hooks optimal-routing-amm hook-enabed-forward-exchange-functions CFMM  smart-routing-CFMM provably-improving-hooks better-hooks-CFMM
 ---
 
-# WIP - WORK IN PROGRESS
 
 # Introduction - The Evolution of Automated Market Makers 
 
@@ -119,13 +118,13 @@ These hooks expand the set of possible trades, but when does this actually impro
 
 ## Definition of Provably Improving Hooks
 
-For a hook to provably improve routing, we require three fundamental properties:  
+For a hook to **provably improve routing**, we require three fundamental properties:  
 
 1. No worse on any trade size: $\tilde{\phi}(x) \geq \phi(x)$ for all $x \geq 0$.  
    - Meaning: The modified exchange function never offers a worse rate than the original.  
    - Why it matters: This ensures that users are never forced into a suboptimal trade.  
 
-2. Strict improvement on some trade sizes: There exists $x^*$ such that $\tilde{\phi}(x^*) > \phi(x^*)$.  
+2. Strict improvement on some trade sizes: There exists $x^\*$ such that $\tilde{\phi}(x^\*) > \phi(x^\*)$.  
    - Meaning: The hook must provide a strictly better rate for at least one trade size.  
    - Why it matters: Otherwise, the hook doesn’t expand the feasible trade set, making it functionally useless.  
 
@@ -175,7 +174,7 @@ This is guaranteed if:
 2. There exists a price improvement $h(x) > 0$ over some trade region.  
 3. The aggregator retains optionality: If the hook isn't beneficial, it can be ignored.  
 
-Thus, we can formally define the set of provably improving hooks as follows:  
+Thus, we can formally define **the set of provably improving hooks** as follows:  
 
 $$
 \mathcal{H}(\phi) = \Big\{ \tilde{\phi} \colon \mathbb{R}_+ \to \mathbb{R}_+  \; \Big| \;  \tilde{\phi}(x) \geq \phi(x) \; \forall x, \quad \tilde{\phi} \text{ is concave and nondecreasing}, \quad \exists x^* \text{ s.t. } \tilde{\phi}(x^*) > \phi(x^*) \Big\}.
@@ -267,7 +266,8 @@ Thus, we have mathematically established that:
 Now, let’s formalize the main theorem that guarantees hook-modified forward exchange functions improve routing while preserving convex solvability.  
 
 ## Theorem (Provably Improved Routing)  
-Let $\{ \phi_i \}_{i=1}^{m}$ be the original forward exchange functions for $m$ CFMM pools. Suppose we modify them via hooks, yielding new functions $\{ \tilde{\phi}_i \}_{i=1}^{m}$, where each $\tilde{\phi}_i$ belongs to the set $\mathcal{H}(\phi_i)$. Define the new feasible trade sets:  
+
+Let $\{ \phi_i \}_{i=1}^{m}$ be the original forward exchange functions for $m$ CFMM pools. Suppose we modify them via hooks, yielding new functions $\{ \tilde{\phi}\_i \}\_{i=1}^{m}$, where each $\tilde{\phi}_i$ belongs to the set $\mathcal{H}(\phi_i)$. Define the new feasible trade sets:  
 
 $$
 \tilde{T}_i = \{(x,y) \in \mathbb{R}_+^2 \;|\; y \leq \tilde{\phi}_i(x) \}.
