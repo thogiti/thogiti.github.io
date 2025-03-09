@@ -1,5 +1,5 @@
 ---
-title: Hook-Enabled Forward Exchange Functions - A Rigorous Mathematical Framework for Optimal Routing in Uniswap v4
+title: Provably Improving Hook-Enabled Forward Exchange Functions - A Rigorous Mathematical Framework for Optimal Routing in Uniswap v4
 tags: Ethereum uniswap uniswap-v4 uniswap-v4-hooks amm automated-market-making automated-market-maker amm-v4-hooks optimal-routing-amm hook-enabed-forward-exchange-functions CFMM  smart-routing-CFMM provably-improving-hooks better-hooks-CFMM
 ---
 
