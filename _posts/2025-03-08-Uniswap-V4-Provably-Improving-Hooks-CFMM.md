@@ -370,3 +370,9 @@ Thus, hook-enabled CFMMs extend the efficient routing frontier, just like portfo
 Uniswap v4's hook-enabled forward exchange functions are more than just a technical curiosity—they’re a fundamental upgrade to how decentralized trading works. By expanding the set of mathematically provable trade improvements, Uniswap is bringing a more flexible, efficient, and customizable AMM system to DeFi.  
 
 
+# References
+- [Chitra, Tarun et al., "Optimal Routing in the Presence of Hooks: Three Case Studies, 2025."](https://arxiv.org/abs/2502.02059)
+- [Diamandis et al., An Efficient Algorithm for Optimal Routing Through Constant Function Market Makers, 2023.](https://arxiv.org/abs/2302.04938)
+- [Guillermo Angeris et al., An analysis of Uniswap markets, 2021](https://arxiv.org/abs/1911.03380)
+- [Uniswap V4](https://github.com/Uniswap/v4-core/tree/main/docs/whitepaper)
+- [ Guillermo Angeris et al., When Does The Tail Wag The Dog? Curvature and Market Making, 2022.](https://cryptoeconomicsystems.pubpub.org/pub/angeris-curvature-market-making/release/2)
