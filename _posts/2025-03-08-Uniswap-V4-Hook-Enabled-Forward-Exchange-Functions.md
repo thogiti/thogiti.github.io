@@ -132,10 +132,29 @@ For a hook to **provably improve routing**, we require three fundamental propert
    - Meaning: The modified function still behaves like a well-defined market: larger trades do not yield increasing marginal returns.  
    - Why it matters: Ensuring concavity guarantees that the aggregator’s global routing problem remains convex, which means it is still solvable in polynomial time.  
 
+Thus, we can formally define **the set of provably improving hooks** as follows:  
+
+$$
+\mathcal{H}(\phi) = \Big\{ \tilde{\phi} \colon \mathbb{R}_+ \to \mathbb{R}_+  \; \Big| \;  \tilde{\phi}(x) \geq \phi(x) \; \forall x, \quad \tilde{\phi} \text{ is concave and nondecreasing}, \quad \exists x^* \text{ s.t. } \tilde{\phi}(x^*) > \phi(x^*) \Big\}.
+$$
+
+This is the set of all hook-enabled forward exchange functions that provably improve routing.  
+
+
+If $\tilde{\phi} \in \mathcal{H}(\phi)$, routing is **provably improved**.  
+
+- Hooks in $\mathcal{H}(\phi)$ guarantee traders never get a worse rate.  
+- If $\tilde{\phi}(x) > \phi(x)$, routing strictly improves. 
+- Concavity ensures optimal routing remains solvable.
+- If $\tilde{\phi} \notin \mathcal{H}(\phi)$, the hook either degrades routing or breaks solvability.  
+
+
+
+# Mathematical Proof of Provably Improved Routing
 
 ## The Formal Optimization Problem
 
-A trader’s job is to find the best route across multiple liquidity pools:
+A trader’s job is to find the best route across multiple liquidity pools, optimizing their utility function $U(x)$:
 
 $$
 \max_{x \in \mathbb{R}_+^N} U(x) \quad \text{subject to} \quad x \in \mathcal{F}(\phi).
@@ -152,7 +171,7 @@ $$
 \mathcal{F}(\tilde{\phi}) = \{(x, y) \in \mathbb{R}_+^2 \;|\; y \leq \tilde{\phi}(x) \}.
 $$
 
-Since $\tilde{\phi}(x) \geq \phi(x)$ by definition, the new feasible set is always larger.  
+Since $\tilde{\phi}(x) \geq \phi(x)$ by definition, the new feasible set is always larger,  $\mathcal{F}(\tilde{\phi}) \supset \mathcal{F}(\phi)$.  
 
 Thus, the optimal routing solution improves:  
 
@@ -174,22 +193,13 @@ This is guaranteed if:
 2. There exists a price improvement $h(x) > 0$ over some trade region.  
 3. The aggregator retains optionality: If the hook isn't beneficial, it can be ignored.  
 
-Thus, we can formally define **the set of provably improving hooks** as follows:  
-
-$$
-\mathcal{H}(\phi) = \Big\{ \tilde{\phi} \colon \mathbb{R}_+ \to \mathbb{R}_+  \; \Big| \;  \tilde{\phi}(x) \geq \phi(x) \; \forall x, \quad \tilde{\phi} \text{ is concave and nondecreasing}, \quad \exists x^* \text{ s.t. } \tilde{\phi}(x^*) > \phi(x^*) \Big\}.
-$$
-
-This is the set of all hook-enabled forward exchange functions that provably improve routing.  
-
-- If $\tilde{\phi} \in \mathcal{H}(\phi)$, routing is strictly better.
-- If $\tilde{\phi} \notin \mathcal{H}(\phi)$, the hook either degrades routing or breaks solvability.  
-
-
 
 ---
 
 ## Variational Proof of Routing Improvement
+
+Now, let’s prove this rigorously using optimization techniques.
+
 
 ### KKT Conditions & Their Importance  
 
@@ -355,6 +365,7 @@ Thus, hook-enabled CFMMs extend the efficient routing frontier, just like portfo
 - Hooks strictly expand the set of possible trades.  
 - Hooks never make routing worse (traders can always ignore them).  
 - Hooks shift the execution frontier outward (better execution quality).  
+- Mathematically, provably improving hooks guarantee optimal routing remains convex and solvable.
 
 Uniswap v4's hook-enabled forward exchange functions are more than just a technical curiosity—they’re a fundamental upgrade to how decentralized trading works. By expanding the set of mathematically provable trade improvements, Uniswap is bringing a more flexible, efficient, and customizable AMM system to DeFi.  
 
