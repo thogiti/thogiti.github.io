@@ -3,9 +3,6 @@ title: Why "Bad" Ideas are Good for Solana - A Journey Through Transaction Prior
 tags: Solana fee-markets solana-fee-markets solana-transaction-prioritization solana-priority-fees simd-253 transaction-stuffing solana-mechanisms
 ---
 
-# WIP - WORK IN PROGRESS
-
-
 # Why Explore “Bad” Ideas?
 
 In the world of high-throughput blockchain design—especially on Solana—people often focus on polished final solutions that “just work.” But that mindset can stifle creativity and blind us to alternative approaches. What if we took a fearless dive into the entire design space, including half-baked or experimental ideas? Sure, many of them won’t survive deeper scrutiny—some might even be called “bad.” Yet every attempt, success or failure, helps us uncover hidden constraints, new angles, and why certain mechanisms succeed under pressure.
