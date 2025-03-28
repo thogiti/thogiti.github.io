@@ -382,7 +382,9 @@ Each product $7 \times \alpha$ is computed using polynomial multiplication modul
    $$  
    This confirms $7^{-1} = 5$.
 
-### Inverse Test Results
+**Inverse Test Results**
+
+
 | Candidate $\alpha$ | Compute $7 \times \alpha$ | Result |
 |------------------------|--------------------------------|--------|
 | `001` (1)              | 7                              | ≠ 1    |
