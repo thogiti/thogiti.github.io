@@ -302,8 +302,8 @@ Now, lets understand how arithmetic operations work in $GF(2^3)$.
      $$
        (y^2 + y) \;\times\; (y^2 + y + 1)
        = (y^4 + y^3 + y^2) + (y^3 + y^2 + y)
-       =(y^4 +  y) = y*(y^3 + 1) 
-       \\ = y*(y + 1 + 1) = y*y = y^2
+       =(y^4 +  y) = y*(y^3 + 1) \\
+       = y*(y + 1 + 1) = y*y = y^2
        \;\;\text{mod}\;\; (y^3 + y +1).
      $$
      
