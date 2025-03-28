@@ -302,8 +302,10 @@ Now, lets understand how arithmetic operations work in $GF(2^3)$.
      $$
        (y^2 + y) \;\times\; (y^2 + y + 1)
        = (y^4 + y^3 + y^2) + (y^3 + y^2 + y)
-       =(y^4 +  y) = y*(y^3 + 1) \\
-       = y*(y + 1 + 1) = y*y = y^2
+       =(y^4 +  y)
+      $$ 
+      
+      $$ = y*(y^3 + 1) = y*(y + 1 + 1) = y*y = y^2
        \;\;\text{mod}\;\; (y^3 + y +1).
      $$
      
@@ -679,7 +681,7 @@ E = [
 ```
 
 Encoding:
-```plaintext
+```python
 function encode_block(data_vector):
     # data_vector has length 2 in GF(8)
     # encoder_matrix E is 4 x 2
@@ -689,7 +691,7 @@ function encode_block(data_vector):
 ```
 
 Decoding:
-```plaintext
+```python
 function decode_shards(shards_subset, row_indices):
     # shards_subset has length K=2 (any 2 shards from the 4)
     # row_indices is which rows of E they came from (e.g., [0,2])
