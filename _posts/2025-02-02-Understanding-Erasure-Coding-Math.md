@@ -333,7 +333,7 @@ $$
 $$
 
 
-Step 1: Represent Numbers as Binary & Polynomials
+**Step 1: Represent Numbers as Binary & Polynomials**
 
 Let's map each number to its 3-bit binary string and then to the corresponding polynomial in $y$:
 
@@ -351,7 +351,7 @@ where $7^{-1}$ is defined by $7 \times 7^{-1} = 1$.
 
 
 
-Step 2: Find the Inverse of 7 ($7^{-1}$)
+**Step 2: Find the Inverse of 7 ($7^{-1}$)**
 
 We test all non-zero elements to find $\alpha$ such that $7 \times \alpha = 1$.
 
@@ -423,6 +423,7 @@ Hence we get,
 $$
 \frac{6}{7} = 3 \quad \text{in} \quad GF(2^3).
 $$  
+
 *(Binary: `110 ÷ 111 = 011`)*
 
 
