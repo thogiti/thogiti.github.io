@@ -25,6 +25,10 @@ Hence, in crypto, if perpetual swaps are trailing in price discovery metrics—e
 
 # The Main Assumptions About Perpetual Swaps vs. CME
 
+![CME Bitcoin Futures VS Binance Perps](https://pbs.twimg.com/media/Gnt__SpbYAIcvBD?format=png&name=small)
+
+*Source: [@defiance_cr](https://x.com/defiance_cr/status/1908275362582368401?s=46)*
+
 [Recent analysis](https://x.com/defiance_cr/status/1908275362582368401?s=46) highlights that BTC perpetual swaps, despite enormous nominal volumes, may be losing the price discovery battle to CME futures. Below are the key assumptions driving that conclusion:
 
 
