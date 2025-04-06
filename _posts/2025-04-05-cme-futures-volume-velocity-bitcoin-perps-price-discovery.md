@@ -249,7 +249,7 @@ anchors the perpetual price $P_{\text{perp},t}$ tightly to an external spot inde
 
 **Modification A: Remove or Reduce the Base Rate**
 
-1. Removing $r_{\mathrm{base}}$ entirely:
+A1. Removing $r_{\mathrm{base}}$ entirely:
    
    $$
      \text{FundingRate}_t^{\text{(new)}} 
@@ -268,7 +268,7 @@ anchors the perpetual price $P_{\text{perp},t}$ tightly to an external spot inde
 
 *Note: A high base rate once helped mitigate counterparty risks and encourage more short liquidity, but in a maturing environment, that cost now hampers price discovery leadership.*
 
-2. Dynamic or Zero Base Rate in *uptrend scenarios*:
+A2. Dynamic or Zero Base Rate in *uptrend scenarios*:
    - Exchanges might allow the base rate to *float near zero* when short‐term volatility $\sigma_{\text{short}}$ is above some threshold, effectively relaxing the penalty for leading during highly volatile periods. 
    - The dynamic base rate function could be 
      
@@ -282,7 +282,7 @@ anchors the perpetual price $P_{\text{perp},t}$ tightly to an external spot inde
 
 **Modification B: Introduce Adaptive (Volatility‐Based) Clamps**
 
-1. Volatility‐Scaled Clamp: 
+B1. Volatility‐Scaled Clamp: 
 
    $$
      \mathrm{Clamp}\Bigl(p_t,\;\pm \delta\sigma_{\text{short}}\Bigr),
@@ -293,7 +293,7 @@ anchors the perpetual price $P_{\text{perp},t}$ tightly to an external spot inde
    - Expected Outcome: A less rigid clamp can reduce the negative feedback loop on fast information incorporation, thus increasing the perp’s potential to “lead” for a short window.
 
 
-2. Time‐Weighted Premiums: Instead of using the spot difference at a single moment, the exchange might average $p_t$ over a short time window (e.g., 5 minutes) to avoid penalizing a *sudden but justified* jump.
+B2. Time‐Weighted Premiums: Instead of using the spot difference at a single moment, the exchange might average $p_t$ over a short time window (e.g., 5 minutes) to avoid penalizing a *sudden but justified* jump.
 
 Backtesting or Experimentation:  
 - Exchanges can replay historical data in a hypothetical environment where the modified funding formula is applied.  
@@ -376,7 +376,7 @@ Despite complexities, exchanges or independent researchers can systematically te
   - If the *synthetic* perp consistently exhibits a higher share of price discovery in key windows—especially around news events—this suggests the design improvements help the perp *lead* rather than *follow*.  
 - Statistical Significance: Conduct bootstrapped standard errors or *rolling window analysis* to confirm the observed changes in price discovery are robust across different market conditions (bullish runs, sideways action, or heavy volatility).
 
-**Iterative Parameter Tuning  **
+**Iterative Parameter Tuning**
 - Example: Vary $\delta$ in increments (e.g., 0.025%, 0.05%, 0.10%) or test different averaging windows $T$ (5, 15, 30 minutes) for the TWAP index.  
 - Measure: Which setting yields the best trade‐off between (1) minimal funding volatility and (2) maximal short‐term reactivity?
 
@@ -386,6 +386,8 @@ Because direct references to published results might be lacking or proprietary, 
 ---
 
 ## Potential Outcomes and Next Steps
+
+We can expect several improved outcomes from these experiments.
 
 - Higher Information Leadership Share: By lowering the mechanical penalty for short‐term deviations and smoothing the index, a perp might capture a bigger fraction of new information first, demonstrated by a higher ILS or IS in controlled simulations.  
 - Reduced Funding Volatility: Dynamically adjusting clamps or using a TWAP index generally produces less abrupt funding rate spikes, *benefiting* both liquidity providers and directional traders.  
@@ -412,7 +414,7 @@ In conclusion, these policy and design changes aim to eliminate structural frict
 # References
 - [Price discovery in bitcoin futures](https://www.sciencedirect.com/science/article/abs/pii/S0275531919305628)
 - [Price discovery in Bitcoin: The impact of unregulated markets](https://www.sciencedirect.com/science/article/pii/S1572308920300759)
-- https://x.com/defiance_cr/status/1908275362582368401?s=46
+- [A weakness at the heart of Bitcoin Perpetual Swaps](https://x.com/defiance_cr/status/1908275362582368401?s=46)
 - [Co-Integration and Error Correction - Representation, Estimation, and Testing](https://www.jstor.org/stable/1913236)
 - [Estimation of Common Long-Memory Components in Cointegrated Systems](https://www.jstor.org/stable/1392518)
 - [Cointegration, Error Correction, and Price Discovery on Informationally Linked Security Markets](https://www.jstor.org/stable/2331277)
