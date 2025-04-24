@@ -221,3 +221,5 @@ Looking ahead, we may see hybrid solutions that use TEEs alongside decentralized
 - [Espresso Sequencer](https://hackmd.io/@EspressoSystems/EspressoSequencer)
 - [Anatomy of Decentralized Sequencers](https://blog.kroma.network/decentralized-sequencers-d2a4aeaf1084)
 - [TeeRollup - Efficient Rollup Design Using Heterogeneous TEE](https://arxiv.org/html/2409.14647v1)
+- [Aztec Fernet Announcement](https://medium.com/aztec-protocol/announcing-fernet-aztecs-decentralized-sequencer-selection-protocol-dd06194d572f)
+- [BlockScience PDF on Sequencer Sets](https://arxiv.org/pdf/2310.03616)
