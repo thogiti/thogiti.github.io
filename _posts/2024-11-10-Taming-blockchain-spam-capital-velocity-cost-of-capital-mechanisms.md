@@ -165,7 +165,7 @@ Gas-only fee markets fight spam with a single blunt instrument that loses effect
 
 [^3]: [Polygon's transaction volume drops by 50% following gas fees hike.](https://cryptonary.com/polygons-transaction-volume-drops-by-50-following-gas-fees-hike/)
 
-[^4]: [Asynchronous Execution | Monad Developer Documentation.](https://docs.monad.xyz/monad-arch/consensus/asynchronous-execution)
+[^4]: [Asynchronous Execution - Monad Developer Documentation.](https://docs.monad.xyz/monad-arch/consensus/asynchronous-execution)
 
 [^5]: [Tokenized Vault Standard.](https://ethereum.org/en/developers/docs/standards/tokens/erc-4626/)
 
