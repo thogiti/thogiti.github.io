@@ -1,6 +1,6 @@
 ---
 title:  Taming Blockchain Spam - How Capital Velocity and Cost of Capital Rewrite Fee Markets
-tags: Ethereum Solana Rollups MEV blockchain-spam capital-velocity velocity-of-money cost-of-capital reduce-spam-blockchain Solana local-fee-markets multi-dimensional-fee-markets blockchain-spam-mitigation capital-velocity-DeFi cost-of-capital-spammers MEV-spam-economics
+tags: Ethereum Solana Rollups MEV blockchain-spam capital-velocity velocity-of-money cost-of-capital reduce-spam-blockchain Solana-local-fee-markets multi-dimensional-fee-markets blockchain-spam-mitigation capital-velocity-DeFi cost-of-capital-spammers MEV-spam-economics
 ---
 
 
@@ -47,7 +47,7 @@ where $K$ is the principal temporarily encumbered, $r$ a risk-free staking yield
 
 **How it helps spammers**: Spammers, who send thousands of transactions in a short period, take advantage of this high velocity. They can use a relatively small amount of capital to fund a massive number of spam transactions by rapidly recycling their funds. They don't need to have the total cost of all their spam transactions on hand at once.
 
-## Cost of Capital
+## Cost of capital
 
 **What it is**: The cost of capital is the minimum return an investment must earn to be profitable. For a spammer, this is the opportunity cost of the funds they have tied up for gas fees. If that capital wasn't being used for spam, it could be earning a return elsewhere ( e.g., through staking).
 
@@ -111,7 +111,7 @@ $$
 \text{MaxGas}\times\text{GasPrice}
 $$
 
-in the user’s balance. Actual execution happens in block $N+1$; the surplus (MaxGas – ActualGas)×GasPrice is released only after a further delay of about ten blocks.[^4]
+in the user’s balance. Actual execution happens in block $N+1$; the surplus (MaxGas – ActualGas)×GasPrice is released only after a further delay of about ten blocks[^4].
 
 Economically this is a built-in $K_{\text{req}}$ equal to the worst-case gas and a $T_{\text{lock}}$ of roughly ten blocks. Validators report that bursty DDoS-style spam fizzles out unless the attacker pre-funds a much larger bankroll than on a conventional EVM chain. Honest wallets sending one transaction every few minutes rarely notice the hold.
 
@@ -148,14 +148,14 @@ Requiring every transaction to lock extra capital for a few blocks is conceptual
 
 *Third*, let high-frequency actors salvage idle yield.  A DEX router or oracle that legitimately pushes hundreds of updates per minute will always have some fraction of its capital sitting in the “cool-down” queue.  Wrapping the escrow in an ERC-4626-style[^5] token turns that idle slice into a yield-bearing asset; the protocol can even redirect the staking rewards to the escrow owner, so the economic penalty is purely the *illiquidity*, not the lost yield.
 
-With these three layers, pay-master wallets, batch-level bonding, and yield-bearing escrow tokens, the liquidity-lock mechanism enforces the desired opportunity cost on spammers **without** resurfacing fee-management complexity to ordinary users and without starving legitimate power-users of capital efficiency.
+With these three layers, pay-master wallets, batch-level bonding, and yield-bearing escrow tokens, the liquidity-lock mechanism enforces the desired opportunity cost on spammers without resurfacing fee-management complexity to ordinary users and without starving legitimate power-users of capital efficiency.
 
 
 ---
 
 # Conclusion
 
-Gas-only fee markets fight spam with a single blunt instrument that loses effectiveness exactly when MEV spikes. By explicitly pricing *liquidity*—how much capital an attacker must front—and *time*—how long that capital stays inert—multi-dimensional fee markets restore leverage to protocol designers. They raise the bar for bots yet leave everyday transactions inexpensive. In the current era of throughput arms-race, ignoring these extra dimensions means repeating Solana’s and Polygon’s hard-won lessons; embracing them is how the next wave of high-performance chains will stay both fast **and** clean.
+Gas-only fee markets fight spam with a single blunt instrument that loses effectiveness exactly when MEV spikes. By explicitly pricing *liquidity*—how much capital an attacker must front—and *time*—how long that capital stays inert—multi-dimensional fee markets restore leverage to protocol designers. They raise the bar for bots yet leave everyday transactions inexpensive. In the current era of throughput arms-race, ignoring these extra dimensions means repeating Solana’s and Polygon’s hard-won lessons; embracing them is how the next wave of high-performance chains will stay both fast and clean.
 
 # References 
 
