@@ -14,15 +14,15 @@ Both incidents highlight a structural weakness of modern high-throughput, low-fe
 
 # A minimal economic model of spam
 
-Suppose a bot fires off $N$ transactions per block, each with success probability $w$ and profit $P_{*}$ if it lands in the “right” slot of the ordering. The direct cost is the gas fee $G_{\text{cost}}=\text{GasPrice}\times\text{GasUsed}$. Total expected profit in that block is
+Suppose a bot fires off $N$ transactions per block, each with success probability $w$ and profit $P_b$ if it lands in the “right” slot of the ordering. The direct cost is the gas fee $G_{\text{cost}}=\text{GasPrice}\times\text{GasUsed}$. Total expected profit in that block is
 
 $$
-\Pi = N\bigl(w P_{*}-G_{\text{cost}}\bigr).
+\Pi = N\bigl(w P_b-G_{\text{cost}}\bigr).
 $$
 
-As long as $w P_{*} > G_{\text{cost}}$ the bot will scale $N$ upward until some external bottleneck, CPU, mempool bandwidth or the chain’s own admission control, pushes back. Two observations make this inequality stubborn:
+As long as $w P_b > G_{\text{cost}}$ the bot will scale $N$ upward until some external bottleneck, CPU, mempool bandwidth or the chain’s own admission control, pushes back. Two observations make this inequality stubborn:
 
-* **Volatility coupling.**  During market turbulence the MEV upside $P_{*}$ rises quickly. Gas prices do rise too, but empirical data show the spike in MEV often outpaces the spike in gas, keeping $w P_{*}-G_{\text{cost}}$ positive.
+* **Volatility coupling.**  During market turbulence the MEV upside $P_b$ rises quickly. Gas prices do rise too, but empirical data show the spike in MEV often outpaces the spike in gas, keeping $w P_b-G_{\text{cost}}$ positive.
 * **No cost of capital.**  After a transaction settles the bot immediately recycles the same principal for the next attempt. Opportunity cost is effectively zero as long as settlement is atomic and instantaneous.
 
 Fee markets attack only the $G_{\text{cost}}$ term; they leave the second factor untouched. This single-dimensional lever therefore runs out of head-room exactly when spam pressure is highest.
@@ -94,7 +94,7 @@ A more robust defense prices not only *computation* (gas) but also *liquidity* (
 With both levers the profitability test becomes
 
 $$
-w P_{*} \;\le\; G_{\text{cost}} + K_{\text{req}} r T_{\text{lock}},
+w P_b \;\le\; G_{\text{cost}} + K_{\text{req}} r T_{\text{lock}},
 $$
 
 so a protocol can kill spam by making either $K_{\text{req}}$ or $T_{\text{lock}}$ grow until the right-hand side outruns the left—*without* touching the base gas price that every honest user pays.
