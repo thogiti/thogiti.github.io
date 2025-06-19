@@ -144,7 +144,7 @@ A spammer must lock $K_{\text{req}}$ per transaction.  His flood of transactions
 - Because $r_t^{\text{lin}}$ is linear, it can fall very quickly—meaning yield dries up exactly when the vault is richest.
 
 
-#### **Who actually borrows from the `ASSET / kASSET` pool?**
+### **Who actually borrows from the `ASSET / kASSET` pool?**
 
 Only actors who need **atomic, single-block liquidity**—capital they can grab *and* repay inside the very same transaction—are willing to pay the pool’s instant slippage + fee:
 
@@ -157,7 +157,7 @@ Only actors who need **atomic, single-block liquidity**—capital they can grab 
 For them, the vault is a native, protocol-secured flash-loan desk with predictable pricing; paying a few bps of slippage plus the vault fee is trivial compared with the arbitrage or liquidation spread they capture.
 
 
-#### **What if the vault price is still too cheap and spam remains profitable?**
+### **What if the vault price is still too cheap and spam remains profitable?**
 
 Let the expected spam profit per tx be $P_{\text{exp}}$.
 The attacker’s net gain is
@@ -176,7 +176,7 @@ The defense loop is two-layered:
 Because $\gamma$ is small but can be applied repeatedly, the system never lets the price linger in a non-deterring zone for more than a handful of blocks.
 
 
-#### **Where does the positive yield for lockers come from?**
+### **Where does the positive yield for lockers come from?**
 
 There is no inflation, no magic printing here: **all yield is paid by the borrowers.**
 
