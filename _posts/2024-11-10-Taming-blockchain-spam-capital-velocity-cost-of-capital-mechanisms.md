@@ -111,7 +111,7 @@ $$
 \text{MaxGas}\times\text{GasPrice}
 $$
 
-in the user’s balance. Actual execution happens in block $N+1$; the surplus (MaxGas – ActualGas)×GasPrice is released only after a further delay of about ten blocks[^4].
+in the user’s balance. Actual execution happens in block $N+1$; the surplus $(MaxGas – ActualGas)*GasPrice$ is released only after a further delay of about ten blocks[^4].
 
 Economically this is a built-in $K_{\text{req}}$ equal to the worst-case gas and a $T_{\text{lock}}$ of roughly ten blocks. Validators report that bursty DDoS-style spam fizzles out unless the attacker pre-funds a much larger bankroll than on a conventional EVM chain. Honest wallets sending one transaction every few minutes rarely notice the hold.
 

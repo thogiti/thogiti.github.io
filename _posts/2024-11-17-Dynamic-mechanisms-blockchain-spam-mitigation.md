@@ -143,6 +143,51 @@ A spammer must lock $K_{\text{req}}$ per transaction.  His flood of transactions
 - Yield equals $r_t^{\text{lin}}\times V_t$ and can be routed to the treasury or burned.
 - Because $r_t^{\text{lin}}$ is linear, it can fall very quickly—meaning yield dries up exactly when the vault is richest.
 
+
+#### **Who actually borrows from the `ASSET / kASSET` pool?**
+
+Only actors who need **atomic, single-block liquidity**—capital they can grab *and* repay inside the very same transaction—are willing to pay the pool’s instant slippage + fee:
+
+| Borrower archetype        | Why the vault is perfect                                                                                                              |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **Arbitrageur**           | Buys on cheap DEX, sells on expensive DEX in one bundle; needs bulk `ASSET` for the first leg and repays with proceeds of the second. |
+| **Liquidator**            | Repays a delinquent loan on Aave/Compound, claims collateral at discount, then sells it—all atomically.                               |
+| **Flash-loan strategist** | Executes collateral swaps, debt refinancing, or multi-step MEV tricks that momentarily require more capital than the wallet owns.     |
+
+For them, the vault is a native, protocol-secured flash-loan desk with predictable pricing; paying a few bps of slippage plus the vault fee is trivial compared with the arbitrage or liquidation spread they capture.
+
+
+#### **What if the vault price is still too cheap and spam remains profitable?**
+
+Let the expected spam profit per tx be $P_{\text{exp}}$.
+The attacker’s net gain is
+
+$$
+\Pi = P_{\text{exp}} - \bigl(G_{\text{cost}} + K_{\text{req}}\cdot P_{k\!A}\bigr),
+$$
+
+where $P_{k\!A}$ is the vault’s **implicit interest cost** (price discount of `kASSET`). If $\Pi>0$ they will keep spamming.
+
+The defense loop is two-layered:
+
+1. **Curve defense (automatic).** Every new spam tx mints more `kASSET`, pushes $P_{k\!A}$ down, and steepens its own future borrowing cost *convexly*.
+2. **Governor defense (explicit).** If price still sinks below the comfort floor $P_{\min}$, the governor multiplies next-block $K_{\text{req}}$ by $(1+\gamma)$. Even with $P_{k\!A}\!\approx0$, a 2× or 4× jump in collateral wipes out $\Pi$ or demands a bankroll most spammers won’t post.
+
+Because $\gamma$ is small but can be applied repeatedly, the system never lets the price linger in a non-deterring zone for more than a handful of blocks.
+
+
+#### **Where does the positive yield for lockers come from?**
+
+There is no inflation, no magic printing here: **all yield is paid by the borrowers.**
+
+- **Swap fee stream.** Every `ASSET ↔ kASSET` trade clips a 0.3 % (configurable) LP fee that accrues to the pool.
+- **Convex-pricing rent.** Borrowers slide down the constant-product curve; the geometric-mean payoff they leave behind is economic surplus captured by LP shares.
+
+Those LP tokens are auto-held by whoever’s capital is currently locked; when a user’s $T_{\text{lock}}$ expires, they redeem 1 `kASSET` → 1 `ASSET` **plus** their pro-rata share of accumulated fees. It is, in effect, an on-chain MEV rebate: the profit that would have gone to external flash-loan providers or to miner-extracted priority fees is recycled back to the people whose collateral defends the chain.
+
+*Borrowers* pay for the privilege of instant liquidity; *lockers* earn that payment; the protocol only steps in when the curve itself no longer disciplines spam.
+
+
 Let's summarize the benefits and challenges with the model 2A.
 
 - **Pros**
@@ -152,7 +197,7 @@ Let's summarize the benefits and challenges with the model 2A.
 - **Cons**
   - Rate collapses *too* fast as $V_t$ grows, so governor must intervene often.
   - Single exogenous parameter $D$ must be estimated and can drift over time.
-  - Large discrete jumps in $K_{\text{req}}$ risk oscillatory behaviour if $\gamma$ is mis-tuned.
+  - Large discrete jumps in $K_{\text{req}}$ risk oscillatory behavior if $\gamma$ is mis-tuned.
 
 ---
 
@@ -273,6 +318,23 @@ The auction creates a powerful incentive to not over-secure the network. Since t
 - **Cons:**
     - **Whale Manipulation:** A wealthy actor could potentially sway the auction. However, the slashing mechanism makes this extremely risky; if their chosen parameters lead to instability, their massive bond will be slashed.
     - **Requires Critical Mass:** The system's security relies on a sufficiently large and liquid pool of bonding capital to make the auction meaningful and manipulation prohibitively expensive.
+
+# Profit-sharing as MEV redistribution
+
+Both vault designs generate an **excess value stream** that did not exist in the static-escrow world:
+
+- the linear vault accrues one-block **interest** on every flash loan;
+- the CP-AMM vault earns **swap fees** (and, with concentrated liquidity, a tighter gamma-bleed rebate).
+
+Because that revenue is created by transactions jostling for priority, it is effectively **“soft MEV”** captured by the protocol.  Sharing it back with the very wallets whose capital underwrites the defense turns the anti-spam cost into a **positive-sum redistribution loop**:
+
+| Step                | How it works                                                                                                                                                                                                                                         | Typical cadence |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| **1. Accrue**       | Interest or LP fees accumulate as additional vault shares.                                                                                                                                                                                           | Every block     |
+| **2. Harvest**      | A keeper or scheduled function converts surplus shares back to `ASSET`.                                                                                                                                                                              | Daily / weekly  |
+| **3. Redistribute** |  • Pro-rata to all addresses with active locks (simple LP model).<br> • Stream to a pay-master that auto-pays part of their next gas/lock fee (gas subsidy).<br> • Route to a public-goods treasury or burn address if governance prefers deflation. | Same as harvest |
+
+On-chain accounting is trivial: each lock already mints `kASSET` (or an LP receipt) for the user; the profit is distributed in the *same* token, so holders see their balance rise automatically.  Over time the mechanism dampens the net cost of security for honest participants—*a built-in MEV-rebate programme*—while spammers still face the full brunt of rising $K_{\text{req}}$ and price slippage.
 
 
 # References 
