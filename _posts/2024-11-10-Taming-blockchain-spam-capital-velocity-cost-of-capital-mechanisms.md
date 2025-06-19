@@ -134,7 +134,13 @@ $$
 
 where $C_{\text{spam}}$ is total capital cost inflicted on class 1 and $F_i$ the friction cost borne by legitimate classes. A grid search optimization over a modest set of discrete $K_{\text{req}}$ multipliers (e.g., 4X, 8X, 16X) and timeout values (e.g., 1, 5, 10, 20, etc. blocks) each epoch can maximize $U_{\text{net}}$ while respecting constraints such as *retail cost ≤ x* and *power-user working capital ≤ y*. The parameters therefore adapt automatically to bot activity without governance micromanagement.
 
-For rollups, the very spam that bloats state also looks like easy money: every wasted CU still credits a fee to the sequencer’s wallet, so on paper the operator is incentivized to tolerate it. Yet when the marginal fee is dwarfed by the marginal cost of bandwidth, storage, and dispute resolution, that “extra” income flips negative in net terms—a red flag that block-space remains badly under-priced and that stronger, multi-vector defenses must be in place before TVL and MEV growth magnify the gap.
+The chosen parameters must operate within a set of constraints to ensure the network remains functional, accessible, and fair.
+
+* **Constraint 1: Regular User Affordability:** The total effective cost for a typical, regular transaction must remain below a maximum acceptable threshold ($C_{max}$) to keep the network accessible.
+* **Constraint 2: dApp/Power User Viability:** Legitimate high-frequency applications (like oracle networks, HFT apps) have a budget for their total required working capital. The parameters must not make their operations economically unviable.
+* **Constraint 3: Minimum Spam Deterrence:** The chosen parameters must be strong enough to make a standard, low-valuation spam attack unprofitable.
+
+For rollups, the very spam that bloats state also looks like easy money: every wasted CU or gas still credits a fee to the sequencer’s wallet, so on paper the operator is incentivized to tolerate it. Yet when the marginal fee is dwarfed by the marginal cost of bandwidth, storage, and dispute resolution, that “extra” income flips negative in net terms—a red flag that block-space remains badly under-priced and that stronger, multi-vector defenses must be in place before TVL and MEV growth magnify the gap.
 
 ---
 
