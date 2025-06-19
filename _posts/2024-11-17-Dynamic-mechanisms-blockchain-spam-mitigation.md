@@ -1,6 +1,6 @@
 ---
-title:  Dynamic Mechanism for Blockchain Spam Mitigation
-tags: Ethereum Solana Rollups MEV blockchain-spam capital-velocity velocity-of-money cost-of-capital reduce-spam-blockchain Solana-local-fee-markets multi-dimensional-fee-markets blockchain-spam-mitigation capital-velocity-DeFi cost-of-capital-spammers MEV-spam-economics
+title:  Dynamic Fee Vectors - Turning Anti-Spam Escrows into Self-Tuning Markets
+tags: Ethereum Solana Rollups MEV blockchain-spam capital-velocity velocity-of-money cost-of-capital reduce-spam-blockchain Solana-local-fee-markets multi-dimensional-fee-markets blockchain-spam-mitigation capital-velocity-DeFi cost-of-capital-spammers MEV-spam-economics spam-mitigation local-vs-global-fee-markets Li-Yorke-chaos-avoidance blockchain-anti-spam-design
 ---
 
 
