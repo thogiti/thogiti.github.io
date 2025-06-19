@@ -288,12 +288,12 @@ This model uses financial incentives to outsource the complex problem of paramet
 
 ## Mechanism & Auction Analysis
 
-1.  **Auction Type:** This is a **bonding auction**. The goal is not to sell an item but to select a policy outcome—the network's parameters for the next epoch—based on the collective financial conviction of the bidders.
-2.  **The Bidding Process:** Before each epoch, "bonders" stake capital on their preferred parameter set $(K_{req}, T_{lock})$.
-3.  **Allocation Rule:** The parameter set with the highest total amount of bonded capital is chosen for the next epoch. This is a "winner-take-all" allocation based on stake-weight.
-4.  **Payoff and Slashing:**
-    * **If the epoch is stable** (low volatility), the bonders who backed the winning parameters receive a yield.
-    * **If the epoch is unstable** (high volatility), their bond is **slashed** (partially or fully confiscated by the protocol). This creates a strong financial disincentive to propose parameters that could lead to the chaotic behavior described in the dynamics analysis paper[^1].
+- **Auction Type:** This is a **bonding auction**. The goal is not to sell an item but to select a policy outcome—the network's parameters for the next epoch—based on the collective financial conviction of the bidders.
+- **The Bidding Process:** Before each epoch, "bonders" stake capital on their preferred parameter set $(K_{req}, T_{lock})$.
+- **Allocation Rule:** The parameter set with the highest total amount of bonded capital is chosen for the next epoch. This is a "winner-take-all" allocation based on stake-weight.
+- **Payoff and Slashing:**
+    - **If the epoch is stable** (low volatility), the bonders who backed the winning parameters receive a yield.
+    - **If the epoch is unstable** (high volatility), their bond is **slashed** (partially or fully confiscated by the protocol). This creates a strong financial disincentive to propose parameters that could lead to the chaotic behavior described in the dynamics analysis paper[^1].
 
 ## Game-Theoretic Analysis
 
@@ -334,7 +334,7 @@ Because that revenue is created by transactions jostling for priority, it is eff
 | **2. Harvest**      | A keeper or scheduled function converts surplus shares back to `ASSET`.                                                                                                                                                                              | Daily / weekly  |
 | **3. Redistribute** |  • Pro-rata to all addresses with active locks (simple LP model).<br> • Stream to a pay-master that auto-pays part of their next gas/lock fee (gas subsidy).<br> • Route to a public-goods treasury or burn address if governance prefers deflation. | Same as harvest |
 
-On-chain accounting is trivial: each lock already mints `kASSET` (or an LP receipt) for the user; the profit is distributed in the *same* token, so holders see their balance rise automatically.  Over time the mechanism dampens the net cost of security for honest participants—*a built-in MEV-rebate programme*—while spammers still face the full brunt of rising $K_{\text{req}}$ and price slippage.
+On-chain accounting is trivial: each lock already mints `kASSET` (or an LP receipt) for the user; the profit is distributed in the *same* token, so holders see their balance rise automatically.  Over time the mechanism dampens the net cost of security for honest participants—*a built-in MEV-rebate program*—while spammers still face the full brunt of rising $K_{\text{req}}$ and price slippage.
 
 
 # References 
