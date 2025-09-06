@@ -208,10 +208,10 @@ This is not “a router that tries a bunch of things.” It’s a **mechanism-so
 
 # References
 
-[^1]: **Solidity language** — external calls, revert behavior, `try/catch`. \[S1]: [https://docs.soliditylang.org/en/latest/control-structures.html](https://docs.soliditylang.org/en/latest/control-structures.html)
-[^2]: **Monad: Gas model** — charged by **gas limit**; 150 M block / 30 M tx; PGA ordering. \[M1]: [https://docs.monad.xyz/developer-essentials/gas-on-monad](https://docs.monad.xyz/developer-essentials/gas-on-monad)
-[^3]: **Monad: Deployment summary** — \~400–500 ms blocks; Finalized at two blocks; timestamp granularity notes; finality stages. \[M2]: [https://docs.monad.xyz/developer-essentials/summary](https://docs.monad.xyz/developer-essentials/summary)
-[^4]: **Monad: Parallel execution** — optimistic parallelism with re-execution, serial-equivalent results. \[M3]: [https://docs.monad.xyz/monad-arch/execution/parallel-execution](https://docs.monad.xyz/monad-arch/execution/parallel-execution)
-[^5]: **Monad: Oracles** — providers on Monad testnet (Blocksense, Chainlink, Chronicle, Pyth, etc.). \[M4]: [https://docs.monad.xyz/tooling-and-infra/oracles](https://docs.monad.xyz/tooling-and-infra/oracles)
-[^6]: **Monad: JIT/native compilation** (architecture notes). \[M5]: [https://docs.monad.xyz/monad-arch/](https://docs.monad.xyz/monad-arch/)
+[^1]:[Solidity language — external calls, revert behavior, `try/catch`](https://docs.soliditylang.org/en/latest/control-structures.html)
+[^2]:[Monad: Gas model — charged by gas limit; 150 M block / 30 M tx; PGA ordering.](https://docs.monad.xyz/developer-essentials/gas-on-monad)
+[^3]: [Monad: Deployment summary — \~400–500 ms blocks; Finalized at two blocks; timestamp granularity notes; finality stages.](https://docs.monad.xyz/developer-essentials/summary)
+[^4]: [Monad: Parallel execution — optimistic parallelism with re-execution, serial-equivalent results.](https://docs.monad.xyz/monad-arch/execution/parallel-execution)
+[^5]: [Monad: Oracles — providers on Monad testnet (Blocksense, Chainlink, Chronicle, Pyth, etc.).](https://docs.monad.xyz/tooling-and-infra/oracles)
+[^6]: [Monad: JIT/native compilation (architecture notes).](https://docs.monad.xyz/monad-arch/)
 [^7]: [Monad's blog](https://blog.monad.xyz/)
