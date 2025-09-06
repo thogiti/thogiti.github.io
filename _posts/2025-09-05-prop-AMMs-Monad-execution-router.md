@@ -179,7 +179,7 @@ A compact equilibrium picture helps: given $x,r$, each adapter chooses $Q_i$ kno
 $$Q_i - \alpha\widehat{g}_i$$ 
 and (ii) any positive shortfall incurs 
 $$\lambda(Q_i-R_i)_+$$. 
-Let $\Delta_i$ be the marginal maker surplus if chosen truthfully. If $\lambda \ge \overline{\Delta}_i$ (the supremum surplus from any feasible misreport at $x$), the best response is $Q_i=R_i$. With everyone truthful, selection reduces to $\arg\max_i\{R_i-\alpha\widehat{g}_i\}$, i.e., the user-welfare maximizer given the probe budget. Two small tweaks keep the equilibrium tight: an **epsilon-tolerance** $(Q_i-R_i-\varepsilon)_+$ to avoid penalizing dust/FO-T fees, and optional **gas declarations** $\tilde g_i$ inside metadata (penalize if realized swap gas exceeds $\tilde g_i+\tau$) to discourage “cheap-to-probe, expensive-to-execute” paths.
+Let $\Delta_i$ be the marginal maker surplus if chosen truthfully. If $$\lambda \ge \overline{\Delta}_i$$ (the supremum surplus from any feasible misreport at $x$), the best response is $Q_i=R_i$. With everyone truthful, selection reduces to $$\arg\max_i\{R_i-\alpha\widehat{g}_i\}$$, i.e., the user-welfare maximizer given the probe budget. Two small tweaks keep the equilibrium tight: an **epsilon-tolerance** $(Q_i-R_i-\varepsilon)_+$ to avoid penalizing dust/FO-T fees, and optional **gas declarations** $\tilde g_i$ inside metadata (penalize if realized swap gas exceeds $\tilde g_i+\tau$) to discourage “cheap-to-probe, expensive-to-execute” paths.
 
 ## Engineering primitives implementing the mechanism
 
