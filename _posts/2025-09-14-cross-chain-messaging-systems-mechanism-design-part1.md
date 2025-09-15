@@ -114,17 +114,17 @@ A practical toolkit is a **trust graph**: indispensable actors are edges weighte
 
 # 5) Concrete numbers, with “what-ifs” and sensitivity
 
-Let $V=\$10M$. We’ll set $c_i=0$ for readability.
+Let $V= USD 10M$. We’ll set $c_i=0$ for readability.
 
 ### LayerZero (split $O+R$): same stake and franchise on both roles
 
-Choose $S_O=S_R=\$8.5M$, $R_O=R_R=\$1M$, $q=0.5$. Then each role contributes $(qS+R)=0.5\cdot 8.5+1=\$5.25M$.
+Choose $S_O=S_R=8.5M$, $R_O=R_R=1M$, $q=0.5$. Then each role contributes $(qS+R)=0.5\cdot 8.5+1=5.25M$.
 
-* **Low correlation ($p=0.3$)**: per-role $\frac{5.25}{0.3}=\$17.50M$; sum $=\$35.0M$ ≫ $V$.
-* **Medium ($p=0.6$)**: per-role $\$8.75M$; sum $=\$17.5M$.
-* **High ($p=0.9$)**: per-role $\$5.833M$; sum $=\$11.667M$.
-* **What if $p\to0.95$**? Sum $\approx 2\times(5.25/0.95)=\$11.053M$.
-* **What if $q$ dips to $0.3$** during an incident? Each role’s $(qS+R)=0.3\cdot 8.5+1=\$3.55M$. With $p=0.6$: per-role $3.55/0.6=\$5.917M$; sum $=\$11.833M$ (still >$V$, but margin shrank).
+* **Low correlation ($p=0.3$)**: per-role $\frac{5.25}{0.3}=17.50M$; sum $=35.0M$ ≫ $V$.
+* **Medium ($p=0.6$)**: per-role $8.75M$; sum $=17.5M$.
+* **High ($p=0.9$)**: per-role $5.833M$; sum $=11.667M$.
+* **What if $p\to0.95$**? Sum $\approx 2\times(5.25/0.95)=11.053M$.
+* **What if $q$ dips to $0.3$** during an incident? Each role’s $(qS+R)=0.3\cdot 8.5+1=3.55M$. With $p=0.6$: per-role $3.55/0.6=5.917M$; sum $=11.833M$ (still >$V$, but margin shrank).
 
 **Sensitivity (derivatives of CoC):**
 $\displaystyle \frac{\partial \mathrm{CoC}}{\partial q}=\sum_i \frac{S_i}{p_i} > 0,\quad \frac{\partial \mathrm{CoC}}{\partial p_j}=-\frac{qS_j+R_j}{p_j^2}<0,$
@@ -133,19 +133,19 @@ So: **CoC is most fragile to increases in $p$** (correlation), especially when $
 
 ### CCIP (quorum $t$ of $m$)
 
-Let $m=7, t=4$. Each validator has $S=\$3M$, $R=\$0.5M$, $q=0.5$ → $(qS+R)=\$2.0M$. The attacker buys the **cheapest four** terms $(2.0/p)$.
+Let $m=7, t=4$. Each validator has $S=3M$, $R=0.5M$, $q=0.5$ → $(qS+R)=2.0M$. The attacker buys the **cheapest four** terms $(2.0/p)$.
 
-* **Moderate corr ($p=0.7$)**: per = $\$2.857M$; sum (4) $=\$11.43M$ (> $V$).
-* **High corr ($p=0.9$)**: per = $\$2.222M$; sum (4) $=\$8.889M$ (< $V$) → **under-secured**.
+* **Moderate corr ($p=0.7$)**: per = $2.857M$; sum (4) $=11.43M$ (> $V$).
+* **High corr ($p=0.9$)**: per = $2.222M$; sum (4) $=8.889M$ (< $V$) → **under-secured**.
 
 **What if we cap same-owner nodes to 1 and force client diversity?** Empirically this drops $p$ meaningfully; even a 0.1–0.2 reduction in $p$ often flips the inequality.
 
 ### Across (optimistic)
 
-Relayer bond $S$, $R=\$0.5M$. Detection $q$ depends on watcher bounties and arrival.
+Relayer bond $S$, $R=0.5M$. Detection $q$ depends on watcher bounties and arrival.
 
-* If $q=0.3$: need $qS+R>V \Rightarrow S>(V-R)/q= (10-0.5)/0.3=\$31.67M$.
-* If bounties lift $q$ to $0.6$: $S>(9.5)/0.6=\$15.83M$.
+* If $q=0.3$: need $qS+R>V \Rightarrow S>(V-R)/q= (10-0.5)/0.3=31.67M$.
+* If bounties lift $q$ to $0.6$: $S>(9.5)/0.6=15.83M$.
 
 **What if correlation depresses watcher availability (so $q$ dips during holidays/outages)?** You’ll want **dynamic bounties** that surge for hot routes/times to keep $q(T)$ stable.
 
