@@ -1,5 +1,5 @@
 ---
-title: Coalition-Proof Attestation for Cross-Chain Messaging Systems Part 1 
+title: Coalition-Proof Attestation for Cross-Chain Messaging Systems - Part 1 
 tags: LayerZero CCIP Across  Cross-Chain-Messaging-Systems game-theoretic-vulnerabilities bandwidth-allocation-mechanism cross-chain-interoperability Coalition-Proof-Attestation blockchain-bridge-failures
 ---
 
