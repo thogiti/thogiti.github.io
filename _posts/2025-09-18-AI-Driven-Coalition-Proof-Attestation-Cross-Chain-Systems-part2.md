@@ -200,7 +200,7 @@ $$
 S_O'+S_R' \ge 0.75\ \text{million}.
 $$
 
-With a per-party stake-increase cap of \$0.4M/day, two days of adjustments suffice. Alternatively, raising $\underline q$ from 0.6 to 0.7 reduces the required stake by about 20%—sometimes cheaper if bounty dollars are inexpensive.
+With a per-party stake-increase cap of 0.4M/day, two days of adjustments suffice. Alternatively, raising $\underline q$ from 0.6 to 0.7 reduces the required stake by about 20%—sometimes cheaper if bounty dollars are inexpensive.
 
 **CCIP (quorum $m=5,t=3$).** Stressed per-operator weights (already correlation-inflated) are $[2.75,2.38,2.00,1.50,1.25]$M. The cheapest three sum to $4.75$M, but you need $V+M^\*=10$M, so a deficit of $5.25$M. With $\underline q=0.5$ and 1.25x inflation, each 1M of extra stake on a “cheap” validator adds 0.625M to its term; you need about 8.4M spread across the three—unless boosting detection is cheaper under your cost weights, in which case the solver will trade stake for bounty.
 
