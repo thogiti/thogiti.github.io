@@ -51,7 +51,8 @@ Inherit OApp → call `_lzSend` to send bytes; implement `_lzReceive` to handle 
 
 ## The Message Journey (Source → Destination)
 
-![LayerZero-V2-Message-Journey-Map](/assets/images/2025/LayerZero-V2-Message-Journey-Map.png)
+![LayerZero-V2-Message-Journey-Map](/assets/images/2025/LayerZero-V2-Message-Journey-Map-LR.png)
+
 
 Here is a high-level overview of a typical message flow in LayerZero V2. Let's break it down to understand the main components and their core properties.
 
