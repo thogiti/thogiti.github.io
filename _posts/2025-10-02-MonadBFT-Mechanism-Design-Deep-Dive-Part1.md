@@ -6,7 +6,7 @@ tags: monad monadbft High-Performance-Consensus
 ## Overview 
 Consensus protocols live inside economies. Validators carry stake, pay operating costs, chase or defend against MEV, and sometimes collude. If we describe MonadBFT as only a message-passing algorithm, we miss the forces that drive real outcomes. In this series we treat MonadBFT as a **mechanism**: a rule system played by strategic agents. Our questions are mechanism-design questions: does the protocol make “follow the spec” a best response for rational validators, while staying safe against Byzantine behavior?
 
-[MonadBFT’s paper](https://arxiv.org/abs/2502.20692)[^2^3] and [implementation](https://github.com/category-labs/monad-bft) aim for fast confirmations, accountable safety, and resistance to tail-forking, while keeping the happy path essentially linear. In this opener we (i) place MonadBFT on a clean game-theoretic footing, (ii) explain its artifacts as **mechanism components**, (iii) pin those components to the repo, and (iv) lay out six research problems whose solutions strengthen the mechanism without bloating the protocol. Later posts will take them one at a time.
+[MonadBFT’s paper](https://arxiv.org/abs/2502.20692)[^2][^3] and [implementation](https://github.com/category-labs/monad-bft) aim for fast confirmations, accountable safety, and resistance to tail-forking, while keeping the happy path essentially linear. In this opener we (i) place MonadBFT on a clean game-theoretic footing, (ii) explain its artifacts as **mechanism components**, (iii) pin those components to the repo, and (iv) lay out six research problems whose solutions strengthen the mechanism without bloating the protocol. Later posts will take them one at a time.
 
 ---
 
@@ -22,15 +22,15 @@ We reason in **sequential (perfect Bayesian) equilibrium**, and whenever possibl
 
 ---
 
-## 2) Protocol artifacts as mechanism components (story first)
+## 2) Protocol artifacts as mechanism components 
 
-Consensus systems read like distributed plays: clients announce intentions, nodes interpret them, a messenger chorus carries lines across the stage, and the pacemaker keeps time. MonadBFT renders this play in Rust. Each artifact below is simultaneously a **software component** and a **mechanism element**—a point where incentives, information, and control meet code.
+Consensus systems read like distributed plays: clients announce intentions, nodes interpret them, a messenger chorus carries lines across the stage, and the pacemaker keeps time. MonadBFT renders this play in Rust. Each artifact below is simultaneously a **software component** and a **mechanism element**, a point where incentives, information, and control meet code.
 
 Economically, preserving the linear happy path doesn’t just lower latency; it lowers the marginal cost of participation so smaller validators remain competitive, directly pushing against centralization pressure.
 
 ### 2.1 From client intent to on-chain commitment
 
-A typical round begins outside the validator set. Clients speak JSON-RPC; the node translates intent into candidate state transitions; consensus determines the order in which those transitions become law.
+A typical round begins outside the validator set. Clients speak JSON-RPC; the node translates intent into candidate state transitions; consensus determines the order in which those transitions become law[^4].
 
 ![Core Consensus and Transaction Flow](/assets/images/2025/MonadBFT-Core-Consensus-and-Transaction-Flow.svg)
 _Figure: ingress → tx admission → propose/vote (QC/TC) → commit → RPC externalization._
@@ -39,7 +39,7 @@ _Figure: ingress → tx admission → propose/vote (QC/TC) → commit → RPC ex
 `monad-rpc` exposes Ethereum-compatible HTTP/WebSocket endpoints, validates request shape, and forwards transactions/state queries via IPC to the node executors ([`monad-rpc/src/main.rs` L65–125, 130–155](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-rpc/src/main.rs#L65-L125)). Mechanism view: RPC is the **reporting channel** where users reveal bids (tips per gas) that later drive allocation.
 
 **Admission & pre-adjudication (TxPool + policy).**
-`EthTxPoolExecutor` checks signatures and policy, stores transactions, and—on demand from consensus—produces a proposal subject to `EthBlockPolicy` limits. Ordering is the priority rule implemented in the tracked-pool sequencer ([`monad-eth-txpool/src/pool/tracked/sequencer.rs`](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-eth-txpool/src/pool/tracked/sequencer.rs)). Mechanism view: this is the **allocation rule** over a batch; currently a first-price priority auction on `effective_tip_per_gas`.
+`EthTxPoolExecutor` checks signatures and policy, stores transactions, and, on demand from consensus, produces a proposal subject to `EthBlockPolicy` limits. Ordering is the priority rule implemented in the tracked-pool sequencer ([`monad-eth-txpool/src/pool/tracked/sequencer.rs`](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-eth-txpool/src/pool/tracked/sequencer.rs)). Mechanism view: this is the **allocation rule** over a batch; currently a first-price priority auction on `effective_tip_per_gas`.
 
 **Consensus loop (propose → vote → QC/TC).**
 `monad-consensus-state` runs HotStuff-family rounds: the leader emits `Proposal`, validators verify and cast `Vote`s, and the system aggregates a **QC**; on stalls it accumulates a **TC** ([`monad-consensus-state/src/lib.rs` ~L435–752](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-consensus-state/src/lib.rs#L435-L752)). Mechanism view: QCs/TCs are **public signals** aligning beliefs and advancing the game under partial synchrony.
@@ -52,7 +52,7 @@ Committed blocks flush through `MonadBlockFileLedger`; state deltas land in `Tri
 Monad follows a clean **executor pattern**: `monad-node` orchestrates typed events and commands; each subsystem is a worker with a narrow contract.
 
 
-`monad-node` boots keys/config (`NodeState`), wires executors, and drives the event loop ([`monad-node/src/main.rs` L109–153, 299–418, 458–548](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-node/src/main.rs#L109-L153)). `ParentExecutor` fans out commands to `MultiRouter` (network), `TokioTimer` (timeouts), `EthTxPoolExecutor` (proposals), `StateSync`, `Ledger`, and more ([`monad-executor-glue/src/lib.rs` L57–76, 441–489, 563–585](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-executor-glue/src/lib.rs#L57-L76)). Mechanism view: the event bus *delimits the strategy space*—who can do what, when, and with what evidence. Typed commands make incentive boundaries explicit.
+`monad-node` boots keys/config (`NodeState`), wires executors, and drives the event loop ([`monad-node/src/main.rs` L109–153, 299–418, 458–548](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-node/src/main.rs#L109-L153)). `ParentExecutor` fans out commands to `MultiRouter` (network), `TokioTimer` (timeouts), `EthTxPoolExecutor` (proposals), `StateSync`, `Ledger`, and more ([`monad-executor-glue/src/lib.rs` L57–76, 441–489, 563–585](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-executor-glue/src/lib.rs#L57-L76)). Mechanism view: the event bus *delimits the strategy space*, who can do what, when, and with what evidence. Typed commands make incentive boundaries explicit.
 
 ### 2.3 The network as courier, not arbiter (RaptorCast, routing, identity)
 
@@ -87,7 +87,7 @@ fn cmp(&self, other: &Self) -> Ordering {
 }
 ```
 
-—a **first-price priority auction** over slots ([sequencer.rs `Ord::cmp`](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-eth-txpool/src/pool/tracked/sequencer.rs#L81-L84)). `EthBlockPolicy` sets per-block resource ceilings (module `monad-eth-block-policy`). Mechanism view: the ordering rule defines bidders’ best responses; policy bounds define the feasible set.
+, a **first-price priority auction** over slots ([sequencer.rs `Ord::cmp`](https://github.com/category-labs/monad-bft/blob/ca4accd0/monad-eth-txpool/src/pool/tracked/sequencer.rs#L81-L84)). `EthBlockPolicy` sets per-block resource ceilings (module `monad-eth-block-policy`). Mechanism view: the ordering rule defines bidders’ best responses; policy bounds define the feasible set.
 
 ### 2.6 Storage, state sync, and the external view
 
@@ -95,7 +95,7 @@ fn cmp(&self, other: &Self) -> Ordering {
 
 ### 2.7 The message taxonomy that drives the game
 
-`ProposalMessage` (leader move), `VoteMessage` (endorsement), `TimeoutMessage` (escalation), `RoundRecovery/NoEndorsement` (negative evidence). Router publishes/broadcasts. These are not just packets; they are **mechanism primitives** carrying commitments, costs, and beliefs. When we tweak them—add a VRF to election, pay for relay—we change the equilibrium set.
+`ProposalMessage` (leader move), `VoteMessage` (endorsement), `TimeoutMessage` (escalation), `RoundRecovery/NoEndorsement` (negative evidence). Router publishes/broadcasts. These are not just packets; they are **mechanism primitives** carrying commitments, costs, and beliefs. When we tweak them, add a VRF to election, pay for relay, we change the equilibrium set.
 
 
 ---
@@ -150,7 +150,7 @@ We’ve now framed the mechanism and identified its security properties. Next, w
 
 Before we propose changes, we want to **pin the abstract mechanism to exact lines in the repo**. Each subsection below does three things in a few lines: (i) shows the specific code path that implements a protocol artifact, (ii) explains the *mechanism-design pressure* that arises there (incentives, predictability, public-goods leakage), and (iii) sketches the **smallest design nudge** that improves incentives without changing MonadBFT’s beautiful message pattern. Think of these as “surgical anchors”: we’re not rewriting consensus; we’re tightening seams that matter economically.
 
-With that frame, the snippets below follow are not random examples—they’re the **minimal places** where a one-line seed, a price rule, or a small controller parameter changes the **game** the protocol is actually playing.
+With that frame, the snippets below follow are not random examples, they’re the **minimal places** where a one-line seed, a price rule, or a small controller parameter changes the **game** the protocol is actually playing.
 
 
 ### 4.1 Leader selection (replayable *and* predictable → add VRF seed)
@@ -412,15 +412,15 @@ q\rho > c \quad \text{and} \quad qb \ge \text{max spoof gain},
 $$
 where $c$ is per-chunk cost. Choose $q$ so $q\rho$ is negligible overhead and liveness still improves under load.
 
-**What we’ll measure.** Chunk receipt rates; reconstruction latency $P95/P99$; audit failure rate; overhead. Trade-offs: tiny accounting channel and bond management—kept off the hot path; receipts can be batched or folded into block metadata.
+**What we’ll measure.** Chunk receipt rates; reconstruction latency $P95/P99$; audit failure rate; overhead. Trade-offs: tiny accounting channel and bond management, kept off the hot path; receipts can be batched or folded into block metadata.
 
 ---
 
 ### 5.5 Peer Discovery: small answers, big consequences (design for expansion)
 
-Peer discovery’s responses are intentionally small (≤16 peers) and prune unresponsive nodes—good operational hygiene. Economically, a small answer budget makes every neighbor slot precious; naïve selection can entangle honest nodes in adversarial neighborhoods.
+Peer discovery’s responses are intentionally small (≤16 peers) and prune unresponsive nodes, good operational hygiene. Economically, a small answer budget makes every neighbor slot precious; naïve selection can entangle honest nodes in adversarial neighborhoods.
 
-**Mechanism target.** Choose neighbors to **maximize diversity/expansion**—across stake pools, ASNs, geography—paired with a **costly identity** (stake/work) so large Sybil surfaces are expensive. The goal is an overlay that behaves like an **expander** from the honest region’s view.
+**Mechanism target.** Choose neighbors to **maximize diversity/expansion**, across stake pools, ASNs, geography, paired with a **costly identity** (stake/work) so large Sybil surfaces are expensive. The goal is an overlay that behaves like an **expander** from the honest region’s view.
 
 **Formal goal (informal).** With answer budget $d$ and diversity score $\lambda$,
 
@@ -435,7 +435,7 @@ where $\sigma$ is adversarial identity weight and $w_H$ the honest diversity wei
 
 ### 5.6 Pacemaker: a small controller that makes delay-games not pay
 
-The current timer combines a multiple of $\Delta$ with vote pacing and local processing—sensible and clear.
+The current timer combines a multiple of $\Delta$ with vote pacing and local processing, sensible and clear.
 
 ```rust
 // monad-consensus/src/pacemaker.rs
@@ -450,7 +450,7 @@ But static edges invite “almost-too-late” voting patterns that fatten tails 
 $$
 \theta_{v+1}=(1-\alpha)\theta_v+\alpha,\widehat{\Delta}_v+\beta,\widehat{v}_v,
 $$
-with clipping/hysteresis, and discount **clustered late votes** when assembling TCs (light, statistical weighting—not a new threshold).
+with clipping/hysteresis, and discount **clustered late votes** when assembling TCs (light, statistical weighting, not a new threshold).
 
 **Formal goal (informal).** There exist $(\alpha,\beta)$ such that (i) the strategy “systematically vote at $>0.9\theta$” is **strictly dominated** in expected payoff (higher TC probability + penalty risk), and (ii) $P99$ commit latency improves without oscillations.
 
@@ -464,11 +464,12 @@ Every mechanism above is **local**: it doesn’t introduce all-to-all communicat
 
 ## 6) Next up
 
-**Part 2 — Ordering & MEV.** We’ll specify the **batch auction + order-commit** mechanism, give a truthfulness sketch, calibrate the audit penalty, and include a small agent-based sim spec you can run locally. The goal isn’t to “solve MEV” but to make a measurable dent in its worst pathologies without breaking validator economics—or MonadBFT’s beautiful message pattern.
+**Part 2 — Ordering & MEV.** We’ll specify the **batch auction + order-commit** mechanism, give a truthfulness sketch, calibrate the audit penalty, and include a small agent-based sim spec you can run locally. The goal isn’t to “solve MEV” but to make a measurable dent in its worst pathologies without breaking validator economics, or MonadBFT’s beautiful message pattern.
 
 ---
 
 ## References
+
 [^1]: [MonadBFT GitHub Repo](https://github.com/category-labs/monad-bft)
 
 [^2]: [MonadBFT: Fast, Responsive, Fork-Resistant Streamlined Consensus](https://arxiv.org/abs/2502.20692)
