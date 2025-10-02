@@ -15,9 +15,11 @@ Consensus protocols live inside economies. Validators carry stake, pay operating
 We model an infinite-horizon game over views $v=1,2,\ldots$. In each view a leader $\ell(v)$ proposes a block $B_v$; validators either vote (happy path) or send timeouts (unhappy path). The network is **partially synchronous**: after an unknown GST, honest↔honest messages arrive within $\Delta$; pre-GST delays are unbounded. Safety doesn’t assume GST; liveness and latency do.
 
 Each validator (i) has a type $\theta_i$ (stake $s_i$, latency, MEV capacity, coalition intent) and a per-view utility
+
 $$
 U_i=\text{fees}_i+\text{rewards}_i+\text{relayPay}_i - \text{costs}_i(\text{compute},\text{bw},\text{delay}) - \text{slash}_i + \text{MEV}_i(\text{ordering},\text{timing}).
 $$
+
 We reason in **sequential (perfect Bayesian) equilibrium**, and whenever possible we aim for **ex-post** incentive statements that don’t depend on priors.
 
 ---
