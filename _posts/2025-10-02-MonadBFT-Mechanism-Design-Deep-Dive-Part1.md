@@ -1,6 +1,6 @@
 ---
 title: MonadBFT Deep Dive - A Mechanism-Design Foundation for High-Performance Consensus - Part 1
-tags: monad monadbft High-Performance-Consensus 
+tags: monad monadbft High-Performance-Consensus mechanism-design MEV Monad-MEV Monad-RaptorCast Monad-Pacemaker-timer
 ---
 
 ## Overview 
