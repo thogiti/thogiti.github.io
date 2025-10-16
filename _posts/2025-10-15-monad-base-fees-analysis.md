@@ -87,7 +87,7 @@ In Monad’s fee market, the situation is inverted:
 
 This creates a **closed feedback loop** where the controller’s adaptation rule is part of the strategic environment it’s trying to regulate. Producers don’t just respond to prices, they **steer the price discovery process itself**.
 
-**Contrast with EIP-1559:** Ethereum's mechanism is **memoryless**, each block's update depends only on that block's fullness, with a fixed 12.5% max adjustment (when $|g_k - T| = T$). A producer alternating full/empty blocks causes fee *oscillation*, but cannot suppress the mechanism's *responsiveness*. There is no state $S_k$ to manipulate, no learning rate to collapse. The mechanism's sensitivity is a constant, not a strategic variable. Monad's adaptivity, by making $\eta_k = f(\{g_{k-j}\})$, converts the controller itself into an attack surface.
+**Contrast with EIP-1559:** Ethereum's mechanism is **memoryless**, each block's update depends only on that block's fullness, with a fixed 12.5% max adjustment (when $\lvert g_k - T\rvert = T$). A producer alternating full/empty blocks causes fee *oscillation*, but cannot suppress the mechanism's *responsiveness*. There is no state $S_k$ to manipulate, no learning rate to collapse. The mechanism's sensitivity is a constant, not a strategic variable. Monad's adaptivity, by making $\eta_k = f(\{g_{k-j}\})$, converts the controller itself into an attack surface.
 
 Mathematically, this is a **[Stackelberg game](https://en.wikipedia.org/wiki/Stackelberg_competition) with adaptive follower dynamics**, where the leader (the mechanism designer) commits to an update rule $f(\cdot)$, and the followers (producers) play a best-response that anticipates how their actions will shape future $f(\cdot)$. The equilibrium is not a simple Nash equilibrium but a **strategic fixed point**:
 $$
@@ -147,11 +147,11 @@ We choose a price discovery horizon of $w = 20$ blocks (~8s) and tolerate a max 
 ### 6.2 Scarcity-Gated, Directional Adaptivity
 
 We only allow variance to damp the learning rate when economic signals confirm low demand. Define a **scarcity gate**:
+
 $$
-\begin{aligned}
-\phi_k = \mathbf{1}\left\{ B_k \leq \theta \ \text{AND}\ \text{p90\_bid}_k < (1+\delta_q) b_k \right\},
-\end{aligned}
+\phi_k = \mathbf{1}\Big[ B_k \leq \theta \;\land\; \mathrm{p90\_bid}_k < (1+\delta_q)b_k \Big],
 $$
+
 where $B_k$ is a backlog proxy. In a local-mempool world, **define $B_k$ as non-local scarcity**: gas from transactions visible to at least two distinct scheduled producers (via retries or cross-producer gossip) with age $\ge \tau$. We approximate this by (a) retry-count $\ge 2$ and (b) age $\ge \tau$, gas-weighted. When privacy allows, **VRF-sampled commit–reveal** of fee quantiles strengthens the gate without exposing private order flow.
 
 We then use **directional variance**: never damp upward moves.
@@ -159,7 +159,7 @@ $$
 \begin{aligned}
 \eta_k =
 \begin{cases}
-\max\left(\eta_{\min}, \eta_{\max} \frac{\varepsilon}{\varepsilon + s_k}\right) & \text{if } g_k < T \text{ AND } \phi_k=1 \text{ AND not alt\_alarm}_k, \\
+\max\left(\eta_{\min}, \eta_{\max} \frac{\varepsilon}{\varepsilon + s_k}\right) & \text{if } g_k < T \text{ AND } \phi_k=1 \text{ AND not alt-alarm}_k, \\
 \eta_{\max} & \text{otherwise}.
 \end{cases}
 \end{aligned}
@@ -170,7 +170,7 @@ $$
 Leaders can toggle $g_k$; they cannot cheaply spoof exogenous scarcity. We fit a tiny online predictor on those signals and adapt to the **residual**.
 $$
 \begin{aligned}
-\hat{g}_k = a_0 + a_1 \hat{g}_{k-1} + a_2 \cdot \mathrm{sat}\left(\frac{B_{k-1}-\theta}{\theta}\right) + a_3 \cdot \frac{\text{p90\_bid}_{k-1}}{b_{k-1}}, \quad r_k = g_k - \hat{g}_k.
+\hat{g}_k = a_0 + a_1 \hat{g}_{k-1} + a_2 \cdot \mathrm{sat}\left(\frac{B_{k-1}-\theta}{\theta}\right) + a_3 \cdot \frac{\mathrm{p90\_bid}_{k-1}}{b_{k-1}}, \quad r_k = g_k - \hat{g}_k.
 \end{aligned}
 $$
 
@@ -216,6 +216,7 @@ n_{\downarrow}\ge \frac{\ln(1/(1-\delta))}{\min\{4\eta_{\downarrow},\alpha\}}.
 $$
 
 **Numerical example:** Suppose $b_0 = 1000$ MON-gwei, $L = 10^9$ gas, $\eta_{\max} = 1/28$, and an attacker wants to double the fee ($R=2$) then harvest a 30% drop ($\delta=0.3$). The burn cost is:
+
 $$
 \frac{1000 \times 10^9}{1/28} \times (2-1) = 28{,}000 \text{ MON}.
 $$
@@ -223,6 +224,7 @@ The potential gain (assuming they can capture $Q = 10^8$ gas at the inflated fee
 $$
 0.3 \times 2 \times 1000 \times 10^8 = 60{,}000 \text{ MON}.
 $$
+
 But achieving a 30% drop with $\alpha = 0.015$ requires at least $n_{\downarrow} \ge \ln(1/0.7)/0.015 \approx 24$ blocks of forgone tips. At ~500 MON/block in tips, that's **12,000 MON in opportunity cost**. Net EV: $60{,}000 - 28{,}000 - 12{,}000 = +20{,}000$ MON, *seemingly* profitable. This “paper profit” assumes (i) the controller keeps damping while backlog is high (it won’t), (ii) no alternation veto (it will), and (iii) the attacker can keep $B_k$ low while honest users are priced out (implausible). With the gate and veto in place, our simulations drive EV $\le 0$  across realistic $(R, \delta, Q)$.
 
 Therefore, while a naive model might suggest a profit, the real-world frictions introduced by our mitigations ensure that any attempt at ‘pump-and-glide’ is economically irrational.
