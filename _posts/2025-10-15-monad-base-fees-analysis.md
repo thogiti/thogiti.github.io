@@ -49,7 +49,7 @@ The blog and our simulation use $\beta \approx 0.96$ (7s half-life), $\eta_{\max
 
 ## 2. Smooth ≠ Predictable: The Endogeneity Problem
 
-A posted-price mechanism only helps users if a strategy like “bid $b_k + \varepsilon$” is reliable. This requires predictability: users must be able to form $\mathbb{E}[b_{k+1} \mid \mathcal{F}_k]$ from public history. In Monad’s design, the learning rate $\eta_k$ is a function of $\sigma_k^2$, which is derived from past $g_j$, values chosen by block producers. Therefore, $\eta_k$ is **endogenous** to strategic behavior, not a fixed function of public observables.
+A posted-price mechanism only helps users if a strategy like “bid $b_k + \varepsilon$” is reliable. This requires predictability: users must be able to form $\mathbb{E}[b_{k+1} \mid \mathcal{F}_k]$ from public history. In Monad’s design, the learning rate $\eta_k$ is a function of $\sigma_k^2$, which is derived from past $g_j$, values chosen by block producers. Therefore, $\eta_k$ is endogenous to strategic behavior, not a fixed function of public observables.
 
 Formally, with log-price $p_k = \log(b_k)$, the increment is $p_{k+1} - p_k = \eta_k \Delta_k$. Because $\eta_k = f(\{g_{k-j}\})$ and each $g_{k-j}$ is a strategic choice, the process $\{p_k\}$ is non-Markovian under strategic input. No rational-expectations equilibrium exists in which users can treat the base fee as an exogenous price signal. Smoothness of the fee path does not imply predictability or dominant-strategy truthfulness (DSIC).
 
@@ -64,11 +64,11 @@ Even under demand that averages exactly at the target ($\mathbb{E}[\Delta_k] = 0
 > $$\mathbb{E}[p_{k+1} - p_k] \;=\; \mathbb{E}[\eta_k \Delta_k] \;=\; \operatorname{Cov}(\eta_k, \Delta_k) \;<\; 0.$$
 > Congestion ($\Delta_k > 0$) typically comes with high variance (e.g., NFT mints), suppressing $\eta_k$. Coordinated underfill ($\Delta_k < 0$) yields low variance, keeping $\eta_k$ high. This negative covariance creates a fee-sink bias toward $b_{\min}$.
 
-*Here is a sufficient condition.* If $\sigma_k^2$ is first-order stochastically larger **conditional on** $\Delta_k > 0$ than on $\Delta_k < 0$, and $\eta_k$ is nonincreasing in $\sigma_k$, then $\operatorname{Cov}(\eta_k, \Delta_k) < 0$.  
+*Here is a sufficient condition.* If $\sigma_k^2$ is first-order stochastically larger conditional on $\Delta_k > 0$ than on $\Delta_k < 0$, and $\eta_k$ is nonincreasing in $\sigma_k$, then $\operatorname{Cov}(\eta_k, \Delta_k) < 0$.  
 
 *Here is the empirical check.* In the [notebook](https://colab.research.google.com/drive/1d6szryT7FrL__7cIpHIViqT0iygYFx8m?usp=sharing), we report the ECDF gap of $\sigma_k^2 \mid \Delta_k>0$ vs $\sigma_k^2 \mid \Delta_k<0$ and the sample covariance $\widehat{\operatorname{Cov}}(\eta_k, \Delta_k)$ with confidence intervals (see `PartB_KPIs.csv`; inline markers in Fig. B4).
 
-In our B4 (Underfill→Harvest) simulation, the base fee spends **over 40% of its time at $b_{\min}$** despite average utilization being near target (Fig. B4; `PartB_KPIs.csv: time_at_min_s`). The system is biased to underprice blockspace.
+In our B4 (Underfill→Harvest) simulation, the base fee spends over 40% of its time at $b_{\min}$ despite average utilization being near target (Fig. B4; `PartB_KPIs.csv: time_at_min_s`). The system is biased to underprice blockspace.
 
 ---
 
@@ -101,8 +101,8 @@ This leads to a fundamental trade-off:
 
 | Goal                                   | Requires                                   | Conflict                                                                       |
 | -------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------ |
-| **Responsiveness to sustained demand** | High $\eta_k$ when demand is stable      | Strategic actors can mimic stability to trigger high $\eta_k$ for manipulation |
-| **Robustness to strategic variance**   | Low sensitivity to $V_k$ or fixed $\eta_k$ | Loses the benefit of adaptivity during honest bursts                           |
+| Responsiveness to sustained demand | High $\eta_k$ when demand is stable      | Strategic actors can mimic stability to trigger high $\eta_k$ for manipulation |
+| Robustness to strategic variance   | Low sensitivity to $V_k$ or fixed $\eta_k$ | Loses the benefit of adaptivity during honest bursts                           |
 
 No mechanism that uses $V_k = \mathrm{Var}(g_{k-w:k})$ as a control input can simultaneously achieve both goals in an adversarial environment. The moment the controller depends on a statistic that is a function of producer-chosen actions, it creates a lever for manipulation. Strategic volatility is observationally equivalent to honest volatility; the mechanism has no access to *intent*, only outcomes.
 
@@ -154,7 +154,7 @@ $$
 
 where $B_k$ is a backlog proxy. In a local-mempool world, define $B_k$ as non-local scarcity: gas from transactions visible to at least two distinct scheduled producers (via retries or cross-producer gossip) with age $\ge \tau$. We approximate this by (a) retry-count $\ge 2$ and (b) age $\ge \tau$, gas-weighted. When privacy allows, VRF-sampled commit–reveal of fee quantiles strengthens the gate without exposing private order flow.
 
-We then use **directional variance**: never damp upward moves.
+We then use directional variance: never damp upward moves.
 $$
 \begin{aligned}
 \eta_k =
@@ -193,7 +193,7 @@ $$
 
 ### 6.4 Alternation Veto and a Backlog Leg
 
-We add a cheap **alternation alarm** to veto damping during suspected variance-lock. Concretely, compute a [Wald–Wolfowitz runs statistic](https://en.wikipedia.org/wiki/Wald%E2%80%93Wolfowitz_runs_test) on the binary sequence $u_k=\mathbf{1}\{g_k \ge T\}$ over a 20-block window and veto damping when the standardized score $Z < -2.33$ ($\alpha=0.01$). Finally, we run a two-leg controller that never prices below what backlog justifies:
+We add a cheap alternation alarm to veto damping during suspected variance-lock. Concretely, compute a [Wald–Wolfowitz runs statistic](https://en.wikipedia.org/wiki/Wald%E2%80%93Wolfowitz_runs_test) on the binary sequence $u_k=\mathbf{1}\{g_k \ge T\}$ over a 20-block window and veto damping when the standardized score $Z < -2.33$ ($\alpha=0.01$). Finally, we run a two-leg controller that never prices below what backlog justifies:
 $$
 p_{k+1} = \max\left\{ p_k + \tilde{\xi}_k,  p_k + \eta^{(b)} \cdot \mathrm{sat}\left(\frac{B_k-\theta}{\theta}\right) \right\}.
 $$
@@ -237,27 +237,27 @@ Therefore, while a naive model might suggest a profit, the real-world frictions 
 
 ![Variance-Lock](/assets/images/2025/fig-B3-Cartel-Variance_lock-100-60.png)
 
-* **Fig. B3 (Variance-Lock)**: $\eta_k \to 0$, a flat fee, and a high `price_gap_proxy` (`PartB_KPIs.csv: price_gap_proxy`).
+* Fig. B3 (Variance-Lock): $\eta_k \to 0$, a flat fee, and a high `price_gap_proxy` (`PartB_KPIs.csv: price_gap_proxy`).
 
 ![Underfill→Harvest](/assets/images/2025/fig-B4-cartel-underfill-harvest.png)
-* **Fig. B4 (Underfill→Harvest)**: sharp down-move, slow recovery, and positive `cartel net_tip_gain` (≈ +120 MON; `PartB_KPIs.csv: net_tip_gain`, `time_at_min_s`).
+* Fig. B4 (Underfill→Harvest): sharp down-move, slow recovery, and positive `cartel net_tip_gain` (≈ +120 MON; `PartB_KPIs.csv: net_tip_gain`, `time_at_min_s`).
 
 ![Underfill-Harvest-Mitigated](/assets/images/2025/fig-C1-underfill-harvest-mitigated.png)
 
 ![Variance-Lock-Mitigated](/assets/images/2025/fig-C2-variance-lock-mitigated.png)
-* **Fig. C1/C2 (Mitigations)**: after applying the fixes, `time_at_min_s ↓`, `base_log_span_p90 ↓`, and `net_tip_gain → 0` (`Mitigations_KPIs.csv`).
+* Fig. C1/C2 (Mitigations): after applying the fixes, `time_at_min_s ↓`, `base_log_span_p90 ↓`, and `net_tip_gain → 0` (`Mitigations_KPIs.csv`).
 
 All figures and CSVs are written to `/mnt/data/monad_unified_artifacts` in the notebook.
 
 *Reading guide:* solid = base fee (left axis), dashed = utilization (right axis), dotted = 0.8 target.
 
-**Fig B3 – Variance-Lock:** Alternating 100/60% utilization spikes variance, collapses η, and flattens the fee—price discovery stalls.
+- Fig B3 – Variance-Lock: Alternating 100/60% utilization spikes variance, collapses η, and flattens the fee—price discovery stalls.
 
-**Fig B4 – Underfill→Harvest:** Underfilled bursts push the fee down fast; recovery is slow, exposing a profit window for the cartel.
+- Fig B4 – Underfill→Harvest: Underfilled bursts push the fee down fast; recovery is slow, exposing a profit window for the cartel.
 
-**Fig C1 – Underfill→Harvest (mitigated):** Guardrails + scarcity gate prevent fee freefall/stickiness; rebounds are quick and cartel gains vanish.
+- Fig C1 – Underfill→Harvest (mitigated): Guardrails + scarcity gate prevent fee freefall/stickiness; rebounds are quick and cartel gains vanish.
 
-**Fig C2 – Variance-Lock (mitigated):** η-floor + alternation veto keep the fee adjusting despite high-variance utilization; no freeze.
+- Fig C2 – Variance-Lock (mitigated): η-floor + alternation veto keep the fee adjusting despite high-variance utilization; no freeze.
 
 
 ---
@@ -266,11 +266,11 @@ All figures and CSVs are written to `/mnt/data/monad_unified_artifacts` in the n
 
 From an engineering point of view here is an implementation plan:
 
-* **Horizon**: $w = 20$ blocks (~8s).
-* **Guardrails**: $\alpha = \eta_{\min} = 0.015$.
-* **MAD window**: $m = 24$ blocks.
-* **Backlog gate**: $\theta \approx 0.5L$, $\delta_q = 0.1$, with non-local scarcity definition (retry ≥ 2; age ≥ $\tau$).
-* **Backlog leg gain**: $\eta^{(b)} = \eta_{\max}$.
+* Horizon: $w = 20$ blocks (~8s).
+* Guardrails: $\alpha = \eta_{\min} = 0.015$.
+* MAD window: $m = 24$ blocks.
+* Backlog gate: $\theta \approx 0.5L$, $\delta_q = 0.1$, with non-local scarcity definition (retry ≥ 2; age ≥ $\tau$).
+* Backlog leg gain: $\eta^{(b)} = \eta_{\max}$.
 
 Start with directional variance + queue override in shadow mode and monitor time_at_min_s, price_gap_proxy, tip_pain_p95, and net_tip_gain.
 
