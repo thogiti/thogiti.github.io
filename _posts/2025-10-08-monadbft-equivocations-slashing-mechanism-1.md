@@ -182,7 +182,7 @@ Monad’s protocol already empties the first subgame; slashing must empty the se
 
 ## 6) Some Scenarios
 
-In what follows we just plug the decision rule from § 1 into the calibration from § 5.4 and check the sign of the payoff. By varying $\text{MEV}_{\text{now}}$, $\phi$, $D\approx 1$ and the influence window $w$, the three mini-scenarios show that equivocate is strictly dominated once $\phi_{\text{block}} \gtrsim \tfrac{(1+\eta)\cdot \kappa \cdot w \cdot M_b}{s_i}$. Each case corresponds to the two behaviors separated in § 5.5 (harmless omission vs. true same-round conflict) plus a collusive double-spend.
+In what follows we just plug the decision rule from § 1 into the calibration from § 5.4 and check the sign of the payoff. By varying $\mathrm{MEV}_{\text{now}}$, $\phi$, $D\approx 1$ and the influence window $w$, the three mini-scenarios show that equivocate is strictly dominated once $\phi_{\text{block}} \gtrsim \tfrac{(1+\eta)\cdot \kappa \cdot w \cdot M_b}{s_i}$. Each case corresponds to the two behaviors separated in § 5.5 (harmless omission vs. true same-round conflict) plus a collusive double-spend.
 
 
 ### 6.1 Rational MEV extraction
