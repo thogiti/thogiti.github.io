@@ -135,7 +135,7 @@ The evidence object includes a reporter signature over the proof hash; the staki
 Let
 
 * $s_i$: stake of validator $i$,
-* $M_b$: a high-quantile per-block MEV tail (e.g., 99.5th percentile), measured on testnet,
+* $M_b$: a high-quantile per-block MEV tail (e.g., 99.5th percentile),
 * $w$: the effective influence window (in blocks) before Monad’s extend-or-explain path collapses a deviation (TC/high-tip/NEC rules),
 * $\kappa \ge 1$: compounding factor for cross-block effects (e.g., predecessor + current),
 * $\eta > 0$: safety margin for estimation error.
@@ -246,7 +246,7 @@ With the mechanism specified, the practical question to ask is what can still go
 
 ---
 
-## 10) What to measure on testnet
+## 10) What to measure
 
 Good mechanisms leave fingerprints; this section lists a few metrics that should move if the design is working.
 
