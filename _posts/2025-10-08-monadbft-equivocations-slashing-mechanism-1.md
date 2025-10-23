@@ -224,7 +224,7 @@ Treat this as a division of labor: the theorems constrain dynamics (they bound $
 
 With the mechanics and deterrence math in place, here’s a compact comparison of how Ethereum, Tendermint, and the proposed MonadBFT line up on the levers that matter.
 
-| Feature            |           Ethereum PoS |         Tendermint |                                      MonadBFT (proposed) |
+| Feature            |           Ethereum |         Tendermint |                                      MonadBFT (This proposal) |
 | ------------------ | ---------------------: | -----------------: | -------------------------------------------------------: |
 | Detection          |        Optional, heavy | Mandatory, in-path |                                       Mandatory, in-path |
 | $D$                |          Low, variable |        $\approx 1$ |                                              $\approx 1$ |
@@ -262,7 +262,7 @@ $$
 
 ---
 
-## Closing
+## Conclusion
 
 MonadBFT already narrows the strategy surface with extend-or-explain and fast public signals. The missing layer is accountability that matches the consensus core: universal, cheap detection; evidence that rides the same pipeline as blocks; and penalties sized against worst-case windows, not medians. When we do all of that, and the inequality in § 1 holds where it matters, the tails, so “one round” speculative finality becomes a sound default.
 
