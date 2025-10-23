@@ -1,5 +1,5 @@
 ---
-title: Equivocation Detection & Slashing in MonadBFT Context - Game Theory & Mechanism Design Analysis - PART 1
+title: Equivocation Detection & Slashing in MonadBFT - Game Theory & Mechanism Design Analysis - PART 1
 tags: monad monadbft High-Performance-Consensus mechanism-design MEV Monad-MEV monad-equivocation monad-slashing monad-slashing-mechanism mechanism-design MEV equivocation slashing
 ---
 
@@ -36,20 +36,19 @@ Facing an equivocation opportunity, validator $i$ weighs:
 
 Then, we have, the expected utility from deviating:
 $$
-\mathbb{E}\big[u_i(\text{equivocate})\big]
-=
-\mathrm{MEV}_{\text{now}}
-- D \cdot P
-+ \delta \cdot \mathbb{E}\big[u_i^{\text{post-slash}}\big].
+\mathbb{E}\big[u_i(\text{equivocate})\big] =
+\mathrm{MEV}_{\text{now}} - D \cdot P + \delta \cdot \mathbb{E}\big[u_i^{\text{post-slash}}\big].
 $$
 
 This formula says what a validator “makes” from cheating: a quick MEV windfall, minus the chance of getting caught times the penalty, plus whatever future income remains after being punished. 
 
 Economic safety for one-round speculation requires
+
 $$
 \boxed{\mathbb{E}\big[u_i(\text{equivocate})\big]
 < \delta \cdot \mathbb{E}\big[u_i^{\text{honest}}\big]}
 $$
+
 to hold under realistic tail MEV. The mechanism’s job is to make this inequality robust.
 
 The boxed inequality says this bet must be worse than just staying honest, even when MEV is unusually large. In other words: set detection and penalties so that equivocation is a losing trade on expectation, while honest validators keep their steady future rewards.
@@ -183,7 +182,7 @@ Monad’s protocol already empties the first subgame; slashing must empty the se
 
 ## 6) Some Scenarios
 
-In what follows we just plug the decision rule from § 1 into the calibration from § 5.4 and check the sign of the payoff. By varying $\text{MEV}_{\text{now}}, \phi, D\approx 1$ and the influence window $w$, the three mini-scenarios show that equivocate is strictly dominated once $\phi_{\text{block}} \gtrsim \tfrac{(1+\eta)\cdot \kappa \cdot w \cdot M_b}{s_i}$. Each case corresponds to the two behaviors separated in § 5.5 (harmless omission vs. true same-round conflict) plus a collusive double-spend.
+In what follows we just plug the decision rule from § 1 into the calibration from § 5.4 and check the sign of the payoff. By varying $\text{MEV}_{\text{now}}$, $\phi$, $D\approx 1$ and the influence window $w$, the three mini-scenarios show that equivocate is strictly dominated once $\phi_{\text{block}} \gtrsim \tfrac{(1+\eta)\cdot \kappa \cdot w \cdot M_b}{s_i}$. Each case corresponds to the two behaviors separated in § 5.5 (harmless omission vs. true same-round conflict) plus a collusive double-spend.
 
 
 ### 6.1 Rational MEV extraction
@@ -266,6 +265,8 @@ $$
 ## Closing
 
 MonadBFT already narrows the strategy surface with extend-or-explain and fast public signals. The missing layer is accountability that matches the consensus core: universal, cheap detection; evidence that rides the same pipeline as blocks; and penalties sized against worst-case windows, not medians. When we do all of that, and the inequality in § 1 holds where it matters, the tails, so “one round” speculative finality becomes a sound default.
+
+In the Part 2 of the blog, I will explore the formal mechanism design analysis of this proposal and derive some necessary theorems and properties to study performance, liveness safety, robustness, and security.
 
 ---
 
