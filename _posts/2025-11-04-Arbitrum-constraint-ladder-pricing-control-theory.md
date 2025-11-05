@@ -1,6 +1,6 @@
 ---
 title: A Control-Theoretic View of Arbitrum’s Constraint Ladder Gas Pricer 
-date: 2025-10-21
+date: 2025-11-04
 tags: Arbitrum Arbitrum-gas-pricing constraint-ladder Rollups Layer2 Gas-pricing Rollup-gas-pricing L2-gas-pricing control-theory-gas-pricing
 description: 
 ---
@@ -38,10 +38,12 @@ This is a pure integral controller on the error $e_t=\lambda_t-T$, with a clamp 
 ### Why discrete time is the right abstraction
 
 Blockchain execution samples demand and updates fees on a regular cadence, the sequencer batch interval or block time. Let $\Delta t$ denote this period. Measured usage $\lambda_t$ is an average over $[t,t+\Delta t)$, and the fee quoted at time $t$ is applied at $t+\Delta t$. Under this timing, the discrete update
+
 $$
 B_{t+\Delta t}=\max\{0,B_t+(\lambda_t-T)\Delta t\}
 $$
-matches the [Riemann-sum](https://grokipedia.com/page/Riemann_sum) analogue of the continuous backlog integral, and the discrete stability condition $|a|<1$ on the linearized eigenvalue is the right criterion for block-synchronous control. Choosing $\Delta t$ equal to the sequencer’s decision cadence keeps the model aligned with implementation.
+
+matches the [Riemann-sum](https://grokipedia.com/page/Riemann_sum) analogue of the continuous backlog integral, and the discrete stability condition $ \verta \vert<1$ on the linearized eigenvalue is the right criterion for block-synchronous control. Choosing $\Delta t$ equal to the sequencer’s decision cadence keeps the model aligned with implementation.
 
 
 ## Assumptions for analysis
@@ -66,15 +68,15 @@ a=1+k\Lambda'(P^\*)\frac{\partial P}{\partial x}\Big|_{x^\*}
 =1+k\Lambda'(P^\*)P^\*.
 $$
 
-Since demand decreases with price, $\Lambda'(P^\*)<0$. The discrete-time stability condition $|a|<1$ becomes
+Since demand decreases with price, $\Lambda'(P^\*)<0$. The discrete-time stability condition $\vert a \vert<1$ becomes
 
 $$
 -2<k\Lambda'(P^\*)P^\*<0
 \Longleftrightarrow
-0<\frac{\Delta t}{AT}|\Lambda'(P^\*)|P^\*<2.
+0<\frac{\Delta t}{AT} \vert \Lambda'(P^\*)  \vert P^\*<2.
 $$
 
-This is the patient-enough inequality. A small $A$ (impatient) increases $k$ and pushes the eigenvalue toward $-1$ and oscillation; a very large $A$ yields sluggish response. The inequality supports data-driven calibration of $A$ to the measured elasticity $|\Lambda'(P^\*)|$ at $P^\*$.
+This is the patient-enough inequality. A small $A$ (impatient) increases $k$ and pushes the eigenvalue toward $-1$ and oscillation; a very large $A$ yields sluggish response. The inequality supports data-driven calibration of $A$ to the measured elasticity $ \vert \Lambda'(P^\*) \vert $ at $P^\*$.
 
 
 ## Why a single constraint overreacts to harmless bursts
@@ -129,7 +131,7 @@ Geometric spacing is a good default. The Arbitrum simulations, and a direct repl
 The stability inequality above assumes demand reacts within one $\Delta t$ interval. In practice there is actuation/measurement delay: users, bots, and the sequencer respond with lag, and $\lambda_t$ is an imperfect proxy for executor slack. A conservative remedy is to keep the stability factor
 
 $$
-\Phi = \Big(\sum_{i\in\mathcal{A}}\frac{\Delta t}{A_iT_i}\Big)|\Lambda'(P^\*)|P^\*
+\Phi = \Big(\sum_{i\in\mathcal{A}}\frac{\Delta t}{A_iT_i}\Big) \vert \Lambda'(P^\*) \vert P^\*
 $$
 
 below a tight margin $\rho<2$. When delays exceed two to three sampling intervals (for example, $2$–$3$ blocks for rollups with $\sim2$–$4$ s batch times), choose $\rho\approx 1$.
@@ -160,7 +162,7 @@ A sequencer can bunch transactions to shape near-term fullness, and users can fr
 
 ## Anti-windup, deadbands, rate limits, and hard limits
 
-If the price is capped for policy reasons, or block fullness hits a hard maximum, the plant saturates while integral states can wind up, causing unnecessarily high prices after the event. Back-calculation anti-windup drains integral states proportionally to the difference between requested log-price $x_{\mathrm{raw}}$ and enforced $x_{\mathrm{eff}}$, so backlogs reflect the enforced $x=\log(P/P_{\min})$ and unwind promptly. Measurement noise and sequencer timing can induce rapid sign-flips in $(\lambda_t-T)$; a small deadband $|\lambda_t-T|<\epsilon$ and a bound $|x_{t+\Delta t}-x_t|\le r_{\max}$ on the per-tick change of $\log P$ improve robustness without altering steady-state behavior.
+If the price is capped for policy reasons, or block fullness hits a hard maximum, the plant saturates while integral states can wind up, causing unnecessarily high prices after the event. Back-calculation anti-windup drains integral states proportionally to the difference between requested log-price $x_{\mathrm{raw}}$ and enforced $x_{\mathrm{eff}}$, so backlogs reflect the enforced $x=\log(P/P_{\min})$ and unwind promptly. Measurement noise and sequencer timing can induce rapid sign-flips in $(\lambda_t-T)$; a small deadband $\vert \lambda_t-T\vert<\epsilon$ and a bound $\vert x_{t+\Delta t}-x_t \vert \le r_{\max}$ on the per-tick change of $\log P$ improve robustness without altering steady-state behavior.
 
 ### Low-utilization regime 
 When $\lambda_t \ll \min_i T_i$ for extended periods, all backlogs drain to zero and the price converges to $P_{\min}$. The ladder structure recovers gracefully: fast rungs empty first, then progressively slower rungs, which avoids oscillation when restarting from quiet periods. In extended low-utilization periods the slowest rung may never fully drain due to measurement noise; in practice, apply a tiny negative bias to the slowest backlog or perform a periodic reset when $\lambda_t < 0.5 \times \min_i T_i$ for more than one hour.
@@ -176,7 +178,7 @@ With $K{+}1$ rungs, the controller keeps $K{+}1$ scalars $B_i$ and updates them 
 
 ## A concrete numerical calibration
 
-Let $\Delta t=1$ s, $T=25$ Mgas/s, $P^\*=0.30$ gwei, and empirically $|\Lambda'(P^\*)|\approx 60$ (Mgas/s)/gwei. For the single-constraint pricer,
+Let $\Delta t=1$ s, $T=25$ Mgas/s, $P^\*=0.30$ gwei, and empirically $ \vert \Lambda'(P^\*) \vert \approx 60$ (Mgas/s)/gwei. For the single-constraint pricer,
 
 $$
 a_{\text{single}}
@@ -199,10 +201,10 @@ a_{\text{ladder}}=1+(\Delta t)k_{\mathrm{eff}}\Lambda'(P^\*)P^\*
 =1-0.000240\cdot 18 \approx 0.996
 $$
 
-when all rungs are active. For a 10-minute 30 Mgas/s burst, only the fast rung accumulates backlog; slow rungs remain near zero, so $k_{\mathrm{eff}}\approx 1/(50\cdot 102)\approx 0.000196$ and $a\approx 1-0.000196\cdot 18 \approx 0.9965$, a small, well-damped deviation. The stability margin $\Phi=\big(\sum_i 1/(A_iT_i)\big)|\Lambda'(P^\*)|P^\*$ grows only when multiple horizons bind.
+when all rungs are active. For a 10-minute 30 Mgas/s burst, only the fast rung accumulates backlog; slow rungs remain near zero, so $k_{\mathrm{eff}}\approx 1/(50\cdot 102)\approx 0.000196$ and $a\approx 1-0.000196\cdot 18 \approx 0.9965$, a small, well-damped deviation. The stability margin $\Phi=\big(\sum_i 1/(A_iT_i)\big) \vert \Lambda'(P^\*) \vert P^\*$ grows only when multiple horizons bind.
 
 ### Sensitivity of the margin 
-The stability margin $\Phi=\big(\sum_i 1/(A_iT_i)\big)|\Lambda'(P^\*)|P^\*$ is more sensitive to the fastest rung than to the slowest. A 10% change in the top rung’s patience $A_K$ shifts $\Phi$ by roughly 10%, whereas a 10% change in a day-scale $A_0$ typically moves $\Phi$ by less than 0.1% (its contribution to $\sum_i 1/(A_iT_i)$ is small). This supports conservative calibration of fast rungs and more aggressive tuning of slow ones. This guides the conservative defaults for $A_K$ in migration.
+The stability margin $\Phi=\big(\sum_i 1/(A_iT_i)\big) \vert \Lambda'(P^\*) \vert P^\*$ is more sensitive to the fastest rung than to the slowest. A 10% change in the top rung’s patience $A_K$ shifts $\Phi$ by roughly 10%, whereas a 10% change in a day-scale $A_0$ typically moves $\Phi$ by less than 0.1% (its contribution to $\sum_i 1/(A_iT_i)$ is small). This supports conservative calibration of fast rungs and more aggressive tuning of slow ones. This guides the conservative defaults for $A_K$ in migration.
 
 ![Figure 2: local eigenvalue $a(t)$ under a 10-min 30 Mgas/s burst](/assets/images/2025/blog-arbitrum-constraint-ladder-pricer-CT-fig2.png)
 
@@ -244,7 +246,7 @@ Constraint ladders differ from [multi-dimensional pricing](https://vitalik.eth.l
 
 Given fee dynamics’ externalities, changes should be staged. Here are some ideas on how to approach this.
 
-Start in shadow mode: compute ladder prices off-path and log $x_{\text{ladder}}$ and per-rung contributions alongside the live single-constraint price. Then freeze parameters after fitting $|\Lambda'(P)|$ at relevant operating points and measuring delays. Proceed with progressive activation: enable the top rung first, add intermediate rungs over time while monitoring executor slack, backlog histograms, and price half-lives. Keep anti-windup, a deadband, and per-tick $\Delta\log P$ caps in place as guardrails.
+Start in shadow mode: compute ladder prices off-path and log $x_{\text{ladder}}$ and per-rung contributions alongside the live single-constraint price. Then freeze parameters after fitting $ \vert \Lambda'(P) \vert $ at relevant operating points and measuring delays. Proceed with progressive activation: enable the top rung first, add intermediate rungs over time while monitoring executor slack, backlog histograms, and price half-lives. Keep anti-windup, a deadband, and per-tick $\Delta\log P$ caps in place as guardrails.
 
 
 
