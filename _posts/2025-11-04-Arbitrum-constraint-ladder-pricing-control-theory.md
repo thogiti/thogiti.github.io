@@ -43,7 +43,7 @@ $$
 B_{t+\Delta t}=\max\{0,B_t+(\lambda_t-T)\Delta t\}
 $$
 
-matches the [Riemann-sum](https://grokipedia.com/page/Riemann_sum) analogue of the continuous backlog integral, and the discrete stability condition $ \verta \vert<1$ on the linearized eigenvalue is the right criterion for block-synchronous control. Choosing $\Delta t$ equal to the sequencer’s decision cadence keeps the model aligned with implementation.
+matches the [Riemann-sum](https://grokipedia.com/page/Riemann_sum) analogue of the continuous backlog integral, and the discrete stability condition $ \vert a \vert <1$ on the linearized eigenvalue is the right criterion for block-synchronous control. Choosing $\Delta t$ equal to the sequencer’s decision cadence keeps the model aligned with implementation.
 
 
 ## Assumptions for analysis
