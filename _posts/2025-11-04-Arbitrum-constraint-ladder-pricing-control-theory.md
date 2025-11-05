@@ -10,7 +10,7 @@ The Arbitrum [post](https://research.arbitrum.io/t/multi-constraint-pricing/9782
 
 ## The baseline pricing model, variables, and notations
 
-Time is continuous in principle but, in this model, it is analyzed in discrete steps of $\Delta t$ seconds (for example, $\Delta t=1$). Let $T>0$ denote the desired average gas usage per second (Mgas/s). Let $A>0$ be an adjustment time in seconds, the controller’s patience. Let $P_{\min}>0$ be a price floor (gwei). At time $t$, the pricer observes actual gas usage $\lambda_t$ (Mgas/s) and maintains a backlog $B_t$ (Mgas·s) that integrates excess consumption above target. The update rule is
+Time is continuous in principle but, in this model, it is analyzed in discrete steps of $\Delta t$ seconds (for example, $\Delta t=1 s$). Let $T>0$ denote the desired average gas usage per second (Mgas/s). Let $A>0$ be an adjustment time in seconds, the controller’s patience. Let $P_{\min}>0$ be a price floor (gwei). At time $t$, the pricer observes actual gas usage $\lambda_t$ (Mgas/s) and maintains a backlog $B_t$ (Mgas·s) that integrates excess consumption above target. The update rule is
 
 $$B_{t+\Delta t}=\max\{0,B_t+(\lambda_t-T)  \Delta t\},$$
 
@@ -49,25 +49,31 @@ matches the [Riemann-sum](https://grokipedia.com/page/Riemann_sum) analogue of t
 For small-signal analysis, model realized usage as $\lambda_t \approx \Lambda(P_t)$ up to short-lived noise, where $\Lambda:(0,\infty)\to[0,\infty)$ is continuous and strictly decreasing on any compact interval $[P_{\min},\bar P]$. The clamp is inactive at the operating point $x_t>0$, and actuation/measurement delay is not so large as to invalidate a $\Delta t$-spaced model; “material delay” is quantified below. These are standard for discrete-time integral control around an equilibrium.
 
 Substituting $\lambda_t \approx \Lambda(P_t)$ with $P_t=P_{\min}e^{x_t}$ closes the loop:
+
 $$
 x_{t+\Delta t}=\max\{0,x_t+k[\Lambda(P_{\min}e^{x_t})-T]\}.
 $$
+
 A steady state $x^\*>0$ satisfies $\Lambda(P^\*)=T$ where $P^\*=P_{\min}e^{x^\*}$.
 
 ## Local stability and the “patient-enough” condition
 
 Linearizing for small deviations $\delta x_t=x_t-x^\*$ with an inactive clamp yields
+
 $$
 \delta x_{t+\Delta t}\approx a\delta x_t,\qquad
 a=1+k\Lambda'(P^\*)\frac{\partial P}{\partial x}\Big|_{x^\*}
 =1+k\Lambda'(P^\*)P^\*.
 $$
+
 Since demand decreases with price, $\Lambda'(P^\*)<0$. The discrete-time stability condition $|a|<1$ becomes
+
 $$
 -2<k\Lambda'(P^\*)P^\*<0
 \Longleftrightarrow
 0<\frac{\Delta t}{AT}|\Lambda'(P^\*)|P^\*<2.
 $$
+
 This is the patient-enough inequality. A small $A$ (impatient) increases $k$ and pushes the eigenvalue toward $-1$ and oscillation; a very large $A$ yields sluggish response. The inequality supports data-driven calibration of $A$ to the measured elasticity $|\Lambda'(P^\*)|$ at $P^\*$.
 
 
@@ -79,22 +85,28 @@ The single-constraint approach uses one $(T,A)$ to defend both seconds-scale exe
 ## Multi-constraint pricing, the Jacobian, and the ladder
 
 In the multi-constraint ladder model, we track several backlogs in parallel:
+
 $$
 B_{i,t+\Delta t}=\max\{0,B_{i,t}+(\lambda_t-T_i)\Delta t\},\qquad
 x_t=\sum_{i=0}^{K}\frac{B_{i,t}}{A_iT_i},\qquad
 P_t=P_{\min}e^{x_t}.
 $$
+
 Each rung $i$ has a target $T_i$ and patience $A_i$. At an interior equilibrium $x^\*>0$,
+
 $$
 \frac{\partial x_{t+\Delta t}}{\partial \mathbf{B}*t}
 =\Big[\tfrac{1}{A_0T_0},\dots,\tfrac{1}{A_KT_K}\Big],\qquad
 \frac{\partial \mathbf{B}*{t+\Delta t}}{\partial x_t}
 =\mathbf{1}\Lambda'(P^\*)P^\*\Delta t,
 $$
+
 so the closed-loop eigenvalue is
+
 $$
 a=1+\Big(\sum_{i\in\mathcal{A}}\frac{\Delta t}{A_iT_i}\Big)\Lambda'(P^\*)P^\*,
 $$
+
 with $\mathcal{A}$ the set of rungs whose backlogs are active. Replace $k$ by the effective integral gain $k_{\mathrm{eff}}=\sum_{i\in\mathcal{A}}\Delta t/(A_iT_i)$. When load is low, only slow rungs contribute to $k_{\mathrm{eff}}$ and the loop is patient; as load approaches riskier regimes, faster rungs engage and $k_{\mathrm{eff}}$ increases smoothly. Geometric spacing between a day-scale state rung and a 100-second execution rung yields a smooth gain schedule. The Arbitrum research post[^1] lays out this construction and the ladder intuition with concrete parameters and the 30 Mgas/s burst example.
 
 View each rung as a “leaky” integrator with leakage rate $T_i$: if demand falls below target, the backlog drains at $T_i$ per second. In frequency terms, the multi-constraint controller is a sum of low-pass filters at different cutoffs; short spikes primarily excite the fastest rung and dissipate before they charge slow backlogs. This parallels [Active Queue Management](https://grokipedia.com/page/Active_queue_management) (PIE[^2], CoDel[^4]) where distinct time constants tame burstiness without oscillation; replace “queueing delay” by “execution slack” and the analogy holds (PIE: RFC 8033[^3], CoDel[^4]: ACM Queue).
@@ -115,23 +127,29 @@ Geometric spacing is a good default. The Arbitrum simulations, and a direct repl
 ## Delays, damping, and a concrete safety margin
 
 The stability inequality above assumes demand reacts within one $\Delta t$ interval. In practice there is actuation/measurement delay: users, bots, and the sequencer respond with lag, and $\lambda_t$ is an imperfect proxy for executor slack. A conservative remedy is to keep the stability factor
+
 $$
 \Phi = \Big(\sum_{i\in\mathcal{A}}\frac{\Delta t}{A_iT_i}\Big)|\Lambda'(P^\*)|P^\*
 $$
+
 below a tight margin $\rho<2$. When delays exceed two to three sampling intervals (for example, $2$–$3$ blocks for rollups with $\sim2$–$4$ s batch times), choose $\rho\approx 1$.
 
 ### Executor slack signal
 Let $S_t$ denote executor slack (milliseconds of headroom before the executor falls behind the sequencer). To avoid noise amplification, smooth $S_t$ with a short window (for example, a 3-sample EMA) before inversion. Define the inverse-slack pressure
+
 $$
 \sigma_t=\max\Big(0,\frac{1}{S_t}-\frac{1}{S_{\mathrm{safe}}}\Big),
 $$
+
 where $S_{\mathrm{safe}}$ is a target slack (for example, $100$ ms). The fastest rung should regulate $\sigma_t$ rather than raw $\lambda_t$, because $\sigma_t$ measures proximity to execution failure and is harder to game with cosmetic batching.
 
 A complementary remedy is a small proportional term on the fastest rung (PI):
+
 $$
 x_t=\sum_{i}\frac{B_{i,t}}{A_iT_i}+K_P[,\sigma_t-\sigma_{\mathrm{target}},],\qquad
 \sigma_{\mathrm{target}}=0.
 $$
+
 The proportional term adds damping under delay; the integral terms maintain zero steady-state error. If $S_t$ is noisy, use a short EMA (2–3 samples) before the proportional term.
 
 
@@ -159,22 +177,28 @@ With $K{+}1$ rungs, the controller keeps $K{+}1$ scalars $B_i$ and updates them 
 ## A concrete numerical calibration
 
 Let $\Delta t=1$ s, $T=25$ Mgas/s, $P^\*=0.30$ gwei, and empirically $|\Lambda'(P^\*)|\approx 60$ (Mgas/s)/gwei. For the single-constraint pricer,
+
 $$
 a_{\text{single}}
 =1+\frac{\Delta t}{AT}\Lambda'(P^\*)P^\*
 =1-\frac{18}{25A}.
 $$
+
 With $A=0.5$ s, $a=-0.44$ (stable but under-damped). With $A=2.0$ s, $a=0.64$ (well-damped, slower). Now consider a three-rung ladder with $(T_i,A_i)\in{(25,86400),(37.5,600),(50,102)}$. The effective gain at full activation is
+
 $$
 k_{\mathrm{eff}}=\sum_i\frac{1}{A_iT_i}
 \approx \frac{1}{25\cdot 86400}+\frac{1}{37.5\cdot 600}+\frac{1}{50\cdot 102}
 \approx 0.00000046+0.000044+0.000196 \approx 0.000240,
 $$
+
 so
+
 $$
 a_{\text{ladder}}=1+(\Delta t)k_{\mathrm{eff}}\Lambda'(P^\*)P^\*
 =1-0.000240\cdot 18 \approx 0.996
 $$
+
 when all rungs are active. For a 10-minute 30 Mgas/s burst, only the fast rung accumulates backlog; slow rungs remain near zero, so $k_{\mathrm{eff}}\approx 1/(50\cdot 102)\approx 0.000196$ and $a\approx 1-0.000196\cdot 18 \approx 0.9965$, a small, well-damped deviation. The stability margin $\Phi=\big(\sum_i 1/(A_iT_i)\big)|\Lambda'(P^\*)|P^\*$ grows only when multiple horizons bind.
 
 ### Sensitivity of the margin 
@@ -195,13 +219,17 @@ The stability margin $\Phi=\big(\sum_i 1/(A_iT_i)\big)|\Lambda'(P^\*)|P^\*$ is m
 To align price with tail risk, borrow the [Operating Reserve Demand Curve](https://www.sciencedirect.com/science/article/abs/pii/S0301421520307680) idea from power markets: a pre-specified scarcity adder that increases as reserves thin[^3]. ORDC implementations in RTO/ISO markets (PJM, [ERCOT](https://www.ercot.com/files/docs/2024/10/31/2024-biennial-ercot-report-on-the-ordc-20241031.pdf), MISO) show how stepped or sloped scarcity adders can be calibrated to [loss-of-load probability](https://en.wikipedia.org/wiki/Loss_of_load) and [value-of-lost-load](https://en.wikipedia.org/wiki/Value_of_lost_load); the same logic applies here when “reserves” are executor slack and state headroom.
 
 For rung $i$, define a scarcity term
+
 $$
 \Delta \log P_i(B_i)=\alpha_i,\mathrm{LoLP}_i(B_i),
 $$
+
 where $\mathrm{LoLP}*i$ is the loss-of-load probability (probability of violating constraint $i$ within its horizon), estimated from executor telemetry (lag distributions, sync catch-up rates, state-DB compaction debt) or from stress tests. The scale $\alpha_i$ is a Value of Lost Execution/State (VLOE/VLOS). Then set
+
 $$
 \log P=\log P_{\min}+\sum_i \frac{B_i}{A_iT_i}+\sum_i \alpha_i\mathrm{LoLP}_i(B_i).
 $$
+
 Linear backlog terms continue to regulate targets; the ORDC-style adders price rare events. (For background on ORDC formulation and its role in scarcity pricing, see [FERC](https://www.ferc.gov/sites/default/files/2021-09/20210907-4002_Energy%20and%20Ancillary%20Services%20Markets_2021_0.pdf) staff summaries and Hogan’s primers.)
 
 
