@@ -188,6 +188,7 @@ The stability margin $\Phi=\big(\sum_i 1/(A_iT_i)\big)|\Lambda'(P^\*)|P^\*$ is m
 
 *Figure 3: price multiplier $P/P_{\min}$ with and without slack-based $K_P$ on the fastest rung*
 
+>This python Jupyter [notebook](https://colab.research.google.com/drive/1Sf2Is5efGc7i0JYqZfX4sZ3xbAxOuLOG?usp=sharing) reproduces above simulations[^5].
 
 ## Economic calibration via risk-priced rungs
 
@@ -235,3 +236,4 @@ Arbitrum’s [backlog pricer](https://research.arbitrum.io/t/multi-constraint-pr
 
 [^4]: [Controlling Queue Delay](https://queue.acm.org/detail.cfm?id=2209336)
 
+[^5]: [Simulations of Arbitrum Constraint-Ladder Pricer - Control-Theoretic Model](https://colab.research.google.com/drive/1Sf2Is5efGc7i0JYqZfX4sZ3xbAxOuLOG?usp=sharing)
