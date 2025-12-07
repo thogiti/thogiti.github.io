@@ -162,7 +162,7 @@ Surjectivity is shown using fixed-point theory.
    F_y(x) = y - f(\mathrm{LN}(x)).
    $$
 
-3. Choose $R$ large enough that the ball $B_R = {x : |x| \le R}$ satisfies $F_y(B_R) \subseteq B_R$. Intuitively, $F_y(x)$ cannot push you outside a sufficiently large ball because $f(\mathrm{LN}(x))$ is bounded.
+3. Choose $R$ large enough that the ball $B_R = {x : \|x\| \le R}$ satisfies $F_y(B_R) \subseteq B_R$. Intuitively, $F_y(x)$ cannot push you outside a sufficiently large ball because $f(\mathrm{LN}(x))$ is bounded.
 
 4. By Brouwer’s fixed-point theorem, there exists $x^* \in B_R$ such that
    $$
@@ -387,9 +387,13 @@ Usually the informal answer is: “no, because we did not train it to do that.�
 Surjectivity, combined with the usual decoding layer, undercuts this style of argument. If the policy can represent an action in its output space (for example, by producing a logit configuration that decodes to that action), then by surjectivity there exists some input embedding sequence that leads to that configuration. Training may make that input unusual or hard to find, but the architecture does not rule it out.
 
 If the contract’s action set is $\mathcal{A}*\text{allowed}$, and the model induces a map
+
+
 $$
 \pi*\theta : \mathcal{Z} \to \mathcal{A}*\text{allowed},
 $$
+
+
 then the safe default is to treat every $a \in \mathcal{A}*\text{allowed}$ as reachable from some $z \in \mathcal{Z}$. For Level-1 safety, the conclusion is simple:
 
 * if a contract permits an action syntactically, then one should behave as if there is some observation under which the model emits it.
