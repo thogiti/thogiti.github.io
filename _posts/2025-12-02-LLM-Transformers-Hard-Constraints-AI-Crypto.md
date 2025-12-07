@@ -33,7 +33,10 @@ This first part reconstructs the math from first principles. Part II will apply 
 
 ## 1. Three Functional Properties, with Geometry Behind Them
 
-Let $f: \mathcal{X} \to \mathcal{Y}$. Three properties describe how input space and output space relate in a Transformer model.
+![Transformer Architecture](https://arxiv.org/html/1706.03762v7/Figures/ModalNet-21.png)
+_Source: Figure 1: The Transformer - model architecture, https://arxiv.org/abs/1706.03762._
+
+Let $f: \mathcal{X} \to \mathcal{Y}$. Three properties describe how input space and output space relate in a [Transformer model](https://arxiv.org/html/1706.03762v7).
 
 ### 1.1 Surjectivity (“onto”)
 
@@ -99,7 +102,7 @@ graph TB
 
 “Is a Transformer surjective?” or “Is an LLM injective?” is ambiguous because the model contains several structurally different maps.
 
-The three that matter are:
+The three that matter are explained below.
 
 ### 2.1 Continuous core
 
@@ -107,7 +110,7 @@ $$
 \mathrm{TF}_\theta : (\mathbb{R}^d)^n \to (\mathbb{R}^d)^n
 $$
 
-This is the multi-layer block structure operating purely on embeddings (attention + MLP). Jiang & Haghtalab analyze this map[^1].
+This is the multi-layer block structure operating purely on embeddings (attention + MLP). Jiang & Haghtalab analyze this map in their paper[^1].
 
 ### 2.2 Prompt-to-representation map
 
@@ -125,7 +128,7 @@ F_\theta: \mathcal{V}^{\le K} \to \mathcal{V}^{\le K'},
 $$
 which includes embedding, TF blocks, logit projection, sampling or argmax, and iteration until EOS. This is neither injective nor surjective.
 
-Most confusion in public discourse arises from silently substituting one map for another. The surjectivity paper concerns **2.1**; the injectivity paper concerns **2.2**; people often talk as if both applied to **2.3**.
+Most confusion in public discourse arises from silently substituting one map for another. The surjectivity paper concerns 2.1; the injectivity paper concerns 2.2; people often talk as if both applied to 2.3.
 
 ---
 
@@ -133,7 +136,7 @@ Most confusion in public discourse arises from silently substituting one map for
 
 Paper: *On Surjectivity of Neural Networks: Can you elicit any behavior from your model?* (Haozhe Jiang, Nika Haghtalab, 2025)[^1].
 
-Modern Transformer blocks (pre-LayerNorm + residual) have the form
+[Modern Transformer](https://arxiv.org/abs/1706.03762) blocks (pre-LayerNorm + residual) have the form
 $$
 g(x) = f(\mathrm{LN}(x)) + x,
 $$
@@ -176,7 +179,7 @@ The [Haozhe Jiang's paper](https://arxiv.org/abs/2508.19445) extends this with d
 
 ### 3.2 What this means in practice
 
-Surjectivity is a **structural** property; it holds regardless of initialization or training. It means:
+Surjectivity is a **structural** property; it holds regardless of initialization or training or hyper parameters. It means:
 
 > If a behavior corresponds to some embedding-space output, then some input exists that produces it.
 
@@ -223,7 +226,7 @@ So different prompts almost surely never collide in representation space.
 
 ### 4.1 Intuitive picture: a lossless fingerprint
 
-An injective map is a **no-collision encoder**:
+An injective map is a no-collision encoder, which means:
 
 * every different input prompt yields a unique hidden vector;
 * no two prompts share the same internal state;
@@ -249,7 +252,7 @@ This is the opposite of the usual assumption that “internal embeddings anonymi
 
 ### 4.3 SipIt: turning injectivity into an actual inverse
 
-The paper does not stop at existence. It introduces **SipIt** (Sequential Inverse Prompt via Iterative Updates), which:
+The paper does not stop at existence[^2]. It introduces **SipIt** (Sequential Inverse Prompt via Iterative Updates), which:
 
 * uses causality: the hidden state at position $t$ depends only on the prefix $(s_1,\dots,s_t)$;
 * for a fixed prefix, varies the next token $s_t$ and observes the resulting hidden state;
@@ -443,9 +446,9 @@ A small table summary can be useful here as a mental checklist:
 
 | Safety level | Informal expectation                           | What surjectivity suggests instead                                 |
 | ------------ | ---------------------------------------------- | ------------------------------------------------------------------ |
-| Basic        | “Model will not output obviously bad actions.” | Any syntactically allowed action should be treated as reachable.   |
-| Intermediate | “Bad actions require extreme prompts.”         | Adversaries can search inputs; treat $\mathcal{Z}$ as adversarial. |
-| Expert       | “Training and alignment give global safety.”   | Only contract-level invariants constrain worst-case behavior.      |
+| Basic        | Model will not output obviously bad actions. | Any syntactically allowed action should be treated as reachable.   |
+| Intermediate | Bad actions require extreme prompts.         | Adversaries can search inputs; treat $\mathcal{Z}$ as adversarial. |
+| Expert       | Training and alignment give global safety.   | Only contract-level invariants constrain worst-case behavior.      |
 
 ---
 
