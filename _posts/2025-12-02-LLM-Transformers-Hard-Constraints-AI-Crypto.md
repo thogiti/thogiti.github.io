@@ -1,5 +1,5 @@
 ---
-title: Can Transformers Do Everything, and Undo It Too? Part I — Functional Properties as Hard Constraints for AI+Crypto
+title: Can Your AI Agent Be Forced to Drain the Wallet? The Structural Risks of AI in DeFi
 date: 2025-12-02
 tags: LLM-reversable Transformers LLM LLM-hard-constraints AI-Crypto AI-DeFi AI-DeFi-Agents Agentic-Crypto 
 description: "A deep technical exploration of why modern Transformers are structurally surjective and injective—and what this means for AI agents embedded in blockchain, DeFi, and cryptoeconomic systems. This article explains, from first principles, how these functional properties reshape safety, privacy, and mechanism design in AI-driven protocols."
