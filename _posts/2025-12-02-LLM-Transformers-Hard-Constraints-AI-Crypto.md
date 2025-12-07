@@ -635,7 +635,7 @@ The functional properties established here are architectural facts, not training
 
 **Acknowledgments**
 
-Thanks to Haozhe Jiang, Giorgos Nikolaou and the authors of [^1] and [^2] for their foundational work on functional properties of deep neural networks.
+Thanks to [Haozhe Jiang](https://x.com/erichzjiang), [Giorgos Nikolaou](https://x.com/GiorgosNik02) and the authors of [^1] and [^2] for their foundational work on functional properties of deep neural networks.
 
 ## References
 [^1]: [On Surjectivity of Neural Networks: Can you elicit any behavior from your model?](https://arxiv.org/abs/2508.19445)
