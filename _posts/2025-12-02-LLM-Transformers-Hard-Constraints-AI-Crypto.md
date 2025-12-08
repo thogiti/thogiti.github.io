@@ -9,6 +9,8 @@ When a Transformer controls a $100M DeFi vault, can it be jailbroken into draini
 
 This two-part series explains why these properties matter for AI-driven crypto protocols, and how to build systems that remain secure despite them. Part I establishes the mathematical foundations. Part II (coming soon) provides concrete mechanisms, attack scenarios, and defenses.
 
+---
+
 ## Overview 
 A modern Transformer is a function
 $$
@@ -181,7 +183,7 @@ The [Haozhe Jiang's paper](https://arxiv.org/abs/2508.19445) extends this with d
 
 Surjectivity is a **structural** property; it holds regardless of initialization or training or hyper parameters. It means:
 
-> If a behavior corresponds to some embedding-space output, then some input exists that produces it.
+> If a behavior is representable as an embedding-space output that decodes into an admissible action, then there exists some input embedding sequence that produces it.
 
 The proof is existential; it does not yield an efficient method to find that input. But from a safety standpoint, mere existence already matters.
 
@@ -234,7 +236,7 @@ An injective map is a no-collision encoder, which means:
 
 Informally:
 
-> The hidden state is a reversible fingerprint of the entire prompt.
+> The hidden state is a reversible fingerprint of the entire prompt with respect to the model that produced it.
 
 If we know $r_\theta$ and have access to the model, the representation essentially determines the prompt.
 
@@ -246,7 +248,12 @@ If an observer sees $r_\theta(s)$, and they can use the model as an oracle, then
 2. They can, in principle, search for that $s$ by probing the model.
 3. If the search procedure is efficient, they can reconstruct the exact input.
 
-In mechanism-design language: if types (private information) are mapped to signals via an injective function, then observing the signal **pins down the type** in the model’s world. There is no many-to-one compression; the signal is a full-information encoding.
+
+**A note on projections and practical inversion:** 
+
+Injectivity holds for the full hidden state $h \in \mathbb{R}^d$. Many linear projections used in practice, such as logging subsets of dimensions, extracting attention keys/values, or storing intermediate layer states, empirically preserve enough structure for inversion on realistic prompt manifolds, even if they are not strictly injective in the mathematical sense. In other words, even "compressed" or "projected" representations often leak sufficient information to reconstruct the original prompt when combined with model access and inversion algorithms like SipIt[^2].
+
+In mechanism-design language: if types (private information) are mapped to signals via an injective function, then observing the signal pins down the type in the model’s world. There is no many-to-one compression; the signal is a full-information encoding.
 
 This is the opposite of the usual assumption that “internal embeddings anonymize user data.”
 
@@ -308,6 +315,21 @@ There is no contradiction. The “LLMs are bijective” meme is a mis-assignment
 
 The two properties have different security flavors.
 
+### A Note on Existential vs Operational Risk
+
+These functional results, surjectivity and injectivity, are **existential rather than algorithmic**. Surjectivity does not imply efficient discovery of adversarial inputs; injectivity does not imply efficient inversion by any observer.
+
+However, cryptographic and economic security arguments are existential by construction: a protocol is unsafe if there *exists* an execution that violates an invariant, regardless of how rare or expensive it is to find.
+
+This asymmetry is why these functional properties matter more in crypto than in conventional ML deployments. In traditional ML, we might accept that "attacks exist but are hard to find." In DeFi, where:
+- Failures are immediately monetizable
+- Transactions are irreversible
+- Adversaries have strong economic incentives to search for exploits
+
+The existence of a vulnerability is itself the problem, not its average-case likelihood.
+
+The remainder of this section explores how each property creates specific threat patterns.
+
 ### 6.1 Surjectivity → safety risk via reachability
 
 If the action space $\mathcal{A}$ of an AI policy contains a harmful action $a_{\text{harm}}$, surjectivity implies
@@ -346,6 +368,10 @@ In mechanism-design terms, $r_\theta$ turns private types into fully revealing s
 ---
 
 ## 7. Implications for AI + Crypto: Surjectivity and Injectivity as Design Constraints
+
+**A broader perspective:** 
+
+Before diving into crypto-specific implications, it's worth noting that surjectivity and injectivity of Transformers create challenges across multiple domains where AI systems have consequential outputs. Similar issues appear in robotics (where unsafe trajectories are structurally reachable via surjective policies) and in recommender systems (where internal state leakage enables preference reconstruction via injective encodings). However, Crypto or DeFi tightens the requirements because failures are immediately monetizable, irreversible, and occur in an adversarial environment where attackers have strong economic incentives to search for exploits. This makes the existential nature of these functional properties particularly critical for blockchain applications.
 
 Once a Transformer sits inside a crypto-economic system—as a vault manager, oracle, or governance agent—it is no longer “just a model.” It becomes one component of a **mechanism** that maps on-chain and off-chain state to economically consequential actions.
 
@@ -454,7 +480,7 @@ A small table summary can be useful here as a mental checklist:
 | Intermediate | Bad actions require extreme prompts.         | Adversaries can search inputs; treat $\mathcal{Z}$ as adversarial. |
 | Expert       | Training and alignment give global safety.   | Only contract-level invariants constrain worst-case behavior.      |
 
----
+
 
 ### 7.2 Privacy: injectivity and what internal states reveal
 
@@ -523,7 +549,13 @@ Zero-knowledge proofs are often presented as a generic privacy tool for blockcha
 
 If witnesses are assembled and held on the user’s device, and only short commitments or proof objects are sent to the chain or to verifiers, then a proof can certify a property (“my score is above a threshold,” “this order respects risk limits”) without exposing the underlying data.
 
-However, if a system ships raw prompts or internal representations to a remote proving service, injectivity implies that the prover sees essentially the full input. In that case, the proof may hide data from the chain, but it does not hide data from the prover. For AI+DeFi designs where the LM runs remotely and witnesses are built there, zero-knowledge protocols do not address the main privacy risk introduced by injective representations.
+However, if a system ships raw prompts or internal representations to a remote proving service, injectivity implies that the prover sees essentially the full input. In that case, the proof may hide data from the chain, but it does not hide data from the prover. 
+
+**A note on TEEs (Trusted Execution Environments):** 
+
+TEEs such as Intel SGX or AMD SEV are effective at protecting *execution integrity*, ensuring that a computation runs as specified without tampering by the host. However, they are not designed to address *information-theoretic leakage* from a computation that is itself injective. If the model's internal map $r_\theta$ is injective, then the hidden state $h$ uniquely determines the prompt $s$, regardless of whether that computation happens inside a TEE. The TEE protects against a malicious host modifying execution; it does not prevent the legitimate computation from producing a reversible encoding.
+
+In that sense, injectivity pushes privacy concerns above the hardware layer, into architectural and protocol choices. For AI+DeFi designs where the LM runs remotely (even in a TEE) and witnesses are built there, neither zero-knowledge protocols nor TEEs address the main privacy risk introduced by injective representations.
 
 #### Consequences for architecture
 
@@ -541,27 +573,14 @@ These are not policy recommendations; they are direct consequences of treating $
 
 When surjectivity and injectivity coexist inside the same policy $\pi_\theta$, the overall system inherits both reachable actions and reversible inputs. This combination is more constraining than either property alone.
 
-A few observations follow directly.
-
-#### Input shaping and output prediction become mutually reinforcing.
-
-If adversaries can influence observations, they can search $\mathcal{Z}$ for sequences that drive $\pi_\theta$ toward specific actions. If adversaries can recover (or approximate) $r_\theta^{-1}$, they can observe what the agent has seen, anticipate likely actions, and optimize their own strategies accordingly.
-
-#### Safety and privacy cannot be isolated.
-
-A mechanism that relies on confidential signals can lose its intended incentive properties if those signals leak through internal representations. Likewise, safety assumptions fail if an adversary can steer the agent using crafted inputs whose structure is inferred from observing partial leaks of its state.
-
-#### System-level robustness must be formulated at the mechanism boundary.
-
-From the mechanism’s point of view, the agent is effectively an arbitrary function inside the admissible input and action sets. The correctness conditions must be properties of the contract and oracle pathways, not assumptions about internal network invariants.
-
-This leads naturally to the architectural principles of Part II.
+When surjectivity and injectivity coexist, they create mutually reinforcing threats: adversaries who can influence observations (exploiting surjectivity) and recover internal states (exploiting injectivity) gain a closed-loop advantage. Safety and privacy can no longer be treated as separate concerns, leaked representations enable better input manipulation, and manipulated inputs produce exploitable actions. This forces system-level robustness to be formulated at the mechanism boundary: the contract and oracle pathways must enforce correctness properties, not the network's internal invariants.
 
 #### Concrete Example: AI Vault Manager Under Combined Threats
 
 To see how these properties interact, consider an AI-controlled DeFi vault with the following architecture:
 
 **System components:**
+
 $$
 \text{Market data } z \xrightarrow{\text{tokenize}} s \xrightarrow{r_\theta} h \xrightarrow{\text{TF}_\theta} h' \xrightarrow{\text{decode}} a \xrightarrow{\text{contract}} \text{execution}
 $$
@@ -570,9 +589,15 @@ where $s$ is the prompt, $h$ is the hidden state, $h'$ is the transformed embedd
 
 **Threat 1: Surjectivity enables action reachability**
 
-The vault contract permits actions $\mathcal{A}_{\text{allowed}} = \{\text{rebalance}, \text{hedge}, \text{withdraw}\}$. Each action $a$ corresponds to some output embedding region. By surjectivity of $\text{TF}_\theta$, for any $a \in \mathcal{A}_{\text{allowed}}$, there exists some input embedding that produces it.
+The vault contract permits actions 
 
-This means: if "withdraw 100% to external address" is syntactically valid, some market condition $z$ (possibly adversarially crafted) will trigger it.
+$$\mathcal{A}_{\text{allowed}} = \{\text{rebalance}, \text{hedge}, \text{withdraw}\}$$. 
+
+Each action $a$ corresponds to some output embedding region. By surjectivity of $\text{TF}_\theta$, 
+
+for any $$a \in \mathcal{A}_{\text{allowed}}$$, there exists some input embedding that produces it.
+
+This means: if "withdraw 100% to external address" is syntactically valid, some admissible observation sequence $z$, potentially adversarially shaped within protocol limits, will trigger it.
 
 **Threat 2: Injectivity enables input recovery**
 
@@ -622,9 +647,11 @@ Concretely:
 * The contract defines and enforces the admissible action set $\mathcal{A}_\text{allowed}$.
 * Observation pathways constrain the admissible input set $\mathcal{Z}_\text{trusted}$.
 * Any statistic that must remain private should be computed before any value is exposed outside the trust boundary.
-* The AI model itself is treated as a general function $\pi_\theta$ compatible with surjectivity in its continuous core and injectivity in its representations.
+* The AI model itself is treated as an arbitrary function over the admissible input–action interface, consistent with surjectivity of its continuous core and injectivity of its representations.
 
 This viewpoint matches how mechanism designers handle arbitrary agent behavior: constraints are placed on the environment, not on internal computations that cannot be verified.
+
+From a mechanism-design perspective, the model’s internal computation is unobservable and unverifiable; only its interface can be constrained.
 
 ---
 
