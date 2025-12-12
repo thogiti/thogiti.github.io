@@ -169,7 +169,7 @@ The right way, IMHO, is to connect production ADL (contracts) and the paper’s 
 For a given ADL wave $t$:
 
 * let $e_t(p)$ be equity at the start of the wave,
-* define $e_t^{\text{no-ADL}}(p)$ as the equity at the end of the wave if ADL were **disabled** but the underlying price path and non-ADL order flow were the same,
+* define $e_t^{\text{no-ADL}}(p)$ as the equity at the end of the wave if ADL were disabled but the underlying price path and non-ADL order flow were the same,
 * define $e_t^{\text{ADL}}(p)$ as the equity at the end of the wave with ADL active.
 
 Then define a realized wealth-space haircut:
@@ -382,7 +382,7 @@ The paper would become a lot harder to attack (and a lot easier to learn from) w
 3. Publish and document the USD 653m analysis.
    Include a short methods summary in the paper that defines $D_t$, $H_t^{\text{queue}}$, $H_t^\star$, and shows one end-to-end wave reconstruction.
 
-4. **Adjust the language around Hyperliquid.**
+4. Adjust the language around Hyperliquid.
    Instead of “Hyperliquid wiped USD 653m of PnL,” say something like:
 
    > “Under our wealth-space reconstruction of the October 10 event, the induced queue concentrates haircuts on a small set of winners and appears to over-use their equity by a factor of about $\kappa$ relative to [specified benchmark].”
@@ -391,7 +391,7 @@ That keeps the main message intact:
 
 * ADL is a necessary evil in leveraged systems.
 * There are different ways to design it (queue vs Pro-Rata vs hybrids).
-* Those choices create different **maps from bad debt to who pays**.
+* Those choices create different maps from bad debt to who pays.
 
 What this debate has surfaced is that it is not enough to say “we have ADL, trust us.” If you want to claim your design is fair and efficient, you have to be very clear about:
 
