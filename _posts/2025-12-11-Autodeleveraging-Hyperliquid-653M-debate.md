@@ -404,7 +404,7 @@ What this debate has surfaced is that it is not enough to say “we have ADL, tr
 ## References
 [^1]: [Autodeleveraging - Impossibilities and Optimization](https://www.arxiv.org/abs/2512.01112)
 
-[^2] [Tarun's tweet thread - ADL paper](https://x.com/tarunchitra/status/1998451762232177041)
+[^2]: [Tarun's tweet thread - ADL paper](https://x.com/tarunchitra/status/1998451762232177041)
 
 [^3]: [Dan's criticism](https://x.com/danrobinson/status/1998924691365572647)
 
