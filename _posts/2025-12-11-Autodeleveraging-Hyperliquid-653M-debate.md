@@ -27,7 +27,7 @@ Very short version:
 
   * Hyperliquid’s ADL works in **contracts**, not as “take 100% of each winner’s equity in order.”
   * The paper’s Pro-Rata mechanism, as written, lives in **equity** space, while live systems like Drift allocate losses by position size (contracts)[^6].
-  * The $653m “excess haircuts” number needs a clear, public methodology so that others can audit and verify it.
+  * The USD 653m “excess haircuts” number needs a clear, public methodology so that others can audit and verify it.
 
 * **Tarun is right** that:
 
@@ -39,7 +39,7 @@ What, in my POV, actually needs editing in the paper:
 
   1. Label the queue model as an **equity-space abstraction**, not “the Hyperliquid queue.”
   2. Write Pro-Rata cleanly as a **single scalar equity haircut** and separate it from Drift’s **contracts-pro-rata**.
-  3. Publish the analysis code (Tarun already hinted he would open source it next week) that yields $\$653m$, and state clearly what “haircut” means in dollars.
+  3. Publish the analysis code (Tarun already hinted he would open source it next week) that yields USD 653m, and state clearly what “haircut” means in dollars.
 
 Now some context, because the ADL design problem isn’t just crypto drama. ADL is an essential safety mechanism in high-leverage derivatives markets.
 
@@ -90,14 +90,14 @@ Key point: this is all phrased in terms of contracts and positions being closed.
 
 Dan’s [simple example](https://x.com/danrobinson/status/1999012411206996219) makes that concrete:
 
-* A user with a 2 ETH short blows up; there is a $\$1,500$ deficit.
-* The top account in the ADL queue has a 1 ETH long, worth $\$3,000$ with $\$1,500$ in equity (2x levered).
+* A user with a 2 ETH short blows up; there is a USD 1,500 deficit.
+* The top account in the ADL queue has a 1 ETH long, worth USD 3,000 with USD 1,500 in equity (2x levered).
 
 In a contracts-based queue:
 
 * The system needs to offset 2 ETH of bad short.
-* The top long contributes its 1 ETH, so it eats half the loss (say $\$750$).
-* The other $\$750$ comes from the next long(s) in the queue.
+* The top long contributes its 1 ETH, so it eats half the loss (say USD 750).
+* The other USD 750 comes from the next long(s) in the queue.
 
 This top account is fully closed in contracts, but it has not had a 100% equity haircut. It lost a fraction of its equity.
 
@@ -192,7 +192,7 @@ $$
 
 Now:
 
-* If Hyperliquid closes a 1 ETH long and that reduces equity by $\$750$, then $h_t^{\text{prod}}(p)$ is $\$750$ divided by the starting equity, not $1$.
+* If Hyperliquid closes a 1 ETH long and that reduces equity by USD 750, then $h_t^{\text{prod}}(p)$ is USD 750 divided by the starting equity, not $1$.
 * This matters a lot for any statistic that sums “haircuts in dollars” over many waves.
 
 So the clean position is:
@@ -215,13 +215,16 @@ In Drift’s implementation, socialized losses look like this in spirit:
 * compute total loss $L$ on one side of the book,
 * compute total base asset $\sum_i q_i$ on that side,
 * define a per-contract loss
-  $$
+
+$$
   \ell_{\text{per-contract}} = \frac{L}{\sum_i q_i},
-  $$
+$$
+
 * charge each trader
-  $$
+
+$$
   \text{Loss}*i = q_i \cdot \ell*{\text{per-contract}}.
-  $$
+$$
 
 That is base-space Pro-Rata: loss per trader is proportional to number of contracts $q_i$.
 
@@ -303,9 +306,9 @@ The fix is simple: use the scalar-$\lambda$ formulation above and state clearly 
 
 ---
 
-## 5. The $653m “excess haircuts”: structure vs scale
+## 5. The USD 653m “excess haircuts”: structure vs scale
 
-The $653m claim is the most visible number in the paper and the least documented. Dan’s question is: *“What exactly did you sum to get that value?”*
+The USD 653m claim is the most visible number in the paper and the least documented. Dan’s question is: *“What exactly did you sum to get that value?”*
 
 Tarun has said the analysis code will be open-sourced within the next few days/weeks. Within the wealth-space model, a sensible pipeline for one ADL wave $t$ would be:
 
@@ -350,14 +353,14 @@ If the actual implementation did something like:
 * $H_t^{\text{queue}} = \sum \text{notional}_i$, or
 * $H_t^{\text{queue}} = \sum e_t(p_i)^+$ over all ADLed winners,
 
-then it is not measuring “wealth lost.” It is measuring volume or gross equity, which could easily produce a number on the order of $653m but does **not** mean “traders paid $653m.”
+then it is not measuring “wealth lost.” It is measuring volume or gross equity, which could easily produce a number on the order of USD 653m but does **not** mean “traders paid USD 653m.”
 
 So:
 
 * The structure of comparing production ADL to a benchmark policy on the same event is sound.
-* The scale of $653m is uncertain until the code is public and the “haircut” variable is clearly defined.
+* The scale of USD 653m is uncertain until the code is public and the “haircut” variable is clearly defined.
 
->The $\$653m$ figure only reflects ‘excess wealth destruction’ if $H_t^{\text{queue}}$ measures actual equity lost, not notional contracts closed."
+>The USD 653m figure only reflects ‘excess wealth destruction’ if $H_t^{\text{queue}}$ measures actual equity lost, not notional contracts closed."
 
 ---
 
@@ -376,11 +379,11 @@ The paper would become a lot harder to attack (and a lot easier to learn from) w
 2. Clean up Pro-Rata.
    Replace the current Pro-Rata equation with the scalar–$\lambda$ version above. State plainly that Drift implements base-space Pro-Rata, while the fairness section uses wealth-space Pro-Rata.
 
-3. Publish and document the $653m analysis.
+3. Publish and document the USD 653m analysis.
    Include a short methods summary in the paper that defines $D_t$, $H_t^{\text{queue}}$, $H_t^\star$, and shows one end-to-end wave reconstruction.
 
 4. **Adjust the language around Hyperliquid.**
-   Instead of “Hyperliquid wiped $653m of PnL,” say something like:
+   Instead of “Hyperliquid wiped USD 653m of PnL,” say something like:
 
    > “Under our wealth-space reconstruction of the October 10 event, the induced queue concentrates haircuts on a small set of winners and appears to over-use their equity by a factor of about $\kappa$ relative to [specified benchmark].”
 
