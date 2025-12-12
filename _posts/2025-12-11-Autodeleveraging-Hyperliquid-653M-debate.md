@@ -5,7 +5,7 @@ tags: Autodeleveraging Hyperliquid ADL ADL-trilemma Tarun-Chitra-ADL ADL-queue A
 ---
 
 
-Tarun Chitra’s [ADL paper](https://www.arxiv.org/abs/2512.01112) triggered a big argument around Hyperliquid’s October 10–11 event[^1^2^3^4].
+Tarun Chitra’s [ADL paper](https://www.arxiv.org/abs/2512.01112) triggered a big argument around Hyperliquid’s October 10–11 event[^1][^2][^3][^4].
 
 ### Who’s right about what, and what actually needs fixing?
 
