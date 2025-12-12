@@ -177,9 +177,9 @@ Then define a realized wealth-space haircut:
 $$
 h_t^{\text{prod}}(p) =
 \begin{cases}
-\dfrac{e_t^{\text{no-ADL}}(p) - e_t^{\text{ADL}}(p)}{e_t(p)}, & e_t(p) > 0,[6pt]
--1, & e_t(p) < 0 \text{ and the position is fully reset},[4pt]
-0, & \text{otherwise.}
+\dfrac{e_t^{\text{no-ADL}}(p) - e_t^{\text{ADL}}(p)}{e_t(p)}, & e_t(p) > 0, \\
+-1, & e_t(p) < 0 \text{ and the position is fully reset}, \\
+0, & \text{otherwise}.
 \end{cases}
 $$
 
