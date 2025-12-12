@@ -5,7 +5,7 @@ tags: Autodeleveraging Hyperliquid ADL ADL-trilemma Tarun-Chitra-ADL ADL-queue A
 ---
 
 
-Tarun Chitra’s [ADL paper](https://www.arxiv.org/abs/2512.01112) triggered a big argument around Hyperliquid’s October 10–11 event[^1][^2][^4].
+Tarun Chitra’s [ADL paper](https://www.arxiv.org/abs/2512.01112) triggered a big argument around Hyperliquid’s October 10–11 event[^1][^2][^3].
 
 ### Who’s right about what, and what actually needs fixing?
 
@@ -39,7 +39,7 @@ What, in my POV, actually needs editing in the paper:
 
   1. Label the queue model as an **equity-space abstraction**, not “the Hyperliquid queue.”
   2. Write Pro-Rata cleanly as a **single scalar equity haircut** and separate it from Drift’s **contracts-pro-rata**.
-  3. Publish the analysis code (Tarun already hinted he would open source it next week) that yields $653m, and state clearly what “haircut” means in dollars.
+  3. Publish the analysis code (Tarun already hinted he would open source it next week) that yields $\$653m$, and state clearly what “haircut” means in dollars.
 
 Now some context, because the ADL design problem isn’t just crypto drama. ADL is an essential safety mechanism in high-leverage derivatives markets.
 
@@ -113,13 +113,13 @@ with $c$ collateral and $\mathrm{PNL}_T(p)$ the realized profit or loss.
 
 Over all positions $P_n$:
 
-* total shortfall (bad debt) is
+Total shortfall (bad debt) is
 
   $$
   D_T(P_n) = \sum_{p \in P_n} (-e_T(p))_+,
   $$
 
-* total winners’ equity is
+Total winners’ equity is
 
   $$
   W_T(P_n) = \sum_{p \in P_n} (e_T(p))_+.
@@ -164,7 +164,7 @@ Dan is right that if you read the queue in the paper as “this is Hyperliquid,�
 
 ### 3.3 How to connect them without pretending they’re the same
 
-The right way, IMHO, to connect production ADL (contracts) and the paper’s model (equity) is to **derive haircuts from observed equity changes**, not to assume “closed ⇒ $h=1$.”
+The right way, IMHO, is to connect production ADL (contracts) and the paper’s model (equity) is to **derive haircuts from observed equity changes**, not to assume “closed ⇒ $h=1$.” But until we can see the full code on Hyperliquid ADL, we can't know for sure. We can only make good guesses.
 
 For a given ADL wave $t$:
 
@@ -206,7 +206,7 @@ Tarun’s “round vs not round” comment (integer vs continuous water-filling)
 
 ## 4. Pro-Rata: equity vs contracts, and what Drift actually does
 
-Dan’s second complaint is that the paper “misdescribes Pro-Rata ADL” and that the Drift code Tarun links does not match the paper’s formula[^3].
+Dan’s second complaint is that the paper “misdescribes Pro-Rata ADL” and that the Drift code Tarun links does not match the paper’s formula[^4].
 
 ### 4.1 Drift is contracts-pro-rata
 
@@ -395,9 +395,9 @@ What this debate has surfaced is that it is not enough to say “we have ADL, tr
 
 [^2] [Tarun's tweet thread - ADL paper](https://x.com/tarunchitra/status/1998451762232177041)
 
-[^3]: [Tarun's follow up tweet](https://x.com/tarunchitra/status/1998985133303701673)
+[^3]: [Dan's criticism](https://x.com/danrobinson/status/1998924691365572647)
 
-[^4]: [Dan's criticism](https://x.com/danrobinson/status/1998924691365572647)
+[^4]: [Tarun's follow up tweet](https://x.com/tarunchitra/status/1998985133303701673)
 
 [^5]: [Auto-deleveraging - Hyperliquid Docs](https://hyperliquid.gitbook.io/hyperliquid-docs/trading/auto-deleveraging)
 
