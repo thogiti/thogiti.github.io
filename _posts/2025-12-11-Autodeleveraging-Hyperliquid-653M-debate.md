@@ -200,7 +200,7 @@ So the clean position is:
 * **Yes**, the queue in the theory is an equity-space abstraction and does not reproduce Hyperliquid’s contracts-space queue.
 * The paper should say that clearly and treat Hyperliquid’s actual ADL as data that induces $h_t^{\text{prod}}$, not as a literal instance of the theoretical $\pi^Q$.
 
-Tarun’s “round vs not round” comment (integer vs continuous water-filling) fits inside this picture: you can still talk about “rounded queue” vs “continuous queue,” but you need to be explicit whether you are rounding contracts or equity.
+Tarun’s “round vs not round” comment (integer vs continuous water-filling) fits inside this picture: you can still talk about “rounded queue” vs “continuous queue,” but you need to be explicit whether you are rounding contracts or equity[^4].
 
 ---
 
@@ -243,32 +243,40 @@ Written cleanly:
 * severity $\theta^{\pi^{PR}} \in [0,1]$,
 * global haircut fraction
   
-$$ 
-\lambda_T(\pi^{PR}, P_n):= \min \bigl\\{1; \theta^{\pi^{PR}}\frac{D_T(P_n)}{W_T(P_n)}\bigr\\}, 
-
+$$
+\lambda_T(\pi^{PR}, P_n)
+= \min\left\{1,\;
+\theta^{\pi^{PR}} \frac{D_T(P_n)}{W_T(P_n)}
+\right\}.
 $$
 
 
 * haircuts
-  $$
-  h^{\pi^{PR}}(p) =
-  \begin{cases}
-  \lambda_T(\pi^{PR}, P_n), & e_T(p) > 0,[4pt]
-  -1, & e_T(p) < 0 \text{ and fully reset},[4pt]
-  0, & \text{otherwise,}
-  \end{cases}
-  $$
+  
+$$
+h^{\pi^{PR}}(p) =
+\begin{cases}
+\lambda_T(\pi^{PR}, P_n), & e_T(p) > 0,\\[4pt]
+-1, & e_T(p) < 0 \text{ and fully reset},\\[4pt]
+0, & \text{otherwise.}
+\end{cases}
+$$
+
 * post-ADL equity for winners
-  $$
-  e_T^{\text{post}}(p) = \bigl(1 - \lambda_T(\pi^{PR}, P_n)\bigr), e_T(p).
-  $$
+
+$$
+e_T^{\text{post}}(p)
+= \bigl(1 - \lambda_T(\pi^{PR}, P_n)\bigr)\, e_T(p).
+$$
 
 Total haircut on winners:
+
 $$
-\sum_{p} h^{\pi^{PR}}(p), e_T(p)^+
-= \lambda_T W_T(P_n)
-= \theta^{\pi^{PR}} D_T(P_n)
+\sum_{p} h^{\pi^{PR}}(p)\, e_T(p)^+
+= \lambda_T\, W_T(P_n)
+= \theta^{\pi^{PR}} D_T(P_n).
 $$
+
 whenever $\theta^{\pi^{PR}} D_T(P_n) \le W_T(P_n)$.
 
 That is Pro-Rata in equity. It is not what Drift does.
