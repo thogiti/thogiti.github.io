@@ -79,7 +79,7 @@ Hyperliquid describes ADL roughly as[^5]:
 
 * compute a priority index per position (something like PnL × leverage ÷ account value),
 * sort open positions by this index,
-* when there is bad debt, **fully close positions** at a mark / ADL price in that order until enough opposite-side contracts have been matched.
+* when there is bad debt, **fully closd positions** at a mark / ADL price in that order until enough opposite-side contracts have been matched.
 
 >“Closed” in Hyperliquid’s ADL means the position’s contracts are offset against bad debt, not that equity is zeroed. Equity loss depends on the PnL of the closed contracts.
 
@@ -288,8 +288,8 @@ That is Pro-Rata in equity. It is not what Drift does.
 
 Once spelled out, the distinction is straightforward:
 
-* **Drift / Dan:** Pro-Rata in base space, losses $\propto q_i$.
-* **Paper:** Pro-Rata in wealth space, losses $\propto e_T(p_i)$ via a common fraction.
+* Drift / Dan: Pro-Rata in base space, losses $\propto q_i$.
+* Paper: Pro-Rata in wealth space, losses $\propto e_T(p_i)$ via a common fraction.
 
 Both are internally consistent. They answer different fairness questions:
 
