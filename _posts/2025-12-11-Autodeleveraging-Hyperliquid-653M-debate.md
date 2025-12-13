@@ -79,7 +79,7 @@ Hyperliquid describes ADL roughly as[^5]:
 
 * compute a priority index per position (something like PnL × leverage ÷ account value),
 * sort open positions by this index,
-* when there is bad debt, **fully closd positions** at a mark / ADL price in that order until enough opposite-side contracts have been matched.
+* when there is bad debt, **fully closed positions** at a mark / ADL price in that order until enough opposite-side contracts have been matched.
 
 >“Closed” in Hyperliquid’s ADL means the position’s contracts are offset against bad debt, not that equity is zeroed. Equity loss depends on the PnL of the closed contracts.
 
@@ -247,8 +247,7 @@ Written cleanly:
 * global haircut fraction
   
 $$
-\lambda_T(\pi^{PR}, P_n)
-= \min\left\{1,\;
+\lambda_T(\pi^{PR}, P_n) = \min\left\{1,\;
 \theta^{\pi^{PR}} \frac{D_T(P_n)}{W_T(P_n)}
 \right\}.
 $$
