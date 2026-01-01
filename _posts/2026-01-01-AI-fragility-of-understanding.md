@@ -1,7 +1,7 @@
 ---
-title: "Cheap Generation and the Fragility of Understanding"
-subtitle: "Why AI might not automatically couple truth to value"
-date: 2025-12-31
+title: Cheap Generation and the Fragility of Understanding
+subtitle: Why AI might not automatically couple truth to value
+date: 2026-01-01
 author: Nagu Thogiti
 tags: AI ML Machine-Learning Epistemology Incentives World-Models Education Societal-Impact AI-Ethics Fragility-of-Understanding
 ---
