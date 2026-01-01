@@ -1,5 +1,7 @@
 ---
 title: Exploring Dynamic Base Fees for Solana’s Parallel Fee Markets
+date: 2025-01-31
+author: Nagu Thogiti
 tags: Solana fee-mechanism local-fee-markets solana-local-fee-markets dynamics-base-fees solana-fee-markets 
 ---
 

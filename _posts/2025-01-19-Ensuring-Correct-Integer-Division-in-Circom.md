@@ -1,5 +1,7 @@
 ---
 title: Ensuring Correct Integer Division in Circom - Avoiding Multiple Solutions in $\mathbb{F}_p$
+date: 2025-01-19
+author: Nagu Thogiti
 tags: Circom Zero-Knowledge-Proofs ZKP integer-division
 ---
 

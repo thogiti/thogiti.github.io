@@ -1,5 +1,7 @@
 ---
 title: Routing Revolution in AMM - Hooks in Uniswap V4 and Optimal Trade Execution - A Paper Review
+date: 2025-02-15
+author: Nagu Thogiti
 tags: Ethereum uniswap uniswap-v4 uniswap-v4-hooks amm automated-market-making automated-market-maker amm-v4-hooks optimal-routing-amm CFMM
 ---
 

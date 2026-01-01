@@ -1,6 +1,7 @@
 ---
 title: Autodeleveraging, Hyperliquid, and the $653m Debate
 date: 2025-12-11
+author: Nagu Thogiti
 tags: Autodeleveraging Hyperliquid ADL ADL-trilemma Tarun-Chitra-ADL ADL-queue ADL-pro-rata Drift-ADL 
 ---
 

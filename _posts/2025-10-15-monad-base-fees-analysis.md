@@ -1,5 +1,7 @@
 ---
 title: Variance-Locked Fees - A Game-Theoretic Deep Dive into Monad’s Base-Fee Mechanism
+date: 2025-10-15
+author: Nagu Thogiti
 tags: monad monad-base-fees tfm transaction-fee-mechanism adapative-fee-mechanism variance-aware-fee-mechanism Variance-Locked-Fees
 ---
 

@@ -1,5 +1,7 @@
 ---
 title: How Jito-Solana Works - A Deep Dive
+date: 2025-01-01
+author: Nagu Thogiti
 tags: Solana Jito Jito-solana jito-mev mev-redistribution jito-block-engine jito-tip-router jito-tip-distribution jito-tips
 ---
 

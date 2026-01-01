@@ -1,5 +1,7 @@
 ---
 title:  Application-Controlled Sequencing (ACS) as Pigouvian Policy for MEV - Internalizing Externalities at the App Layer
+date: 2025-08-26
+author: Nagu Thogiti
 tags: Ethereum Rollups Application-Specific-Sequencing app-sequencing MEV Pigouvian-taxes Pigouvian-policies Application-Controlled-Sequencing shared-sequencing decentralized-sequencing shared-sequencing-marketplaces app-sequencing-mechanism-design app-sequencing-auction
 ---
 

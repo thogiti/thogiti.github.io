@@ -1,6 +1,7 @@
 ---
 title: ADL Trilemma, Assumption J.3, and Dan Robinson’s Critique and Tarun's Paper Fixes
 date: 2025-12-14
+author: Nagu Thogiti
 tags: Autodeleveraging Hyperliquid ADL ADL-trilemma Tarun-Chitra-ADL ADL-queue ADL-pro-rata Drift-ADL Dan-Robinson
 ---
 

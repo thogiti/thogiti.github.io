@@ -1,5 +1,7 @@
 ---
 title: MonadBFT Deep Dive - A Mechanism-Design Foundation for High-Performance Consensus - Part 1
+date: 2025-10-02
+author: Nagu Thogiti
 tags: monad monadbft High-Performance-Consensus mechanism-design MEV Monad-MEV Monad-RaptorCast Monad-Pacemaker-timer
 ---
 

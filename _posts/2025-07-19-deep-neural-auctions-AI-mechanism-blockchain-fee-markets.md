@@ -1,6 +1,7 @@
 ---
 title: Deep Neural-Menu Auctions - An AI-Driven Mechanism of Blockchain Fee Markets
-
+date: 2025-07-19
+author: Nagu Thogiti
 tags: blockchain-fee-markets AI-driven-mechanism-design-blockchain AI-driven-mechanism-design RL-mechanism-blockchain RL-blockchain
 ---
 

@@ -1,5 +1,7 @@
 ---
 title: Choosing the Right Data Availability Layer - A Deep Dive into Celestia, Polygon Avail, and EigenDA
+date: 2025-02-25
+author: Nagu Thogiti
 tags: Ethereum Data-Availability-Layer DA-layer Celestia Polygon-Avail EigenDA Data-Availability-Sampling DAS altDA
 ---
 

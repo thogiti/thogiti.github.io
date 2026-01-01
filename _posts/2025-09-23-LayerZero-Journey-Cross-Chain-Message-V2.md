@@ -1,5 +1,7 @@
 ---
 title: LayerZero - The Journey of a Cross-Chain Message (V2) — “Universal Postal Service”
+date: 2025-09-23
+author: Nagu Thogiti
 tags: LayerZero Cross-Chain-Messaging-Systems
 ---
 

@@ -1,5 +1,7 @@
 ---
 title: Dominant Resource Fairness for High Performance Blockchains - A Multi-Dimensional Leap Beyond EIP-1559
+date: 2025-02-01
+author: Nagu Thogiti
 tags: Solana fee-mechanism local-fee-markets solana-local-fee-markets dynamics-base-fees solana-fee-markets Dominant-Resource-Fairness Multi-Resource-Blockchain-Fees Multi-Dimensional-Blockchain-Fees blockchain-fee-mechanism Multi-Resource-blockchain-fee-mechanism
 ---
 

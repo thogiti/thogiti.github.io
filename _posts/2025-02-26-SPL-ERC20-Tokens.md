@@ -1,5 +1,7 @@
 ---
 title: Solana SPL vs. Ethereum ERC-20 - A Deep Dive into State, Scalability, and Architecture
+date: 2025-02-26
+author: Nagu Thogiti
 tags: Ethereum Solana ERC20 SPL ERC20-token SPL-token state-growth compare-erc20-spl-tokens
 ---
 

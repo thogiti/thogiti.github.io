@@ -1,5 +1,7 @@
 ---
 title: Volume vs. Velocity - Why CME Futures Outpace High-Volume Perps in BTC Price Discovery
+date: 2025-04-05
+author: Nagu Thogiti
 tags: Bitcoin btc-price-discovery CME DeFi Perpetual-swaps Perpetuals perps future-of-perps crypto-futures cex-price-discovery btc-perps
 ---
 

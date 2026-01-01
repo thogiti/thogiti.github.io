@@ -1,6 +1,7 @@
 ---
 title: The Mechanics of 24/7 Equity Perps - Part 1
 date: 2025-12-21
+author: Nagu Thogiti
 tags: equity-perps perpetuals Hyperliquid HIP-3 lighter Hyperliquid-HIP-3 Ostium GMX-Oracle-Pricing equity-perpetuals 
 ---
 

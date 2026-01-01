@@ -1,5 +1,7 @@
 ---
 title: Columbia CryptoEconomics Workshop 2024 - Personal Notes and Inquiries
+date: 2025-01-05
+author: Nagu Thogiti
 tags: Ethereum block-building decentralized-block-building PBS flashbot flashbot rollups rollup-economics sequencers sequencing preconfirmations l2-sequencing cryptoeconomics columbia-cec the-forum-columbia ethereum-north-star  ethereum-end-game mev maximal-extracted-value block-rewards transaction-fees transaction-fee-mechanism  
 ---
 

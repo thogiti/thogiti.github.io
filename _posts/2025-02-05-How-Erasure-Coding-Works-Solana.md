@@ -1,5 +1,7 @@
 ---
 title: How Erasure Coding Works in Solana - A Deep Dive into Reed–Solomon and Data Propagation
+date: 2025-02-05
+author: Nagu Thogiti
 tags: Erasure-coding Solana Scalability Data-Extraction Data-Interpolation Missing-Value-Analysis Coefficient-Extraction Error-Correction Generalized-Reed-Solomon-Codes Reed-Solomon-Codes data-propagation
 ---
 

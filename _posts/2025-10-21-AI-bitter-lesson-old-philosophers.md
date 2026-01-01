@@ -1,6 +1,7 @@
 ---
 title: "The Bitter Lesson and the Old Philosophers"
 date: 2025-10-21
+author: Nagu Thogiti
 tags: Richard-Sutton, Bitter-Lesson, Reinforcement-Learning, Plato, Aristotle, Hegel, Philosophy-of-AI
 description: "How Richard Sutton’s 'bitter lesson' in reinforcement learning echoes a 2,000-year-old argument between Plato, Aristotle, and Hegel about the nature of learning itself."
 ---

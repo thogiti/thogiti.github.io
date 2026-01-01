@@ -1,5 +1,7 @@
 ---
 title: Game-Theoretic Vulnerabilities in Proportional Bandwidth Allocation - A Formal Analysis of FastLane’s ShMonad Protocol
+date: 2025-07-17
+author: Nagu Thogiti
 tags: Fastlane monad shMonad liquid-staking-token game-theoretic-vulnerabilities bandwidth-allocation-mechanism 
 ---
 

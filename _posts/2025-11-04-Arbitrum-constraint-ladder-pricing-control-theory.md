@@ -1,6 +1,7 @@
 ---
 title: A Control-Theoretic View of Arbitrum’s Constraint Ladder Gas Pricer 
 date: 2025-11-04
+author: Nagu Thogiti
 tags: Arbitrum Arbitrum-gas-pricing constraint-ladder Rollups Layer2 Gas-pricing Rollup-gas-pricing L2-gas-pricing control-theory-gas-pricing
 description: 
 ---

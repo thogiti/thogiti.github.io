@@ -1,5 +1,7 @@
 ---
 title: Prop AMMs on Monad - A Mechanism-sound, Execution-time Router for Atomic Best-execution
+date: 2025-09-05
+author: Nagu Thogiti
 tags: Fastlane monad prop-AMMs dark-AMMs Monad-Execution-time-Router 
 ---
 

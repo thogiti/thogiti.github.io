@@ -1,5 +1,7 @@
 ---
 title: Coalition-Proof Attestation for Cross-Chain Messaging Systems - Part 1 
+date: 2025-09-14
+author: Nagu Thogiti
 tags: LayerZero CCIP Across  Cross-Chain-Messaging-Systems game-theoretic-vulnerabilities bandwidth-allocation-mechanism cross-chain-interoperability Coalition-Proof-Attestation blockchain-bridge-failures
 ---
 

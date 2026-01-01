@@ -1,5 +1,7 @@
 ---
 title: Equivocation Detection & Slashing in MonadBFT - Game Theory & Mechanism Design Analysis - PART 1
+date: 2025-10-08
+author: Nagu Thogiti
 tags: monad monadbft High-Performance-Consensus mechanism-design MEV Monad-MEV monad-equivocation monad-slashing monad-slashing-mechanism mechanism-design MEV equivocation slashing
 ---
 

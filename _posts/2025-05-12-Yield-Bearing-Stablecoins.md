@@ -1,5 +1,7 @@
 ---
 title: Yield-Bearing Stablecoins - A Deep Dive into Mechanisms, Mathematics, and Ecosystems
+date: 2025-05-12
+author: Nagu Thogiti
 tags: Yield-Bearing-Stablecoins Stablecoins YBSs 
 ---
 

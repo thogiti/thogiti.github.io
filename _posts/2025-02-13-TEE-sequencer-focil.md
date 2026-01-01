@@ -1,5 +1,7 @@
 ---
 title: 	Trusted Execution Environments (TEEs) and L2 Sequencers - Challenges, Trade-offs, and Security Implications
+date: 2025-02-13
+author: Nagu Thogiti
 tags: Ethereum Solana Rollups Multiple-concurrent-proposers censorship-resistance ethereum-roadmap focil inclusion-lists blockchain-security blockchain-censorship-resistance TEE-sequeencer TEE-Rollups TEE-layer2
 ---
 

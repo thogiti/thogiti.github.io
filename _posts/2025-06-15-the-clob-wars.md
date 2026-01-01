@@ -1,5 +1,7 @@
 ---
 title: The CLOB Wars — Monolithic vs. Modular in Next-Gen On-Chain Exchanges
+date: 2025-06-15
+author: Nagu Thogiti
 tags: CLOBs CLOB-wards central-limit-order-book on-chain-liquidity Hyperliquid DEX-exploit DeFi DeFi-exploit Bullet hibachi paradex kuru-monad gte-megaeth lighter perps future-of-perps crypto-futures
 ---
 

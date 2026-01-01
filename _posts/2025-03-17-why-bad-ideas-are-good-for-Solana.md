@@ -1,5 +1,7 @@
 ---
 title: Why "Bad" Ideas are Good for Solana - A Journey Through Transaction Prioritization 
+date: 2025-03-17
+author: Nagu Thogiti
 tags: Solana fee-markets solana-fee-markets solana-transaction-prioritization solana-priority-fees simd-253 transaction-stuffing solana-mechanisms
 ---
 

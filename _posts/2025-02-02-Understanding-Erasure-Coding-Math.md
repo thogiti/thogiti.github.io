@@ -1,5 +1,7 @@
 ---
 title: Understanding Erasure Coding - A Deep Dive into Mathematical Foundations
+date: 2025-02-02
+author: Nagu Thogiti
 tags: Erasure-coding Ethereum Danksharding Scalability Product-Code algebraic-coding-theory Data-Extraction Data-Interpolation Missing-Value-Analysis Coefficient-Extraction Error-Correction Generalized-Reed-Solomon-Codes Reed-Solomon-Codes 
 ---
 
