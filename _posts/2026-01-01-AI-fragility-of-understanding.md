@@ -25,9 +25,9 @@ Because “value” comes in two different kinds.
 
 ## Two kinds of value
 
-There is **market value**: salary, prestige, promotions, funding, attention.
+There is market value: salary, prestige, promotions, funding, attention.
 
-And there is **intrinsic utility**: the thing that keeps the plane in the sky.
+And there is intrinsic utility: the thing that keeps the plane in the sky.
 
 The optimistic quote assumes these stay aligned. It assumes institutions and markets reliably identify and reward verification, judgment, and accountability.
 
@@ -47,31 +47,26 @@ They say something that matters:
 
 The workflow is familiar by now: spin up a repo, feed context, interrogate the plan, link docs, let the agent run, watch the stream, interrupt when it fails, run the server, test, iterate. Then tune an `agents.md` so next time starts cleaner. Add end-to-end tests because you’re tired of bugs that should have been caught.
 
-This resembles apprenticeship, but the resemblance is dangerous.
+This resembles apprenticeship, with a catch.
+
 
 In apprenticeship, a master passes down grounded competence. Here, the “teacher” is a probabilistic engine. The human learns by running a loop: propose, build, break, patch, repeat.
 
-It’s less “learning from a master” and more **learning by inspection inside a cybernetic loop**.
+It’s less “learning from a master” and more learning by inspection inside a cybernetic loop.
 
 That loop can teach real things. It can also create a convincing feeling of mastery before you’ve built a model that survives contact with reality.
 
-People begin to confuse three different outcomes:
 
-- **Shipping**: delivering artifacts that run
-- **Learning**: improving through feedback and iteration
-- **Understanding**: carrying a predictive model that still works when conditions change
+People begin to treat three different outcomes as the same thing: shipping (artifacts that run), learning (iteration and feedback), and understanding (a predictive model that still works when conditions change).
 
->A note of grounding: large-scale studies that categorize LLM-generated code failures show the pattern you’d expect—models can produce runnable code while still systematically missing deeper failure modes. One survey-style deep dive cites work that manually examined hundreds of LLM-generated-code bugs and grouped them into recurring mistake categories.[^1]
+
+>A note of grounding: large-scale studies that categorize LLM-generated code failures show the pattern you’d expect, models can produce runnable code while still systematically missing deeper failure modes. One survey-style deep dive cites work that manually examined hundreds of LLM-generated-code bugs and grouped them into recurring mistake categories.[^1]
 
 ---
 
 ## What has become cheap (and what hasn’t)
 
-AI lowers the cost of producing plausible artifacts.
-
-Code that compiles.  
-Plans that persuade.  
-Features that demo.
+AI lowers the cost of producing plausible artifacts: code that compiles, plans that persuade, features that demo.
 
 What it does not lower, by default, is the cost of forming an internal model of what you built: its assumptions, its invariants, its failure modes, the places where the world punches through your abstractions.
 
@@ -203,8 +198,7 @@ AI makes it easier to fool ourselves at scale.
 
 You can generate the language of insight without the structure of insight. You can ship confidently without knowing where the system breaks.
 
-The risk is not that AI is wrong.  
-The risk is that institutions stop paying for the work that would find out where it is wrong.
+The risk is not that AI is wrong. The risk is that institutions stop paying for the work that would find out where it is wrong.
 
 ---
 
@@ -240,7 +234,7 @@ The crisis begins when we confuse their optimization for our understanding.
 
 So the real question stays the same:
 
-**What incentive structures keep truth coupled to reward?**
+What incentive structures keep truth coupled to reward?
 
 ## References
 [^1]: [A Deep Dive Into Large Language Model Code Generation Mistakes: What and Why?](https://arxiv.org/html/2411.01414v2)
