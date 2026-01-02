@@ -131,13 +131,13 @@ Fees and rebates are omitted here. Add them back as per-fill constants.
 
 Read those equations in plain English:
 
-* You “earn” $\frac{s_t}{2}$ for providing liquidity.
+* You earn $\frac{s_t}{2}$ for providing liquidity.
 * Then the mid moves.
 * The mid move can be your real profit or your real loss.
 
 That second term is the whole game. If fills are followed by adverse mid moves, the half-spread is hazard pay, not edge.
 
-*Quick check:* So why do makers lose money even when they “capture spread”?
+*Quick check:* So why do makers lose money even when they capture spread?
 *Answer:* Because $\mathbb{E}[\Delta M(\tau)\mid \text{fill}]$ is generally not zero. The conditional drift after fills can eat the half-spread.
 
 This is the market-making version of the **winner’s curse**. In auctions, “winning” can mean you overpaid relative to the true value. In liquidity provision, “winning the trade” can mean you were the best price available right before the mid moved against you.
