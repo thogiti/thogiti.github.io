@@ -67,7 +67,7 @@ Write the dynamics in discrete time (quarters are a natural mental tick, but the
 
 $$
 \begin{aligned}
-N_{t+1} &= (1-\delta_N)N_t + a,P_t \
+N_{t+1} &= (1-\delta_N)N_t + a,P_t \\
 P_{t+1} &= (1-\delta_P)P_t + b,r,N_t
 \end{aligned}
 $$
@@ -173,20 +173,20 @@ Partners don’t smoothly “spend 7% less.” They hit a runway wall, fail a co
 
 You don’t need a complicated nonlinearity to capture this. You only need a cliff.
 
-Say there is a minimum spend capacity $P^{\min}$ below which financing dries up and the partner can’t keep spending at the old rate. Then:
+Say there is a minimum spend capacity $P_{\min}$ below which financing dries up and the partner can’t keep spending at the old rate. Then:
 
 $$
 P_{t+1} =
 \begin{cases}
-(1-\delta_P)P_t + brN_t, & \mathrm{if}\; P_t \ge P^{\min},\\
-(1-\delta_P)P_t,         & \mathrm{if}\; P_t < P^{\min}.
+(1-\delta_P)P_t + brN_t, & \mathrm{if}\; P_t \ge P_{\min},\\
+(1-\delta_P)P_t,         & \mathrm{if}\; P_t < P_{\min}.
 \end{cases}
 $$
 
 
 Now a cascade becomes easy to imagine.
 
-A shock hits $N_t$. The recycled term $brN_t$ shrinks. $P_t$ drifts downward. If it crosses $P^{\min}$, the pump turns off. Then $P_t$ falls faster, which cuts $aP_t$, which shrinks $N_t$ further, which shrinks reinvestment further.
+A shock hits $N_t$. The recycled term $brN_t$ shrinks. $P_t$ drifts downward. If it crosses $P_{\min}$, the pump turns off. Then $P_t$ falls faster, which cuts $aP_t$, which shrinks $N_t$ further, which shrinks reinvestment further.
 
 This means that partners can spend normally until they hit a financing threshold. Above $𝑃_{min}$, they can keep spending and keep receiving support; below it, funding dries up and the “extra inflow” shuts off, so spend capacity decays on its own—turning a mild shock into a regime change.
 
