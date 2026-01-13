@@ -68,7 +68,7 @@ Write the dynamics in discrete time (quarters are a natural mental tick, but the
 $$
 \begin{aligned}
 N_{t+1} &= (1-\delta_N)N_t + a,P_t \\
-P_{t+1} &= (1-\delta_P)P_t + b,r,N_t
+P_{t+1} &= (1-\delta_P)P_t + brN_t
 \end{aligned}
 $$
 
