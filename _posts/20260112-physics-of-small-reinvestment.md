@@ -2,7 +2,7 @@
 title: The Physics of Small Reinvestment
 date: 2026-01-12
 author: Nagu Thogiti
-tags: 
+tags: econophysics feedback-loops systemic-risk reflexivity complex-systems network-effects stability ai-economics nvidia venture-capital
 ---
 
 ### How 1–5% reinvestment can create circularity, amplification, and cascades - *without* invoking accounting round-tripping
