@@ -43,6 +43,7 @@ It was built to **move a body through the world**.
 It takes messy sensory input, makes a guess about what’s happening, checks reality, corrects itself, and acts. Learning is less like filing and more like updating a model.
 
 **Question:** If that’s true, why does the brain remember anything at all?
+
 **Answer:** Because some information changes behavior. If it helps the brain predict and act, it tends to stick. If it doesn’t get used, it fades.
 
 That explains why memorized facts often evaporate after a test. The brain is economical. It keeps what seems useful and discards what doesn’t.
@@ -54,6 +55,7 @@ That explains why memorized facts often evaporate after a test. The brain is eco
 Memorization feels safe for a reason. It shrinks uncertainty. There’s no exploration, no risk, no need to be wrong. You either recall the answer or you don’t.
 
 **Question:** If memorization is so fragile, why does it work so well in school?
+
 **Answer:** Because school rewards it. The environment is stable enough that short-term recall can pass as mastery.
 
 But the real test of learning isn’t whether you can answer what you’ve seen before. It’s what happens when the question changes, when the template is missing.
@@ -73,20 +75,22 @@ Returning means meeting the same idea again, but in a way that demands slightly 
 A child learns a letter’s shape, then its sound, then how it behaves in words, then how those words behave in sentences. Each return deepens the model.
 
 **Question:** Why does variation matter so much?
+
 **Answer:** Because variation forces structure. A fact that survives variation becomes usable knowledge. A fact that only works in one format stays brittle.
 
 ---
 
 ## Making Differences Sharp
 
-In the workshop, a speaker drew a capital **B** and said:
-“If I just tell a child this is *B*, it’s a cold symbol. But if I say it’s the **sting of the bee and the body of the bee**, the order is no longer arbitrary.”
+In the workshop, a speaker drew a letter **b** and said:
+“If I just tell a child this is *b*, it’s a cold symbol. But if I say it’s the **sting of the bee and the body of the bee**, the order is no longer arbitrary.”
 
 Suddenly the b/d problem stops being a geometry puzzle and becomes a character difference.
 
 That matters because one hard job in early learning is telling apart things that are *similar but not the same*. When instruction blurs distinctions, the brain blurs them too. Confusion follows.
 
 **Question:** Why do small confusions persist for years?
+
 **Answer:** Because once two things are encoded as “almost the same,” every future encounter reinforces the overlap. You don’t fix it by going faster. You fix it by making the differences crisp.
 
 ---
@@ -100,6 +104,7 @@ In classrooms, danger is rarely physical. It’s social: embarrassment, comparis
 In the second lecture, Mr. Reed called this **brittle education**. If you’re terrified of being wrong, memorization becomes the safest move.
 
 **Question:** Is “willingness to be wrong” just a classroom virtue?
+
 **Answer:** No. It’s a requirement. Without safe error, the brain can’t update its model. Without updates, you get performance, not learning.
 
 ---
@@ -113,6 +118,7 @@ The first move is to make foundational skills **cheap**: decoding, handwriting, 
 Small steps. Frequent practice. Immediate correction. Cumulative review.
 
 **Question:** Isn’t this just drill?
+
 **Answer:** Drill is mindless repetition. This is load management. The goal isn’t to keep kids busy; it’s to remove friction so the mind can do higher work.
 
 One speaker used a cycling analogy: nobody wins a race while consciously thinking about balance. Balance has to be automatic so attention can go to the road.
@@ -126,6 +132,7 @@ Many students “struggle with math” when the failure is actually linguistic: 
 Carden treats language as infrastructure. Students explain problems in clear sentences before manipulating symbols.
 
 **Question:** Why insist on complete sentences?
+
 **Answer:** Because sloppy language produces sloppy models. If a student can’t state the problem cleanly, they can’t solve it reliably.
 
 ---
@@ -141,6 +148,7 @@ The same logic shows up in reading. Early Carden readers famously have **no pict
 A word becomes not a symbol but an experience.
 
 **Question:** Why does that matter?
+
 **Answer:** Because comprehension is simulation. If the child can’t “see” what the sentence is doing, reading becomes word-calling. If they can, reading becomes meaning.
 
 ---
@@ -181,6 +189,7 @@ When tools are reliable, students gain trust that their skills will show up when
 A child trained in a shame-free error environment doesn’t treat mistakes as identity. Being wrong isn’t a verdict; it’s data.
 
 **Question:** Why is that such a big deal?
+
 **Answer:** Because uncertainty is where real thinking begins. If a child can’t stand uncertainty, they can’t think. They can only perform.
 
 ---
