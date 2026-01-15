@@ -50,7 +50,7 @@ That explains why memorized facts often evaporate after a test. The brain is eco
 
 ---
 
-## Why Memorization Feels Safe—and Why It Fails
+## Why Memorization Feels Safe and Why It Fails
 
 Memorization feels safe for a reason. It shrinks uncertainty. There’s no exploration, no risk, no need to be wrong. You either recall the answer or you don’t.
 
@@ -189,6 +189,7 @@ When tools are reliable, students gain trust that their skills will show up when
 A child trained in a shame-free error environment doesn’t treat mistakes as identity. Being wrong isn’t a verdict; it’s data.
 
 **Question:** Why is that such a big deal?
+
 **Answer:** Because uncertainty is where real thinking begins. If a child can’t stand uncertainty, they can’t think. They can only perform.
 
 ---
