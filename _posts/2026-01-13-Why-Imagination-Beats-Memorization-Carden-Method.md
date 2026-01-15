@@ -6,13 +6,13 @@ tags: learning-theory education-philosophy AI-and-education cognitive-science ea
 ---
 
 
-## Why the Carden Method Works (and What the Brain Has Been Trying to Tell Us)
+## Why the [Carden Method](https://carden.org/method/) Works (and What the Brain Has Been Trying to Tell Us)
 
 ![Why-the-Carden-Method-Works](/assets/images/2026/Why-the-Carden-Method-Works.jpeg)
 
 I’m writing this for a personal reason: my seven-year-old lives in a world where answers are cheap. Watching him learn forced me to ask a harder question: if answers no longer matter, what does?
 
-In the age of AI, producing an answer costs almost nothing. Verifying it still costs attention, judgment, and time. That’s the bottleneck. At a Carden workshop, a parent asked the question many parents are carrying around: if AI can generate answers instantly, what are we actually teaching? Another parent replied: verification. That’s the expensive part.
+In the age of AI, producing an answer costs almost nothing. Verifying it still costs attention, judgment, and time. That’s the bottleneck. At a [Carden](https://carden.org/method/) workshop, a parent asked the question many parents are carrying around: if AI can generate answers instantly, what are we actually teaching? Another parent replied: verification. That’s the expensive part.
 
 I want to understand learning the way an engineer understands a machine. Not what schools claim works, but what minds can actually do, and what kinds of classrooms protect curiosity instead of draining it. If a machine can hand a child plausible answers all day, the point is no longer recall. It’s whether the child can think, wonder, and keep the joy of learning intact.
 
@@ -189,7 +189,6 @@ When tools are reliable, students gain trust that their skills will show up when
 A child trained in a shame-free error environment doesn’t treat mistakes as identity. Being wrong isn’t a verdict; it’s data.
 
 **Question:** Why is that such a big deal?
-
 **Answer:** Because uncertainty is where real thinking begins. If a child can’t stand uncertainty, they can’t think. They can only perform.
 
 ---
@@ -253,23 +252,23 @@ Information that improves prediction is retained. Information that doesn’t get
 
 Only a small subset of neuroanatomy is needed to understand the learning claims made in the lecture.
 
-### Occipital Cortex — Visual Input
+### Occipital Cortex - Visual Input
 
 Processes raw visual information (shapes, lines, contrast). Relevant for early letter and symbol recognition.
 
-### Parietal Cortex — Spatial and Sensory Integration
+### Parietal Cortex - Spatial and Sensory Integration
 
 Supports spatial relationships (“where”), magnitude, and orientation. Relevant for handwriting, geometry, and number sense.
 
-### Temporal Cortex — Object and Language Recognition
+### Temporal Cortex - Object and Language Recognition
 
 Involved in identifying “what” things are, including words, sounds, and meaning. Central for language comprehension and reading.
 
-### Frontal Cortex — Planning and Executive Control
+### Frontal Cortex - Planning and Executive Control
 
 Supports decision-making, sequencing, monitoring errors, and voluntary action. Heavily involved when learners explain reasoning or solve novel problems.
 
-### Hippocampus — Contextual Binding and Learning
+### Hippocampus - Contextual Binding and Learning
 
 Located within the temporal lobe. Plays a key role in:
 
