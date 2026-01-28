@@ -2,7 +2,7 @@
 title: The Option Value of Waiting in Prediction Markets - A structural theory of volume timing, entry timing, and latent toxicity
 date: 2026-01-28
 author: Nagu Thogiti
-tags: 
+tags: prediction-markets market-microstructure adverse-selection information-asymmetry hazard-models option-value onchain-data polymarket dune-analytics empirical-finance
 ---
 
 
@@ -383,13 +383,15 @@ This makes the boxing outliers less mysterious. Boxing is not “sports” in th
 
 If you treat these markets as an exchange designer, the takeaway is practical. You can watch LOX as a diagnostic for when the participant base shifts from broad, mixed flow to a narrow, selection-heavy regime. For risk controls, incentive design, and liquidity policy, that is closer to a state variable than “news vs sports.”
 
+> [Here](https://colab.research.google.com/drive/1QN9kyLZ4DiysC5r9Tes7DJXwlJfZXjiK#scrollTo=RW3i_e8LJ6EM) is teh code for simulating and reproducing the figures from this mathematical model.
+
 ---
 
-# Methods Appendix: Implementation Notes (from on-chain settled trades)
+## Methods Appendix: Implementation Notes (from on-chain settled trades)
 
 This appendix makes the LOX pipeline reproducible from the minimal data Dune-style queries usually expose. The logic is: construct two empirical CDFs over normalized time, one weighted by volume, one based on first entry, and evaluate them at an activity-defined quantile.
 
-## A. What you need from the dataset
+### A. What you need from the dataset
 
 You need one row per settled trade (or per fill). Each row should have:
 
@@ -407,7 +409,7 @@ Two edge cases are worth deciding upfront:
 
 2. **Markets with very few entrants.** If a market has only a handful of unique traders, $U(t)$ becomes too coarse and LOX is dominated by discreteness. Set a minimum entrant threshold (for example 50–100) before interpreting LOX as a stable market-level statistic.
 
-## B. Normalizing time
+### B. Normalizing time
 
 For each trade timestamp $s$ in a market compute:
 
@@ -417,7 +419,7 @@ $$
 
 Implementation detail: compute $t$ as a float and clip to $[0,1]$. Clipping prevents timestamp anomalies from breaking quantile inversion.
 
-## C. Constructing the volume curve $V(t)$
+### C. Constructing the volume curve $V(t)$
 
 Sort trades by normalized time $t$ within each market.
 
@@ -431,7 +433,7 @@ $$
 
 Empirically, $V(t)$ is a step function that starts at 0 and ends at 1. For plotting, you can bin time into small intervals (for example 1% bins) and compute cumulative volume by bin. LOX itself does not require smoothing.
 
-## D. Constructing the entry curve $U(t)$
+### D. Constructing the entry curve $U(t)$
 
 For each wallet $w$ in a market, compute its first trade time:
 
@@ -447,7 +449,7 @@ $$
 
 This is also a step CDF. Binning can make plots easier to read, but the statistic uses the underlying empirical curve.
 
-## E. Computing $t_q = V^{-1}(q)$
+### E. Computing $t_q = V^{-1}(q)$
 
 Pick $q\in(0,1)$. Define $t_q$ as the earliest time when the market has processed $q$ of its eventual volume:
 
@@ -459,7 +461,7 @@ In code, this is a monotone search over the cumulative volume array. If you work
 
 This step replaces “last 20% or 10% of time” with “last $1-q$ of activity,” which makes markets comparable even when their activity starts at different times.
 
-## F. Evaluating LOX robustly
+### F. Evaluating LOX robustly
 
 LOX is:
 
@@ -477,7 +479,7 @@ $$
 
 with a small $\varepsilon$ (for example $10^{-6}$). If clamping happens often for a market, that market is too small for LOX to be stable.
 
-## G. Recommended diagnostics
+### G. Recommended diagnostics
 
 Before trusting LOX values, check:
 
@@ -488,6 +490,99 @@ Before trusting LOX values, check:
 
 If you later add price data, a natural next diagnostic is markout conditioned on entry time: late entrants in high-LOX markets should have systematically better post-trade outcomes than early entrants, with the gap strongest near resolution.
 
+### H. Code for simulations and figures
+
+You can find the code for simulating and reproducing the above figures [here](https://colab.research.google.com/drive/1QN9kyLZ4DiysC5r9Tes7DJXwlJfZXjiK#scrollTo=RW3i_e8LJ6EM).
+
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def logistic(t, k=10.0, x0=0.5):
+    """Smooth S-curve in [0,1]."""
+    y = 1.0 / (1.0 + np.exp(-k * (t - x0)))
+    # Normalize to (approximately) hit 0 and 1 at endpoints
+    y0 = 1.0 / (1.0 + np.exp(-k * (0.0 - x0)))
+    y1 = 1.0 / (1.0 + np.exp(-k * (1.0 - x0)))
+    return (y - y0) / (y1 - y0)
+
+def delayed_j(t, power=12):
+    """Sharp J-curve: near 0 for most of time, jumps near 1."""
+    return t**power
+
+# -------------------------
+# Figure 1: Gap Chart
+# -------------------------
+t = np.linspace(0, 1, 400)
+
+V = logistic(t, k=8.0, x0=0.45)  # activity accumulates smoothly
+U = delayed_j(t, power=10)       # entrants delay heavily
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(t, V, linewidth=2, label="Cumulative Volume V(t)")
+ax.plot(t, U, linewidth=2, label="Cumulative Entry U(t)")
+
+# Highlight tail window for a chosen q
+q = 0.8
+idx = np.searchsorted(V, q)
+idx = min(max(idx, 0), len(t) - 1)
+t_q = t[idx]
+
+ax.axvline(t_q, linestyle="--", linewidth=1.5, label=f"t_q where V(t_q)=q (q={q})")
+ax.fill_between(t, 0, 1, where=(t >= t_q), alpha=0.15)
+
+ax.set_title("Figure 1: The 'Gap' Between Activity and Entry (Stylized Toxic Market)")
+ax.set_xlabel("Normalized time t")
+ax.set_ylabel("Cumulative fraction")
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+ax.legend()
+plt.tight_layout()
+plt.show()
+
+# -------------------------
+# Figure 2: Quadrant Scatter (Synthetic)
+# -------------------------
+rng = np.random.default_rng(7)
+
+# X: late activity proxy (e.g., t_50 or tail concentration) in [0,1]
+# Y: LOX proxy (synthetic) in roughly [-2, 4]
+sports_x = rng.normal(0.35, 0.08, size=80)
+sports_y = rng.normal(0.1, 0.4, size=80)
+
+late_lowtox_x = rng.normal(0.75, 0.07, size=60)  # late activity, low LOX
+late_lowtox_y = rng.normal(0.2, 0.5, size=60)
+
+toxic_x = rng.normal(0.78, 0.06, size=40)        # late activity, high LOX
+toxic_y = rng.normal(2.5, 0.7, size=40)
+
+weird_x = rng.normal(0.30, 0.08, size=15)        # early activity, high LOX
+weird_y = rng.normal(2.0, 0.6, size=15)
+
+X = np.clip(np.concatenate([sports_x, late_lowtox_x, toxic_x, weird_x]), 0, 1)
+Y = np.concatenate([sports_y, late_lowtox_y, toxic_y, weird_y])
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.scatter(X, Y, alpha=0.7)
+
+# Visual quadrant guides
+ax.axvline(0.6, linestyle="--", linewidth=1.2)
+ax.axhline(1.0, linestyle="--", linewidth=1.2)
+
+ax.text(0.15, 0.3, "Early activity\nLow LOX\n(Sports-like)", fontsize=10)
+ax.text(0.70, 0.3, "Late activity\nLow LOX\n(High hazard, manageable)", fontsize=10)
+ax.text(0.70, 2.6, "Late activity\nHigh LOX\n(Toxic / informed)", fontsize=10)
+ax.text(0.12, 2.2, "Early activity\nHigh LOX\n(Weird / ambiguous)", fontsize=10)
+
+ax.set_title("Figure 2: Phase Map — Late Activity vs Excess Hesitation (LOX)")
+ax.set_xlabel("Late Activity (proxy)")
+ax.set_ylabel("Excess Hesitation (LOX proxy)")
+ax.set_xlim(0, 1)
+plt.tight_layout()
+plt.show()
+
+```
 ---
 
 
