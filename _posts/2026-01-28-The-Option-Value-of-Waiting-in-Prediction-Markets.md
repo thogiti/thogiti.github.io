@@ -23,7 +23,7 @@ This post builds a framework that separates those forces using only settled on-c
 ## Timing regimes in the wild
 
 ![Volume Half-life vs Late User Arrival](/assets/images/2026/danning-vol-t50-late-arrival-t20.jpeg)
-_Source: https://x.com/sui414/status/2016387824757465131_
+_Source: [Danning's scatter plot, https://x.com/sui414/status/2016387824757465131](https://x.com/sui414/status/2016387824757465131)_
 
 **Caption:**
 X-axis: volume half-life $t_{50}$, the normalized time when cumulative volume $V(t)=0.5$.
@@ -383,7 +383,7 @@ This makes the boxing outliers less mysterious. Boxing is not “sports” in th
 
 If you treat these markets as an exchange designer, the takeaway is practical. You can watch LOX as a diagnostic for when the participant base shifts from broad, mixed flow to a narrow, selection-heavy regime. For risk controls, incentive design, and liquidity policy, that is closer to a state variable than “news vs sports.”
 
-> [Here](https://colab.research.google.com/drive/1QN9kyLZ4DiysC5r9Tes7DJXwlJfZXjiK#scrollTo=RW3i_e8LJ6EM) is teh code for simulating and reproducing the figures from this mathematical model.
+> [Here](https://colab.research.google.com/drive/1QN9kyLZ4DiysC5r9Tes7DJXwlJfZXjiK#scrollTo=RW3i_e8LJ6EM) is the code for simulating and reproducing the figures from this mathematical model.
 
 ---
 
