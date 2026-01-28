@@ -5,6 +5,7 @@ author: Nagu Thogiti
 tags: prediction-markets market-microstructure adverse-selection information-asymmetry hazard-models option-value onchain-data polymarket dune-analytics empirical-finance
 ---
 
+![Cover Option Value of Waiting in Prediction Markets](/assets/images/2026/cover-LOX-prediction-markets.jpeg)
 
 Prediction markets aggregate information. They also shape *when* it is rational to participate.
 
