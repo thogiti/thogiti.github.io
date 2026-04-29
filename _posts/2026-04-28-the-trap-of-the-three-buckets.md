@@ -5,6 +5,8 @@ author: Nagu Thogiti
 tags: AI learning-theory cognitive-science intelligence sample-efficiency active-learning world-models reward-functions epistemology Feynman-style-inquiry
 ---
 
+![The-Trap-of-the-Three-Buckets](/assets/images/2026/The-Trap-of-the-Three-Buckets-cover.png)
+
 A question keeps returning in AI [conversations](https://x.com/dwarkesh_sp/status/2049232356998094998):
 
 > Why are humans so much more sample efficient than large language models?
