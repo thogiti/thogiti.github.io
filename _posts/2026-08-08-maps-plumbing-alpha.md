@@ -8,6 +8,8 @@ tags: Quantitative-Trading, AI-in-Finance, Market-Microstructure, Trading-Infras
 
 ### When AI Makes Strategies Cheap, What Becomes Scarce?
 
+![Maps-Plumbing-Alpha](/assets/images/2026/maps-plumbing-alpha-cover.jpg)
+
 Imagine two trading teams watching the same liquidation cascade. A large position is liquidated on Venue A, its price drops sharply, and a few hundred milliseconds later Venue B follows. Both teams see the same sequence and form an obvious hypothesis: A may be incorporating information faster, leaving a brief window in which B can be predicted.
 
 The first team begins with the work that precedes almost every serious cross-venue experiment. It builds exchange connectors, cleans the feeds, reconciles clocks, reconstructs order books, handles sequence gaps, models fees, and writes enough order-management logic to reproduce what the strategy could actually have traded. Several weeks pass before the researchers trust their replay well enough to test the original idea.
