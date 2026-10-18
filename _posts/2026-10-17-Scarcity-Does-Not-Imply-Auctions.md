@@ -3,7 +3,7 @@ title: Scarcity Does Not Imply Auctions
 subtitle: Why AI inference may look more like cloud capacity than crypto blockspace.
 date: 2026-10-17
 author: Nagu Thogiti
-tags: Quantitative-Trading, AI-in-Finance, Market-Microstructure, Trading-Infrastructure, Backtest-Overfitting, Representation-Arbitrage
+tags: ai-inference ai-economics market-design auctions agentic-ai cloud-computing inference-routing mechanism-design
 ---
 
 
