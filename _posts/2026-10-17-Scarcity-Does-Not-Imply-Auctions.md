@@ -57,7 +57,7 @@ where $P_i$ is provider $i$'s positive price score and $\pi_i$ is its selection 
 
 The score becomes less informative when serving one request changes the cost of serving the next. Prompt caching lets a provider reuse computation for repeated input, and OpenRouter documents sticky routing that keeps subsequent requests with the same provider to preserve cache benefits, subject to availability and routing settings. Its full service should not be mistaken for a fresh, stateless price contest on every call. [^caching]
 
-In a simple example, ten calls repeat a million-token prefix and the final nine qualify for a cache discount. Provider A charges \$0.60 per million input tokens without a discount. Provider B charges \$1.00 for the initial input and \$0.10 for each cached repeat. The repeated-input bill is \$6.00 at A and \$1.90 at B.
+In a simple example, ten calls repeat a million-token prefix and the final nine qualify for a cache discount. Provider A charges \$0.60 per million input tokens without a discount. Provider B charges \\$1.00 for the initial input and \\$0.10 for each cached repeat. The repeated-input bill is \\$6.00 at A and \\$1.90 at B.
 
 A ranking based on the uncached headline rate favors A, even though B delivers the cheaper repeated-input bill. Providers competing for that ranking have a reason to cut the visible rate rather than the cost the customer ultimately bears. A fiercely competitive market can still compete over the wrong price.
 
