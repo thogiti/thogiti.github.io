@@ -1,0 +1,149 @@
+.article__content .breakwater-figure {
+  margin: 2rem 0;
+}
+
+.breakwater-zoom {
+  display: block;
+  cursor: zoom-in;
+}
+
+.article__content .breakwater-figure img,
+.article__content .breakwater-figure video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #d9dfe2;
+  border-radius: 6px;
+}
+
+.article__content .breakwater-figure figcaption {
+  margin-top: .75rem;
+  color: #535a60;
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.breakwater-player {
+  position: relative;
+}
+
+.breakwater-player video {
+  aspect-ratio: 16 / 9;
+  background: #0d1617;
+}
+
+.breakwater-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  max-width: calc(100% - 2rem);
+  padding: 1rem 1.5rem;
+  border: 2px solid #efb847;
+  border-radius: 999px;
+  background: #0b1919f2;
+  color: #fff3d8;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.breakwater-play[hidden] {
+  display: none;
+}
+
+.breakwater-play:hover {
+  background: #243b35;
+}
+
+.breakwater-play svg {
+  width: 2rem;
+  height: 2rem;
+  fill: #efb847;
+}
+
+.breakwater-zoom:focus-visible,
+.breakwater-play:focus-visible,
+.breakwater-dialog button:focus-visible {
+  outline: 3px solid #b67c0b;
+  outline-offset: 4px;
+}
+
+.breakwater-dialog {
+  box-sizing: border-box;
+  width: 1900px;
+  max-width: 96vw;
+  max-height: 94vh;
+  padding: 1rem;
+  border: 1px solid #b9c2c7;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+}
+
+.breakwater-dialog::backdrop {
+  background: #061010d9;
+}
+
+.breakwater-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.breakwater-dialog-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.breakwater-dialog button {
+  flex-shrink: 0;
+  padding: .5rem .75rem;
+  border: 1px solid #68747c;
+  border-radius: 4px;
+  background: #f3f5f6;
+  color: #222;
+  font: inherit;
+  cursor: pointer;
+}
+
+.breakwater-dialog-caption {
+  margin: 1rem 0;
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.breakwater-dialog-scroll {
+  overflow: auto;
+  max-height: 68vh;
+  background: #0d1617;
+}
+
+.breakwater-dialog-scroll img {
+  display: block;
+  width: auto;
+  max-width: none;
+  height: auto;
+  margin: auto;
+}
+
+@media (max-width: 480px) {
+  .breakwater-play {
+    padding: .6rem 1rem;
+    font-size: .9rem;
+  }
+}
+
+@media print {
+  .breakwater-play,
+  .breakwater-dialog {
+    display: none;
+  }
+}

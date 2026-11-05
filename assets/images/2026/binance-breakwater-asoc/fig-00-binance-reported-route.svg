@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="390" viewBox="0 0 1300 390" role="img" aria-labelledby="title desc">
+  <title id="title">Reported Binance intrusion path, with two converging branches</title>
+  <desc id="desc">A substituted pyenv command on Engineer B's endpoint led through internal AI tools to Engineer A's deployment credential and Engineer C's compromised endpoint. Those branches converged when the attacker deployed a malicious container on October 30 and reached wallet signing and EIP-7702 delegation. Simplified from Binance's preliminary incident report; not live telemetry.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d191a"/><stop offset="1" stop-color="#101f20"/></linearGradient>
+    <marker id="tealArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#56c8bc"/></marker>
+    <marker id="amberArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e9b44c"/></marker>
+    <marker id="redArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#ed9085"/></marker>
+    <marker id="purpleArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#aa92e8"/></marker>
+  </defs>
+  <rect width="1300" height="390" rx="20" fill="url(#background)"/>
+  <rect x="1" y="1" width="1298" height="388" rx="19" stroke="#304744" fill="none"/>
+  <text x="34" y="43" fill="#f2eee4" font-family="Inter,Arial,sans-serif" font-size="23" font-weight="700">The route reported by Binance</text>
+  <text x="1262" y="42" fill="#a0b4ad" font-family="Inter,Arial,sans-serif" font-size="14" text-anchor="end">Editorial reconstruction · not live telemetry</text>
+
+  <g>
+    <rect x="34" y="116" width="212" height="159" rx="12" fill="#172b2c" stroke="#56c8bc" stroke-width="2"/>
+    <rect x="300" y="93" width="230" height="111" rx="12" fill="#172b2c" stroke="#e9b44c" stroke-width="2"/>
+    <rect x="300" y="235" width="230" height="111" rx="12" fill="#172b2c" stroke="#ed9085" stroke-width="2"/>
+    <rect x="642" y="144" width="238" height="132" rx="12" fill="#182b2e" stroke="#e9b44c" stroke-width="2"/>
+    <rect x="930" y="153" width="155" height="115" rx="12" fill="#182b2e" stroke="#e9b44c" stroke-width="2"/>
+    <rect x="1135" y="153" width="130" height="115" rx="12" fill="#201f31" stroke="#aa92e8" stroke-width="2"/>
+  </g>
+
+  <g font-family="Inter,Arial,sans-serif">
+    <text x="51" y="144" fill="#56c8bc" font-size="13" font-weight="700">SEPTEMBER</text>
+    <text x="51" y="172" fill="#fff9ec" font-size="21" font-weight="700">Engineer B</text>
+    <text x="51" y="200" fill="#d1ded7" font-size="15">Interview repo setup</text>
+    <text x="51" y="221" fill="#d1ded7" font-size="15">replaces pyenv</text>
+    <text x="51" y="248" fill="#99b4aa" font-size="13">Initial compromised host</text>
+
+    <text x="318" y="119" fill="#e9b44c" font-size="13" font-weight="700">BY OCTOBER 20</text>
+    <text x="318" y="145" fill="#fff9ec" font-size="20" font-weight="700">Engineer A</text>
+    <text x="318" y="170" fill="#d1ded7" font-size="15">Deployment token found</text>
+    <text x="318" y="190" fill="#a7bdb5" font-size="13">via internal AI-tool access</text>
+
+    <text x="318" y="261" fill="#ed9085" font-size="13" font-weight="700">BY OCTOBER 20</text>
+    <text x="318" y="287" fill="#fff9ec" font-size="20" font-weight="700">Engineer C</text>
+    <text x="318" y="312" fill="#d1ded7" font-size="15">Compromised endpoint</text>
+    <text x="318" y="332" fill="#a7bdb5" font-size="13">used again October 30</text>
+
+    <text x="660" y="170" fill="#e9b44c" font-size="13" font-weight="700">OCTOBER 30</text>
+    <text x="660" y="197" fill="#fff9ec" font-size="20" font-weight="700">Malicious container</text>
+    <text x="660" y="222" fill="#d1ded7" font-size="15">Token + endpoint access</text>
+    <text x="660" y="244" fill="#a7bdb5" font-size="13">converge at deployment</text>
+
+    <text x="946" y="182" fill="#e9b44c" font-size="13" font-weight="700">RUNTIME</text>
+    <text x="946" y="209" fill="#fff9ec" font-size="18" font-weight="700">Wallet</text>
+    <text x="946" y="231" fill="#fff9ec" font-size="18" font-weight="700">signing</text>
+    <text x="946" y="251" fill="#a7bdb5" font-size="12">access reached</text>
+
+    <text x="1148" y="182" fill="#bfa9f0" font-size="13" font-weight="700">ON-CHAIN</text>
+    <text x="1148" y="207" fill="#fff9ec" font-size="17" font-weight="700">EIP-7702</text>
+    <text x="1148" y="229" fill="#fff9ec" font-size="16">delegation</text>
+    <text x="1148" y="250" fill="#b5aace" font-size="12">revoked separately</text>
+  </g>
+
+  <path d="M246 172 C272 172 269 149 298 149" fill="none" stroke="#56c8bc" stroke-width="3" marker-end="url(#tealArrow)"/>
+  <path d="M246 220 C273 220 268 290 298 290" fill="none" stroke="#56c8bc" stroke-width="3" marker-end="url(#tealArrow)"/>
+  <path d="M530 144 C574 144 589 177 640 177" fill="none" stroke="#e9b44c" stroke-width="3" marker-end="url(#amberArrow)"/>
+  <path d="M530 290 C574 290 590 242 640 242" fill="none" stroke="#ed9085" stroke-width="3" marker-end="url(#redArrow)"/>
+  <path d="M880 209 L928 209" fill="none" stroke="#e9b44c" stroke-width="3" marker-end="url(#amberArrow)"/>
+  <path d="M1085 209 L1133 209" fill="none" stroke="#aa92e8" stroke-width="3" marker-end="url(#purpleArrow)"/>
+  <text x="568" y="130" fill="#e9b44c" font-family="Inter,Arial,sans-serif" font-size="13" text-anchor="middle">token</text>
+  <text x="578" y="309" fill="#ed9085" font-family="Inter,Arial,sans-serif" font-size="13" text-anchor="middle">foothold</text>
+  <text x="34" y="370" fill="#9fb3ab" font-family="Inter,Arial,sans-serif" font-size="13">Simplified reported relationships. AI-tool access, credential authority and on-chain delegation require distinct evidence.</text>
+</svg>
